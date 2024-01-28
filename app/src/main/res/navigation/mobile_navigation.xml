@@ -18,11 +18,11 @@
 <!--        tools:layout="@layout/fragment_dashboard"-->
 <!--        />-->
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_events"-->
-<!--        android:name="com.example.myhome.ui.notifications.NotificationsFragment"-->
-<!--        android:label="@string/title_events"-->
-<!--        />-->
+    <fragment
+        android:id="@+id/navigation_events"
+        android:name="com.example.myhome.ui.event.list.EventListView"
+        android:label="@string/title_events"
+        />
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_chats"-->

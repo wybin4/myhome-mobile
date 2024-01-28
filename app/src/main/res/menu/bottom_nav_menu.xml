@@ -11,10 +11,10 @@
 <!--        android:icon="@drawable/charges_logo"-->
 <!--        android:title="@string/title_charges" />-->
 
-<!--    <item-->
-<!--        android:id="@+id/navigation_events"-->
-<!--        android:icon="@drawable/events_logo"-->
-<!--        android:title="@string/title_events" />-->
+    <item
+        android:id="@+id/navigation_events"
+        android:icon="@drawable/events_logo"
+        android:title="@string/title_events" />
 
 <!--    <item-->
 <!--        android:id="@+id/navigation_chats"-->
