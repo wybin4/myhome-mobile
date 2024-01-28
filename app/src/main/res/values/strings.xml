@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">myhome</string>
+    <string name="title_meters">Счётчики</string>
+    <string name="title_nav_meters">Счётчики и показания</string>
+    <string name="title_charges">Начисления</string>
+    <string name="title_events">События</string>
+    <string name="title_appeals">Обращения</string>
+    <string name="title_chats">Чаты</string>
+</resources>

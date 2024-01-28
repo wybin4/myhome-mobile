@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_meters">
+
+    <fragment
+        android:id="@+id/navigation_meters"
+        android:name="com.example.myhome.ui.meter.list.MeterListView"
+        android:label="@string/title_nav_meters"
+        tools:layout="@layout/meter_list_view" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_charges"-->
+<!--        android:name="com.example.myhome.ui.dashboard.DashboardFragment"-->
+<!--        android:label="@string/title_charges"-->
+<!--        tools:layout="@layout/fragment_dashboard"-->
+<!--        />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_events"-->
+<!--        android:name="com.example.myhome.ui.notifications.NotificationsFragment"-->
+<!--        android:label="@string/title_events"-->
+<!--        />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_chats"-->
+<!--        android:name="com.example.myhome.ui.notifications.NotificationsFragment"-->
+<!--        android:label="@string/title_chats" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_appeals"-->
+<!--        android:name="com.example.myhome.ui.notifications.NotificationsFragment"-->
+<!--        android:label="@string/title_appeals"/>-->
+</navigation>

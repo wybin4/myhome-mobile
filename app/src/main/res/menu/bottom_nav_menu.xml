@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_meters"
+        android:icon="@drawable/meters_logo"
+        android:title="@string/title_meters" />
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_charges"-->
+<!--        android:icon="@drawable/charges_logo"-->
+<!--        android:title="@string/title_charges" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_events"-->
+<!--        android:icon="@drawable/events_logo"-->
+<!--        android:title="@string/title_events" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_chats"-->
+<!--        android:icon="@drawable/chats_logo"-->
+<!--        android:title="@string/title_chats" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_appeals"-->
+<!--        android:icon="@drawable/appeals_logo"-->
+<!--        android:title="@string/title_appeals" />-->
+
+</menu>
