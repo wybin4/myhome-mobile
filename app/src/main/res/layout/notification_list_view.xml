@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.myhome.ui.notification.list.NotificationListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="28dp"
+                >
+
+                <!--            уведомление-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="32dp">
+
+                    <!--            иконка-->
+                    <LinearLayout
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="@color/primary_light"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/system_warning"/>
+                    </LinearLayout>
+
+                    <!--            текст-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="15dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Оплата задолженности"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:layout_marginRight="8dp"/>
+                            <LinearLayout
+                                android:layout_width="6dp"
+                                android:layout_height="6dp"
+                                android:background="@drawable/circle"
+                                android:backgroundTint="@color/red"
+                                android:layout_marginTop="1dp"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Срочно оплатите задолженность размером в 91.52 руб, иначе через 31 день вам..."
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="14dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="23 Марта · 11:04 · Системное"
+                            android:textSize="13dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <!--            уведомление-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="32dp">
+
+                    <!--            иконка-->
+                    <LinearLayout
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="@color/primary_light"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/user_warning"/>
+                    </LinearLayout>
+
+                    <!--            текст-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Отключение горячей воды"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginRight="8dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Из-за аварий на магистралях тепловых сетей подача горячей воды временно..."
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="14dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="30 Апреля · 15:50 · ТСЖ Прогресс"
+                            android:textSize="13dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
