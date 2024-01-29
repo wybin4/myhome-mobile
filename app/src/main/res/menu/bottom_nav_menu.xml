@@ -16,10 +16,10 @@
         android:icon="@drawable/events_logo"
         android:title="@string/title_events" />
 
-<!--    <item-->
-<!--        android:id="@+id/navigation_chats"-->
-<!--        android:icon="@drawable/chats_logo"-->
-<!--        android:title="@string/title_chats" />-->
+    <item
+        android:id="@+id/navigation_chats"
+        android:icon="@drawable/chats_logo"
+        android:title="@string/title_chats" />
 
 <!--    <item-->
 <!--        android:id="@+id/navigation_appeals"-->

@@ -24,10 +24,10 @@
         android:label="@string/title_events"
         />
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_chats"-->
-<!--        android:name="com.example.myhome.ui.notifications.NotificationsFragment"-->
-<!--        android:label="@string/title_chats" />-->
+    <fragment
+        android:id="@+id/navigation_chats"
+        android:name="com.example.myhome.ui.chat.list.ChatListView"
+        android:label="@string/title_chats" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_appeals"-->
