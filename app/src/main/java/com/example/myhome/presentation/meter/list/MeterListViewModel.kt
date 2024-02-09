@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.domain.models.MeterGetModel
-import com.example.myhome.domain.usecases.MeterListUseCase
+import com.example.myhome.domain.meter.models.MeterGetModel
+import com.example.myhome.domain.meter.usecases.MeterListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch

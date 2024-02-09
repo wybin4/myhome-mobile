@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhome.databinding.MeterListItemViewBinding
-import com.example.myhome.domain.models.MeterGetModel
+import com.example.myhome.domain.meter.models.MeterGetModel
 
 class MeterListAdapter(private val context: Context) :
     ListAdapter<MeterGetModel, MeterListAdapter.ItemViewHolder>(MeterDiffCallback()) {

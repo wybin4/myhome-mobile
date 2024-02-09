@@ -1,8 +1,7 @@
 package com.example.myhome.di
 
 import android.content.Context
-import android.util.Log
-import com.example.myhome.data.services.MeterApiService
+import com.example.myhome.data.meter.services.MeterApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
