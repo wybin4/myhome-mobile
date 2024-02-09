@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.myhome.ui.chat.list.ChatListViewModel" />
+            type="com.example.myhome.presentation.chat.list.ChatListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

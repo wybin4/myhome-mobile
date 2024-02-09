@@ -7,9 +7,23 @@
 
     <fragment
         android:id="@+id/navigation_meters"
-        android:name="com.example.myhome.ui.meter.list.MeterListView"
+        android:name="com.example.myhome.presentation.meter.list.MeterListView"
         android:label="@string/title_nav_meters"
-        tools:layout="@layout/meter_list_view" />
+        tools:layout="@layout/meter_list_view">
+        <action
+            android:id="@+id/action_MeterListView_to_MeterAddView"
+            app:destination="@id/add_meter" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_meter"
+        android:name="com.example.myhome.presentation.meter.add.MeterAddView"
+        android:label="@string/title_add_meter"
+        tools:layout="@layout/meter_add_view">
+        <action
+            android:id="@+id/action_meterAddView_to_meterListView"
+            app:destination="@id/navigation_meters" />
+    </fragment>
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_charges"-->
@@ -20,13 +34,13 @@
 
     <fragment
         android:id="@+id/navigation_events"
-        android:name="com.example.myhome.ui.event.list.EventListView"
+        android:name="com.example.myhome.presentation.event.list.EventListView"
         android:label="@string/title_events"
         />
 
     <fragment
         android:id="@+id/navigation_chats"
-        android:name="com.example.myhome.ui.chat.list.ChatListView"
+        android:name="com.example.myhome.presentation.chat.list.ChatListView"
         android:label="@string/title_chats" />
 
 <!--    <fragment-->

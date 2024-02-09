@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.myhome.ui.meter.get.MeterGetViewModel" />
+            type="com.example.myhome.presentation.meter.get.MeterGetViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
