@@ -41,9 +41,12 @@ android {
 }
 
 dependencies {
-    val retrofitVersion = "2.9.0"
     val daggerVersion = "2.50"
     val truthVersion = "1.4.0"
+
+    // projects
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -61,9 +64,6 @@ dependencies {
     //truth
     testImplementation("com.google.truth:truth:${truthVersion}")
     androidTestImplementation("com.google.truth:truth:${truthVersion}")
-    // retrofit
-    implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
-    implementation("com.squareup.retrofit2:converter-gson:${retrofitVersion}")
     // hilt
     implementation("com.google.dagger:hilt-android:${daggerVersion}")
     kapt("com.google.dagger:hilt-compiler:${daggerVersion}")

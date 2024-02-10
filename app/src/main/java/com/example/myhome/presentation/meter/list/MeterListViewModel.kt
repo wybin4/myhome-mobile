@@ -1,12 +1,11 @@
 package com.example.myhome.presentation.meter.list
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.domain.meter.models.MeterGetModel
-import com.example.myhome.domain.meter.usecases.MeterListUseCase
+import com.example.myhome.meter.models.MeterGetModel
+import com.example.myhome.meter.usecases.MeterListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -33,7 +32,6 @@ class MeterListViewModel @Inject constructor(
                     _meterList.value = listOf()
                 }
                 .collect {
-                    Log.e("viewModelScope", "Данные присваиваются")
                     _meterList.value = it
                 }
         }

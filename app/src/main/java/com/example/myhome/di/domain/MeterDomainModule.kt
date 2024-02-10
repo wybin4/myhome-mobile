@@ -1,8 +1,8 @@
 package com.example.myhome.di.domain
 
-import com.example.myhome.domain.meter.repositories.MeterRepository
-import com.example.myhome.domain.meter.usecases.MeterAddUseCase
-import com.example.myhome.domain.meter.usecases.MeterListUseCase
+import com.example.myhome.meter.repositories.MeterRepository
+import com.example.myhome.meter.usecases.MeterAddUseCase
+import com.example.myhome.meter.usecases.MeterListUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
