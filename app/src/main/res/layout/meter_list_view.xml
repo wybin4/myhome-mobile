@@ -73,12 +73,8 @@
                             android:layout_marginBottom="20dp"/>
                         <Button
                             android:id="@+id/add_meter_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="52dp"
+                            style="@style/ActionButton"
                             android:text="Добавить счётчик"
-                            android:textAllCaps="false"
-                            app:cornerRadius="15dp"
-                            android:backgroundTint="@color/black"
                             android:layout_marginBottom="25dp"/>
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler_view"

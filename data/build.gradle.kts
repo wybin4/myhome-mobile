@@ -39,12 +39,15 @@ dependencies {
 
     // projects
     implementation(project(":domain"))
-
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     //junit
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    //mockito
+    testImplementation("org.mockito:mockito-core:5.3.1")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
     implementation("com.squareup.retrofit2:converter-gson:${retrofitVersion}")

@@ -16,5 +16,6 @@
     <color name="card_border">#EFEFEF</color>
     <color name="input_border">#D3D3D3</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="darken">#41000000</color>
 
 </resources>

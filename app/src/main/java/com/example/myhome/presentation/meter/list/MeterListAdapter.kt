@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myhome.databinding.MeterListItemViewBinding
+import com.example.myhome.databinding.MeterListItemBinding
 import com.example.myhome.meter.models.MeterGetModel
 
 class MeterListAdapter(private val context: Context) :
@@ -14,7 +14,7 @@ class MeterListAdapter(private val context: Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = MeterListItemViewBinding.inflate(layoutInflater, parent, false)
+        val binding = MeterListItemBinding.inflate(layoutInflater, parent, false)
         return ItemViewHolder(binding)
     }
 
@@ -23,7 +23,7 @@ class MeterListAdapter(private val context: Context) :
         holder.bind(meter)
     }
 
-    class ItemViewHolder(private val binding: MeterListItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ItemViewHolder(private val binding: MeterListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(meter: MeterGetModel) {
             binding.meter = meter
             binding.executePendingBindings()
