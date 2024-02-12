@@ -24,10 +24,12 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/apartment_selector"
                         style="@style/Dropdown"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Квартира">
+                        android:hint="Квартира"
+                        >
 
                         <AutoCompleteTextView
                             android:id="@+id/apartment_list"
@@ -37,6 +39,7 @@
                             />
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/type_of_service_selector"
                         style="@style/Dropdown"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -50,16 +53,19 @@
                             />
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/factory_number_input"
                         style="@style/Input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Заводской номер"
+                        app:errorIconTint="@color/white"
                         >
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/factory_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="@={viewModel.selectedFactoryNumber}"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
                     <LinearLayout
@@ -67,10 +73,11 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/verified_at_date_picker"
                             style="@style/Input"
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:hint="Дата поверки"
                             android:paddingHorizontal="0dp">
 
@@ -83,10 +90,11 @@
                                 />
                         </com.google.android.material.textfield.TextInputLayout>
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/issued_at_date_picker"
                             style="@style/Input"
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:hint="Дата истечения"
                             android:paddingHorizontal="0dp"
                             android:layout_marginLeft="18dp"

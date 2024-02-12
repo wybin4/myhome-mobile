@@ -6,7 +6,7 @@ import com.example.myhome.meter.models.MeterUpdateModel
 import kotlinx.coroutines.flow.Flow
 
 interface MeterRepository {
-    fun addMeter(meter: MeterAddModel): Flow<MeterGetModel>
-    fun updateMeter(meter: MeterUpdateModel): Flow<MeterGetModel>
+    suspend fun addMeter(meter: MeterAddModel)
+    suspend fun updateMeter(meter: MeterUpdateModel)
     fun listMeter(): Flow<List<MeterGetModel>>
 }

@@ -17,15 +17,15 @@ import javax.inject.Singleton
 class ApartmentDataModule {
     @Provides
     @Singleton
-    fun provideApartmentStorage(meterApiService: ApartmentApiService): ApartmentStorage {
-        return ApartmentRemoteStorage(meterApiService)
+    fun provideApartmentStorage(apartmentApiService: ApartmentApiService): ApartmentStorage {
+        return ApartmentRemoteStorage(apartmentApiService)
     }
     @Provides
     @Singleton
-    fun provideApartmentRepository(meterStorage: ApartmentStorage, meterRemoteMapper: ApartmentRemoteMapper): ApartmentRepository {
+    fun provideApartmentRepository(apartmentStorage: ApartmentStorage, apartmentRemoteMapper: ApartmentRemoteMapper): ApartmentRepository {
         return ApartmentRepositoryImpl(
-            meterStorage,
-            meterRemoteMapper
+            apartmentStorage,
+            apartmentRemoteMapper
         )
     }
     @Provides

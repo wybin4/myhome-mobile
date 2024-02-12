@@ -1,5 +1,6 @@
 package com.example.myhome.meter.repositories
 
+import com.example.myhome.appeal.storages.AppealStorage
 import com.example.myhome.meter.mappers.MeterRemoteMapper
 import com.example.myhome.meter.storages.MeterStorage
 import com.example.myhome.meter.models.MeterAddModel
@@ -10,18 +11,17 @@ import kotlinx.coroutines.flow.flow
 
 class MeterRepositoryImpl(
     private val meterStorage: MeterStorage,
+    private val appealStorage: AppealStorage,
     private val meterRemoteMapper: MeterRemoteMapper
 ): MeterRepository {
-    override fun addMeter(meter: MeterAddModel): Flow<MeterGetModel> = flow {
+    override suspend fun addMeter(meter: MeterAddModel) {
         val meterDto = meterRemoteMapper.mapAddToRemote(meter)
-        val result = meterStorage.addMeter(meterDto)
-        emit(meterRemoteMapper.mapToDomain(result))
+        appealStorage.addAppeal(meterDto)
     }
 
-    override fun updateMeter(meter: MeterUpdateModel): Flow<MeterGetModel> = flow {
+    override suspend fun updateMeter(meter: MeterUpdateModel) {
         val meterDto = meterRemoteMapper.mapUpdateToRemote(meter)
-        val result = meterStorage.updateMeter(meterDto)
-        emit(meterRemoteMapper.mapToDomain(result))
+        appealStorage.addAppeal(meterDto)
     }
 
     override fun listMeter(): Flow<List<MeterGetModel>> = flow {

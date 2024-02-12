@@ -7,7 +7,7 @@ import javax.inject.Inject
 class MeterAddUseCase @Inject constructor(
     private val meterRepository: MeterRepository
 ) {
-    operator fun invoke(meter: MeterAddModel) {
+    suspend operator fun invoke(meter: MeterAddModel) {
         meterRepository.addMeter(meter = meter)
     }
 

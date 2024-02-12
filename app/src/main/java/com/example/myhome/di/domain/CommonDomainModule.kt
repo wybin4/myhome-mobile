@@ -1,8 +1,10 @@
 package com.example.myhome.di.domain
 
 import com.example.myhome.common.repositories.ApartmentRepository
+import com.example.myhome.common.repositories.SubscriberRepository
 import com.example.myhome.common.repositories.TypeOfServiceRepository
 import com.example.myhome.common.usecases.ApartmentListUseCase
+import com.example.myhome.common.usecases.SubscriberListUseCase
 import com.example.myhome.common.usecases.TypeOfServiceListUseCase
 import dagger.Module
 import dagger.Provides
@@ -19,5 +21,9 @@ class CommonDomainModule {
     @Provides
     fun provideTypeOfServiceListUseCase(typeOfServiceRepository: TypeOfServiceRepository): TypeOfServiceListUseCase {
         return TypeOfServiceListUseCase(typeOfServiceRepository = typeOfServiceRepository)
+    }
+    @Provides
+    fun provideSubscriberListUseCase(subscriberRepository: SubscriberRepository): SubscriberListUseCase {
+        return SubscriberListUseCase(subscriberRepository = subscriberRepository)
     }
 }

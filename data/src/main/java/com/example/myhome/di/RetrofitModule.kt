@@ -1,7 +1,9 @@
 package com.example.myhome.di
 
 import android.content.Context
+import com.example.myhome.appeal.services.AppealApiService
 import com.example.myhome.common.services.ApartmentApiService
+import com.example.myhome.common.services.SubscriberApiService
 import com.example.myhome.common.services.TypeOfServiceApiService
 import com.example.myhome.meter.services.MeterApiService
 import dagger.Module
@@ -20,7 +22,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
     companion object {
-        private const val BASE_URL = " https://d1bf-95-25-63-200.ngrok-free.app/api/"
+        private const val BASE_URL = "https://4dbb-95-25-65-16.ngrok-free.app/api/"
     }
     @Provides
     @Singleton
@@ -57,5 +59,15 @@ class RetrofitModule {
     @Singleton
     fun provideTypeOfServiceApiService(@Named("Normal") retrofit: Retrofit): TypeOfServiceApiService {
         return retrofit.create(TypeOfServiceApiService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideSubscriberApiService(@Named("Normal") retrofit: Retrofit): SubscriberApiService {
+        return retrofit.create(SubscriberApiService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideAppealApiService(@Named("Normal") retrofit: Retrofit): AppealApiService {
+        return retrofit.create(AppealApiService::class.java)
     }
 }

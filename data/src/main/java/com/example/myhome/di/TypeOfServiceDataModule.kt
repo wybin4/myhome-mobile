@@ -17,15 +17,15 @@ import javax.inject.Singleton
 class TypeOfServiceDataModule {
     @Provides
     @Singleton
-    fun provideTypeOfServiceStorage(meterApiService: TypeOfServiceApiService): TypeOfServiceStorage {
-        return TypeOfServiceRemoteStorage(meterApiService)
+    fun provideTypeOfServiceStorage(typeOfServiceApiService: TypeOfServiceApiService): TypeOfServiceStorage {
+        return TypeOfServiceRemoteStorage(typeOfServiceApiService)
     }
     @Provides
     @Singleton
-    fun provideTypeOfServiceRepository(meterStorage: TypeOfServiceStorage, meterRemoteMapper: TypeOfServiceRemoteMapper): TypeOfServiceRepository {
+    fun provideTypeOfServiceRepository(typeOfServiceStorage: TypeOfServiceStorage, typeOfServiceRemoteMapper: TypeOfServiceRemoteMapper): TypeOfServiceRepository {
         return TypeOfServiceRepositoryImpl(
-            meterStorage,
-            meterRemoteMapper
+            typeOfServiceStorage,
+            typeOfServiceRemoteMapper
         )
     }
     @Provides

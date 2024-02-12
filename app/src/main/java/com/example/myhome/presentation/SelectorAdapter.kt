@@ -1,19 +1,20 @@
-package com.example.myhome.presentation.meter.add
+package com.example.myhome.presentation
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.example.myhome.common.models.ApartmentGetModel
+import com.example.myhome.common.models.Identifiable
 
-class ApartmentAdapter(
-    context: Context, 
-    textViewResourceId: Int, 
-    private var values: List<ApartmentGetModel>
-) : ArrayAdapter<ApartmentGetModel>(context, textViewResourceId, values) {
-    fun updateApartments(apartments: List<ApartmentGetModel>) {
-        values = apartments
+class SelectorAdapter<T : Identifiable>(
+    context: Context,
+    textViewResourceId: Int,
+    private var values: List<T>
+): ArrayAdapter<T>(context, textViewResourceId, values) {
+    fun update(items: List<T>) {
+        values = items
         notifyDataSetChanged()
     }
     override fun getCount() = values.size
@@ -22,13 +23,13 @@ class ApartmentAdapter(
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val label = super.getView(position, convertView, parent) as TextView
-        label.text = values[position].address
+        label.text = values[position].name
         return label
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         val label = super.getDropDownView(position, convertView, parent) as TextView
-        label.text = values[position].address
+        label.text = values[position].name
         return label
     }
 

@@ -1,25 +1,36 @@
 package com.example.myhome.presentation
 
-import android.app.Activity
+import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlin.reflect.KMutableProperty0
 
+class CustomDatePicker(
+    private val activity: FragmentActivity,
+    private var selectedDate: KMutableProperty0<Date?>,
+    private val attribute: TextInputEditText,
+    input: TextInputLayout,
+    validateMessage: String
+) {
+    private val validator: InputValidator = InputValidator(
+        input,
+        { text: String? -> text?.length!! > 0 },"Выберите дату $validateMessage", { validate() }
+    )
 
-class CustomDatePicker(private val activity: FragmentActivity, private val attribute: TextInputEditText) {
-
-    private var selectedDate: Long? = null
     private val now = Calendar.getInstance()
     private val datePicker: DatePickerDialog = DatePickerDialog.newInstance(
         { _, year, monthOfYear, dayOfMonth ->
             val calendar = Calendar.getInstance()
             calendar.set(year, monthOfYear, dayOfMonth)
-            selectedDate = calendar.timeInMillis
-            attribute.setText(formatDate(selectedDate!!))
+            selectedDate.set(calendar.time)
+            attribute.setText(dateToString())
+            validate()
         },
         now[Calendar.YEAR],
         now[Calendar.MONTH],
@@ -35,9 +46,13 @@ class CustomDatePicker(private val activity: FragmentActivity, private val attri
         datePicker.show(activity.supportFragmentManager, "DatePicker")
     }
 
-    private fun formatDate(milliseconds: Long): String {
+    private fun dateToString(): String {
         val dateFormat = SimpleDateFormat("dd.MM.yyyy")
-        val date = Date(milliseconds)
-        return dateFormat.format(date)
+        return selectedDate.get()?.let { dateFormat.format(it) } ?: ""
     }
+
+    fun validate(): Boolean {
+        return validator.validate(dateToString())
+    }
+
 }

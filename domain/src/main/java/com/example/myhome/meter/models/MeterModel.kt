@@ -15,6 +15,8 @@ data class MeterUpdateModel(
     val id: Int,
     val verifiedAt: Date,
     val issuedAt: Date,
+    val managementCompanyId: Int,
+    val subscriberId: Int
 )
 data class MeterAddModel(
     override val id: Int?,
@@ -23,8 +25,8 @@ data class MeterAddModel(
     override val issuedAt: Date,
     override val apartmentId: Int,
     override val typeOfServiceId: Int,
-    val previousReading: Int?,
-    val previousReadAt: Date?
+    val managementCompanyId: Int,
+    val subscriberId: Int
 ) : MeterModel(
     id = id,
     factoryNumber = factoryNumber,

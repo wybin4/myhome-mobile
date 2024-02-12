@@ -3,6 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="input_border">12dp</dimen>
-    <dimen name="input_padding_bottom">23dp</dimen>
     <dimen name="action_button_height">58dp</dimen>
+    <dimen name="input_margin_bottom">10dp</dimen>
 </resources>

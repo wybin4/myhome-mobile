@@ -1,6 +1,7 @@
 package com.example.myhome.common.models
 
 data class ApartmentGetModel (
-    val id: Int,
-    val address: String
-)
+    override val id: Int,
+    override val name: String,
+    val subscriberId: Int
+): Identifiable

@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.meter.add
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,24 +8,40 @@ import androidx.lifecycle.viewModelScope
 import com.example.myhome.common.usecases.ApartmentListUseCase
 import com.example.myhome.common.usecases.TypeOfServiceListUseCase
 import com.example.myhome.common.models.ApartmentGetModel
+import com.example.myhome.common.models.SubscriberGetModel
 import com.example.myhome.common.models.TypeOfServiceGetModel
+import com.example.myhome.common.usecases.SubscriberListUseCase
+import com.example.myhome.meter.models.MeterAddModel
+import com.example.myhome.meter.usecases.MeterAddUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class MeterAddViewModel @Inject constructor(
     private val apartmentListUseCase: ApartmentListUseCase,
-    private val typeOfServiceListUseCase: TypeOfServiceListUseCase
+    private val subscriberListUseCase: SubscriberListUseCase,
+    private val typeOfServiceListUseCase: TypeOfServiceListUseCase,
+    private val meterAddUseCase: MeterAddUseCase
 ) : ViewModel() {
     private val _apartmentList = MutableLiveData<List<ApartmentGetModel>>()
     val apartmentList: LiveData<List<ApartmentGetModel>> = _apartmentList
 
     private val _typeOfServiceList = MutableLiveData<List<TypeOfServiceGetModel>>()
     val typeOfServiceList: LiveData<List<TypeOfServiceGetModel>> = _typeOfServiceList
+
+    private val _subscriberList = MutableLiveData<List<SubscriberGetModel>>()
+    val subscriberList: LiveData<List<SubscriberGetModel>> = _subscriberList
+
+    var selectedApartmentId: Int = -1
+    var selectedTypeOfServiceId: Int = -1
+    var selectedFactoryNumber: String = ""
+    var selectIssuedAt: Date? = null
+    var selectVerifiedAt: Date? = null
 
     init {
         fetchLists()
@@ -49,6 +66,39 @@ class MeterAddViewModel @Inject constructor(
                 .collect {
                     _typeOfServiceList.value = it
                 }
+
+            subscriberListUseCase()
+                .flowOn(Dispatchers.IO)
+                .catch {
+                    _subscriberList.value = listOf()
+                }
+                .collect {
+                    _subscriberList.value = it
+                }
+        }
+    }
+
+    fun addMeter() {
+        val selectedSubscriberId = apartmentList.value?.find { it.id == selectedApartmentId }?.subscriberId
+        val selectedManagementCompanyId = subscriberList.value?.find { it.subscriberId == selectedSubscriberId }?.managementCompanyId
+
+        if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
+            viewModelScope.launch {
+                meterAddUseCase(
+                    MeterAddModel(
+                        id = null,
+                        apartmentId = selectedApartmentId,
+                        typeOfServiceId = selectedTypeOfServiceId,
+                        factoryNumber = selectedFactoryNumber,
+                        verifiedAt = selectVerifiedAt!!,
+                        issuedAt = selectIssuedAt!!,
+                        managementCompanyId = selectedManagementCompanyId,
+                        subscriberId = selectedSubscriberId,
+                    )
+                )
+            }
+        } else {
+            TODO("Ошибка?")
         }
     }
 }

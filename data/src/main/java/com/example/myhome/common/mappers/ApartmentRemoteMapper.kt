@@ -9,7 +9,8 @@ class ApartmentRemoteMapper() {
             apartment.run {
                 ApartmentGetModel(
                         id = id,
-                        address = address
+                        name = address,
+                        subscriberId = subscriberId
                     )
                 }
             }
