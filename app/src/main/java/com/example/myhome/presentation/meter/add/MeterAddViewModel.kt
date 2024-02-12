@@ -1,18 +1,17 @@
 package com.example.myhome.presentation.meter.add
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myhome.appeal.models.AppealAddMeterModel
+import com.example.myhome.appeal.usecases.AppealAddUseCase
 import com.example.myhome.common.usecases.ApartmentListUseCase
 import com.example.myhome.common.usecases.TypeOfServiceListUseCase
 import com.example.myhome.common.models.ApartmentGetModel
 import com.example.myhome.common.models.SubscriberGetModel
 import com.example.myhome.common.models.TypeOfServiceGetModel
 import com.example.myhome.common.usecases.SubscriberListUseCase
-import com.example.myhome.meter.models.MeterAddModel
-import com.example.myhome.meter.usecases.MeterAddUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -26,7 +25,7 @@ class MeterAddViewModel @Inject constructor(
     private val apartmentListUseCase: ApartmentListUseCase,
     private val subscriberListUseCase: SubscriberListUseCase,
     private val typeOfServiceListUseCase: TypeOfServiceListUseCase,
-    private val meterAddUseCase: MeterAddUseCase
+    private val appealAddUseCase: AppealAddUseCase
 ) : ViewModel() {
     private val _apartmentList = MutableLiveData<List<ApartmentGetModel>>()
     val apartmentList: LiveData<List<ApartmentGetModel>> = _apartmentList
@@ -84,8 +83,8 @@ class MeterAddViewModel @Inject constructor(
 
         if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
             viewModelScope.launch {
-                meterAddUseCase(
-                    MeterAddModel(
+                appealAddUseCase.addMeter(
+                    AppealAddMeterModel(
                         id = null,
                         apartmentId = selectedApartmentId,
                         typeOfServiceId = selectedTypeOfServiceId,

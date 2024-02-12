@@ -1,5 +1,8 @@
 package com.example.myhome.di
 
+import com.example.myhome.appeal.mappers.AppealRemoteMapper
+import com.example.myhome.appeal.repositories.AppealRepository
+import com.example.myhome.appeal.repositories.AppealRepositoryImpl
 import com.example.myhome.appeal.services.AppealApiService
 import com.example.myhome.appeal.storages.AppealRemoteStorage
 import com.example.myhome.appeal.storages.AppealStorage
@@ -17,18 +20,18 @@ class AppealDataModule {
     fun provideAppealStorage(appealApiService: AppealApiService): AppealStorage {
         return AppealRemoteStorage(appealApiService)
     }
-//    @Provides
-//    @Singleton
-//    fun provideAppealRepository(appealStorage: AppealStorage, appealRemoteMapper: AppealRemoteMapper): AppealRepository {
-//        return AppealRepositoryImpl(
-//            appealStorage,
-//            appealRemoteMapper
-//        )
-//    }
-//    @Provides
-//    @Singleton
-//    fun provideAppealMapper(): AppealRemoteMapper {
-//        return AppealRemoteMapper()
-//    }
+    @Provides
+    @Singleton
+    fun provideAppealRepository(appealStorage: AppealStorage, appealRemoteMapper: AppealRemoteMapper): AppealRepository {
+        return AppealRepositoryImpl(
+            appealStorage,
+            appealRemoteMapper
+        )
+    }
+    @Provides
+    @Singleton
+    fun provideAppealMapper(): AppealRemoteMapper {
+        return AppealRemoteMapper()
+    }
 
 }

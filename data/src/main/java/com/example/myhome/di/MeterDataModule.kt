@@ -1,6 +1,5 @@
 package com.example.myhome.di
 
-import com.example.myhome.appeal.storages.AppealStorage
 import com.example.myhome.base.mappers.DateMapper
 import com.example.myhome.meter.repositories.MeterRepositoryImpl
 import com.example.myhome.meter.storages.MeterStorage
@@ -35,13 +34,11 @@ class MeterDataModule {
     @Provides
     @Singleton
     fun provideMeterRepository(
-        appealStorage: AppealStorage,
         meterStorage: MeterStorage,
         meterRemoteMapper: MeterRemoteMapper
     ): MeterRepository {
         return MeterRepositoryImpl(
-            meterStorage, appealStorage,
-            meterRemoteMapper
+            meterStorage, meterRemoteMapper
         )
     }
     @Provides

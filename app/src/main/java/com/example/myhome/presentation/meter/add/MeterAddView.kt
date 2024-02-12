@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import com.example.myhome.common.models.ApartmentGetModel
 import com.example.myhome.common.models.TypeOfServiceGetModel
 import com.example.myhome.databinding.MeterAddViewBinding
-import com.example.myhome.meter.models.MeterAddModel
 import com.example.myhome.presentation.CustomDatePicker
 import com.example.myhome.presentation.InputValidator
 import com.example.myhome.presentation.SelectorManager
