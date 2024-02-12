@@ -1,5 +1,7 @@
 package com.example.myhome.meter.models
 
+import com.example.myhome.common.models.Adaptive
+import com.example.myhome.common.models.DateConverter
 import java.util.Date
 
 abstract class ReadingModel(
@@ -22,7 +24,7 @@ data class ReadingAddModel(
 )
 
 data class ReadingGetModel(
-    val id: Int?,
+    val id: Int,
     val reading: Float,
     val consumption: Float,
     val readAt: Date

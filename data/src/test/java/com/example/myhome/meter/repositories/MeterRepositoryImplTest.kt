@@ -42,7 +42,7 @@ class MeterRepositoryImplTest {
                     issuedAt = date,
                     apartmentId = 101,
                     typeOfServiceId = 1,
-                    currentReading = 5000,
+                    currentReading = 4.4 as Float,
                     typeOfServiceName = "Электроэнергия",
                     unitName = "кВт"
                 ),
@@ -53,7 +53,7 @@ class MeterRepositoryImplTest {
                     issuedAt = date,
                     apartmentId = 101,
                     typeOfServiceId = 1,
-                    currentReading = 5000,
+                    currentReading = 34.4 as Float,
                     typeOfServiceName = "ГВС",
                     unitName = "м3"
                 )
@@ -66,7 +66,7 @@ class MeterRepositoryImplTest {
                     issuedAt = dateString,
                     apartmentId = 101,
                     typeOfServiceId = 1,
-                    currentReading = 5000,
+                    currentReading = 4.4 as Float,
                     typeOfServiceName = "Электроэнергия",
                     unitName = "кВт"
                 ),
@@ -77,7 +77,7 @@ class MeterRepositoryImplTest {
                     issuedAt = dateString,
                     apartmentId = 101,
                     typeOfServiceId = 1,
-                    currentReading = 5000,
+                    currentReading = 34.4 as Float,
                     typeOfServiceName = "ГВС",
                     unitName = "м3"
                 )

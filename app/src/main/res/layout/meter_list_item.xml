@@ -4,7 +4,7 @@
     <data>
         <variable
             name="meter"
-            type="com.example.myhome.meter.models.MeterGetModel" />
+            type="com.example.myhome.presentation.meter.list.MeterUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,7 +85,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="@{`Поверка: ` + meter.issuedAt}"
+                                        android:text="@{`Поверка: ` + meter.formatIssuedAt()}"
                                         android:textAlignment="textEnd"
                                         android:textColor="@color/description" />
 

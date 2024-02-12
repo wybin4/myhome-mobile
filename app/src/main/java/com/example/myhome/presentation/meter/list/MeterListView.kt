@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
+import com.example.myhome.databinding.MeterListItemBinding
 import com.example.myhome.databinding.MeterListViewBinding
-import com.example.myhome.presentation.meter.MeterParcelableModel
+import com.example.myhome.presentation.CustomListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Date
 
 
 @AndroidEntryPoint
@@ -19,7 +19,7 @@ class MeterListView : Fragment() {
     private var _binding: MeterListViewBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<MeterListViewModel>()
-    private lateinit var adapter: MeterListAdapter
+    private lateinit var meterListAdapter: CustomListAdapter<MeterUiModel, MeterListItemBinding>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +40,20 @@ class MeterListView : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.meterList.observe(viewLifecycleOwner) { meters ->
-            adapter.submitList(meters)
+            val list = meters.map {
+                MeterUiModel(
+                    id = it.id,
+                    factoryNumber = it.factoryNumber,
+                    verifiedAt = it.verifiedAt,
+                    issuedAt = it.issuedAt,
+                    currentReading = it.currentReading,
+                    typeOfServiceName = it.typeOfServiceName,
+                    unitName = it.unitName,
+                    address = "пер. Соборный 99, кв. 12"
+                )
+            }
+
+            meterListAdapter.submitList(list)
         }
     }
 
@@ -50,28 +63,37 @@ class MeterListView : Fragment() {
     }
 
     private fun setupRecyclerView() {
-         adapter = MeterListAdapter(requireActivity()) {
+        meterListAdapter = CustomListAdapter(
+            context = requireActivity(),
+            itemBindingInflater = { inflater, parent, attachToParent ->
+                MeterListItemBinding.inflate(inflater, parent, attachToParent)
+            },
+            setBinding = { binding, item ->
+                binding.meter = item
+            },
+            onItemClick = { item ->
+                val meter = MeterParcelableModel(
+                    id = item.id,
+                    factoryNumber = item.factoryNumber,
+                    verifiedAt = item.verifiedAt,
+                    issuedAt = item.issuedAt,
+                    address = "пер. Соборный 99, кв. 12",
+                    currentReading = item.currentReading?.toString() ?: "—",
+                    typeOfServiceName = item.typeOfServiceName,
+                    unitName = item.unitName
+                )
 
-             val meter = MeterParcelableModel(
-                 id = it.id,
-                 factoryNumber = it.factoryNumber,
-                 verifiedAt = it.verifiedAt,
-                 issuedAt = it.issuedAt,
-                 address = "пер. Соборный 99, кв. 12",
-                 currentReading = it.currentReading?.toString() ?: "—",
-                 typeOfServiceName = it.typeOfServiceName,
-                 unitName = it.unitName
-             )
 
+                val bundle = Bundle().apply {
+                    putParcelable("meter", meter)
+                }
 
-             val bundle = Bundle().apply {
-                 putParcelable("meter", meter)
-             }
+                findNavController().navigate(R.id.action_MeterListView_to_MeterGetView, bundle)
 
-             findNavController().navigate(R.id.action_MeterListView_to_MeterGetView, bundle)
+            }
+        )
 
-         }
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.adapter = meterListAdapter
     }
 
 }

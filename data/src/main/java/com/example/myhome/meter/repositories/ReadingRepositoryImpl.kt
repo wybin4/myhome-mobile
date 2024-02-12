@@ -5,6 +5,7 @@ import com.example.myhome.meter.storages.MeterStorage
 import com.example.myhome.meter.models.ReadingAddModel
 import com.example.myhome.meter.models.ReadingGetModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class ReadingRepositoryImpl(
     private val meterStorage: MeterStorage,
@@ -17,11 +18,8 @@ class ReadingRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun listReading(meterId: Int): Flow<List<ReadingGetModel>> {
-//        val result = meterStorage.listReading(meterId)
-//        return result.map { meters ->
-//            readingRemoteMapper.mapListToDomain(meters)
-//        }
-        TODO("Not yet implemented")
+    override fun listReading(meterId: Int): Flow<List<ReadingGetModel>> = flow {
+        val result = meterStorage.listReading(meterId)
+        emit(readingRemoteMapper.mapListToDomain(result))
     }
 }

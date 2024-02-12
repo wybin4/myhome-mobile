@@ -1,11 +1,10 @@
 package com.example.myhome.presentation
 
-import android.util.Log
 import androidx.fragment.app.FragmentActivity
+import com.example.myhome.common.models.DateConverter
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -17,7 +16,7 @@ class CustomDatePicker(
     private val attribute: TextInputEditText,
     input: TextInputLayout,
     validateMessage: String
-) {
+): DateConverter {
     private val validator: InputValidator = InputValidator(
         input,
         { text: String? -> text?.length!! > 0 },"Выберите дату $validateMessage", { validate() }
@@ -29,7 +28,7 @@ class CustomDatePicker(
             val calendar = Calendar.getInstance()
             calendar.set(year, monthOfYear, dayOfMonth)
             selectedDate.set(calendar.time)
-            attribute.setText(dateToString())
+            attribute.setText(formatDate())
             validate()
         },
         now[Calendar.YEAR],
@@ -46,13 +45,12 @@ class CustomDatePicker(
         datePicker.show(activity.supportFragmentManager, "DatePicker")
     }
 
-    private fun dateToString(): String {
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy")
-        return selectedDate.get()?.let { dateFormat.format(it) } ?: ""
+    private fun formatDate(): String {
+        return selectedDate.get()?.let { formatDate(it) } ?: ""
     }
 
     fun validate(): Boolean {
-        return validator.validate(dateToString())
+        return validator.validate(formatDate())
     }
 
 }

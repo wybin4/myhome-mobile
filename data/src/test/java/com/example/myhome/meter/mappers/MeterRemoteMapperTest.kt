@@ -29,7 +29,7 @@ class MeterRemoteMapperTest {
             issuedAt = dateString,
             apartmentId = 101,
             typeOfServiceId = 1,
-            currentReading = 5000,
+            currentReading = 43.4,
             typeOfServiceName = "Электроэнергия",
             unitName = "кВт"
         )
@@ -40,7 +40,7 @@ class MeterRemoteMapperTest {
             issuedAt = date,
             apartmentId = 101,
             typeOfServiceId = 1,
-            currentReading = 5000,
+            currentReading = 43.4,
             typeOfServiceName = "Электроэнергия",
             unitName = "кВт"
         )
@@ -57,7 +57,7 @@ class MeterRemoteMapperTest {
                 issuedAt = dateString,
                 apartmentId = 101,
                 typeOfServiceId = 1,
-                currentReading = 5000,
+                currentReading = 4.4,
                 typeOfServiceName = "Электроэнергия",
                 unitName = "кВт"
             ),
@@ -68,7 +68,7 @@ class MeterRemoteMapperTest {
                 issuedAt = dateString,
                 apartmentId = 101,
                 typeOfServiceId = 1,
-                currentReading = 5000,
+                currentReading = 43.4,
                 typeOfServiceName = "ГВС",
                 unitName = "м3"
             )
@@ -81,7 +81,7 @@ class MeterRemoteMapperTest {
                 issuedAt = date,
                 apartmentId = 101,
                 typeOfServiceId = 1,
-                currentReading = 5000,
+                currentReading = 4.4,
                 typeOfServiceName = "Электроэнергия",
                 unitName = "кВт"
             ),
@@ -92,7 +92,7 @@ class MeterRemoteMapperTest {
                 issuedAt = date,
                 apartmentId = 101,
                 typeOfServiceId = 1,
-                currentReading = 5000,
+                currentReading = 43.4,
                 typeOfServiceName = "ГВС",
                 unitName = "м3"
             )

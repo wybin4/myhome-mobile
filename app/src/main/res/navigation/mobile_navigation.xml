@@ -41,7 +41,7 @@
             app:destination="@id/list_meter" />
         <argument
             android:name="meter"
-            app:argType="com.example.myhome.presentation.meter.MeterParcelableModel" />
+            app:argType="com.example.myhome.presentation.meter.list.MeterParcelableModel" />
 
         <!--        <argument android:name="meter"-->
 <!--            app:argType="com.example.myhome.meter.models.MeterGetModel" />-->

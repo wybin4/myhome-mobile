@@ -4,7 +4,10 @@ import com.example.myhome.base.mappers.DateMapper
 import com.example.myhome.meter.repositories.MeterRepositoryImpl
 import com.example.myhome.meter.storages.MeterStorage
 import com.example.myhome.meter.mappers.MeterRemoteMapper
+import com.example.myhome.meter.mappers.ReadingRemoteMapper
 import com.example.myhome.meter.repositories.MeterRepository
+import com.example.myhome.meter.repositories.ReadingRepository
+import com.example.myhome.meter.repositories.ReadingRepositoryImpl
 import com.example.myhome.meter.services.MeterApiService
 import com.example.myhome.meter.storages.MeterRemoteStorage
 import dagger.Module
@@ -16,16 +19,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class MeterDataModule {
-    //    @Provides
-//    @Singleton
-//    fun provideReadingRepository(readingStorage: MeterStorage, readingRemoteMapper: ReadingRemoteMapper): ReadingRepository {
-//        return ReadingRepositoryImpl(readingStorage, readingRemoteMapper)
-//    }
-//    @Provides
-//    @Singleton
-//    fun provideReadingMapper(dateMapper: DateMapper): ReadingRemoteMapper {
-//        return ReadingRemoteMapper(dateMapper)
-//    }
+    @Provides
+    @Singleton
+    fun provideReadingRepository(readingStorage: MeterStorage, readingRemoteMapper: ReadingRemoteMapper): ReadingRepository {
+        return ReadingRepositoryImpl(readingStorage, readingRemoteMapper)
+    }
+    @Provides
+    @Singleton
+    fun provideReadingMapper(dateMapper: DateMapper): ReadingRemoteMapper {
+        return ReadingRemoteMapper(dateMapper)
+    }
     @Provides
     @Singleton
     fun provideMeterStorage(meterApiService: MeterApiService): MeterStorage {

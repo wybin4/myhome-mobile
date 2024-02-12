@@ -1,5 +1,6 @@
 package com.example.myhome.meter.models
 
+import com.example.myhome.common.models.Adaptive
 import java.util.Date
 
 abstract class MeterModel(
@@ -28,4 +29,4 @@ data class MeterGetModel(
     issuedAt = issuedAt,
     apartmentId = apartmentId,
     typeOfServiceId = typeOfServiceId
-)
+), Adaptive

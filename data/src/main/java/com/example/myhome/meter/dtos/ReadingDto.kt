@@ -25,3 +25,7 @@ data class ReadingGetDto(
     val consumption: Float,
     val readAt: String
 )
+
+data class ReadingListDto(
+    val meterId: Int
+)
