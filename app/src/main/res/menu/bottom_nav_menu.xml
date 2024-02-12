@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_meters"
+        android:id="@+id/list_meter"
         android:icon="@drawable/meters_logo"
         android:title="@string/title_meters" />
 

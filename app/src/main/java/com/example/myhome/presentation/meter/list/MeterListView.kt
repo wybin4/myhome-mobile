@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.MeterListViewBinding
+import com.example.myhome.presentation.meter.MeterParcelableModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
 
 
 @AndroidEntryPoint
@@ -48,7 +50,27 @@ class MeterListView : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = MeterListAdapter(requireActivity())
+         adapter = MeterListAdapter(requireActivity()) {
+
+             val meter = MeterParcelableModel(
+                 id = it.id,
+                 factoryNumber = it.factoryNumber,
+                 verifiedAt = it.verifiedAt,
+                 issuedAt = it.issuedAt,
+                 address = "пер. Соборный 99, кв. 12",
+                 currentReading = it.currentReading?.toString() ?: "—",
+                 typeOfServiceName = it.typeOfServiceName,
+                 unitName = it.unitName
+             )
+
+
+             val bundle = Bundle().apply {
+                 putParcelable("meter", meter)
+             }
+
+             findNavController().navigate(R.id.action_MeterListView_to_MeterGetView, bundle)
+
+         }
         binding.recyclerView.adapter = adapter
     }
 

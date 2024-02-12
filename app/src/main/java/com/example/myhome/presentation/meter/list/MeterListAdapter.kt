@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myhome.databinding.MeterListItemBinding
 import com.example.myhome.meter.models.MeterGetModel
 
-class MeterListAdapter(private val context: Context) :
+class MeterListAdapter(
+    private val context: Context,
+    private val onItemClick: (meter: MeterGetModel) -> Unit
+) :
     ListAdapter<MeterGetModel, MeterListAdapter.ItemViewHolder>(MeterDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -21,6 +24,9 @@ class MeterListAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val meter = getItem(position)
         holder.bind(meter)
+        holder.itemView.setOnClickListener {
+            onItemClick(meter)
+        }
     }
 
     class ItemViewHolder(private val binding: MeterListItemBinding) : RecyclerView.ViewHolder(binding.root) {

@@ -20,7 +20,7 @@ data class ReadingAddDto(
 )
 
 data class ReadingGetDto(
-    val id: Int?,
+    val id: Int,
     val reading: Float,
     val consumption: Float,
     val readAt: String

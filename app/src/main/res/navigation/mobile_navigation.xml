@@ -3,16 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_meters">
+    app:startDestination="@+id/list_meter">
 
     <fragment
-        android:id="@+id/navigation_meters"
+        android:id="@+id/list_meter"
         android:name="com.example.myhome.presentation.meter.list.MeterListView"
         android:label="@string/title_nav_meters"
         tools:layout="@layout/meter_list_view">
         <action
             android:id="@+id/action_MeterListView_to_MeterAddView"
             app:destination="@id/add_meter" />
+        <action
+            android:id="@+id/action_MeterListView_to_MeterGetView"
+            app:destination="@id/get_meter">
+
+        </action>
+
     </fragment>
 
     <fragment
@@ -22,7 +28,23 @@
         tools:layout="@layout/meter_add_view">
         <action
             android:id="@+id/action_meterAddView_to_meterListView"
-            app:destination="@id/navigation_meters" />
+            app:destination="@id/list_meter" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/get_meter"
+        android:name="com.example.myhome.presentation.meter.get.MeterGetView"
+        android:label="@string/title_get_meter"
+        tools:layout="@layout/meter_get_view">
+        <action
+            android:id="@+id/action_meterGetView_to_meterListView"
+            app:destination="@id/list_meter" />
+        <argument
+            android:name="meter"
+            app:argType="com.example.myhome.presentation.meter.MeterParcelableModel" />
+
+        <!--        <argument android:name="meter"-->
+<!--            app:argType="com.example.myhome.meter.models.MeterGetModel" />-->
     </fragment>
 
 <!--    <fragment-->

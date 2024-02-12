@@ -12,13 +12,13 @@ abstract class MeterModel(
 )
 
 data class MeterGetModel(
-    override val id: Int?,
+    override val id: Int,
     override val factoryNumber: String,
     override val verifiedAt: Date,
     override val issuedAt: Date,
     override val apartmentId: Int,
     override val typeOfServiceId: Int,
-    val currentReading: Int?,
+    val currentReading: Float?,
     val typeOfServiceName: String,
     val unitName: String
 ) : MeterModel(

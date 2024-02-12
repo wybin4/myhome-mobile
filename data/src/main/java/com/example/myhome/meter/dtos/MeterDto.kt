@@ -20,13 +20,13 @@ data class MeterAddDto(
 )
 
 data class MeterGetDto(
-    val id: Int?,
+    val id: Int,
     val factoryNumber: String,
     val verifiedAt: String,
     val issuedAt: String,
     val apartmentId: Int,
     val typeOfServiceId: Int,
-    val currentReading: Int?,
+    val currentReading: Float?,
     val typeOfServiceName: String,
     val unitName: String
 )

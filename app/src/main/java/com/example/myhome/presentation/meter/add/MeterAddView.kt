@@ -1,7 +1,6 @@
 package com.example.myhome.presentation.meter.add
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,7 @@ class MeterAddView : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = MeterAddViewBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -43,21 +42,7 @@ class MeterAddView : Fragment() {
         setupValidators()
         setupSelectors()
 
-        binding.nextButton.setOnClickListener {
-            val isFactoryNumberValid = factoryNumberValidator.validate(viewModel.selectedFactoryNumber)
-            val isApartmentValid = apartmentManager.validate()
-            val isTypeOfServiceValid = typeOfServiceManager.validate()
-            val isVerifiedAtValid = verifiedAtPicker.validate()
-            val isIssuedAtValid = issuedAtPicker.validate()
-
-            if (
-                isFactoryNumberValid &&
-                isApartmentValid && isTypeOfServiceValid
-                && isVerifiedAtValid && isIssuedAtValid
-            ) {
-                viewModel.addMeter()
-            }
-        }
+        binding.nextButton.setOnClickListener { nextClick() }
 
         return binding.root
     }
@@ -117,6 +102,22 @@ class MeterAddView : Fragment() {
                 }
             }
         )
+    }
+
+    private fun nextClick() {
+        val isFactoryNumberValid = factoryNumberValidator.validate(viewModel.selectedFactoryNumber)
+        val isApartmentValid = apartmentManager.validate()
+        val isTypeOfServiceValid = typeOfServiceManager.validate()
+        val isVerifiedAtValid = verifiedAtPicker.validate()
+        val isIssuedAtValid = issuedAtPicker.validate()
+
+        if (
+            isFactoryNumberValid &&
+            isApartmentValid && isTypeOfServiceValid
+            && isVerifiedAtValid && isIssuedAtValid
+        ) {
+            viewModel.addMeter()
+        }
     }
 
     override fun onDestroyView() {

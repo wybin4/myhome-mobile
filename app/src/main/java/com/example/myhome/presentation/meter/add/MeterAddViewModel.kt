@@ -34,7 +34,7 @@ class MeterAddViewModel @Inject constructor(
     val typeOfServiceList: LiveData<List<TypeOfServiceGetModel>> = _typeOfServiceList
 
     private val _subscriberList = MutableLiveData<List<SubscriberGetModel>>()
-    val subscriberList: LiveData<List<SubscriberGetModel>> = _subscriberList
+    private val subscriberList: LiveData<List<SubscriberGetModel>> = _subscriberList
 
     var selectedApartmentId: Int = -1
     var selectedTypeOfServiceId: Int = -1
