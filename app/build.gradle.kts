@@ -68,7 +68,6 @@ dependencies {
     implementation("com.google.dagger:hilt-android:${daggerVersion}")
     kapt("com.google.dagger:hilt-compiler:${daggerVersion}")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-//    implementation("javax.inject:javax.inject:1")
     // datepicker
     implementation("com.wdullaer:materialdatetimepicker:4.2.3")
 }

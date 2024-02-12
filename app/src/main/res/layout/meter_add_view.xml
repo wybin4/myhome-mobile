@@ -113,7 +113,7 @@
                     android:id="@+id/next_button"
                     android:layout_height="65dp"
                     android:layout_marginBottom="50dp"
-                    android:text="Далее"
+                    android:text="Загрузить акт установки"
                     style="@style/ActionButton"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
