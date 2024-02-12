@@ -19,7 +19,7 @@ data class MeterGetModel(
     override val issuedAt: Date,
     override val apartmentId: Int,
     override val typeOfServiceId: Int,
-    val currentReading: Float?,
+    val currentReading: Double?,
     val typeOfServiceName: String,
     val unitName: String
 ) : MeterModel(

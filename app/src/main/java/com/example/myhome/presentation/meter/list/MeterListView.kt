@@ -11,6 +11,8 @@ import com.example.myhome.R
 import com.example.myhome.databinding.MeterListItemBinding
 import com.example.myhome.databinding.MeterListViewBinding
 import com.example.myhome.presentation.CustomListAdapter
+import com.example.myhome.presentation.meter.models.MeterListToGetParcelableModel
+import com.example.myhome.presentation.meter.models.MeterUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -49,17 +51,13 @@ class MeterListView : Fragment() {
                     currentReading = it.currentReading,
                     typeOfServiceName = it.typeOfServiceName,
                     unitName = it.unitName,
+                    apartmentId = it.apartmentId,
                     address = "пер. Соборный 99, кв. 12"
                 )
             }
 
             meterListAdapter.submitList(list)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setupRecyclerView() {
@@ -72,11 +70,12 @@ class MeterListView : Fragment() {
                 binding.meter = item
             },
             onItemClick = { item ->
-                val meter = MeterParcelableModel(
+                val meter = MeterListToGetParcelableModel(
                     id = item.id,
                     factoryNumber = item.factoryNumber,
                     verifiedAt = item.verifiedAt,
                     issuedAt = item.issuedAt,
+                    apartmentId = item.apartmentId,
                     address = "пер. Соборный 99, кв. 12",
                     currentReading = item.currentReading?.toString() ?: "—",
                     typeOfServiceName = item.typeOfServiceName,
@@ -94,6 +93,11 @@ class MeterListView : Fragment() {
         )
 
         binding.recyclerView.adapter = meterListAdapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

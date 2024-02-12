@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.meter.list
+package com.example.myhome.presentation.meter.models
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -11,8 +11,9 @@ data class MeterUiModel(
     val factoryNumber: String,
     val verifiedAt: Date,
     val issuedAt: Date,
+    val apartmentId: Int,
     val address: String,
-    val currentReading: Float?,
+    val currentReading: Double?,
     val typeOfServiceName: String,
     val unitName: String
 ) : Adaptive, DateConverter {
@@ -25,18 +26,45 @@ data class MeterUiModel(
     }
 }
 
-class MeterParcelableModel(
+open class ParcelableModel() : Parcelable {
+    constructor(parcel: Parcel) : this()
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<ParcelableModel> = object : Parcelable.Creator<ParcelableModel> {
+            override fun createFromParcel(parcel: Parcel): ParcelableModel {
+                return ParcelableModel()
+            }
+
+            override fun newArray(size: Int): Array<ParcelableModel?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
+}
+
+class MeterListToGetParcelableModel(
     val id: Int,
     val factoryNumber: String,
     val verifiedAt: Date,
     val issuedAt: Date,
+    val apartmentId: Int,
     val address: String,
     val currentReading: String,
     val typeOfServiceName: String,
     val unitName: String
-) : Parcelable, DateConverter {
+) : ParcelableModel(), DateConverter {
     constructor(parcel: Parcel) : this(
         id = parcel.readInt(),
+        apartmentId = parcel.readInt(),
         factoryNumber = parcel.readString() ?: "",
         verifiedAt = Date(parcel.readLong()),
         issuedAt = Date(parcel.readLong()),
@@ -58,23 +86,30 @@ class MeterParcelableModel(
         parcel.writeString(factoryNumber)
         parcel.writeLong(verifiedAt.time)
         parcel.writeLong(issuedAt.time)
+        parcel.writeInt(id)
         parcel.writeString(address)
         parcel.writeString(currentReading)
         parcel.writeString(typeOfServiceName)
         parcel.writeString(unitName)
     }
 
-    override fun describeContents(): Int {
-        return 0
+}
+
+class MeterGetToUpdateParcelableModel(
+    val meterId: Int,
+    val meterName: String,
+    val apartmentId: Int
+) : ParcelableModel(), DateConverter {
+    constructor(parcel: Parcel) : this(
+        meterId = parcel.readInt(),
+        meterName = parcel.readString() ?: "",
+        apartmentId = parcel.readInt()
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(meterId)
+        parcel.writeInt(apartmentId)
+        parcel.writeString(meterName)
     }
 
-    companion object CREATOR : Parcelable.Creator<MeterParcelableModel> {
-        override fun createFromParcel(parcel: Parcel): MeterParcelableModel {
-            return MeterParcelableModel(parcel)
-        }
-
-        override fun newArray(size: Int): Array<MeterParcelableModel?> {
-            return arrayOfNulls(size)
-        }
-    }
 }

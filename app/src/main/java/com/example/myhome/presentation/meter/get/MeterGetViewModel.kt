@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myhome.meter.models.ReadingGetModel
 import com.example.myhome.meter.usecases.ReadingListUseCase
-import com.example.myhome.presentation.meter.list.MeterParcelableModel
+import com.example.myhome.presentation.meter.models.MeterListToGetParcelableModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -21,7 +21,7 @@ class MeterGetViewModel @Inject constructor(
     private val _readingList = MutableLiveData<List<ReadingGetModel>>()
     val readingList: LiveData<List<ReadingGetModel>> = _readingList
 
-    lateinit var meterParcelable : MeterParcelableModel
+    lateinit var meterParcelable : MeterListToGetParcelableModel
 
     fun fetchReadingList() {
         if (meterParcelable !== null) {

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.myhome.presentation.meter.add.MeterAddViewModel" />
+            type="com.example.myhome.presentation.meter.update.MeterUpdateViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,47 +24,17 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/apartment_selector"
-                        style="@style/Dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Квартира"
-                        >
-
-                        <AutoCompleteTextView
-                            android:id="@+id/apartment_list"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="none"
-                            />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/type_of_service_selector"
-                        style="@style/Dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Тип услуги">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/type_of_service_list"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="none"
-                            />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/factory_number_input"
                         style="@style/Input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Заводской номер"
+                        android:hint="Счётчик"
                         >
-
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/factory_number"
+                            android:id="@+id/meter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={viewModel.selectedFactoryNumber}"
+                            android:enabled="false"
+                            android:text="@{viewModel.meterParcelable.meterName}"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
                     <LinearLayout

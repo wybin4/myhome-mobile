@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.meter.get
+package com.example.myhome.presentation.meter.models
 
 import com.example.myhome.common.models.Adaptive
 import com.example.myhome.common.models.DateConverter
@@ -6,8 +6,8 @@ import java.util.Date
 
 data class ReadingUiModel(
     override val id: Int,
-    val reading: Float,
-    val consumption: Float,
+    val reading: Double,
+    val consumption: Double,
     val readAt: Date,
     val unitName: String
 ): Adaptive, DateConverter {

@@ -1,14 +1,20 @@
 package com.example.myhome.presentation.meter.get
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.myhome.R
 import com.example.myhome.databinding.MeterGetViewBinding
 import com.example.myhome.databinding.ReadingListItemBinding
 import com.example.myhome.presentation.CustomListAdapter
+import com.example.myhome.presentation.meter.models.MeterGetToUpdateParcelableModel
+import com.example.myhome.presentation.meter.models.MeterListToGetParcelableModel
+import com.example.myhome.presentation.meter.models.ReadingUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +38,23 @@ class MeterGetView : Fragment() {
 
         viewModel.fetchReadingList()
         setupRecyclerView()
+
+        binding.updateMeterButton.setOnClickListener {
+            val meter = MeterGetToUpdateParcelableModel(
+                meterId = viewModel.meterParcelable.id,
+                meterName = viewModel.meterParcelable.address + ", " + viewModel.meterParcelable.typeOfServiceName,
+                apartmentId = viewModel.meterParcelable.apartmentId
+            )
+            Log.e("updateMeterButton", meter.toString())
+
+            val bundle = Bundle().apply {
+                putParcelable("meter", meter)
+            }
+            findNavController().navigate(R.id.action_meterGetView_to_meterUpdateView, bundle)
+        }
+        binding.addReadingButton.setOnClickListener {
+//            findNavController().navigate(R.id.action_MeterListView_to_MeterAddView)
+        }
 
         return binding.root
     }

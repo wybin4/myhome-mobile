@@ -26,7 +26,7 @@ data class MeterGetDto(
     val issuedAt: String,
     val apartmentId: Int,
     val typeOfServiceId: Int,
-    val currentReading: Float?,
+    val currentReading: Double?,
     val typeOfServiceName: String,
     val unitName: String
 )

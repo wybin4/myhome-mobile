@@ -16,9 +16,7 @@
         <action
             android:id="@+id/action_MeterListView_to_MeterGetView"
             app:destination="@id/get_meter">
-
         </action>
-
     </fragment>
 
     <fragment
@@ -39,12 +37,25 @@
         <action
             android:id="@+id/action_meterGetView_to_meterListView"
             app:destination="@id/list_meter" />
+        <action
+            android:id="@+id/action_meterGetView_to_meterUpdateView"
+            app:destination="@id/update_meter" />
         <argument
             android:name="meter"
-            app:argType="com.example.myhome.presentation.meter.list.MeterParcelableModel" />
+            app:argType="com.example.myhome.presentation.meter.models.MeterListToGetParcelableModel" />
+    </fragment>
 
-        <!--        <argument android:name="meter"-->
-<!--            app:argType="com.example.myhome.meter.models.MeterGetModel" />-->
+    <fragment
+        android:id="@+id/update_meter"
+        android:name="com.example.myhome.presentation.meter.update.MeterUpdateView"
+        android:label="@string/title_update_meter"
+        tools:layout="@layout/meter_update_view">
+        <action
+            android:id="@+id/action_meterUpdateView_to_meterGetView"
+            app:destination="@id/get_meter" />
+        <argument
+            android:name="meter"
+            app:argType="com.example.myhome.presentation.meter.models.MeterGetToUpdateParcelableModel" />
     </fragment>
 
 <!--    <fragment-->

@@ -3,14 +3,14 @@ package com.example.myhome.meter.dtos
 abstract class ReadingDto(
     open val id: Int?,
     open val meterId: Int,
-    open val reading: Float,
+    open val reading: Double,
     open val readAt: String
 )
 
 data class ReadingAddDto(
     override val id: Int?,
     override val meterId: Int,
-    override val reading: Float,
+    override val reading: Double,
     override val readAt: String
 ) : ReadingDto(
     id = id,
@@ -21,8 +21,8 @@ data class ReadingAddDto(
 
 data class ReadingGetDto(
     val id: Int,
-    val reading: Float,
-    val consumption: Float,
+    val reading: Double,
+    val consumption: Double,
     val readAt: String
 )
 

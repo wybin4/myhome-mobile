@@ -4,7 +4,7 @@
     <data>
         <variable
             name="reading"
-            type="com.example.myhome.presentation.meter.get.ReadingUiModel" />
+            type="com.example.myhome.presentation.meter.models.ReadingUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

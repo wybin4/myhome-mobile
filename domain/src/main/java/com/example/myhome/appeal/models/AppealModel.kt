@@ -22,7 +22,7 @@ data class AppealAddMeterModel(
 )
 
 data class AppealUpdateMeterModel(
-    val id: Int,
+    val meterId: Int,
     val verifiedAt: Date,
     val issuedAt: Date,
     val managementCompanyId: Int,

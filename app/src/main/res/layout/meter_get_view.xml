@@ -43,6 +43,7 @@
                             android:layout_gravity="center_vertical">
                             <!--круглая кнопка раз-->
                             <LinearLayout
+                                android:id="@+id/update_meter_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
@@ -55,7 +56,7 @@
                                     android:layout_marginBottom="7dp"
                                     android:gravity="center"
                                     >
-                                    <ImageButton
+                                    <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/calendar"
@@ -73,23 +74,25 @@
                             </LinearLayout>
                             <!--круглая кнопка два-->
                             <LinearLayout
+                                android:id="@+id/add_reading_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:gravity="center">
+
                                 <LinearLayout
-                                    android:layout_width="43dp"
-                                    android:layout_height="43dp"
-                                    android:background="@drawable/circle_button"
+                                    android:layout_width="39dp"
+                                    android:layout_height="39dp"
                                     android:layout_marginBottom="7dp"
-                                    android:gravity="center"
-                                    >
+                                    android:background="@drawable/circle_button"
+                                    android:gravity="center">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="+"
                                         android:textColor="@color/primary"
-                                        android:textSize="18dp"/>
+                                        android:textSize="18dp" />
                                 </LinearLayout>
                                 <TextView
                                     android:layout_width="wrap_content"

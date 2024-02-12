@@ -32,7 +32,7 @@ class AppealRemoteMapper {
     fun mapUpdateToRemote(meter: AppealUpdateMeterModel): MeterUpdateDto {
         val data = meter.run {
             VerifyIndividualMeterData(
-                meterId = id,
+                meterId = meterId,
                 issuedAt = issuedAt.toString(),
                 verifiedAt = verifiedAt.toString(),
                 attachment = "/path/to"
