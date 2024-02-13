@@ -14,4 +14,75 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="ActionButton">
+        <item name="android:layout_height">58dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="cornerRadius">15dp</item>
+    </style>
+
+    <style name="DescriptionText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/description_night</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="AttentionCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/primary</item>
+        <item name="android:background">@drawable/round_corner_card_night</item>
+        <item name="android:paddingLeft">23dp</item>
+        <item name="android:paddingRight">23dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="CircleButtonLayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Circle">
+        <item name="android:background">@drawable/circle_night</item>
+    </style>
+
+    <style name="CircleButton">
+        <item name="tint">@color/white</item>
+        <item name="android:background">@drawable/circle_button_night</item>
+        <item name="android:layout_width">43dp</item>
+        <item name="android:layout_height">43dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CircleButtonImage">
+        <item name="tint">@color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/transparent</item>
+    </style>
+
+    <style name="CircleButtonText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Card">
+        <item name="android:background">@drawable/round_corner_card_night</item>
+    </style>
+
 </resources>

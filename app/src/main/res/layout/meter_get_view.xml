@@ -44,31 +44,21 @@
                             <!--круглая кнопка раз-->
                             <LinearLayout
                                 android:id="@+id/update_meter_button"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:gravity="center"
+                                style="@style/CircleButtonLayout"
                                 android:layout_marginBottom="21dp">
                                 <LinearLayout
-                                    android:layout_width="43dp"
-                                    android:layout_height="43dp"
-                                    android:background="@drawable/circle_button"
+                                    style="@style/CircleButton"
                                     android:layout_marginBottom="7dp"
-                                    android:gravity="center"
                                     >
                                     <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/CircleButtonImage"
                                         android:src="@drawable/calendar"
-                                        android:backgroundTint="@color/transparent"
                                         />
                                 </LinearLayout>
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    style="@style/Text"
                                     android:text="Изменить\n дату поверки"
                                     android:textSize="12dp"
-                                    android:textColor="@color/black"
                                     android:textAlignment="center"
                                     />
                             </LinearLayout>
@@ -84,31 +74,27 @@
                                     android:layout_width="39dp"
                                     android:layout_height="39dp"
                                     android:layout_marginBottom="7dp"
-                                    android:background="@drawable/circle_button"
+                                    android:background="@drawable/circle_button_night"
                                     android:gravity="center">
 
                                     <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/CircleButtonText"
                                         android:text="+"
-                                        android:textColor="@color/primary"
                                         android:textSize="18dp" />
                                 </LinearLayout>
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    style="@style/Text"
                                     android:text="Добавить\n показания"
                                     android:textSize="12dp"
-                                    android:textColor="@color/black"
                                     android:textAlignment="center"
                                     />
                             </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
+                            style="@style/Card"
                             android:layout_width="264dp"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/round_corner_card"
                             android:orientation="vertical"
                             android:padding="40dp">
                             <LinearLayout
@@ -117,30 +103,24 @@
                                 android:orientation="vertical"
                                 android:layout_marginBottom="130dp">
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    style="@style/Text"
                                     android:text="Текущие показания"
-                                    android:textColor="@color/black"
                                     android:textSize="13dp"/>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
                                     <TextView
                                         android:id="@+id/current_reading"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="@{viewModel.meterParcelable.currentReading}"
                                         android:textSize="36dp"
-                                        android:textColor="@color/black"
                                         android:textStyle="bold"/>
                                     <TextView
                                         android:id="@+id/unit_name"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="@{viewModel.meterParcelable.unitName}"
                                         android:paddingLeft="6dp"
                                         android:textStyle="bold"
-                                        android:textColor="@color/black"
                                         android:textSize="22dp"/>
                                 </LinearLayout>
                             </LinearLayout>
@@ -154,17 +134,13 @@
                                     android:orientation="vertical"
                                     android:layout_marginRight="42dp">
                                     <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="Тип услуги"
-                                        android:textColor="@color/black"
                                         android:textSize="13dp"/>
                                     <TextView
                                         android:id="@+id/type_of_service_name"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="@{viewModel.meterParcelable.typeOfServiceName}"
-                                        android:textColor="@color/black"
                                         android:textSize="16dp"/>
                                 </LinearLayout>
                                 <ImageView
@@ -184,19 +160,11 @@
                         android:paddingHorizontal="28dp">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/round_corner_card"
-                            android:backgroundTint="@color/black"
-                            android:paddingHorizontal="23dp"
-                            android:paddingVertical="16dp"
+                            style="@style/AttentionCard"
                             android:layout_marginBottom="25dp">
-
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                style="@style/AttentionCardText"
                                 android:text="Важно! Поверка счётчика истекает менее чем через 3 дня"
-                                android:textColor="@color/white"
                                 />
                         </LinearLayout>
 
@@ -207,11 +175,9 @@
                             android:layout_marginBottom="30dp">
                             <!--                заголовок-->
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/Text"
                                 android:text="О счётчике"
                                 android:textStyle="bold"
-                                android:textColor="@color/black"
                                 android:textSize="15dp"
                                 android:layout_marginBottom="18dp"/>
 
@@ -242,17 +208,13 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
                                     <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="Адрес"
-                                        android:textColor="@color/black"
                                         android:layout_weight="1"/>
                                     <TextView
                                         android:id="@+id/address"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="@{viewModel.meterParcelable.address}"
-                                        android:textColor="@color/black"
                                         android:textStyle="bold"
                                         android:layout_gravity="end"/>
                                 </LinearLayout>
@@ -286,17 +248,12 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
                                     <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="Дата истечения поверки"
-                                        android:textColor="@color/black"
                                         android:layout_weight="1"/>
                                     <TextView
                                         android:id="@+id/issued_at"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="18.01.2024"
-                                        android:textColor="@color/red"
+                                        style="@style/Text"
                                         android:textStyle="bold"
                                         android:layout_gravity="end"/>
                                 </LinearLayout>
@@ -329,17 +286,12 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
                                     <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="Дата проведения поверки"
-                                        android:textColor="@color/black"
                                         android:layout_weight="1"/>
                                     <TextView
                                         android:id="@+id/verified_at"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="17.05.2023"
-                                        android:textColor="@color/black"
+                                        style="@style/Text"
                                         android:textStyle="bold"
                                         android:layout_gravity="end"/>
                                 </LinearLayout>
@@ -372,17 +324,13 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
                                     <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="Заводской номер"
-                                        android:textColor="@color/black"
                                         android:layout_weight="1"/>
                                     <TextView
                                         android:id="@id/factory_number"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        style="@style/Text"
                                         android:text="@{viewModel.meterParcelable.factoryNumber}"
-                                        android:textColor="@color/black"
                                         android:textStyle="bold"
                                         android:layout_gravity="end"/>
                                 </LinearLayout>
@@ -395,11 +343,9 @@
                             android:orientation="vertical">
                             <!--                заголовок-->
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/Text"
                                 android:text="Последние показания"
                                 android:textStyle="bold"
-                                android:textColor="@color/black"
                                 android:textSize="15dp"
                                 android:layout_marginBottom="18dp"/>
 

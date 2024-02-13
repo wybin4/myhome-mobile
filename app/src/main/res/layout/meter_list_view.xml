@@ -66,10 +66,8 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="Срок передачи показаний — с 20 по 25 число"
-                            android:textColor="@color/description"
+                            style="@style/DescriptionText"
                             android:layout_marginBottom="20dp"/>
                         <Button
                             android:id="@+id/add_meter_button"

@@ -24,7 +24,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/circle_button_night"
                 android:backgroundTint="@color/black"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="19dp"
@@ -59,7 +59,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/round_corner_card"
+                    android:background="@drawable/round_corner_card_normal"
                     android:orientation="vertical"
                     android:paddingHorizontal="27dp"
                     android:paddingVertical="22dp"
@@ -115,7 +115,7 @@
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="47dp"
-                            android:background="@drawable/circle_button"
+                            android:background="@drawable/circle_button_night"
                             android:backgroundTint="#F4EEFF"
                             android:layout_marginBottom="16dp"
                             >
@@ -124,7 +124,7 @@
                                 android:layout_width="220dp"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="#DBD4FF"
-                                android:background="@drawable/circle"/>
+                                android:background="@drawable/circle_normal"/>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -136,14 +136,14 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="13dp"
-                                    android:background="@drawable/circle"
+                                    android:background="@drawable/circle_normal"
                                     android:backgroundTint="@color/white"
                                     android:gravity="center">
 
                                     <LinearLayout
                                         android:layout_width="14dp"
                                         android:layout_height="14dp"
-                                        android:background="@drawable/circle"
+                                        android:background="@drawable/circle_normal"
                                         android:backgroundTint="@color/primary" />
                                 </LinearLayout>
 
@@ -172,7 +172,7 @@
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="47dp"
-                            android:background="@drawable/circle_button"
+                            android:background="@drawable/circle_button_night"
                             android:backgroundTint="#F4EEFF"
                             android:layout_marginBottom="16dp"
                             >
@@ -187,14 +187,14 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="13dp"
-                                    android:background="@drawable/circle"
+                                    android:background="@drawable/circle_normal"
                                     android:backgroundTint="@color/white"
                                     android:gravity="center">
 
                                     <LinearLayout
                                         android:layout_width="14dp"
                                         android:layout_height="14dp"
-                                        android:background="@drawable/circle"
+                                        android:background="@drawable/circle_normal"
                                         android:backgroundTint="#C5BAFF" />
                                 </LinearLayout>
 
@@ -223,7 +223,7 @@
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="47dp"
-                            android:background="@drawable/circle_button"
+                            android:background="@drawable/circle_button_night"
                             android:backgroundTint="#F4EEFF"
                             android:layout_marginBottom="16dp"
                             >
@@ -238,14 +238,14 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="13dp"
-                                    android:background="@drawable/circle"
+                                    android:background="@drawable/circle_normal"
                                     android:backgroundTint="@color/white"
                                     android:gravity="center">
 
                                     <LinearLayout
                                         android:layout_width="14dp"
                                         android:layout_height="14dp"
-                                        android:background="@drawable/circle"
+                                        android:background="@drawable/circle_normal"
                                         android:backgroundTint="#C5BAFF" />
                                 </LinearLayout>
 
@@ -276,7 +276,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/circle"
+                        android:background="@drawable/circle_normal"
                         android:paddingHorizontal="11dp">
                         <TextView
                             android:layout_width="wrap_content"
@@ -292,7 +292,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/round_corner_card"
+                    android:background="@drawable/round_corner_card_normal"
                     android:orientation="vertical"
                     android:paddingHorizontal="27dp"
                     android:paddingVertical="22dp"
@@ -324,7 +324,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/circle"
+                        android:background="@drawable/circle_normal"
                         android:paddingHorizontal="11dp">
                         <TextView
                             android:layout_width="wrap_content"

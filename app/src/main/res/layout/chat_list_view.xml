@@ -43,7 +43,7 @@
                         <LinearLayout
                             android:layout_width="43dp"
                             android:layout_height="43dp"
-                            android:background="@drawable/circle"
+                            android:background="@drawable/circle_normal"
                             android:backgroundTint="@color/primary_light"
                             android:gravity="center">
                             <TextView
@@ -63,19 +63,16 @@
                             android:layout_weight="1">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/Text"
                                 android:text="ТСЖ “Прогресс”"
-                                android:textColor="@color/black"
                                 android:textStyle="bold"
                                 android:layout_marginBottom="6dp"/>
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/Text"
                                 android:textSize="13dp"
                                 android:text="Попробуем поговорить, но ничего не обещаем."
-                                android:textColor="@color/black"/>
+                                />
 
                         </LinearLayout>
 
@@ -86,22 +83,23 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/DescriptionText"
                                 android:text="18:38"
                                 android:layout_marginBottom="6dp"/>
+
                             <LinearLayout
+                                style="@style/Circle"
                                 android:layout_width="21dp"
                                 android:layout_height="21dp"
-                                android:background="@drawable/circle"
-                                android:gravity="center"
-                                android:layout_gravity="end">
+                                android:layout_gravity="end"
+                                android:gravity="center">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="1"
-                                    android:textSize="11dp"
-                                    android:textColor="@color/white"/>
+                                    android:textColor="@color/white"
+                                    android:textSize="11dp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -119,7 +117,7 @@
                         <LinearLayout
                             android:layout_width="43dp"
                             android:layout_height="43dp"
-                            android:background="@drawable/circle"
+                            android:background="@drawable/circle_normal"
                             android:backgroundTint="@color/primary_light"
                             android:gravity="center">
                             <TextView
@@ -139,19 +137,16 @@
                             android:layout_weight="1">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/Text"
                                 android:text="Ладнов Александр"
-                                android:textColor="@color/black"
                                 android:textStyle="bold"
                                 android:layout_marginBottom="6dp"/>
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/Text"
                                 android:textSize="13dp"
                                 android:text="Вы: Почините уже смеситель, постоянно нас топите!"
-                                android:textColor="@color/black"/>
+                                />
 
                         </LinearLayout>
 
@@ -162,26 +157,25 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/DescriptionText"
                                 android:text="Окт 19"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
 
-                <com.google.android.material.floatingactionbutton.DoubleingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:maxImageSize="19dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/pen"
-                    app:backgroundTint="@color/black"
-                    app:tint="@color/white"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginBottom="70dp"
-                    app:elevation="0dp"/>
+<!--                <com.google.android.material.floatingactionbutton.DoubleingActionButton-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:maxImageSize="19dp"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:src="@drawable/pen"-->
+<!--                    app:backgroundTint="@color/black"-->
+<!--                    app:tint="@color/white"-->
+<!--                    android:layout_gravity="bottom|end"-->
+<!--                    android:layout_marginBottom="70dp"-->
+<!--                    app:elevation="0dp"/>-->
 
             </LinearLayout>
 

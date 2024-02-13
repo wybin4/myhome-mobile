@@ -53,7 +53,7 @@
                 <LinearLayout
                     android:layout_width="43dp"
                     android:layout_height="43dp"
-                    android:background="@drawable/circle"
+                    android:background="@drawable/circle_normal"
                     android:backgroundTint="@color/primary_light"
                     android:gravity="center">
                     <TextView
@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="14dp"
                         android:text="Собственник"
-                        android:textColor="@color/description"/>
+                        android:textColor="@color/description_normal"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -103,7 +103,7 @@
                 <LinearLayout
                     android:layout_width="43dp"
                     android:layout_height="43dp"
-                    android:background="@drawable/circle"
+                    android:background="@drawable/circle_normal"
                     android:backgroundTint="@color/primary_light"
                     android:gravity="center">
                     <TextView
@@ -136,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="14dp"
                         android:text="Управляющая компания"
-                        android:textColor="@color/description"/>
+                        android:textColor="@color/description_normal"/>
 
                 </LinearLayout>
             </LinearLayout>
