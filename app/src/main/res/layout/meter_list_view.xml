@@ -57,7 +57,9 @@
                                 android:text="Ростов-на-Дону, ул. Малюгина 35, кв. 24"
                                 android:textColor="@color/primary"
                                 android:textAllCaps="false"
-                                app:cornerRadius="15dp"/>
+                                app:cornerRadius="15dp"
+                                android:elevation="0dp"/>
+
                         </LinearLayout>
                     </RelativeLayout>
                     <LinearLayout

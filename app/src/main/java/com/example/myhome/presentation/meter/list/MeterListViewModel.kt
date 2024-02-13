@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.meter.models.MeterGetModel
+import com.example.myhome.R
 import com.example.myhome.meter.usecases.MeterListUseCase
+import com.example.myhome.presentation.meter.models.MeterUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -17,8 +18,8 @@ import javax.inject.Inject
 class MeterListViewModel @Inject constructor(
     private val meterListUseCase: MeterListUseCase
 ) : ViewModel() {
-    private val _meterList = MutableLiveData<List<MeterGetModel>>()
-    val meterList: LiveData<List<MeterGetModel>> = _meterList
+    private val _meterList = MutableLiveData<List<MeterUiModel>>()
+    val meterList: LiveData<List<MeterUiModel>> = _meterList
 
     init {
         fetchMeterList()
@@ -32,7 +33,23 @@ class MeterListViewModel @Inject constructor(
                     _meterList.value = listOf()
                 }
                 .collect {
-                    _meterList.value = it
+
+                    val list = it.map { meter ->
+                        MeterUiModel(
+                            id = meter.id,
+                            factoryNumber = meter.factoryNumber,
+                            verifiedAt = meter.verifiedAt,
+                            issuedAt = meter.issuedAt,
+                            currentReading = meter.currentReading,
+                            typeOfServiceName = meter.typeOfServiceName,
+                            unitName = meter.unitName,
+                            apartmentId = meter.apartmentId,
+                            address = "пер. Соборный 99, кв. 12",
+                            isIssued = false
+                        ).setIsIssued()
+                    }
+
+                    _meterList.value = list
                 }
         }
     }

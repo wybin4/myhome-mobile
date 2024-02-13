@@ -54,14 +54,15 @@
                                         android:layout_height="43dp"
                                         android:gravity="center"
                                         android:background="@drawable/circle_normal"
-                                        android:backgroundTint="@color/primary_light">
+                                        android:backgroundTint="@{meter.isIssued ? @color/red_light : @color/primary_light}">
                                         <ImageView
                                             android:contentDescription="electricity"
                                             android:layout_width="19dp"
                                             android:layout_height="19dp"
                                             android:layout_gravity="center"
                                             android:adjustViewBounds="true"
-                                            android:src="@drawable/electricity" />
+                                            android:src="@drawable/electricity"
+                                            app:tint="@{meter.isIssued ? @color/red : @color/primary}" />
                                     </LinearLayout>
                                 </LinearLayout>
                                 <LinearLayout
@@ -79,6 +80,7 @@
                                         android:id="@+id/issued_at"
                                         style="@style/DescriptionText"
                                         android:layout_weight="1"
+                                        android:textColor="@{meter.isIssued ? @color/red : @color/black}"
                                         android:text="@{`Поверка: ` + meter.formatIssuedAt()}"
                                         android:textAlignment="textEnd" />
 

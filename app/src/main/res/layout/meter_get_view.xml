@@ -71,10 +71,8 @@
                                 android:gravity="center">
 
                                 <LinearLayout
-                                    android:layout_width="39dp"
-                                    android:layout_height="39dp"
+                                    style="@style/CircleButton"
                                     android:layout_marginBottom="7dp"
-                                    android:background="@drawable/circle_button_night"
                                     android:gravity="center">
 
                                     <TextView
@@ -132,7 +130,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:layout_marginRight="42dp">
+                                    android:paddingRight="42dp">
                                     <TextView
                                         style="@style/Text"
                                         android:text="Тип услуги"
@@ -140,6 +138,7 @@
                                     <TextView
                                         android:id="@+id/type_of_service_name"
                                         style="@style/Text"
+                                        android:layout_width="84dp"
                                         android:text="@{viewModel.meterParcelable.typeOfServiceName}"
                                         android:textSize="16dp"/>
                                 </LinearLayout>
@@ -161,7 +160,9 @@
 
                         <LinearLayout
                             style="@style/AttentionCard"
-                            android:layout_marginBottom="25dp">
+                            android:layout_marginBottom="25dp"
+                            android:visibility="@{viewModel.meterParcelable.isIssued}"
+                            >
                             <TextView
                                 style="@style/AttentionCardText"
                                 android:text="Важно! Поверка счётчика истекает менее чем через 3 дня"
@@ -232,14 +233,14 @@
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:gravity="center"
-                                    android:backgroundTint="@color/red_light"
+                                    android:backgroundTint="@{viewModel.meterParcelable.isIssued ? @color/red_light : @color/primary_light}"
                                     android:background="@drawable/round_corner_icon"
                                     android:layout_marginRight="10dp"
                                     >
                                     <ImageView
                                         android:layout_width="13dp"
                                         android:layout_height="13dp"
-                                        app:tint="@color/red"
+                                        app:tint="@{viewModel.meterParcelable.isIssued ? @color/red : @color/primary}"
                                         android:src="@drawable/calendar"/>
                                 </LinearLayout>
                                 <!--                    надписи-->
@@ -252,9 +253,17 @@
                                         android:text="Дата истечения поверки"
                                         android:layout_weight="1"/>
                                     <TextView
-                                        android:id="@+id/issued_at"
                                         style="@style/Text"
+                                        android:visibility="@{!viewModel.meterParcelable.isIssued}"
                                         android:textStyle="bold"
+                                        android:text="@{viewModel.meterParcelable.formatIssuedAt()}"
+                                        android:layout_gravity="end"/>
+                                    <TextView
+                                        style="@style/Text"
+                                        android:visibility="@{viewModel.meterParcelable.isIssued}"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:text="@{viewModel.meterParcelable.formatIssuedAt()}"
                                         android:layout_gravity="end"/>
                                 </LinearLayout>
                             </LinearLayout>

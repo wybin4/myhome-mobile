@@ -29,4 +29,4 @@ data class MeterGetModel(
     issuedAt = issuedAt,
     apartmentId = apartmentId,
     typeOfServiceId = typeOfServiceId
-), Adaptive
+)

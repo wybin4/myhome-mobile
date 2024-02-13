@@ -13,7 +13,6 @@ import com.example.myhome.databinding.MeterGetViewBinding
 import com.example.myhome.databinding.ReadingListItemBinding
 import com.example.myhome.presentation.CustomListAdapter
 import com.example.myhome.presentation.meter.models.MeterGetToUpdateParcelableModel
-import com.example.myhome.presentation.meter.models.MeterListToGetParcelableModel
 import com.example.myhome.presentation.meter.models.ReadingUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +33,6 @@ class MeterGetView : Fragment() {
 
         viewModel.meterParcelable = requireArguments().getParcelable("meter")!!
         binding.verifiedAt.text = viewModel.meterParcelable.formatVerifiedAt()
-        binding.issuedAt.text = viewModel.meterParcelable.formatIssuedAt()
 
         viewModel.fetchReadingList()
         setupRecyclerView()

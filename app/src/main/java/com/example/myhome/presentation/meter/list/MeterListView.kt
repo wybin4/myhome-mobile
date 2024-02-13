@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.annotation.ColorInt
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -41,22 +44,8 @@ class MeterListView : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.meterList.observe(viewLifecycleOwner) { meters ->
-            val list = meters.map {
-                MeterUiModel(
-                    id = it.id,
-                    factoryNumber = it.factoryNumber,
-                    verifiedAt = it.verifiedAt,
-                    issuedAt = it.issuedAt,
-                    currentReading = it.currentReading,
-                    typeOfServiceName = it.typeOfServiceName,
-                    unitName = it.unitName,
-                    apartmentId = it.apartmentId,
-                    address = "пер. Соборный 99, кв. 12"
-                )
-            }
-
-            meterListAdapter.submitList(list)
+        viewModel.meterList.observe(viewLifecycleOwner) {
+            meterListAdapter.submitList(it)
         }
     }
 
@@ -75,6 +64,7 @@ class MeterListView : Fragment() {
                     factoryNumber = item.factoryNumber,
                     verifiedAt = item.verifiedAt,
                     issuedAt = item.issuedAt,
+                    isIssued = item.isIssued,
                     apartmentId = item.apartmentId,
                     address = "пер. Соборный 99, кв. 12",
                     currentReading = item.currentReading?.toString() ?: "—",
