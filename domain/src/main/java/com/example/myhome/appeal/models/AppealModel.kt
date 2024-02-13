@@ -10,6 +10,7 @@ data class AppealAddMeterModel(
     override val issuedAt: Date,
     override val apartmentId: Int,
     override val typeOfServiceId: Int,
+    val attachment: String,
     val managementCompanyId: Int,
     val subscriberId: Int
 ) : MeterModel(
@@ -26,5 +27,6 @@ data class AppealUpdateMeterModel(
     val verifiedAt: Date,
     val issuedAt: Date,
     val managementCompanyId: Int,
-    val subscriberId: Int
+    val subscriberId: Int,
+    val attachment: String
 )

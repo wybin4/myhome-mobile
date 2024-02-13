@@ -45,7 +45,6 @@ class MeterGetView : Fragment() {
                 meterName = viewModel.meterParcelable.address + ", " + viewModel.meterParcelable.typeOfServiceName,
                 apartmentId = viewModel.meterParcelable.apartmentId
             )
-            Log.e("updateMeterButton", meter.toString())
 
             val bundle = Bundle().apply {
                 putParcelable("meter", meter)

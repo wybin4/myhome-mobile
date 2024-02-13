@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.meter.update
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import com.example.myhome.common.models.ApartmentGetModel
 import com.example.myhome.common.models.SubscriberGetModel
 import com.example.myhome.common.usecases.ApartmentListUseCase
 import com.example.myhome.common.usecases.SubscriberListUseCase
+import com.example.myhome.presentation.ImageMapper
 import com.example.myhome.presentation.meter.models.MeterGetToUpdateParcelableModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +25,8 @@ import javax.inject.Inject
 class MeterUpdateViewModel @Inject constructor(
     private val subscriberListUseCase: SubscriberListUseCase,
     private val apartmentListUseCase: ApartmentListUseCase,
-    private val appealAddUseCase: AppealAddUseCase
+    private val appealAddUseCase: AppealAddUseCase,
+    private val imageMapper: ImageMapper
 ) : ViewModel() {
     private val _subscriberList = MutableLiveData<List<SubscriberGetModel>>()
     private val subscriberList: LiveData<List<SubscriberGetModel>> = _subscriberList
@@ -35,6 +38,7 @@ class MeterUpdateViewModel @Inject constructor(
 
     var selectIssuedAt: Date? = null
     var selectVerifiedAt: Date? = null
+    var selectAttachment: Bitmap? = null
 
     init {
         fetchLists()
@@ -65,6 +69,7 @@ class MeterUpdateViewModel @Inject constructor(
     fun updateMeter() {
         val selectedSubscriberId = apartmentList.value?.find { it.id == meterParcelable.apartmentId }?.subscriberId
         val selectedManagementCompanyId = subscriberList.value?.find { it.subscriberId == selectedSubscriberId }?.managementCompanyId
+        val attachment = imageMapper.mapImageToDomain(selectAttachment!!)
 
         if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
             viewModelScope.launch {
@@ -75,6 +80,7 @@ class MeterUpdateViewModel @Inject constructor(
                         issuedAt = selectIssuedAt!!,
                         managementCompanyId = selectedManagementCompanyId,
                         subscriberId = selectedSubscriberId,
+                        attachment = attachment
                     )
                 )
             }

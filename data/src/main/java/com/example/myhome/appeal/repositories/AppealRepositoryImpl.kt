@@ -1,5 +1,6 @@
 package com.example.myhome.appeal.repositories
 
+import android.util.Log
 import com.example.myhome.appeal.mappers.AppealRemoteMapper
 import com.example.myhome.appeal.models.AppealAddMeterModel
 import com.example.myhome.appeal.models.AppealUpdateMeterModel

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.myhome.databinding.MeterUpdateViewBinding
 import com.example.myhome.presentation.CustomDatePicker
+import com.example.myhome.presentation.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,8 @@ class MeterUpdateView : Fragment() {
 
     private lateinit var verifiedAtPicker: CustomDatePicker
     private lateinit var issuedAtPicker: CustomDatePicker
+
+    private lateinit var imagePicker: ImagePicker
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +33,8 @@ class MeterUpdateView : Fragment() {
         viewModel.meterParcelable = requireArguments().getParcelable("meter")!!
 
         setupDatePickers()
+
+        setupImagePicker()
 
         binding.nextButton.setOnClickListener { nextClick() }
 
@@ -56,12 +61,19 @@ class MeterUpdateView : Fragment() {
         }
     }
 
+    private fun setupImagePicker() {
+        imagePicker = ImagePicker(this) {
+            viewModel.selectAttachment = it
+            viewModel.updateMeter()
+        }
+    }
+
     private fun nextClick() {
         val isVerifiedAtValid = verifiedAtPicker.validate()
         val isIssuedAtValid = issuedAtPicker.validate()
 
         if (isVerifiedAtValid && isIssuedAtValid) {
-            viewModel.updateMeter()
+            imagePicker.checkStoragePermission()
         }
     }
 

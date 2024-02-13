@@ -16,7 +16,7 @@ class AppealRemoteMapper {
                 factoryNumber = factoryNumber,
                 issuedAt = issuedAt.toString(),
                 verifiedAt = verifiedAt.toString(),
-                attachment = "/path/to"
+                attachment = attachment
             )
         }
 
@@ -35,7 +35,7 @@ class AppealRemoteMapper {
                 meterId = meterId,
                 issuedAt = issuedAt.toString(),
                 verifiedAt = verifiedAt.toString(),
-                attachment = "/path/to"
+                attachment = attachment
             )
         }
 

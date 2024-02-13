@@ -1,5 +1,7 @@
 package com.example.myhome.presentation.meter.add
 
+import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +14,7 @@ import com.example.myhome.common.models.ApartmentGetModel
 import com.example.myhome.common.models.SubscriberGetModel
 import com.example.myhome.common.models.TypeOfServiceGetModel
 import com.example.myhome.common.usecases.SubscriberListUseCase
+import com.example.myhome.presentation.ImageMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -25,7 +28,8 @@ class MeterAddViewModel @Inject constructor(
     private val apartmentListUseCase: ApartmentListUseCase,
     private val subscriberListUseCase: SubscriberListUseCase,
     private val typeOfServiceListUseCase: TypeOfServiceListUseCase,
-    private val appealAddUseCase: AppealAddUseCase
+    private val appealAddUseCase: AppealAddUseCase,
+    private val imageMapper: ImageMapper
 ) : ViewModel() {
     private val _apartmentList = MutableLiveData<List<ApartmentGetModel>>()
     val apartmentList: LiveData<List<ApartmentGetModel>> = _apartmentList
@@ -41,6 +45,7 @@ class MeterAddViewModel @Inject constructor(
     var selectedFactoryNumber: String = ""
     var selectIssuedAt: Date? = null
     var selectVerifiedAt: Date? = null
+    var selectAttachment: Bitmap? = null
 
     init {
         fetchLists()
@@ -80,6 +85,7 @@ class MeterAddViewModel @Inject constructor(
     fun addMeter() {
         val selectedSubscriberId = apartmentList.value?.find { it.id == selectedApartmentId }?.subscriberId
         val selectedManagementCompanyId = subscriberList.value?.find { it.subscriberId == selectedSubscriberId }?.managementCompanyId
+        val attachment = imageMapper.mapImageToDomain(selectAttachment!!)
 
         if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
             viewModelScope.launch {
@@ -91,6 +97,7 @@ class MeterAddViewModel @Inject constructor(
                         factoryNumber = selectedFactoryNumber,
                         verifiedAt = selectVerifiedAt!!,
                         issuedAt = selectIssuedAt!!,
+                        attachment = attachment,
                         managementCompanyId = selectedManagementCompanyId,
                         subscriberId = selectedSubscriberId,
                     )
