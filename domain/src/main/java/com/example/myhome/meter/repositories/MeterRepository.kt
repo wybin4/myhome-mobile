@@ -1,8 +1,8 @@
 package com.example.myhome.meter.repositories
 
-import com.example.myhome.meter.models.MeterGetModel
+import com.example.myhome.meter.models.ApartmentWithMeterGetModel
 import kotlinx.coroutines.flow.Flow
 
 interface MeterRepository {
-    fun listMeter(): Flow<List<MeterGetModel>>
+    fun listApartmentWithMeter(): Flow<List<ApartmentWithMeterGetModel>>
 }

@@ -8,8 +8,13 @@ abstract class MeterModel(
     open val factoryNumber: String,
     open val verifiedAt: Date,
     open val issuedAt: Date,
-    open val apartmentId: Int,
     open val typeOfServiceId: Int,
+)
+
+data class ApartmentWithMeterGetModel(
+    val id: Int,
+    val address: String,
+    val meters: List<MeterGetModel>
 )
 
 data class MeterGetModel(
@@ -17,16 +22,14 @@ data class MeterGetModel(
     override val factoryNumber: String,
     override val verifiedAt: Date,
     override val issuedAt: Date,
-    override val apartmentId: Int,
     override val typeOfServiceId: Int,
-    val currentReading: Double?,
     val typeOfServiceName: String,
+    val currentReading: Double?,
     val unitName: String
-) : MeterModel(
+): MeterModel (
     id = id,
     factoryNumber = factoryNumber,
     verifiedAt = verifiedAt,
     issuedAt = issuedAt,
-    apartmentId = apartmentId,
     typeOfServiceId = typeOfServiceId
 )

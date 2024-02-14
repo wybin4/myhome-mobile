@@ -6,6 +6,7 @@ import com.example.myhome.appeal.dtos.AppealAddDto
 import com.example.myhome.appeal.dtos.VerifyIndividualMeterData
 import com.example.myhome.appeal.models.AppealType
 import com.example.myhome.meter.models.MeterType
+import java.util.Date
 
 data class MeterAddDto(
     override val managementCompanyId: Int,
@@ -19,15 +20,21 @@ data class MeterAddDto(
     data = data
 )
 
+data class ApartmentWithMeterGetDto(
+    val apartmentId: Int,
+    val apartmentFullAddress: String,
+    val apartmentNumber: Int,
+    val meters: List<MeterGetDto>
+)
+
 data class MeterGetDto(
     val id: Int,
     val factoryNumber: String,
     val verifiedAt: String,
     val issuedAt: String,
-    val apartmentId: Int,
     val typeOfServiceId: Int,
-    val currentReading: Double?,
     val typeOfServiceName: String,
+    val currentReading: Double?,
     val unitName: String
 )
 
@@ -43,7 +50,7 @@ data class MeterUpdateDto(
     data = data
 )
 
-data class MeterListDto(
+data class ApartmentWithMeterListDto(
     val userId: Int,
     val userRole: UserRole = UserRole.Owner,
     val meterType: MeterType = MeterType.Individual,

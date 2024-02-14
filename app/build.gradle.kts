@@ -61,6 +61,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    // also testing
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
     //mockito
     testImplementation("org.mockito:mockito-core:5.3.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")

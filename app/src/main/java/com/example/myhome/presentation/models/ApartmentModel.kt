@@ -6,4 +6,9 @@ class ApartmentUiModel (
     override val id: Int,
     val name: String,
     var selected: Boolean
-): Adaptive
+): Adaptive {
+    fun setSelected(selectedId: Int): ApartmentUiModel {
+        selected = selectedId == id
+        return this
+    }
+}

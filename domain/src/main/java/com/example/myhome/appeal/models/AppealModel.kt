@@ -8,7 +8,7 @@ data class AppealAddMeterModel(
     override val factoryNumber: String,
     override val verifiedAt: Date,
     override val issuedAt: Date,
-    override val apartmentId: Int,
+    val apartmentId: Int,
     override val typeOfServiceId: Int,
     val attachment: String,
     val managementCompanyId: Int,
@@ -18,7 +18,6 @@ data class AppealAddMeterModel(
     factoryNumber = factoryNumber,
     verifiedAt = verifiedAt,
     issuedAt = issuedAt,
-    apartmentId = apartmentId,
     typeOfServiceId = typeOfServiceId
 )
 

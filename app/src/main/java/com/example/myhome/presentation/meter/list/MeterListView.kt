@@ -27,8 +27,6 @@ class MeterListView : Fragment() {
     private lateinit var meterListAdapter: CustomListAdapter<MeterUiModel, MeterListItemBinding>
     private lateinit var apartmentListAdapter: CustomListAdapter<ApartmentUiModel, ApartmentListItemBinding>
 
-    private lateinit var apartmentList: List<ApartmentUiModel>
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +49,9 @@ class MeterListView : Fragment() {
         viewModel.meterList.observe(viewLifecycleOwner) {
             meterListAdapter.submitList(it)
         }
+        viewModel.apartmentList.observe(viewLifecycleOwner) {
+            apartmentListAdapter.submitList(it)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -70,7 +71,7 @@ class MeterListView : Fragment() {
                     issuedAt = item.issuedAt,
                     isIssued = item.isIssued,
                     apartmentId = item.apartmentId,
-                    address = "пер. Соборный 99, кв. 12",
+                    address = item.address,
                     currentReading = item.currentReading?.toString() ?: "—",
                     typeOfServiceName = item.typeOfServiceName,
                     unitName = item.unitName
@@ -98,25 +99,12 @@ class MeterListView : Fragment() {
                 binding.apartment = item
             },
             onItemClick = { item ->
-                item.selected = true
-                apartmentList.forEach { otherItem ->
-                    if (otherItem != item) {
-                        otherItem.selected = false
-                    }
-                }
-                apartmentListAdapter.submitList(apartmentList)
+                viewModel.changeSelectedApartment(item)
                 apartmentListAdapter.notifyDataSetChanged()
             }
         )
 
         binding.apartmentRecyclerView.adapter = apartmentListAdapter
-
-        apartmentList = listOf(
-            ApartmentUiModel(id = 1, name = "пер. Соборный 99, кв. 12", selected = true),
-            ApartmentUiModel(id = 2, name = "ул. Малюгина 124, кв. 12", selected = false)
-        )
-
-        apartmentListAdapter.submitList(apartmentList)
     }
 
     override fun onDestroyView() {
