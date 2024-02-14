@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.meter.models
+package com.example.myhome.presentation.models
 
 import com.example.myhome.common.models.Adaptive
 import com.example.myhome.common.models.DateConverter

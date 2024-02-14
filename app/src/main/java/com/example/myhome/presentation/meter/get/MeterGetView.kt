@@ -12,8 +12,8 @@ import com.example.myhome.R
 import com.example.myhome.databinding.MeterGetViewBinding
 import com.example.myhome.databinding.ReadingListItemBinding
 import com.example.myhome.presentation.CustomListAdapter
-import com.example.myhome.presentation.meter.models.MeterGetToUpdateParcelableModel
-import com.example.myhome.presentation.meter.models.ReadingUiModel
+import com.example.myhome.presentation.models.MeterGetToUpdateParcelableModel
+import com.example.myhome.presentation.models.ReadingUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

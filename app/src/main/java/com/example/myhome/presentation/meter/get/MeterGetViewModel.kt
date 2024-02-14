@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myhome.meter.models.ReadingGetModel
 import com.example.myhome.meter.usecases.ReadingListUseCase
-import com.example.myhome.presentation.meter.models.MeterListToGetParcelableModel
+import com.example.myhome.presentation.models.MeterListToGetParcelableModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch

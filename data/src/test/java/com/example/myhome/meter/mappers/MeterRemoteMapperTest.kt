@@ -21,33 +21,6 @@ class MeterRemoteMapperTest {
         date = dateMapper.mapyyyyMMdd(dateString)
     }
     @Test
-    fun `map correct meter`() {
-        val dto = MeterGetDto(
-            id = 1,
-            factoryNumber = "1238949637983",
-            verifiedAt = dateString,
-            issuedAt = dateString,
-            apartmentId = 101,
-            typeOfServiceId = 1,
-            currentReading = 43.4,
-            typeOfServiceName = "Электроэнергия",
-            unitName = "кВт"
-        )
-        val expected = MeterGetModel(
-            id = 1,
-            factoryNumber = "1238949637983",
-            verifiedAt = date,
-            issuedAt = date,
-            apartmentId = 101,
-            typeOfServiceId = 1,
-            currentReading = 43.4,
-            typeOfServiceName = "Электроэнергия",
-            unitName = "кВт"
-        )
-        val actual = meterMapper.mapToDomain(dto)
-        Assertions.assertEquals(expected, actual)
-    }
-    @Test
     fun `map correct list`() {
         val dto = listOf(
             MeterGetDto(

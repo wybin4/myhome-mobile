@@ -22,20 +22,4 @@ class MeterRemoteMapper(private val dateMapper: DateMapper) {
                 }
             }
     }
-
-    fun mapToDomain(meter: MeterGetDto): MeterGetModel {
-        return meter.run {
-            MeterGetModel(
-                id = id,
-                factoryNumber = factoryNumber,
-                verifiedAt = dateMapper.mapyyyyMMdd(verifiedAt),
-                issuedAt = dateMapper.mapyyyyMMdd(issuedAt),
-                apartmentId = apartmentId,
-                typeOfServiceId = typeOfServiceId,
-                currentReading = currentReading,
-                typeOfServiceName = typeOfServiceName,
-                unitName = unitName
-            )
-        }
-    }
 }

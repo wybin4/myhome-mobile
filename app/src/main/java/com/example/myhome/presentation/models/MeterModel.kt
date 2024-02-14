@@ -1,13 +1,11 @@
-package com.example.myhome.presentation.meter.models
+package com.example.myhome.presentation.models
 
-import com.example.myhome.R
 import android.os.Parcel
 import android.os.Parcelable
 import com.example.myhome.common.models.Adaptive
 import com.example.myhome.common.models.DateConverter
 import java.util.Calendar
 import java.util.Date
-
 
 data class MeterUiModel(
     override val id: Int,
@@ -21,7 +19,6 @@ data class MeterUiModel(
     val unitName: String,
     var isIssued: Boolean
 ) : Adaptive, DateConverter {
-
     fun formatIssuedAt(): String {
         return formatDate(issuedAt)
     }

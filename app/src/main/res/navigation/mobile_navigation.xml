@@ -42,7 +42,7 @@
             app:destination="@id/update_meter" />
         <argument
             android:name="meter"
-            app:argType="com.example.myhome.presentation.meter.models.MeterListToGetParcelableModel" />
+            app:argType="com.example.myhome.presentation.models.MeterListToGetParcelableModel" />
     </fragment>
 
     <fragment
@@ -55,7 +55,7 @@
             app:destination="@id/get_meter" />
         <argument
             android:name="meter"
-            app:argType="com.example.myhome.presentation.meter.models.MeterGetToUpdateParcelableModel" />
+            app:argType="com.example.myhome.presentation.models.MeterGetToUpdateParcelableModel" />
     </fragment>
 
 <!--    <fragment-->
