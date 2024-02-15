@@ -73,11 +73,11 @@ class MeterListToGetParcelableModel(
 ) : ParcelableModel(), DateConverter {
     constructor(parcel: Parcel) : this(
         id = parcel.readInt(),
-        apartmentId = parcel.readInt(),
         factoryNumber = parcel.readString() ?: "",
         verifiedAt = Date(parcel.readLong()),
         issuedAt = Date(parcel.readLong()),
         isIssued = parcel.readInt() != 0,
+        apartmentId = parcel.readInt(),
         address = parcel.readString() ?: "",
         currentReading = parcel.readString() ?: "—",
         typeOfServiceName = parcel.readString() ?: "",
@@ -97,9 +97,34 @@ class MeterListToGetParcelableModel(
         parcel.writeLong(verifiedAt.time)
         parcel.writeLong(issuedAt.time)
         parcel.writeInt(if (isIssued) 1 else 0)
-        parcel.writeInt(id)
+        parcel.writeInt(apartmentId)
         parcel.writeString(address)
         parcel.writeString(currentReading)
+        parcel.writeString(typeOfServiceName)
+        parcel.writeString(unitName)
+    }
+
+}
+
+class MeterGetToScanParcelableModel(
+    val meterId: Int,
+    val address: String,
+    val previousReading: Float,
+    val typeOfServiceName: String,
+    val unitName: String
+) : ParcelableModel(), DateConverter {
+    constructor(parcel: Parcel) : this(
+        meterId = parcel.readInt(),
+        address = parcel.readString() ?: "",
+        previousReading = parcel.readFloat(),
+        typeOfServiceName = parcel.readString() ?: "",
+        unitName = parcel.readString() ?: ""
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(meterId)
+        parcel.writeString(address)
+        parcel.writeFloat(previousReading)
         parcel.writeString(typeOfServiceName)
         parcel.writeString(unitName)
     }

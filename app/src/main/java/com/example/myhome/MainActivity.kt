@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                 actionBarBinding.placeholder.visibility = View.INVISIBLE
             } else {
                 actionBarBinding.placeholder.visibility = View.GONE
+                navView.visibility = View.GONE
             }
         }
 

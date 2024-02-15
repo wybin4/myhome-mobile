@@ -12,6 +12,7 @@ import com.example.myhome.R
 import com.example.myhome.databinding.MeterGetViewBinding
 import com.example.myhome.databinding.ReadingListItemBinding
 import com.example.myhome.presentation.CustomListAdapter
+import com.example.myhome.presentation.models.MeterGetToScanParcelableModel
 import com.example.myhome.presentation.models.MeterGetToUpdateParcelableModel
 import com.example.myhome.presentation.models.ReadingUiModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +51,20 @@ class MeterGetView : Fragment() {
             findNavController().navigate(R.id.action_meterGetView_to_meterUpdateView, bundle)
         }
         binding.addReadingButton.setOnClickListener {
-//            findNavController().navigate(R.id.action_MeterListView_to_MeterAddView)
+            val prevReading = viewModel.readingList.value?.firstOrNull()?.reading?.toFloat() ?: 0f
+
+            val meter = MeterGetToScanParcelableModel(
+                meterId = viewModel.meterParcelable.id,
+                address = viewModel.meterParcelable.address,
+                previousReading = prevReading,
+                typeOfServiceName = viewModel.meterParcelable.typeOfServiceName,
+                unitName = viewModel.meterParcelable.unitName
+            )
+
+            val bundle = Bundle().apply {
+                putParcelable("meter", meter)
+            }
+            findNavController().navigate(R.id.action_meterGetView_to_meterScanView, bundle)
         }
 
         return binding.root

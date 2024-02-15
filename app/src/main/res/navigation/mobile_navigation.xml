@@ -40,9 +40,25 @@
         <action
             android:id="@+id/action_meterGetView_to_meterUpdateView"
             app:destination="@id/update_meter" />
+        <action
+            android:id="@+id/action_meterGetView_to_meterScanView"
+            app:destination="@id/scan_meter" />
         <argument
             android:name="meter"
             app:argType="com.example.myhome.presentation.models.MeterListToGetParcelableModel" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scan_meter"
+        android:name="com.example.myhome.presentation.meter.scan.MeterScanView"
+        android:label="@string/title_scan_meter"
+        tools:layout="@layout/meter_scan_view">
+        <action
+            android:id="@+id/action_meterScanView_to_meterGetView"
+            app:destination="@id/list_meter" />
+        <argument
+            android:name="meter"
+            app:argType="com.example.myhome.presentation.models.MeterGetToScanParcelableModel" />
     </fragment>
 
     <fragment
