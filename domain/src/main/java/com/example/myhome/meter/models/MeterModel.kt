@@ -1,6 +1,5 @@
 package com.example.myhome.meter.models
 
-import com.example.myhome.common.models.Adaptive
 import java.util.Date
 
 abstract class MeterModel(
@@ -24,6 +23,7 @@ data class MeterGetModel(
     override val issuedAt: Date,
     override val typeOfServiceId: Int,
     val typeOfServiceName: String,
+    val typeOfServiceEngName: String,
     val currentReading: Double?,
     val unitName: String
 ): MeterModel (

@@ -4,6 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.example.myhome.common.models.Adaptive
 import com.example.myhome.common.models.DateConverter
+import com.example.myhome.presentation.DoubleNullableConverter
+import com.example.myhome.presentation.IconPicker
 import java.util.Calendar
 import java.util.Date
 
@@ -16,9 +18,10 @@ data class MeterUiModel(
     val address: String,
     val currentReading: Double?,
     val typeOfServiceName: String,
+    val typeOfServiceEngName: String,
     val unitName: String,
     var isIssued: Boolean
-) : Adaptive, DateConverter {
+) : Adaptive, DateConverter, DoubleNullableConverter, IconPicker {
     fun formatIssuedAt(): String {
         return formatDate(issuedAt)
     }
@@ -31,6 +34,12 @@ data class MeterUiModel(
         }.time
         isIssued = issuedAt.before(threeDaysLater)
         return this
+    }
+    fun formatCurrentReading(): String {
+        return x2doubleToString(currentReading, unitName)
+    }
+    fun getIcon(): Int? {
+        return getMeterIcon(typeOfServiceEngName)
     }
 }
 
@@ -67,10 +76,11 @@ class MeterListToGetParcelableModel(
     val isIssued: Boolean,
     val apartmentId: Int,
     val address: String,
-    val currentReading: String,
+    val currentReading: Double?,
     val typeOfServiceName: String,
+    val typeOfServiceEngName: String,
     val unitName: String
-) : ParcelableModel(), DateConverter {
+) : ParcelableModel(), DateConverter, DoubleNullableConverter, IconPicker {
     constructor(parcel: Parcel) : this(
         id = parcel.readInt(),
         factoryNumber = parcel.readString() ?: "",
@@ -79,8 +89,9 @@ class MeterListToGetParcelableModel(
         isIssued = parcel.readInt() != 0,
         apartmentId = parcel.readInt(),
         address = parcel.readString() ?: "",
-        currentReading = parcel.readString() ?: "—",
+        currentReading = parcel.readDouble(),
         typeOfServiceName = parcel.readString() ?: "",
+        typeOfServiceEngName = parcel.readString() ?: "",
         unitName = parcel.readString() ?: ""
     )
 
@@ -89,6 +100,12 @@ class MeterListToGetParcelableModel(
     }
     fun formatVerifiedAt(): String {
         return formatDate(verifiedAt)
+    }
+    fun formatCurrentReading(): String {
+        return doubleToString(currentReading)
+    }
+    fun getIcon(): Int? {
+        return getMeterIcon(typeOfServiceEngName)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -99,11 +116,11 @@ class MeterListToGetParcelableModel(
         parcel.writeInt(if (isIssued) 1 else 0)
         parcel.writeInt(apartmentId)
         parcel.writeString(address)
-        parcel.writeString(currentReading)
+        parcel.writeDouble(currentReading ?: Double.NaN)
         parcel.writeString(typeOfServiceName)
+        parcel.writeString(typeOfServiceEngName)
         parcel.writeString(unitName)
     }
-
 }
 
 class MeterGetToScanParcelableModel(
@@ -111,21 +128,28 @@ class MeterGetToScanParcelableModel(
     val address: String,
     val previousReading: Double,
     val typeOfServiceName: String,
+    val typeOfServiceEngName: String,
     val unitName: String
-) : ParcelableModel() {
+) : ParcelableModel(), IconPicker {
     constructor(parcel: Parcel) : this(
         meterId = parcel.readInt(),
         address = parcel.readString() ?: "",
         previousReading = parcel.readDouble(),
         typeOfServiceName = parcel.readString() ?: "",
+        typeOfServiceEngName = parcel.readString() ?: "",
         unitName = parcel.readString() ?: ""
     )
+
+    fun getIcon(): Int? {
+        return getMeterIcon(typeOfServiceEngName)
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(meterId)
         parcel.writeString(address)
         parcel.writeDouble(previousReading)
         parcel.writeString(typeOfServiceName)
+        parcel.writeString(typeOfServiceEngName)
         parcel.writeString(unitName)
     }
 

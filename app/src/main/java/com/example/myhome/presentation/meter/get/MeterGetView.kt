@@ -35,42 +35,13 @@ class MeterGetView : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.meterParcelable = requireArguments().getParcelable("meter")!!
+        if (viewModel.meterParcelable.currentReading == null) {
+            binding.unitName.visibility = View.GONE
+        }
         binding.verifiedAt.text = viewModel.meterParcelable.formatVerifiedAt()
 
         setupRecyclerView()
-//        viewModel.fetchReadingList()
-//        lifecycleScope.launch {
-//            viewModel.fetchReadingList()
-//        }
-
-        binding.updateMeterButton.setOnClickListener {
-            val meter = MeterGetToUpdateParcelableModel(
-                meterId = viewModel.meterParcelable.id,
-                meterName = viewModel.meterParcelable.address + ", " + viewModel.meterParcelable.typeOfServiceName,
-                apartmentId = viewModel.meterParcelable.apartmentId
-            )
-
-            val bundle = Bundle().apply {
-                putParcelable("meter", meter)
-            }
-            findNavController().navigate(R.id.action_meterGetView_to_meterUpdateView, bundle)
-        }
-        binding.addReadingButton.setOnClickListener {
-            val prevReading = viewModel.readingList.value?.firstOrNull()?.reading?.toDouble() ?: 0.0
-
-            val meter = MeterGetToScanParcelableModel(
-                meterId = viewModel.meterParcelable.id,
-                address = viewModel.meterParcelable.address,
-                previousReading = prevReading,
-                typeOfServiceName = viewModel.meterParcelable.typeOfServiceName,
-                unitName = viewModel.meterParcelable.unitName
-            )
-
-            val bundle = Bundle().apply {
-                putParcelable("meter", meter)
-            }
-            findNavController().navigate(R.id.action_meterGetView_to_meterScanView, bundle)
-        }
+        setupActionButtons()
 
         return binding.root
     }
@@ -94,6 +65,42 @@ class MeterGetView : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.fetchReadingList()
+    }
+
+    private fun setupActionButtons() {
+        binding.updateMeterButton.setOnClickListener {
+            val meter = MeterGetToUpdateParcelableModel(
+                meterId = viewModel.meterParcelable.id,
+                meterName = viewModel.meterParcelable.address + ", " + viewModel.meterParcelable.typeOfServiceName,
+                apartmentId = viewModel.meterParcelable.apartmentId
+            )
+
+            val bundle = Bundle().apply {
+                putParcelable("meter", meter)
+            }
+            findNavController().navigate(R.id.action_meterGetView_to_meterUpdateView, bundle)
+        }
+        if (viewModel.meterParcelable.currentReading == null) {
+            binding.addReadingButton.setOnClickListener {
+                val prevReading = viewModel.readingList.value?.firstOrNull()?.reading?.toDouble() ?: 0.0
+
+                val meter = MeterGetToScanParcelableModel(
+                    meterId = viewModel.meterParcelable.id,
+                    address = viewModel.meterParcelable.address,
+                    previousReading = prevReading,
+                    typeOfServiceName = viewModel.meterParcelable.typeOfServiceName,
+                    typeOfServiceEngName = viewModel.meterParcelable.typeOfServiceEngName,
+                    unitName = viewModel.meterParcelable.unitName
+                )
+
+                val bundle = Bundle().apply {
+                    putParcelable("meter", meter)
+                }
+                findNavController().navigate(R.id.action_meterGetView_to_meterScanView, bundle)
+            }
+        } else {
+            binding.addReadingButton.visibility = View.GONE
+        }
     }
 
     private fun setupRecyclerView() {

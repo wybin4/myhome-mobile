@@ -35,6 +35,7 @@ data class MeterGetDto(
     val issuedAt: String,
     val typeOfServiceId: Int,
     val typeOfServiceName: String,
+    val typeOfServiceEngName: String,
     val currentReading: Double?,
     val unitName: String
 ): DateConverter {

@@ -16,6 +16,7 @@ class MeterRemoteMapper {
                     typeOfServiceId = it.typeOfServiceId,
                     currentReading = it.currentReading,
                     typeOfServiceName = it.typeOfServiceName,
+                    typeOfServiceEngName = it.typeOfServiceEngName,
                     unitName = it.unitName
                 )
             }

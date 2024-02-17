@@ -4,4 +4,5 @@ data class TypeOfServiceGetDto(
     val id: Int,
     val name: String,
     val unitId: Int,
+    val engName: String
 )

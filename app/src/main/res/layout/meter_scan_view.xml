@@ -41,7 +41,7 @@
                         <ImageView
                             android:layout_width="17dp"
                             android:layout_height="17dp"
-                            android:src="@drawable/heating"
+                            android:src="@{viewModel.meterParcelable.getIcon()}"
                             app:tint="@color/white" />
                     </LinearLayout>
 

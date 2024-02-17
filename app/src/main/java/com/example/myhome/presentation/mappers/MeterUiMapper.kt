@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.mappers
 
+import com.example.myhome.R
 import com.example.myhome.meter.models.ApartmentWithMeterGetModel
 import com.example.myhome.presentation.models.ApartmentUiModel
 import com.example.myhome.presentation.models.MeterUiModel
@@ -25,6 +26,7 @@ class MeterUiMapper @Inject constructor() {
                 issuedAt = meter.issuedAt,
                 currentReading = meter.currentReading,
                 typeOfServiceName = meter.typeOfServiceName,
+                typeOfServiceEngName = meter.typeOfServiceEngName,
                 unitName = meter.unitName,
                 apartmentId = apartment.id,
                 address = apartment.address,

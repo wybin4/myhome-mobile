@@ -110,7 +110,7 @@
                                     <TextView
                                         android:id="@+id/current_reading"
                                         style="@style/Text"
-                                        android:text="@{viewModel.meterParcelable.currentReading}"
+                                        android:text="@{viewModel.meterParcelable.formatCurrentReading()}"
                                         android:textSize="36dp"
                                         android:textStyle="bold"/>
                                     <TextView
@@ -145,7 +145,7 @@
                                 <ImageView
                                     android:layout_width="34dp"
                                     android:layout_height="34dp"
-                                    android:src="@drawable/heating"
+                                    android:src="@{viewModel.meterParcelable.getIcon()}"
                                     app:tint="@color/primary"/>
                             </LinearLayout>
                         </LinearLayout>

@@ -1,7 +1,6 @@
 package com.example.myhome.presentation.meter.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.example.myhome.presentation.models.ApartmentUiModel
 import com.example.myhome.presentation.models.MeterListToGetParcelableModel
 import com.example.myhome.presentation.models.MeterUiModel
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MeterListView : Fragment() {
@@ -72,8 +70,9 @@ class MeterListView : Fragment() {
                     isIssued = item.isIssued,
                     apartmentId = item.apartmentId,
                     address = item.address,
-                    currentReading = item.currentReading?.toString() ?: "—",
+                    currentReading = item.currentReading,
                     typeOfServiceName = item.typeOfServiceName,
+                    typeOfServiceEngName = item.typeOfServiceEngName,
                     unitName = item.unitName
                 )
 

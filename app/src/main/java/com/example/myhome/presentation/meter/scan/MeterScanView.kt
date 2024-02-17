@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.databinding.MeterScanViewBinding
+import com.example.myhome.presentation.DigitPicker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +17,8 @@ class MeterScanView : Fragment() {
     private var _binding: MeterScanViewBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<MeterScanViewModel>()
+    
+    private val digitPicker = DigitPicker()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +42,7 @@ class MeterScanView : Fragment() {
     private fun nextClick() {
         if (binding.btnNext.isEnabled) {
             val newValString = binding.currentReading.text.toString()
-            val newValDouble = newValString.replace(',', '.').toDoubleOrNull() ?: 0.0
-
-            viewModel.addMeterReading(newValDouble)
+            viewModel.addMeterReading(digitPicker.stringToDouble(newValString))
             findNavController().popBackStack()
         }
     }
@@ -49,48 +50,32 @@ class MeterScanView : Fragment() {
     private val digitClickListener = View.OnClickListener { view ->
         var buttonText = (view as Button).text.toString()
         var prevVal = binding.currentReading.text.toString()
-        if (prevVal == "0" && buttonText != ",") {
-            prevVal = ""
-        }
+        binding.currentReading.text = digitPicker.addDigit(buttonText, prevVal)
 
-        val commaCount = prevVal.count { it == ',' }
-        if (commaCount > 0 && buttonText == ",") {
-            buttonText = ""
-        }
-        binding.currentReading.text = prevVal + buttonText
-
-        val newValString = binding.currentReading.text.toString()
-        val newValDouble = newValString.replace(',', '.').toDoubleOrNull() ?: 0.0
-        calcConsumption(newValDouble, viewModel.meterParcelable.previousReading)
+        setConsumption(digitPicker.stringToDouble(
+            binding.currentReading.text.toString()),
+            viewModel.meterParcelable.previousReading
+        )
     }
 
-    private fun calcConsumption(new: Double, prev: Double){
-        if (new > prev) {
-            val newConsumption = new - prev
-            val formattedValue = String.format("%.3f", newConsumption)
-            binding.consumption.text = formattedValue
-
-            binding.btnNext.isEnabled = true // !!!!!
-        } else {
-            binding.consumption.text = "0"
-            binding.btnNext.isEnabled = false // !!!!!
-        }
+    private fun setConsumption(new: Double, prev: Double) {
+        val consumption = digitPicker.calcConsumption(new, prev)
+        binding.consumption.text = consumption
+        binding.btnNext.isEnabled = consumption != "0"
     }
 
     private fun clearDigit(){
-        var prevVal = binding.currentReading.text.toString()
-        if (prevVal.length > 1) {
-            prevVal = prevVal.slice(0 until prevVal.length - 1)
-            binding.currentReading.text = prevVal
-        } else if (prevVal.length == 1 && prevVal != "0") {
-            binding.currentReading.text = "0"
+        val oldVal = binding.currentReading.text.toString()
+        val newVal = digitPicker.clearDigit(oldVal)
+        if (newVal != null) {
+            binding.currentReading.text = newVal
+            setConsumption(
+                digitPicker.stringToDouble(newVal),
+                viewModel.meterParcelable.previousReading
+            )
         }
-
-        val newValString = binding.currentReading.text.toString()
-        val newValDouble = newValString.replace(',', '.').toDoubleOrNull() ?: 0.0
-        calcConsumption(newValDouble, viewModel.meterParcelable.previousReading)
     }
-
+    
     private fun setupDigits() {
         binding.apply {
             btn0.setOnClickListener(digitClickListener)

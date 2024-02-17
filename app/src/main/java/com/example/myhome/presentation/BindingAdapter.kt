@@ -18,5 +18,11 @@ object BindingAdapter {
         view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
+    @JvmStatic
+    @BindingAdapter("android:src")
+    fun setImageResource(imageView: ImageView, resId: Int) {
+        imageView.setImageResource(resId)
+    }
+
 
 }
