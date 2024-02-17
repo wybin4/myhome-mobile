@@ -109,14 +109,14 @@ class MeterListToGetParcelableModel(
 class MeterGetToScanParcelableModel(
     val meterId: Int,
     val address: String,
-    val previousReading: Float,
+    val previousReading: Double,
     val typeOfServiceName: String,
     val unitName: String
-) : ParcelableModel(), DateConverter {
+) : ParcelableModel() {
     constructor(parcel: Parcel) : this(
         meterId = parcel.readInt(),
         address = parcel.readString() ?: "",
-        previousReading = parcel.readFloat(),
+        previousReading = parcel.readDouble(),
         typeOfServiceName = parcel.readString() ?: "",
         unitName = parcel.readString() ?: ""
     )
@@ -124,7 +124,7 @@ class MeterGetToScanParcelableModel(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(meterId)
         parcel.writeString(address)
-        parcel.writeFloat(previousReading)
+        parcel.writeDouble(previousReading)
         parcel.writeString(typeOfServiceName)
         parcel.writeString(unitName)
     }

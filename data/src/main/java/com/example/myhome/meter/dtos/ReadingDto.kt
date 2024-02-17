@@ -1,22 +1,14 @@
 package com.example.myhome.meter.dtos
 
-abstract class ReadingDto(
-    open val id: Int?,
-    open val meterId: Int,
-    open val reading: Double,
-    open val readAt: String
-)
+import com.example.myhome.common.models.DateConverter
+import com.example.myhome.meter.models.MeterType
+import java.util.Date
 
 data class ReadingAddDto(
-    override val id: Int?,
-    override val meterId: Int,
-    override val reading: Double,
-    override val readAt: String
-) : ReadingDto(
-    id = id,
-    meterId = meterId,
-    reading = reading,
-    readAt = readAt
+    val meterId: Int,
+    val meterType: MeterType = MeterType.Individual,
+    val reading: Double,
+    val readAt: String
 )
 
 data class ReadingGetDto(
@@ -24,7 +16,11 @@ data class ReadingGetDto(
     val reading: Double,
     val consumption: Double,
     val readAt: String
-)
+): DateConverter {
+    fun formatReadAt(): Date {
+        return parseDate(readAt)
+    }
+}
 
 data class ReadingListDto(
     val meterId: Int

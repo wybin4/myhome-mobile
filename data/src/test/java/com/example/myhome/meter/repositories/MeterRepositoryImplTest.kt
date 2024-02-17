@@ -1,6 +1,6 @@
 package com.example.myhome.meter.repositories
 
-import com.example.myhome.base.mappers.DateMapper
+import com.example.myhome.DateMapper
 import com.example.myhome.meter.dtos.ApartmentWithMeterGetDto
 import com.example.myhome.meter.dtos.MeterGetDto
 import com.example.myhome.meter.mappers.MeterRemoteMapper
@@ -9,29 +9,19 @@ import com.example.myhome.meter.models.MeterGetModel
 import com.example.myhome.meter.storages.MeterStorage
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
-import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
-import java.util.Date
 
 class MeterRepositoryImplTest {
-    private lateinit var meterRepository: MeterRepository
-    private lateinit var meterStorage: MeterStorage
-    private lateinit var date: Date
-    private lateinit var dateString: String
+    private val meterRemoteMapper = MeterRemoteMapper()
+    private val meterStorage = mock(MeterStorage::class.java)
+    private val meterRepository = MeterRepositoryImpl(meterStorage, meterRemoteMapper)
+    private val dateMapper = DateMapper()
 
-    @Before
-    fun setUp() {
-        meterStorage = mock(MeterStorage::class.java)
-
-        val dateMapper = DateMapper()
-        val meterRemoteMapper = MeterRemoteMapper(dateMapper)
-        dateString = "07.02.2024"
-        date = dateMapper.mapyyyyMMdd(dateString)
-        meterRepository = MeterRepositoryImpl(meterStorage, meterRemoteMapper)
-    }
+    private val dateString = "07.02.2024"
+    private val date = dateMapper.mapyyyyMMdd(dateString)
 
     @Test
     fun `return correct list`() {

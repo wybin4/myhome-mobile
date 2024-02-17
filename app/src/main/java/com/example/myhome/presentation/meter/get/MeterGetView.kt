@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.MeterGetViewBinding
@@ -16,6 +17,7 @@ import com.example.myhome.presentation.models.MeterGetToScanParcelableModel
 import com.example.myhome.presentation.models.MeterGetToUpdateParcelableModel
 import com.example.myhome.presentation.models.ReadingUiModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MeterGetView : Fragment() {
@@ -35,8 +37,11 @@ class MeterGetView : Fragment() {
         viewModel.meterParcelable = requireArguments().getParcelable("meter")!!
         binding.verifiedAt.text = viewModel.meterParcelable.formatVerifiedAt()
 
-        viewModel.fetchReadingList()
         setupRecyclerView()
+//        viewModel.fetchReadingList()
+//        lifecycleScope.launch {
+//            viewModel.fetchReadingList()
+//        }
 
         binding.updateMeterButton.setOnClickListener {
             val meter = MeterGetToUpdateParcelableModel(
@@ -51,7 +56,7 @@ class MeterGetView : Fragment() {
             findNavController().navigate(R.id.action_meterGetView_to_meterUpdateView, bundle)
         }
         binding.addReadingButton.setOnClickListener {
-            val prevReading = viewModel.readingList.value?.firstOrNull()?.reading?.toFloat() ?: 0f
+            val prevReading = viewModel.readingList.value?.firstOrNull()?.reading?.toDouble() ?: 0.0
 
             val meter = MeterGetToScanParcelableModel(
                 meterId = viewModel.meterParcelable.id,
@@ -82,10 +87,13 @@ class MeterGetView : Fragment() {
                     unitName = viewModel.meterParcelable.unitName
                 )
             }
-
             readingListAdapter.submitList(list)
-
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchReadingList()
     }
 
     private fun setupRecyclerView() {

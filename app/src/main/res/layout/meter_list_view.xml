@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/scroll_view">
@@ -43,30 +43,6 @@
                                 android:nestedScrollingEnabled="false"
                                 android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-<!--                            <Button-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:layout_height="40dp"-->
-<!--                                android:backgroundTint="@color/primary"-->
-<!--                                android:singleLine="true"-->
-<!--                                android:text="Ростов-на-Дону, пер. Соборный 99, кв. 12"-->
-<!--                                android:textAllCaps="false"-->
-<!--                                app:cornerRadius="15dp"-->
-<!--                                android:layout_marginRight="20dp"/>-->
-
-<!--                            <Button-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:layout_height="40dp"-->
-<!--                                android:backgroundTint="@color/primary_light"-->
-<!--                                android:singleLine="true"-->
-<!--                                android:text="Ростов-на-Дону, ул. Малюгина 35, кв. 24"-->
-<!--                                android:textColor="@color/primary"-->
-<!--                                android:textAllCaps="false"-->
-<!--                                app:cornerRadius="15dp"-->
-<!--                                android:elevation="0dp"/>-->
-
                         </LinearLayout>
                     </RelativeLayout>
                     <LinearLayout
@@ -92,7 +68,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

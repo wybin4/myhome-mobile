@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.meter.get
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,11 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.myhome.meter.models.ReadingGetModel
 import com.example.myhome.meter.usecases.ReadingListUseCase
 import com.example.myhome.presentation.models.MeterListToGetParcelableModel
+import com.example.myhome.presentation.models.ReadingScanToGetParcelableModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel

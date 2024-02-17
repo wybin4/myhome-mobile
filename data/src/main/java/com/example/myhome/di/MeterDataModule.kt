@@ -1,6 +1,5 @@
 package com.example.myhome.di
 
-import com.example.myhome.base.mappers.DateMapper
 import com.example.myhome.meter.repositories.MeterRepositoryImpl
 import com.example.myhome.meter.storages.MeterStorage
 import com.example.myhome.meter.mappers.MeterRemoteMapper
@@ -21,13 +20,13 @@ import javax.inject.Singleton
 class MeterDataModule {
     @Provides
     @Singleton
-    fun provideReadingRepository(readingStorage: MeterStorage, readingRemoteMapper: ReadingRemoteMapper): ReadingRepository {
-        return ReadingRepositoryImpl(readingStorage, readingRemoteMapper)
+    fun provideReadingRepository(meterStorage: MeterStorage, readingRemoteMapper: ReadingRemoteMapper): ReadingRepository {
+        return ReadingRepositoryImpl(meterStorage, readingRemoteMapper)
     }
     @Provides
     @Singleton
-    fun provideReadingMapper(dateMapper: DateMapper): ReadingRemoteMapper {
-        return ReadingRemoteMapper(dateMapper)
+    fun provideReadingMapper(): ReadingRemoteMapper {
+        return ReadingRemoteMapper()
     }
     @Provides
     @Singleton
@@ -46,8 +45,8 @@ class MeterDataModule {
     }
     @Provides
     @Singleton
-    fun provideMeterMapper(dateMapper: DateMapper): MeterRemoteMapper {
-        return MeterRemoteMapper(dateMapper)
+    fun provideMeterMapper(): MeterRemoteMapper {
+        return MeterRemoteMapper()
     }
 
 }

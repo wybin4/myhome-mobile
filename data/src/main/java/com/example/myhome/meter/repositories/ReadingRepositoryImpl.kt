@@ -11,11 +11,9 @@ class ReadingRepositoryImpl(
     private val meterStorage: MeterStorage,
     private val readingRemoteMapper: ReadingRemoteMapper
 ): ReadingRepository {
-    override fun addReading(reading: ReadingAddModel): Flow<ReadingGetModel> {
-//        val meterDto = readingRemoteMapper.mapAddToRemote(reading)
-//        val result = meterStorage.addReading(meterDto)
-//        return result.map { readingRemoteMapper.mapToDomain(it) }
-        TODO("Not yet implemented")
+    override suspend fun addReading(reading: ReadingAddModel) {
+        val readingDto = readingRemoteMapper.mapAddToRemote(reading)
+        meterStorage.addReading(readingDto)
     }
 
     override fun listReading(meterId: Int): Flow<List<ReadingGetModel>> = flow {

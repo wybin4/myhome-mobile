@@ -1,8 +1,8 @@
 package com.example.myhome.meter.storages
 
 import com.example.myhome.meter.dtos.ApartmentWithMeterGetDto
-import com.example.myhome.meter.dtos.MeterGetDto
 import com.example.myhome.meter.dtos.ApartmentWithMeterListDto
+import com.example.myhome.meter.dtos.ReadingAddDto
 import com.example.myhome.meter.dtos.ReadingGetDto
 import com.example.myhome.meter.dtos.ReadingListDto
 import com.example.myhome.meter.services.MeterApiService
@@ -15,5 +15,8 @@ class MeterRemoteStorage(private val meterApiService: MeterApiService): MeterSto
     override suspend fun listReading(meterId: Int): List<ReadingGetDto> {
         val request = ReadingListDto(meterId)
         return meterApiService.listReading(request)
+    }
+    override suspend fun addReading(reading: ReadingAddDto) {
+        meterApiService.addReading(reading)
     }
 }

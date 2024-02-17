@@ -5,6 +5,7 @@ import com.example.myhome.base.models.UserRole
 import com.example.myhome.appeal.dtos.AppealAddDto
 import com.example.myhome.appeal.dtos.VerifyIndividualMeterData
 import com.example.myhome.appeal.models.AppealType
+import com.example.myhome.common.models.DateConverter
 import com.example.myhome.meter.models.MeterType
 import java.util.Date
 
@@ -36,7 +37,14 @@ data class MeterGetDto(
     val typeOfServiceName: String,
     val currentReading: Double?,
     val unitName: String
-)
+): DateConverter {
+    fun formatIssuedAt(): Date {
+        return parseDate(issuedAt)
+    }
+    fun formatVerifiedAt(): Date {
+        return parseDate(verifiedAt)
+    }
+}
 
 data class MeterUpdateDto(
     override val managementCompanyId: Int,

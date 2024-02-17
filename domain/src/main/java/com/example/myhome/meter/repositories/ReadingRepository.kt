@@ -5,6 +5,6 @@ import com.example.myhome.meter.models.ReadingGetModel
 import kotlinx.coroutines.flow.Flow
 
 interface ReadingRepository {
-    fun addReading(reading: ReadingAddModel): Flow<ReadingGetModel>
+    suspend fun addReading(reading: ReadingAddModel)
     fun listReading(meterId: Int): Flow<List<ReadingGetModel>>
 }

@@ -1,13 +1,13 @@
 package com.example.myhome.presentation.meter.scan
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.myhome.databinding.MeterScanViewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +38,11 @@ class MeterScanView : Fragment() {
 
     private fun nextClick() {
         if (binding.btnNext.isEnabled) {
-            Log.e("nextClick", "nextClick")
+            val newValString = binding.currentReading.text.toString()
+            val newValDouble = newValString.replace(',', '.').toDoubleOrNull() ?: 0.0
+
+            viewModel.addMeterReading(newValDouble)
+            findNavController().popBackStack()
         }
     }
 
@@ -56,11 +60,11 @@ class MeterScanView : Fragment() {
         binding.currentReading.text = prevVal + buttonText
 
         val newValString = binding.currentReading.text.toString()
-        val newValFloat = newValString.replace(',', '.').toFloatOrNull() ?: 0f
-        calcConsumption(newValFloat, viewModel.meterParcelable.previousReading)
+        val newValDouble = newValString.replace(',', '.').toDoubleOrNull() ?: 0.0
+        calcConsumption(newValDouble, viewModel.meterParcelable.previousReading)
     }
 
-    private fun calcConsumption(new: Float, prev: Float){
+    private fun calcConsumption(new: Double, prev: Double){
         if (new > prev) {
             val newConsumption = new - prev
             val formattedValue = String.format("%.3f", newConsumption)
@@ -83,8 +87,8 @@ class MeterScanView : Fragment() {
         }
 
         val newValString = binding.currentReading.text.toString()
-        val newValFloat = newValString.replace(',', '.').toFloatOrNull() ?: 0f
-        calcConsumption(newValFloat, viewModel.meterParcelable.previousReading)
+        val newValDouble = newValString.replace(',', '.').toDoubleOrNull() ?: 0.0
+        calcConsumption(newValDouble, viewModel.meterParcelable.previousReading)
     }
 
     private fun setupDigits() {

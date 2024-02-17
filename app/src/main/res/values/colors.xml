@@ -9,6 +9,7 @@
     <color name="black_light">#54000000</color>
 
     <color name="white">#FFFFFFFF</color>
+    <color name="white_light">#54FFFFFF</color>
     <color name="white_night">#171717</color>
 
     <color name="transparent">#00FFFFFF</color>
