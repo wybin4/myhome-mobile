@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.myhome.HiltAndroidTestRunner"
     }
 
     buildTypes {
@@ -42,6 +42,7 @@ android {
 
 dependencies {
     val daggerVersion = "2.50"
+    val espressoVersion = "3.5.1"
     val truthVersion = "1.4.0"
 
     // projects
@@ -57,20 +58,31 @@ dependencies {
     // navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
-    //junit
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
-    // also testing
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
     //mockito
     testImplementation("org.mockito:mockito-core:5.3.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+    androidTestImplementation("org.mockito:mockito-android:5.10.0")
     // hilt
     implementation("com.google.dagger:hilt-android:${daggerVersion}")
     kapt("com.google.dagger:hilt-compiler:${daggerVersion}")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     // datepicker
     implementation("com.wdullaer:materialdatetimepicker:4.2.3")
+    //junit
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    // async testing
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
+    // espresso
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:$espressoVersion")
+    // hilt testing
+    androidTestImplementation("com.google.dagger:hilt-android-testing:${daggerVersion}")
+    kaptAndroidTest("com.google.dagger:hilt-compiler:${daggerVersion}")
+    // fragment testing
+    debugImplementation("androidx.fragment:fragment-testing:1.6.2")
 }

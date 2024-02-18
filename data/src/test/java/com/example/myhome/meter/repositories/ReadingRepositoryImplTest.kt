@@ -11,7 +11,7 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions
 import org.mockito.Mockito
 
-class ReadingRepositoryImplTest {
+class ReadingRepositoryTest {
     private val readingRemoteMapper = ReadingRemoteMapper()
     private val meterStorage = Mockito.mock(MeterStorage::class.java)
     private val readingRepository = ReadingRepositoryImpl(meterStorage, readingRemoteMapper)

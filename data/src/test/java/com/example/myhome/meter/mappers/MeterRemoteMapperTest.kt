@@ -26,6 +26,7 @@ class MeterRemoteMapperTest {
                 typeOfServiceId = 1,
                 currentReading = 4.4,
                 typeOfServiceName = "Электроэнергия",
+                typeOfServiceEngName = "Eletricity",
                 unitName = "кВт"
             ),
             MeterGetModel(
@@ -36,6 +37,7 @@ class MeterRemoteMapperTest {
                 typeOfServiceId = 1,
                 currentReading = 34.4,
                 typeOfServiceName = "ГВС",
+                typeOfServiceEngName = "Water",
                 unitName = "м3"
             )
         )
@@ -61,6 +63,7 @@ class MeterRemoteMapperTest {
                 typeOfServiceId = 1,
                 currentReading = 4.4,
                 typeOfServiceName = "Электроэнергия",
+                typeOfServiceEngName = "Eletricity",
                 unitName = "кВт"
             ),
             MeterGetDto(
@@ -71,6 +74,7 @@ class MeterRemoteMapperTest {
                 typeOfServiceId = 1,
                 currentReading = 34.4,
                 typeOfServiceName = "ГВС",
+                typeOfServiceEngName = "Water",
                 unitName = "м3"
             )
         )

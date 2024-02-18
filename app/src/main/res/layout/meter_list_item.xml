@@ -55,10 +55,11 @@
                         android:gravity="center"
                         android:background="@drawable/circle_normal"
                         android:backgroundTint="@{meter.isIssued ? @color/red_light : @color/primary_light}">
+
                         <ImageView
                             android:id="@+id/icon"
-                            android:layout_width="19dp"
-                            android:layout_height="19dp"
+                            android:layout_width="14dp"
+                            android:layout_height="10dp"
                             android:layout_gravity="center"
                             android:adjustViewBounds="true"
                             android:src="@{meter.getIcon()}"

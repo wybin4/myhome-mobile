@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Assertions
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 
-class MeterRepositoryImplTest {
+class MeterRepositoryTest {
     private val meterRemoteMapper = MeterRemoteMapper()
     private val meterStorage = mock(MeterStorage::class.java)
     private val meterRepository = MeterRepositoryImpl(meterStorage, meterRemoteMapper)
@@ -35,6 +35,7 @@ class MeterRepositoryImplTest {
                     typeOfServiceId = 1,
                     currentReading = 4.4,
                     typeOfServiceName = "Электроэнергия",
+                    typeOfServiceEngName = "Electricity",
                     unitName = "кВт"
                 ),
                 MeterGetModel(
@@ -45,6 +46,7 @@ class MeterRepositoryImplTest {
                     typeOfServiceId = 1,
                     currentReading = 34.4,
                     typeOfServiceName = "ГВС",
+                    typeOfServiceEngName = "Water",
                     unitName = "м3"
                 )
             )
@@ -70,6 +72,7 @@ class MeterRepositoryImplTest {
                     typeOfServiceId = 1,
                     currentReading = 4.4,
                     typeOfServiceName = "Электроэнергия",
+                    typeOfServiceEngName = "Electricity",
                     unitName = "кВт"
                 ),
                 MeterGetDto(
@@ -80,6 +83,7 @@ class MeterRepositoryImplTest {
                     typeOfServiceId = 1,
                     currentReading = 34.4,
                     typeOfServiceName = "ГВС",
+                    typeOfServiceEngName = "Water",
                     unitName = "м3"
                 )
             )
