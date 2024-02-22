@@ -35,7 +35,7 @@ android {
 
 dependencies {
     val retrofitVersion = "2.9.0"
-    val daggerVersion = "2.50"
+    val hiltVersion = "2.50"
 
     // projects
     implementation(project(":domain"))
@@ -52,7 +52,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
     implementation("com.squareup.retrofit2:converter-gson:${retrofitVersion}")
     // hilt
-    implementation("com.google.dagger:hilt-android:${daggerVersion}")
-    kapt("com.google.dagger:hilt-compiler:${daggerVersion}")
+    implementation("com.google.dagger:hilt-android:${hiltVersion}")
+    kapt("com.google.dagger:hilt-compiler:${hiltVersion}")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 }

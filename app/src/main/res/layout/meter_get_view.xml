@@ -159,6 +159,7 @@
                         android:paddingHorizontal="28dp">
 
                         <LinearLayout
+                            android:id="@+id/issued_card"
                             style="@style/AttentionCard"
                             android:layout_marginBottom="25dp"
                             android:visibility="@{viewModel.meterParcelable.isIssued}"
@@ -230,6 +231,7 @@
                                 >
                                 <!--                    иконка-->
                                 <LinearLayout
+                                    android:id="@+id/issued_at_icon_background"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:gravity="center"
@@ -238,6 +240,7 @@
                                     android:layout_marginRight="10dp"
                                     >
                                     <ImageView
+                                        android:id="@+id/issued_at_icon"
                                         android:layout_width="13dp"
                                         android:layout_height="13dp"
                                         app:tint="@{viewModel.meterParcelable.isIssued ? @color/red : @color/primary}"
@@ -253,12 +256,14 @@
                                         android:text="Дата истечения поверки"
                                         android:layout_weight="1"/>
                                     <TextView
+                                        android:id="@+id/issued_false_text"
                                         style="@style/Text"
                                         android:visibility="@{!viewModel.meterParcelable.isIssued}"
                                         android:textStyle="bold"
                                         android:text="@{viewModel.meterParcelable.formatIssuedAt()}"
                                         android:layout_gravity="end"/>
                                     <TextView
+                                        android:id="@+id/issued_true_text"
                                         style="@style/Text"
                                         android:visibility="@{viewModel.meterParcelable.isIssued}"
                                         android:textColor="@color/red"
@@ -359,7 +364,7 @@
                                 android:layout_marginBottom="18dp"/>
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/recycler_view"
+                                android:id="@+id/reading_recycler_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:nestedScrollingEnabled="false"

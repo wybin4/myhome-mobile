@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.databinding.MeterScanViewBinding
-import com.example.myhome.presentation.DigitPicker
+import com.example.myhome.utils.pickers.DigitPicker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

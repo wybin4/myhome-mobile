@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.myhome.databinding.MeterUpdateViewBinding
-import com.example.myhome.presentation.CustomDatePicker
-import com.example.myhome.presentation.ImagePicker
+import com.example.myhome.utils.pickers.CustomDatePicker
+import com.example.myhome.utils.pickers.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

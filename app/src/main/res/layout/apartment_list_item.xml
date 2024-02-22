@@ -6,7 +6,7 @@
     <data>
         <variable
             name="apartment"
-            type="com.example.myhome.presentation.models.ApartmentUiModel" />
+            type="com.example.myhome.utils.models.ApartmentUiModel" />
 
     </data>
 

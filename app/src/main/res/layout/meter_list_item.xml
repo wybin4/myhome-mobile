@@ -4,7 +4,7 @@
     <data>
         <variable
             name="meter"
-            type="com.example.myhome.presentation.models.MeterUiModel" />
+            type="com.example.myhome.utils.models.MeterUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,8 +58,8 @@
 
                         <ImageView
                             android:id="@+id/icon"
-                            android:layout_width="14dp"
-                            android:layout_height="10dp"
+                            android:layout_width="17dp"
+                            android:layout_height="17dp"
                             android:layout_gravity="center"
                             android:adjustViewBounds="true"
                             android:src="@{meter.getIcon()}"

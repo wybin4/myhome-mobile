@@ -26,7 +26,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-// uses ApartmentWithMeterListUseCaseTest
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 @UninstallModules(MeterDomainModule::class)
@@ -100,6 +99,14 @@ class MeterListViewTest: BaseTest() {
                 hasDescendant(allOf(withId(R.id.current_reading), withText("11.2 гКал"))),
                 hasDescendant(allOf(withId(R.id.icon), withDrawable(R.drawable.water, R.color.primary))),
                 hasDescendant(allOf(withId(R.id.issued_at), hasTextColor(R.color.black))) // только светлая тема
+            ))))
+    }
+
+    @Test
+    fun testCurrentReadingIsNull() {
+        onView(withId(R.id.meter_recycler_view))
+            .check(matches(atPosition(1, allOf(
+                hasDescendant(allOf(withId(R.id.current_reading), withText("—"))),
             ))))
     }
 

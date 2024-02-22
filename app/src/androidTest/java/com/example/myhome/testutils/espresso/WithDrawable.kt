@@ -14,11 +14,6 @@ import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 
 fun withDrawable(
-    drawable: Drawable,
-    @ColorRes tintColorRes: Int? = null
-): Matcher<View> = WithDrawable(drawable, tintColorRes)
-
-fun withDrawable(
     @DrawableRes drawableRes: Int,
     @ColorRes tintColorRes: Int? = null
 ) : Matcher<View> = WithDrawable(drawableRes, tintColorRes)

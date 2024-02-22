@@ -10,11 +10,11 @@ java {
 }
 
 dependencies {
-    val daggerVersion = "2.50"
+    val hiltVersion = "2.50"
 
     // flow
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     // hilt
-    implementation("com.google.dagger:dagger-android:${daggerVersion}")
-    kapt("com.google.dagger:dagger-compiler:${daggerVersion}")
+    implementation("com.google.dagger:dagger-android:${hiltVersion}")
+    kapt("com.google.dagger:dagger-compiler:${hiltVersion}")
 }

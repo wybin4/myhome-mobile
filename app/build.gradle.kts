@@ -41,9 +41,8 @@ android {
 }
 
 dependencies {
-    val daggerVersion = "2.50"
+    val hiltVersion = "2.50"
     val espressoVersion = "3.5.1"
-    val truthVersion = "1.4.0"
 
     // projects
     implementation(project(":domain"))
@@ -61,10 +60,11 @@ dependencies {
     //mockito
     testImplementation("org.mockito:mockito-core:5.3.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+    androidTestImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
     androidTestImplementation("org.mockito:mockito-android:5.10.0")
     // hilt
-    implementation("com.google.dagger:hilt-android:${daggerVersion}")
-    kapt("com.google.dagger:hilt-compiler:${daggerVersion}")
+    implementation("com.google.dagger:hilt-android:${hiltVersion}")
+    kapt("com.google.dagger:hilt-compiler:${hiltVersion}")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     // datepicker
     implementation("com.wdullaer:materialdatetimepicker:4.2.3")
@@ -81,8 +81,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$espressoVersion")
     // hilt testing
-    androidTestImplementation("com.google.dagger:hilt-android-testing:${daggerVersion}")
-    kaptAndroidTest("com.google.dagger:hilt-compiler:${daggerVersion}")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:${hiltVersion}")
+    kaptAndroidTest("com.google.dagger:hilt-compiler:${hiltVersion}")
     // fragment testing
     debugImplementation("androidx.fragment:fragment-testing:1.6.2")
 }

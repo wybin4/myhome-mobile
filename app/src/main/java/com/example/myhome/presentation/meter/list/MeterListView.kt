@@ -11,10 +11,9 @@ import com.example.myhome.R
 import com.example.myhome.databinding.ApartmentListItemBinding
 import com.example.myhome.databinding.MeterListItemBinding
 import com.example.myhome.databinding.MeterListViewBinding
-import com.example.myhome.presentation.CustomListAdapter
-import com.example.myhome.presentation.models.ApartmentUiModel
-import com.example.myhome.presentation.models.MeterListToGetParcelableModel
-import com.example.myhome.presentation.models.MeterUiModel
+import com.example.myhome.utils.adapters.CustomListAdapter
+import com.example.myhome.utils.models.ApartmentUiModel
+import com.example.myhome.utils.models.MeterUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,26 +61,8 @@ class MeterListView : Fragment() {
                 binding.meter = item
             },
             onItemClick = { item ->
-                val meter = MeterListToGetParcelableModel(
-                    id = item.id,
-                    factoryNumber = item.factoryNumber,
-                    verifiedAt = item.verifiedAt,
-                    issuedAt = item.issuedAt,
-                    isIssued = item.isIssued,
-                    apartmentId = item.apartmentId,
-                    address = item.address,
-                    currentReading = item.currentReading,
-                    typeOfServiceName = item.typeOfServiceName,
-                    typeOfServiceEngName = item.typeOfServiceEngName,
-                    unitName = item.unitName
-                )
-
-                val bundle = Bundle().apply {
-                    putParcelable("meter", meter)
-                }
-
+                val bundle = viewModel.mapMeterUiToGetParcel(item).toBundle()
                 findNavController().navigate(R.id.action_MeterListView_to_MeterGetView, bundle)
-
             }
         )
 

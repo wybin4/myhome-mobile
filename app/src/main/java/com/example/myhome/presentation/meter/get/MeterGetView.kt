@@ -1,23 +1,18 @@
 package com.example.myhome.presentation.meter.get
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.MeterGetViewBinding
 import com.example.myhome.databinding.ReadingListItemBinding
-import com.example.myhome.presentation.CustomListAdapter
-import com.example.myhome.presentation.models.MeterGetToScanParcelableModel
-import com.example.myhome.presentation.models.MeterGetToUpdateParcelableModel
-import com.example.myhome.presentation.models.ReadingUiModel
+import com.example.myhome.utils.adapters.CustomListAdapter
+import com.example.myhome.utils.models.ReadingUiModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MeterGetView : Fragment() {
@@ -69,33 +64,13 @@ class MeterGetView : Fragment() {
 
     private fun setupActionButtons() {
         binding.updateMeterButton.setOnClickListener {
-            val meter = MeterGetToUpdateParcelableModel(
-                meterId = viewModel.meterParcelable.id,
-                meterName = viewModel.meterParcelable.address + ", " + viewModel.meterParcelable.typeOfServiceName,
-                apartmentId = viewModel.meterParcelable.apartmentId
-            )
-
-            val bundle = Bundle().apply {
-                putParcelable("meter", meter)
-            }
+            val bundle = viewModel.mapMeterGetToUpdateParcel(viewModel.meterParcelable).toBundle()
             findNavController().navigate(R.id.action_meterGetView_to_meterUpdateView, bundle)
         }
         if (viewModel.meterParcelable.currentReading == null) {
             binding.addReadingButton.setOnClickListener {
-                val prevReading = viewModel.readingList.value?.firstOrNull()?.reading?.toDouble() ?: 0.0
-
-                val meter = MeterGetToScanParcelableModel(
-                    meterId = viewModel.meterParcelable.id,
-                    address = viewModel.meterParcelable.address,
-                    previousReading = prevReading,
-                    typeOfServiceName = viewModel.meterParcelable.typeOfServiceName,
-                    typeOfServiceEngName = viewModel.meterParcelable.typeOfServiceEngName,
-                    unitName = viewModel.meterParcelable.unitName
-                )
-
-                val bundle = Bundle().apply {
-                    putParcelable("meter", meter)
-                }
+                val prevReading = viewModel.readingList.value?.firstOrNull()?.reading ?: 0.0
+                val bundle = viewModel.mapMeterGetToScanParcel(viewModel.meterParcelable, prevReading).toBundle()
                 findNavController().navigate(R.id.action_meterGetView_to_meterScanView, bundle)
             }
         } else {
@@ -115,7 +90,7 @@ class MeterGetView : Fragment() {
             onItemClick = null
         )
 
-        binding.recyclerView.adapter = readingListAdapter
+        binding.readingRecyclerView.adapter = readingListAdapter
     }
 
     override fun onDestroyView() {

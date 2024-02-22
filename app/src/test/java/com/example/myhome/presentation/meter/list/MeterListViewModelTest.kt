@@ -1,12 +1,14 @@
 package com.example.myhome.presentation.meter.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.myhome.meter.models.ApartmentWithMeterGetModel
-import com.example.myhome.meter.models.MeterGetModel
 import com.example.myhome.meter.usecases.ApartmentWithMeterListUseCase
-import com.example.myhome.presentation.mappers.MeterUiMapper
-import com.example.myhome.presentation.models.ApartmentUiModel
-import com.example.myhome.presentation.models.MeterUiModel
+import com.example.myhome.testutils.providers.MeterUITestListProvider.getApartmentUiList
+import com.example.myhome.utils.mappers.MeterUiMapper
+import com.example.myhome.utils.models.ApartmentUiModel
+import com.example.myhome.utils.models.MeterUiModel
+import com.example.myhome.testutils.providers.MeterDomainTestListProvider.apartmentList
+import com.example.myhome.testutils.providers.MeterDomainTestListProvider.getMeterList
+import com.example.myhome.testutils.providers.MeterUITestListProvider.getMeterUiList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -18,7 +20,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.rules.TestRule
 import org.mockito.Mockito
 import org.mockito.kotlin.any
-import java.util.Date
 
 @ExperimentalCoroutinesApi
 class MeterListViewModelTest {
@@ -29,29 +30,9 @@ class MeterListViewModelTest {
     private lateinit var viewModel: MeterListViewModel
 
     private val dispatcher = StandardTestDispatcher()
-
-    private val date = Date()
-    private val address = "Советский союз"
-
-    private val testApartmentUi = listOf(
-        ApartmentUiModel(1, address, false),
-        ApartmentUiModel(2, address, false)
-    )
-
-    private val testMetersUi = listOf(
-        MeterUiModel(1, "12332132131231", date, date, 1, address, 16.9, "Газ", "м3", false),
-        MeterUiModel(2, "12332132131232", date, date, 2, address, 12.0, "ХВС", "м3", false)
-    )
-
-    private val testMeters = listOf(
-        MeterGetModel(1, "12332132131231", date, date, 1, "Газ", 16.9, "м3"),
-        MeterGetModel(2, "12332132131232", date, date, 2, "ХВС", 12.0, "м3")
-    )
-
-    private val testApartments = listOf(
-        ApartmentWithMeterGetModel(1, address, testMeters),
-        ApartmentWithMeterGetModel(2, address, emptyList())
-    )
+    private val testApartmentUi = getApartmentUiList()
+    private val testMetersUi = getMeterUiList()
+    private val testApartments = apartmentList
 
     @Before
     fun setup() {
@@ -133,7 +114,7 @@ class MeterListViewModelTest {
 
     @Test
     fun `meterList set empty when apartment isn't find while changeSelectedApartment`() {
-        viewModel.changeSelectedApartment(ApartmentUiModel(3, address, false))
+        viewModel.changeSelectedApartment(ApartmentUiModel(3, "Нет!", false))
 
         assertEquals(emptyList<MeterUiModel>(), viewModel.meterList.value)
     }

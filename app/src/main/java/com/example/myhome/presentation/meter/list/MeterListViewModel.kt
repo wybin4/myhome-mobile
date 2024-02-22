@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myhome.meter.models.ApartmentWithMeterGetModel
 import com.example.myhome.meter.usecases.ApartmentWithMeterListUseCase
-import com.example.myhome.presentation.mappers.MeterUiMapper
-import com.example.myhome.presentation.models.ApartmentUiModel
-import com.example.myhome.presentation.models.MeterUiModel
+import com.example.myhome.utils.mappers.MeterUiMapper
+import com.example.myhome.utils.models.ApartmentUiModel
+import com.example.myhome.utils.models.MeterListToGetParcelableModel
+import com.example.myhome.utils.models.MeterUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -33,6 +34,10 @@ class MeterListViewModel @Inject constructor(
 
     init {
         fetchMeterList()
+    }
+
+    fun mapMeterUiToGetParcel(meter: MeterUiModel): MeterListToGetParcelableModel {
+        return meterUiMapper.mapMeterUiToGetParcel(meter)
     }
 
     fun changeSelectedApartment(apartment: ApartmentUiModel) {

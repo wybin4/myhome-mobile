@@ -1,5 +1,6 @@
 package com.example.myhome.meter.models
 
+import com.example.myhome.common.models.DateConverter
 import java.util.Date
 
 abstract class MeterModel(
@@ -32,4 +33,11 @@ data class MeterGetModel(
     verifiedAt = verifiedAt,
     issuedAt = issuedAt,
     typeOfServiceId = typeOfServiceId
-)
+), DateConverter {
+    fun formatIssuedAt(): String {
+        return formatDate(issuedAt)
+    }
+    fun formatVerifiedAt(): String {
+        return formatDate(verifiedAt)
+    }
+}

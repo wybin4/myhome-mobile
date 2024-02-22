@@ -11,8 +11,8 @@ import com.example.myhome.common.models.ApartmentGetModel
 import com.example.myhome.common.models.SubscriberGetModel
 import com.example.myhome.common.usecases.ApartmentListUseCase
 import com.example.myhome.common.usecases.SubscriberListUseCase
-import com.example.myhome.presentation.ImageMapper
-import com.example.myhome.presentation.models.MeterGetToUpdateParcelableModel
+import com.example.myhome.utils.mappers.ImageMapper
+import com.example.myhome.utils.models.MeterGetToUpdateParcelableModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
