@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.meter.list
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,10 +11,10 @@ import com.example.myhome.utils.mappers.MeterUiMapper
 import com.example.myhome.utils.models.ApartmentUiModel
 import com.example.myhome.utils.models.MeterListToGetParcelableModel
 import com.example.myhome.utils.models.MeterUiModel
+import com.example.myhome.utils.models.NetworkResult
+import com.example.myhome.utils.models.Resource
+import com.example.myhome.utils.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,6 +30,9 @@ class MeterListViewModel @Inject constructor(
 
     private val _meterList = MutableLiveData<List<MeterUiModel>>()
     val meterList: LiveData<List<MeterUiModel>> = _meterList
+
+    private val _meterListState = MutableLiveData<Resource>(Resource.Loading)
+    val meterListState: LiveData<Resource> = _meterListState
 
     var selectedApartmentId: Int = -1
 
@@ -65,21 +69,35 @@ class MeterListViewModel @Inject constructor(
     }
 
     private fun fetchMeterList() {
+
         viewModelScope.launch {
             apartmentWithMeterListUseCase()
-                .flowOn(Dispatchers.IO)
-                .catch {
-                    _meterList.value = listOf()
-                    _apartmentList.value = listOf()
-                }
-                .collect {
-                    if (it.isNotEmpty()) {
-                        setupLists(it)
-                    } else {
-                        TODO("Ошибка!")
+                .asNetworkResult()
+                .collect { result ->
+                    when (result) {
+                        is NetworkResult.Success -> {
+                            val data = result.data
+                            if (data.isNotEmpty()) {
+                                _meterListState.value = Resource.Success
+                                setupLists(data)
+                            } else {
+                                _meterListState.value = Resource.Empty
+                            }
+                        }
+                        is NetworkResult.Loading -> {
+                            _meterListState.value = Resource.Loading
+                        }
+                        is NetworkResult.Error -> {
+//                            val errorMessage = result.exception.message
+//                            if (errorMessage != null) {
+//                                Log.e("NetworkResult", errorMessage)
+//                            }
+                            _meterListState.value = Resource.Error
+                        }
                     }
                 }
         }
+
     }
 
     fun setupLists(list: List<ApartmentWithMeterGetModel>) {

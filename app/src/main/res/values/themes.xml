@@ -33,6 +33,12 @@
         <item name="android:backgroundTint">@color/button_states_normal</item>
     </style>
 
+    <style name="ItemLoading">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:backgroundTint">@color/primary_loading</item>
+        <item name="android:background">@drawable/round_corner_button</item>
+    </style>
+
     <style name="DescriptionText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

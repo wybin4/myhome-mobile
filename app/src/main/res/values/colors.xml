@@ -16,6 +16,7 @@
 
     <color name="primary">#6C63FF</color>
     <color name="primary_light">#146C63FF</color>
+    <color name="primary_loading">#40B982FF</color>
 
     <color name="red">#EB5858</color>
     <color name="red_light">#24EB5858</color>
