@@ -3,7 +3,8 @@ package com.example.myhome.utils.pickers
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.common.models.DateConverter
 import com.example.myhome.utils.InputValidator
-import com.google.android.material.textfield.TextInputEditText
+import com.example.myhome.utils.listeners.DatePickerListener
+import com.example.myhome.utils.listeners.DateChangeListener
 import com.google.android.material.textfield.TextInputLayout
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.Calendar
@@ -14,10 +15,14 @@ import kotlin.reflect.KMutableProperty0
 class CustomDatePicker(
     private val activity: FragmentActivity,
     private var selectedDate: KMutableProperty0<Date?>,
-    private val attribute: TextInputEditText,
+    private val attribute: DatePickerListener,
     input: TextInputLayout,
     validateMessage: String
-): DateConverter {
+): DateConverter, DateChangeListener {
+    init {
+        attribute.setDateChangeListener(this::onDateChanged)
+    }
+
     private val validator: InputValidator = InputValidator(
         input,
         { text: String? -> text?.length!! > 0 },"Выберите дату $validateMessage", { validate() }
@@ -28,8 +33,7 @@ class CustomDatePicker(
         { _, year, monthOfYear, dayOfMonth ->
             val calendar = Calendar.getInstance()
             calendar.set(year, monthOfYear, dayOfMonth)
-            selectedDate.set(calendar.time)
-            attribute.setText(formatDate())
+
             validate()
         },
         now[Calendar.YEAR],
@@ -52,6 +56,11 @@ class CustomDatePicker(
 
     fun validate(): Boolean {
         return validator.validate(formatDate())
+    }
+
+    override fun onDateChanged(date: Date) {
+        selectedDate.set(date)
+        attribute.setText(formatDate())
     }
 
 }

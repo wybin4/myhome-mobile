@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <application>
+    <application
+        android:theme="@style/Theme.Myhome"
+        >
         <activity android:name=".TestFragmentActivity"
             android:exported="false" />
     </application>

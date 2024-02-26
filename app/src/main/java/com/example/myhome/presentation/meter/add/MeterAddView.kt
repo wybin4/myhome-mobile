@@ -13,7 +13,7 @@ import com.example.myhome.databinding.MeterAddViewBinding
 import com.example.myhome.utils.pickers.CustomDatePicker
 import com.example.myhome.utils.pickers.ImagePicker
 import com.example.myhome.utils.InputValidator
-import com.example.myhome.utils.SelectorManager
+import com.example.myhome.utils.managers.SelectorManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

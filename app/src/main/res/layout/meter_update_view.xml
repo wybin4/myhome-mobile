@@ -23,20 +23,22 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/disabled_meter_input"
                         style="@style/Input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Счётчик"
-                        >
+                        android:hint="Счётчик">
+
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/meter"
+                            android:id="@+id/meter_field"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:enabled="false"
-                            android:text="@{viewModel.meterParcelable.meterName}"
-                            />
+                            android:text="@{viewModel.meterParcelable.meterName}" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -50,7 +52,7 @@
                             android:hint="Дата поверки"
                             android:paddingHorizontal="0dp">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <com.example.myhome.utils.listeners.DatePickerListener
                                 android:id="@+id/verified_at"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -69,7 +71,7 @@
                             android:layout_marginLeft="18dp"
                             >
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <com.example.myhome.utils.listeners.DatePickerListener
                                 android:id="@+id/issued_at"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

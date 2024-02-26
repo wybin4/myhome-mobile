@@ -61,6 +61,10 @@ class InputValidatorTest {
         val input = "Чево"
         val errorResetMock: () -> Unit = Mockito.mock()
 
+        inputValidator = InputValidator(textInputLayout, {
+                text -> text?.length ?: 0 >= 5 // строка длиннее 5 символов
+        }, "Ошибка????") { errorResetMock() }
+
         inputValidator.validate(input)
         inputValidator.validate(input)
 

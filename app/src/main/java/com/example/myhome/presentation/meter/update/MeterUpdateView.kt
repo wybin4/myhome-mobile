@@ -44,7 +44,7 @@ class MeterUpdateView : Fragment() {
     private fun setupDatePickers() {
         verifiedAtPicker = CustomDatePicker(
             requireActivity(),
-            viewModel::selectVerifiedAt ,binding.verifiedAt, binding.verifiedAtDatePicker,
+            viewModel::selectVerifiedAt, binding.verifiedAt, binding.verifiedAtDatePicker,
             "поверки"
         )
         binding.verifiedAt.setOnClickListener {

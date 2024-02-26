@@ -1,4 +1,4 @@
-package com.example.myhome.testutils.mocks
+package com.example.myhome.testutils.mocks.meter.usecases
 
 import com.example.myhome.meter.models.ReadingAddModel
 import com.example.myhome.meter.usecases.ReadingAddUseCase

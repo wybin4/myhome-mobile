@@ -9,9 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.MeterGetViewBinding
+import com.example.myhome.databinding.MeterListItemLoadingBinding
 import com.example.myhome.databinding.ReadingListItemBinding
+import com.example.myhome.databinding.ReadingListItemLoadingBinding
+import com.example.myhome.utils.ConstantsUi
 import com.example.myhome.utils.adapters.CustomListAdapter
+import com.example.myhome.utils.adapters.InfiniteListAdapter
 import com.example.myhome.utils.models.ReadingUiModel
+import com.example.myhome.utils.models.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +25,7 @@ class MeterGetView : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<MeterGetViewModel>()
     private lateinit var readingListAdapter: CustomListAdapter<ReadingUiModel, ReadingListItemBinding>
+    private lateinit var readingInfiniteListAdapter: InfiniteListAdapter<String, ReadingListItemLoadingBinding>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +42,7 @@ class MeterGetView : Fragment() {
         binding.verifiedAt.text = viewModel.meterParcelable.formatVerifiedAt()
 
         setupRecyclerView()
+        setupInfiniteRecyclerView()
         setupActionButtons()
 
         return binding.root
@@ -43,6 +50,23 @@ class MeterGetView : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        observeResourceStates()
+        observeList()
+    }
+
+    private fun observeResourceStates() {
+        viewModel.readingListState.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Loading -> showLoadingState()
+                is Resource.Success -> showSuccessState()
+                is Resource.Empty -> showEmptyState()
+                is Resource.Error -> showErrorState()
+            }
+        }
+    }
+
+    private fun observeList() {
         viewModel.readingList.observe(viewLifecycleOwner) { readings ->
             val list = readings.map { item ->
                 ReadingUiModel(
@@ -55,6 +79,24 @@ class MeterGetView : Fragment() {
             }
             readingListAdapter.submitList(list)
         }
+    }
+
+    private fun showLoadingState() {
+        binding.readingInfiniteRecyclerView.visibility = View.VISIBLE
+        binding.readingRecyclerView.visibility = View.GONE
+    }
+
+    private fun showSuccessState() {
+        binding.readingRecyclerView.visibility = View.VISIBLE
+        binding.readingInfiniteRecyclerView.visibility = View.GONE
+    }
+
+    private fun showEmptyState() {
+        TODO("Доделать")
+    }
+
+    private fun showErrorState() {
+        TODO("Доделать")
     }
 
     override fun onResume() {
@@ -91,6 +133,20 @@ class MeterGetView : Fragment() {
         )
 
         binding.readingRecyclerView.adapter = readingListAdapter
+    }
+
+    private fun setupInfiniteRecyclerView() {
+        readingInfiniteListAdapter = InfiniteListAdapter(
+            itemList = List(ConstantsUi.VERTICAL_LOADING_RECYCLER_VIEW_SIZE) { "" },
+            itemBindingInflater = { inflater, parent, attachToParent ->
+                ReadingListItemLoadingBinding.inflate(inflater, parent, attachToParent)
+            },
+            setBinding = { binding, item ->
+                binding.item = item
+            }
+        )
+        binding.readingInfiniteRecyclerView.adapter = readingInfiniteListAdapter
+        binding.readingInfiniteRecyclerView.hasFixedSize()
     }
 
     override fun onDestroyView() {

@@ -8,7 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.myhome.R
-import com.example.myhome.di.domain.MeterDomainModule
+import com.example.myhome.di.MeterDataModule
 import com.example.myhome.testutils.BaseTest
 import com.example.myhome.testutils.espresso.withBackgroundTint
 import com.example.myhome.testutils.espresso.withDrawable
@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-@UninstallModules(MeterDomainModule::class)
+@UninstallModules(MeterDataModule::class)
 class ScenarioMeterGetViewTest: BaseTest() {
     private lateinit var scenario: AutoCloseable
 

@@ -7,6 +7,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.myhome.R
+import com.example.myhome.di.MeterDataModule
 import com.example.myhome.di.domain.MeterDomainModule
 import com.example.myhome.utils.models.MeterGetToScanParcelableModel
 import com.example.myhome.utils.models.MeterGetToUpdateParcelableModel
@@ -29,12 +30,12 @@ import org.mockito.kotlin.argumentCaptor
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-@UninstallModules(MeterDomainModule::class)
+@UninstallModules(MeterDataModule::class)
 class NavMeterGetViewTest: BaseTest() {
     private val navController = mock(NavController::class.java)
     private lateinit var scenario: AutoCloseable
 
-    private val gettedId = 0
+    private val gettedId = 1
 
     private val meterGetArg = getMeterParcelableGet(id = gettedId)
 
@@ -73,7 +74,6 @@ class NavMeterGetViewTest: BaseTest() {
     @Test
     fun testScanMeterButtonClick_navigateToMeterScanView() {
         val expected = getMeterParcelableScan(id = gettedId)
-
         onView(withId(R.id.add_reading_button)).perform(click())
 
         val argumentCaptor = argumentCaptor<Bundle>()

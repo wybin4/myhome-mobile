@@ -1,13 +1,14 @@
-package com.example.myhome.testutils.mocks
+package com.example.myhome.testutils.mocks.meter.repositories
 
 import com.example.myhome.meter.models.ApartmentWithMeterGetModel
-import com.example.myhome.meter.usecases.ApartmentWithMeterListUseCase
+import com.example.myhome.meter.repositories.MeterRepository
 import com.example.myhome.testutils.providers.MeterUITestListProvider.getApartmentWithMeterList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class ApartmentWithMeterListUseCaseTest : ApartmentWithMeterListUseCase {
-    override operator fun invoke(): Flow<List<ApartmentWithMeterGetModel>> {
+class MeterRepositoryTest : MeterRepository {
+    override fun listApartmentWithMeter(): Flow<List<ApartmentWithMeterGetModel>> {
         return flowOf(getApartmentWithMeterList())
     }
+
 }

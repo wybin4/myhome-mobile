@@ -23,7 +23,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
     companion object {
-        private const val BASE_URL = "https://c7d2-95-25-65-16.ngrok-free.app/api/"
+        private const val BASE_URL = "https://9125-95-25-65-16.ngrok-free.app/api/"
     }
     @Provides
     @Singleton

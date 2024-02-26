@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.meter.get
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,9 @@ import com.example.myhome.utils.models.MeterGetToScanParcelableModel
 import com.example.myhome.utils.models.MeterGetToUpdateParcelableModel
 import com.example.myhome.utils.models.MeterListToGetParcelableModel
 import com.example.myhome.utils.models.MeterUiModel
+import com.example.myhome.utils.models.NetworkResult
+import com.example.myhome.utils.models.Resource
+import com.example.myhome.utils.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -26,6 +30,9 @@ class MeterGetViewModel @Inject constructor(
     private val _readingList = MutableLiveData<List<ReadingGetModel>>()
     val readingList: LiveData<List<ReadingGetModel>> = _readingList
 
+    private val _readingListState = MutableLiveData<Resource>(Resource.Loading)
+    val readingListState: LiveData<Resource> = _readingListState
+
     lateinit var meterParcelable : MeterListToGetParcelableModel
 
     fun mapMeterGetToScanParcel(meter: MeterListToGetParcelableModel, prev: Double): MeterGetToScanParcelableModel {
@@ -40,12 +47,25 @@ class MeterGetViewModel @Inject constructor(
         if (meterParcelable !== null) {
             viewModelScope.launch {
                 readingListUseCase(meterParcelable.id)
-                    .flowOn(Dispatchers.IO)
-                    .catch {
-                        _readingList.value = listOf()
-                    }
-                    .collect {
-                        _readingList.value = it
+                    .asNetworkResult()
+                    .collect { result ->
+                        when (result) {
+                            is NetworkResult.Success -> {
+                                val data = result.data
+                                if (data.isNotEmpty()) {
+                                    _readingListState.value = Resource.Success
+                                    _readingList.value = data
+                                } else {
+                                    _readingListState.value = Resource.Empty
+                                }
+                            }
+                            is NetworkResult.Loading -> {
+                                _readingListState.value = Resource.Loading
+                            }
+                            is NetworkResult.Error -> {
+                                _readingListState.value = Resource.Error
+                            }
+                        }
                     }
             }
         } else {

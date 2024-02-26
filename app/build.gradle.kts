@@ -80,6 +80,7 @@ dependencies {
     // espresso
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$espressoVersion")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:$espressoVersion")
     // hilt testing
     androidTestImplementation("com.google.dagger:hilt-android-testing:${hiltVersion}")
     kaptAndroidTest("com.google.dagger:hilt-compiler:${hiltVersion}")
