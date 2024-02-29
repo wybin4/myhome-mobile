@@ -9,5 +9,7 @@
     <string name="title_charges">Начисления</string>
     <string name="title_events">События</string>
     <string name="title_appeals">Обращения</string>
+    <string name="title_add_appeal">Добавление обращения</string>
     <string name="title_chats">Чаты</string>
+    <string name="attachment"><u>Вложение</u></string>
 </resources>

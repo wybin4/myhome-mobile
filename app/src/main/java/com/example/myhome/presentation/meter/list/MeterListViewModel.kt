@@ -1,6 +1,5 @@
 package com.example.myhome.presentation.meter.list
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -50,7 +49,7 @@ class MeterListViewModel @Inject constructor(
         val selectedApartment = apartmentAndMeterList.find { it.id == selectedApartmentId }
 
         selectedApartment?.let {
-            _meterList.value = setIsIssued(meterUiMapper.mapMeterListToUi(it))
+            _meterList.value = setIsIssued(meterUiMapper.mapApartmentWithMeterToUi(it))
         } ?: run {
             _meterList.value = emptyList()
         }
@@ -68,8 +67,7 @@ class MeterListViewModel @Inject constructor(
         }
     }
 
-    private fun fetchMeterList() {
-
+    fun fetchMeterList() {
         viewModelScope.launch {
             apartmentWithMeterListUseCase()
                 .asNetworkResult()
@@ -107,6 +105,6 @@ class MeterListViewModel @Inject constructor(
         selectedApartmentId = fstApartment.id
 
         _apartmentList.value = setSelected(meterUiMapper.mapApartmentListToUi(list))
-        _meterList.value = setIsIssued(meterUiMapper.mapMeterListToUi(fstApartment))
+        _meterList.value = setIsIssued(meterUiMapper.mapApartmentWithMeterToUi(fstApartment))
     }
 }

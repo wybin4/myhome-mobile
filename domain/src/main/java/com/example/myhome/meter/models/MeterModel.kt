@@ -41,3 +41,10 @@ data class MeterGetModel(
         return formatDate(verifiedAt)
     }
 }
+
+data class MeterListItemModel(
+    val id: Int,
+    val typeOfServiceName: String,
+    val subscriberId: Int,
+    val address: String
+)

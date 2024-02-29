@@ -14,6 +14,24 @@
         <item name="android:backgroundTint">@color/button_states_night</item>
     </style>
 
+    <style name="ActionButtonWithDrawable" parent="ActionButton">
+        <item name="android:drawableTint">@color/black</item>
+        <item name="cornerRadius">100dp</item>
+    </style>
+
+    <style name="FloatingActionButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="elevation">0dp</item>
+        <item name="borderWidth">0dp</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:src">@drawable/add</item>
+        <item name="tint">@color/black</item>
+        <item name="maxImageSize">14dp</item>
+        <item name="android:layout_marginBottom">90dp</item>
+    </style>
+
     <style name="DescriptionText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -70,8 +88,16 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="ImageLikeText">
+        <item name="tint">@color/white</item>
+    </style>
+
     <style name="Card">
         <item name="android:background">@drawable/round_corner_card_night</item>
+    </style>
+
+    <style name="BottomSheetDialog">
+        <item name="android:background">@color/white_night</item>
     </style>
 
 </resources>

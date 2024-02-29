@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.myhome.presentation.meter.add.MeterAddViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,88 +21,8 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/apartment_selector"
-                    style="@style/Dropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Квартира">
+                <include android:id="@+id/layout_items" layout="@layout/appeal_add_view_items" />
 
-                    <com.example.myhome.utils.listeners.SelectorListener
-                        android:id="@+id/apartment_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:editable="false" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/type_of_service_selector"
-                    style="@style/Dropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Тип услуги">
-
-                    <com.example.myhome.utils.listeners.SelectorListener
-                        android:id="@+id/type_of_service_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:editable="false" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/factory_number_input"
-                    style="@style/Input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Заводской номер">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/factory_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@={viewModel.selectedFactoryNumber}" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/verified_at_date_picker"
-                        style="@style/Input"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Дата поверки"
-                        android:paddingHorizontal="0dp">
-
-                        <com.example.myhome.utils.listeners.DatePickerListener
-                            android:id="@+id/verified_at"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/issued_at_date_picker"
-                        style="@style/Input"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="18dp"
-                        android:layout_weight="1"
-                        android:hint="Дата истечения"
-                        android:paddingHorizontal="0dp">
-
-                        <com.example.myhome.utils.listeners.DatePickerListener
-                            android:id="@+id/issued_at"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <Button

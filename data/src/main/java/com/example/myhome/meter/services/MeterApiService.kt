@@ -2,6 +2,8 @@ package com.example.myhome.meter.services
 
 import com.example.myhome.meter.dtos.ApartmentWithMeterGetDto
 import com.example.myhome.meter.dtos.ApartmentWithMeterListDto
+import com.example.myhome.meter.dtos.MeterListDto
+import com.example.myhome.meter.dtos.MeterListItemDto
 import com.example.myhome.meter.dtos.ReadingAddDto
 import com.example.myhome.meter.dtos.ReadingGetDto
 import com.example.myhome.meter.dtos.ReadingListDto
@@ -13,6 +15,11 @@ interface MeterApiService {
     suspend fun listApartmentWithMeter(
         @Body request: ApartmentWithMeterListDto
     ): List<ApartmentWithMeterGetDto>
+
+    @POST("meter/get-meters-by-user")
+    suspend fun listMeter(
+        @Body request: MeterListDto
+    ): List<MeterListItemDto>
 
     @POST("meter/get-meter-readings")
     suspend fun listReading(

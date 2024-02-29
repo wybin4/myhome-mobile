@@ -5,6 +5,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.example.myhome.common.models.Adaptive
 import com.example.myhome.common.models.DateConverter
+import com.example.myhome.common.models.Identifiable
 import com.example.myhome.utils.converters.DoubleNullableConverter
 import com.example.myhome.utils.pickers.IconPicker
 import java.util.Calendar
@@ -191,5 +192,10 @@ class MeterGetToUpdateParcelableModel(
         }
     }
 
-
 }
+
+class MeterListItemUiModel(
+    override val id: Int,
+    val subscriberId: Int,
+    override val name: String
+): Identifiable

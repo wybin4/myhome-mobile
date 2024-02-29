@@ -55,6 +55,11 @@ class MeterGetView : Fragment() {
         observeList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchReadingList()
+    }
+
     private fun observeResourceStates() {
         viewModel.readingListState.observe(viewLifecycleOwner) { resource ->
             when (resource) {
@@ -97,11 +102,6 @@ class MeterGetView : Fragment() {
 
     private fun showErrorState() {
         TODO("Доделать")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchReadingList()
     }
 
     private fun setupActionButtons() {

@@ -1,9 +1,11 @@
 package com.example.myhome.utils.converters
 
 import com.example.myhome.meter.models.ApartmentWithMeterGetModel
+import com.example.myhome.meter.models.MeterListItemModel
 import com.example.myhome.utils.models.ApartmentUiModel
 import com.example.myhome.utils.models.MeterGetToScanParcelableModel
 import com.example.myhome.utils.models.MeterGetToUpdateParcelableModel
+import com.example.myhome.utils.models.MeterListItemUiModel
 import com.example.myhome.utils.models.MeterListToGetParcelableModel
 import com.example.myhome.utils.models.MeterUiModel
 
@@ -45,7 +47,7 @@ interface MeterParcelableConverter {
 }
 
 interface MeterUiConverter {
-    fun meterListToUi(apartment: ApartmentWithMeterGetModel): List<MeterUiModel> {
+    fun apartmentWithMeterToUi(apartment: ApartmentWithMeterGetModel): List<MeterUiModel> {
         return apartment.meters.map { meter ->
             MeterUiModel(
                 id = meter.id,
@@ -59,6 +61,16 @@ interface MeterUiConverter {
                 apartmentId = apartment.id,
                 address = apartment.address,
                 isIssued = false
+            )
+        }
+    }
+
+    fun meterListToUi(meters: List<MeterListItemModel>): List<MeterListItemUiModel> {
+        return meters.map { meter ->
+            MeterListItemUiModel(
+                id = meter.id,
+                subscriberId = meter.subscriberId,
+                name = "${meter.address}, ИПУ ${meter.typeOfServiceName}"
             )
         }
     }

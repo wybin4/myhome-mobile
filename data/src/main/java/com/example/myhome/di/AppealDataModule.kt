@@ -6,6 +6,7 @@ import com.example.myhome.appeal.repositories.AppealRepositoryImpl
 import com.example.myhome.appeal.services.AppealApiService
 import com.example.myhome.appeal.storages.AppealRemoteStorage
 import com.example.myhome.appeal.storages.AppealStorage
+import com.example.myhome.event.services.EventApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,9 +18,13 @@ import javax.inject.Singleton
 class AppealDataModule {
     @Provides
     @Singleton
-    fun provideAppealStorage(appealApiService: AppealApiService): AppealStorage {
-        return AppealRemoteStorage(appealApiService)
+    fun provideAppealStorage(
+        appealApiService: AppealApiService,
+        eventApiService: EventApiService
+    ): AppealStorage {
+        return AppealRemoteStorage(appealApiService, eventApiService)
     }
+
     @Provides
     @Singleton
     fun provideAppealRepository(appealStorage: AppealStorage, appealRemoteMapper: AppealRemoteMapper): AppealRepository {
@@ -28,6 +33,7 @@ class AppealDataModule {
             appealRemoteMapper
         )
     }
+
     @Provides
     @Singleton
     fun provideAppealMapper(): AppealRemoteMapper {

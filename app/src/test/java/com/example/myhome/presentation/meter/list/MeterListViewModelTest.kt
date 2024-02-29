@@ -40,7 +40,7 @@ class MeterListViewModelTest {
         meterUiMapper = Mockito.mock(MeterUiMapper::class.java)
         apartmentWithMeterListUseCase = Mockito.mock(ApartmentWithMeterListUseCase::class.java)
 
-        Mockito.`when`(meterUiMapper.mapMeterListToUi(any())).thenReturn(testMetersUi)
+        Mockito.`when`(meterUiMapper.mapApartmentWithMeterToUi(any())).thenReturn(testMetersUi)
         Mockito.`when`(meterUiMapper.mapApartmentListToUi(any())).thenReturn(testApartmentUi)
 
         viewModel = MeterListViewModel(apartmentWithMeterListUseCase, meterUiMapper)

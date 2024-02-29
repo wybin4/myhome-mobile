@@ -59,6 +59,11 @@ class MeterListView : Fragment() {
         observeLists()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchMeterList()
+    }
+
     private fun observeResourceStates() {
         viewModel.meterListState.observe(viewLifecycleOwner) { resource ->
             when (resource) {

@@ -20,9 +20,9 @@ class MeterUiMapperTest {
     }
 
     @Test
-    fun `mapMeterListToUi maps meters correctly`() {
+    fun `mapApartmentWithMeterToUi maps meters correctly`() {
         val apartment = MeterUITestListProvider.getApartmentWithMeterList().first()
-        val result = mapper.mapMeterListToUi(apartment)
+        val result = mapper.mapApartmentWithMeterToUi(apartment)
 
         assertEquals(apartment.meters.size, result.size)
         result.forEach { meterUiModel ->

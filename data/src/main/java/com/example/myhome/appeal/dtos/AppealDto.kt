@@ -2,6 +2,8 @@ package com.example.myhome.appeal.dtos
 
 import com.example.myhome.appeal.models.AppealStatus
 import com.example.myhome.appeal.models.AppealType
+import com.example.myhome.common.models.DateConverter
+import java.util.Date
 
 abstract class AppealAddDto (
     open val managementCompanyId: Int,
@@ -19,7 +21,11 @@ data class AppealGetDto (
     val name: String,
     val attachment: String?,
     val data: String
-)
+): DateConverter {
+    fun formatCreatedAt(): Date {
+        return parseDate(createdAt)
+    }
+}
 
 abstract class AppealData { }
 
@@ -38,3 +44,31 @@ data class VerifyIndividualMeterData(
     val issuedAt: String,
     val attachment: String
 ) : AppealData()
+
+data class ProblemOrClaimData(
+    val text: String
+) : AppealData()
+
+data class ProblemDto(
+    override val managementCompanyId: Int,
+    override val subscriberId: Int,
+    override val typeOfAppeal: AppealType = AppealType.ProblemOrQuestion,
+    override val data: ProblemOrClaimData
+) : AppealAddDto(
+    managementCompanyId = managementCompanyId,
+    subscriberId = subscriberId,
+    typeOfAppeal = typeOfAppeal,
+    data = data
+)
+
+data class ClaimDto(
+    override val managementCompanyId: Int,
+    override val subscriberId: Int,
+    override val typeOfAppeal: AppealType = AppealType.Claim,
+    override val data: ProblemOrClaimData
+) : AppealAddDto(
+    managementCompanyId = managementCompanyId,
+    subscriberId = subscriberId,
+    typeOfAppeal = typeOfAppeal,
+    data = data
+)

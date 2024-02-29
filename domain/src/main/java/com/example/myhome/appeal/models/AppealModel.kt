@@ -29,3 +29,21 @@ data class AppealUpdateMeterModel(
     val subscriberId: Int,
     val attachment: String
 )
+
+data class AppealProblemOrClaimModel(
+    val managementCompanyId: Int,
+    val subscriberId: Int,
+    val text: String,
+)
+
+data class AppealGetModel(
+    val id: Int,
+    val managementCompanyId: Int,
+    val subscriberId: Int,
+    val typeOfAppeal: AppealType,
+    val status: AppealStatus,
+    val managementCompanyName: String,
+    val description: String,
+    val attachment: String?,
+    val createdAt: Date
+)

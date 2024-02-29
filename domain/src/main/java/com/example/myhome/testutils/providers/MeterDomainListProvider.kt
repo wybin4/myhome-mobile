@@ -2,15 +2,22 @@ package com.example.myhome.testutils.providers
 
 import com.example.myhome.meter.models.ApartmentWithMeterGetModel
 import com.example.myhome.meter.models.MeterGetModel
+import com.example.myhome.meter.models.MeterListItemModel
 import com.example.myhome.meter.models.ReadingGetModel
 import com.example.myhome.testutils.providers.DateDomainProvider.date
 import java.util.Calendar
 import java.util.Date
 
-public object MeterDomainTestListProvider {
+object MeterDomainTestListProvider {
     val apartmentList = listOf(
         ApartmentWithMeterGetModel(1, "пер. Соборный 99, кв. 12", getMeterList()),
         ApartmentWithMeterGetModel(2, "ул. Малюгина 124, кв. 12", emptyList())
+    )
+
+    val meterListItems = listOf(
+        MeterListItemModel(1, "Газ", 1, "пер. Соборный 99, кв. 12"),
+        MeterListItemModel(2, "ХВС", 1, "пер. Соборный 99, кв. 12"),
+        MeterListItemModel(3, "ГВС", 1, "пер. Соборный 99, кв. 12"),
     )
 
     val readingList = listOf(

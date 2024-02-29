@@ -1,7 +1,10 @@
 package com.example.myhome.meter.storages
 
+import android.util.Log
 import com.example.myhome.meter.dtos.ApartmentWithMeterGetDto
 import com.example.myhome.meter.dtos.ApartmentWithMeterListDto
+import com.example.myhome.meter.dtos.MeterListDto
+import com.example.myhome.meter.dtos.MeterListItemDto
 import com.example.myhome.meter.dtos.ReadingAddDto
 import com.example.myhome.meter.dtos.ReadingGetDto
 import com.example.myhome.meter.dtos.ReadingListDto
@@ -12,10 +15,17 @@ class MeterRemoteStorage(private val meterApiService: MeterApiService): MeterSto
         val request = ApartmentWithMeterListDto(userId = 1)
         return meterApiService.listApartmentWithMeter(request)
     }
+
+    override suspend fun listMeter(): List<MeterListItemDto> {
+        val request = MeterListDto(userId = 1)
+        return meterApiService.listMeter(request)
+    }
+
     override suspend fun listReading(meterId: Int): List<ReadingGetDto> {
         val request = ReadingListDto(meterId)
         return meterApiService.listReading(request)
     }
+
     override suspend fun addReading(reading: ReadingAddDto) {
         meterApiService.addReading(reading)
     }

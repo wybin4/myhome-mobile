@@ -2,13 +2,9 @@ package com.example.myhome
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -47,7 +43,7 @@ class MainActivity : AppCompatActivity() {
          appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.list_meter, R.id.navigation_events,
-                R.id.navigation_chats
+                R.id.list_appeal
             )
         )
 
@@ -69,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             val isStartDestination = destination.id in appBarConfiguration.topLevelDestinations
             if (isStartDestination) {
                 actionBarBinding.placeholder.visibility = View.INVISIBLE
+                navView.visibility = View.VISIBLE
             } else {
                 actionBarBinding.placeholder.visibility = View.GONE
                 navView.visibility = View.GONE

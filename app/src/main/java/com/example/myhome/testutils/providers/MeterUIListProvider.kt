@@ -13,7 +13,7 @@ import com.example.myhome.testutils.providers.MeterDomainTestListProvider.readin
 
 object MeterUITestListProvider: MeterParcelableConverter, MeterUiConverter {
     fun getMeterUiList(): List<MeterUiModel> {
-        val meters = meterListToUi(apartmentList[0])
+        val meters = apartmentWithMeterToUi(apartmentList[0])
         return meters.map { it.setIsIssued() }
     }
 

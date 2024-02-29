@@ -2,6 +2,7 @@ package com.example.myhome.meter.repositories
 
 import com.example.myhome.meter.models.ApartmentWithMeterGetModel
 import com.example.myhome.meter.models.MeterGetModel
+import com.example.myhome.meter.models.MeterListItemModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.util.Date
@@ -21,5 +22,9 @@ class MeterRepositoryTest: MeterRepository {
 
     override fun listApartmentWithMeter(): Flow<List<ApartmentWithMeterGetModel>> {
         return flowOf(apartmentList)
+    }
+
+    override fun listMeter(): Flow<List<MeterListItemModel>> {
+        TODO("Not yet implemented")
     }
 }

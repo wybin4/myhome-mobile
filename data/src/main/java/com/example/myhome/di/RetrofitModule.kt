@@ -5,6 +5,7 @@ import com.example.myhome.appeal.services.AppealApiService
 import com.example.myhome.common.services.ApartmentApiService
 import com.example.myhome.common.services.SubscriberApiService
 import com.example.myhome.common.services.TypeOfServiceApiService
+import com.example.myhome.event.services.EventApiService
 import com.example.myhome.meter.services.MeterApiService
 import dagger.Module
 import dagger.Provides
@@ -23,7 +24,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
     companion object {
-        private const val BASE_URL = "https://9125-95-25-65-16.ngrok-free.app/api/"
+        private const val BASE_URL = "https://wealthy-barnacle-secure.ngrok-free.app/api/"
     }
     @Provides
     @Singleton
@@ -49,29 +50,40 @@ class RetrofitModule {
             .client(okHttpClient)
             .build()
     }
+
     @Provides
     @Singleton
     fun provideMeterApiService(@Named("Normal") retrofit: Retrofit): MeterApiService {
         return retrofit.create(MeterApiService::class.java)
     }
+
     @Provides
     @Singleton
     fun provideApartmentApiService(@Named("Normal") retrofit: Retrofit): ApartmentApiService {
         return retrofit.create(ApartmentApiService::class.java)
     }
+
     @Provides
     @Singleton
     fun provideTypeOfServiceApiService(@Named("Normal") retrofit: Retrofit): TypeOfServiceApiService {
         return retrofit.create(TypeOfServiceApiService::class.java)
     }
+
     @Provides
     @Singleton
     fun provideSubscriberApiService(@Named("Normal") retrofit: Retrofit): SubscriberApiService {
         return retrofit.create(SubscriberApiService::class.java)
     }
+
     @Provides
     @Singleton
     fun provideAppealApiService(@Named("Normal") retrofit: Retrofit): AppealApiService {
         return retrofit.create(AppealApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventApiService(@Named("Normal") retrofit: Retrofit): EventApiService {
+        return retrofit.create(EventApiService::class.java)
     }
 }

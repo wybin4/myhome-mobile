@@ -27,6 +27,7 @@
         <action
             android:id="@+id/action_meterAddView_to_meterListView"
             app:destination="@id/list_meter" />
+
     </fragment>
 
     <fragment
@@ -85,16 +86,94 @@
     <fragment
         android:id="@+id/navigation_events"
         android:name="com.example.myhome.presentation.event.list.EventListView"
-        android:label="@string/title_events"
-        />
+        android:label="@string/title_events"/>
 
     <fragment
-        android:id="@+id/navigation_chats"
-        android:name="com.example.myhome.presentation.chat.list.ChatListView"
-        android:label="@string/title_chats" />
+        android:id="@+id/list_appeal"
+        android:name="com.example.myhome.presentation.appeal.list.AppealListView"
+        android:label="@string/title_appeals">
+        <action
+            android:id="@+id/action_appealListView_to_appealPickView"
+            app:destination="@id/pick_appeal" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pick_appeal"
+        android:name="com.example.myhome.presentation.appeal.pick.AppealPickView"
+        android:label="@string/title_add_appeal">
+        <action
+            android:id="@+id/action_appealPickView_to_appealAddView"
+            app:destination="@id/add_appeal" />
+        <action
+            android:id="@+id/action_appealPickView_to_appealVerifyView"
+            app:destination="@id/verify_appeal" />
+        <action
+            android:id="@+id/action_appealPickView_to_appealProblemView"
+            app:destination="@id/problem_appeal" />
+        <action
+            android:id="@+id/action_appealPickView_to_appealClaimView"
+            app:destination="@id/claim_appeal" />
+        <action
+            android:id="@+id/action_appealPickView_to_appealListView"
+            app:destination="@id/list_appeal" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_appeal"
+        android:name="com.example.myhome.presentation.appeal.add.add.AppealAddView"
+        android:label="@string/title_add_appeal">
+        <action
+            android:id="@+id/action_appealAddView_to_appealPickView"
+            app:destination="@id/pick_appeal" />
+        <action
+            android:id="@+id/action_appealAddView_to_appealListView"
+            app:destination="@id/list_appeal" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/verify_appeal"
+        android:name="com.example.myhome.presentation.appeal.add.verify.AppealVerifyView"
+        android:label="@string/title_add_appeal">
+        <action
+            android:id="@+id/action_appealVerifyView_to_appealPickView"
+            app:destination="@id/pick_appeal" />
+        <action
+            android:id="@+id/action_appealVerifyView_to_appealListView"
+            app:destination="@id/list_appeal" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/problem_appeal"
+        android:name="com.example.myhome.presentation.appeal.add.problem.AppealProblemView"
+        android:label="@string/title_add_appeal">
+        <action
+            android:id="@+id/action_appealProblemView_to_appealPickView"
+            app:destination="@id/pick_appeal" />
+        <action
+            android:id="@+id/action_appealProblemView_to_appealListView"
+            app:destination="@id/list_appeal" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/claim_appeal"
+        android:name="com.example.myhome.presentation.appeal.add.claim.AppealClaimView"
+        android:label="@string/title_add_appeal">
+        <action
+            android:id="@+id/action_appealClaimView_to_appealPickView"
+            app:destination="@id/pick_appeal" />
+        <action
+            android:id="@+id/action_appealClaimView_to_appealListView"
+            app:destination="@id/list_appeal" />
+
+    </fragment>
 
 <!--    <fragment-->
-<!--        android:id="@+id/navigation_appeals"-->
+<!--        android:id="@+id/navigation_chats"-->
+<!--        android:name="com.example.myhome.presentation.chat.list.ChatListView"-->
+<!--        android:label="@string/title_chats" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/list_appeal"-->
 <!--        android:name="com.example.myhome.ui.notifications.NotificationsFragment"-->
 <!--        android:label="@string/title_appeals"/>-->
 </navigation>

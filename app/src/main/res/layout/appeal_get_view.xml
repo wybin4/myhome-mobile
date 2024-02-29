@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="appeal"
+            type="com.example.myhome.utils.models.AppealUiModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/BottomSheetDialog"
+        android:orientation="vertical"
+        android:paddingHorizontal="28dp"
+        android:paddingBottom="45dp">
+
+        <LinearLayout
+            android:layout_width="77dp"
+            android:layout_height="5dp"
+            android:backgroundTint="@color/description_night"
+            android:background="@drawable/circle_normal"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="40dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="30dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                style="@style/ImageLikeText"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/paper"
+                android:layout_marginRight="7dp"/>
+
+            <TextView
+                style="@style/Text"
+                android:layout_weight="1"
+                android:text="@{appeal.getStatusString()}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{appeal.getTypeString()}"
+                android:textColor="@color/primary"
+                android:background="@drawable/circle_normal"
+                android:backgroundTint="@color/primary_light"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="5dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+            <TextView
+                style="@style/Text"
+                android:text="@{appeal.getTitle()}"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:layout_marginBottom="2dp"/>
+            <TextView
+                style="@style/Text"
+                android:text="@{appeal.formatCreatedAt()}"
+                android:layout_marginBottom="12dp"/>
+            <TextView
+                style="@style/Text"
+                android:text="@{appeal.description}"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/attachment"
+            android:textColor="@color/primary"
+            android:layout_gravity="end"
+            android:visibility="@{appeal.hasAttachment()}"
+            android:layout_marginTop="10dp"
+            />
+    </LinearLayout>
+</layout>
