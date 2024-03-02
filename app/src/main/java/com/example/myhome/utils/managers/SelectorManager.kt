@@ -1,7 +1,7 @@
 package com.example.myhome.utils.managers
 
 import android.R
-import android.util.Log
+
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.common.models.Identifiable

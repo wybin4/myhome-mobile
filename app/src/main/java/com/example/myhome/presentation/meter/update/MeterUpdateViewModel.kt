@@ -12,11 +12,12 @@ import com.example.myhome.common.models.SubscriberGetModel
 import com.example.myhome.common.usecases.ApartmentListUseCase
 import com.example.myhome.common.usecases.SubscriberListUseCase
 import com.example.myhome.utils.mappers.ImageMapper
+import com.example.myhome.utils.models.AddResource
 import com.example.myhome.utils.models.MeterGetToUpdateParcelableModel
+import com.example.myhome.utils.models.NetworkResult
+import com.example.myhome.utils.models.Resource
+import com.example.myhome.utils.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -34,6 +35,12 @@ class MeterUpdateViewModel @Inject constructor(
     private val _apartmentList = MutableLiveData<List<ApartmentGetModel>>()
     private val apartmentList: LiveData<List<ApartmentGetModel>> = _apartmentList
 
+    private val _dataState = MutableLiveData<Resource>(Resource.Loading)
+    val dataState: LiveData<Resource> = _dataState
+
+    private val _dataAddState = MutableLiveData<AddResource>(AddResource.None)
+    val dataAddState: LiveData<AddResource> = _dataAddState
+
     lateinit var meterParcelable : MeterGetToUpdateParcelableModel
 
     var selectIssuedAt: Date? = null
@@ -47,21 +54,53 @@ class MeterUpdateViewModel @Inject constructor(
     private fun fetchLists() {
         viewModelScope.launch {
             subscriberListUseCase()
-                .flowOn(Dispatchers.IO)
-                .catch {
-                    _subscriberList.value = listOf()
-                }
-                .collect {
-                    _subscriberList.value = it
+                .asNetworkResult()
+                .collect { result ->
+                    when (result) {
+                        is NetworkResult.Success -> {
+                            val data = result.data
+                            if (data.isNotEmpty()) {
+                                _dataState.value = Resource.Success
+                                _subscriberList.value = data
+                            } else {
+                                _dataState.value = Resource.Empty
+                            }
+                        }
+                        is NetworkResult.Loading -> {
+                            _dataState.value = Resource.Loading
+                        }
+                        is NetworkResult.Error -> {
+                            val errorMessage = result.exception.message
+                            if (errorMessage != null) {
+                                _dataState.value = Resource.Error(errorMessage)
+                            }
+                        }
+                    }
                 }
 
             apartmentListUseCase()
-                .flowOn(Dispatchers.IO)
-                .catch {
-                    _apartmentList.value = listOf()
-                }
-                .collect {
-                    _apartmentList.value = it
+                .asNetworkResult()
+                .collect { result ->
+                    when (result) {
+                        is NetworkResult.Success -> {
+                            val data = result.data
+                            if (data.isNotEmpty()) {
+                                _dataState.value = Resource.Success
+                                _apartmentList.value = data
+                            } else {
+                                _dataState.value = Resource.Empty
+                            }
+                        }
+                        is NetworkResult.Loading -> {
+                            _dataState.value = Resource.Loading
+                        }
+                        is NetworkResult.Error -> {
+                            val errorMessage = result.exception.message
+                            if (errorMessage != null) {
+                                _dataState.value = Resource.Error(errorMessage)
+                            }
+                        }
+                    }
                 }
         }
     }
@@ -83,10 +122,31 @@ class MeterUpdateViewModel @Inject constructor(
                         attachment = attachment
                     )
                 )
+                    .asNetworkResult()
+                    .collect { result ->
+                        when (result) {
+                            is NetworkResult.Success -> {
+                                val data = result.data
+                                if (data) {
+                                    _dataAddState.value = AddResource.Success
+                                } else {
+                                    _dataAddState.value = AddResource.CodeError
+                                }
+                            }
+                            is NetworkResult.Loading -> {
+                                _dataAddState.value = AddResource.Loading
+                            }
+                            is NetworkResult.Error -> {
+                                val errorMessage = result.exception.message
+                                if (errorMessage != null) {
+                                    _dataAddState.value = AddResource.NetworkError(errorMessage)
+                                }
+                            }
+                        }
+                    }
             }
         } else {
-            TODO("Ошибка?")
+            _dataAddState.value = AddResource.CodeError
         }
-
     }
 }

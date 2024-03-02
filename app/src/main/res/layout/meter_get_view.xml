@@ -25,22 +25,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="21dp"
-                        android:paddingLeft="28dp"
                         >
+
                         <LinearLayout
+                            android:layout_weight="0.4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="center"
-                            android:paddingRight="45dp"
-                            android:paddingLeft="8dp"
-                            android:layout_gravity="center_vertical">
+                            android:layout_gravity="center_vertical"
+                            android:paddingHorizontal="10dp">
                             <!--круглая кнопка раз-->
                             <LinearLayout
                                 android:id="@+id/update_meter_button"
@@ -91,62 +90,74 @@
 
                         <LinearLayout
                             style="@style/Card"
-                            android:layout_width="264dp"
+                            android:layout_weight="0.6"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="40dp">
+                            android:paddingLeft="30dp"
+                            android:paddingVertical="40dp">
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_marginBottom="130dp">
+                                android:layout_marginBottom="130dp"
+                                android:orientation="vertical">
+
                                 <TextView
                                     style="@style/Text"
                                     android:text="Текущие показания"
-                                    android:textSize="13dp"/>
+                                    android:textSize="13dp" />
+
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
+
                                     <TextView
                                         android:id="@+id/current_reading"
                                         style="@style/Text"
                                         android:text="@{viewModel.meterParcelable.formatCurrentReading()}"
                                         android:textSize="36dp"
-                                        android:textStyle="bold"/>
+                                        android:textStyle="bold" />
+
                                     <TextView
                                         android:id="@+id/unit_name"
                                         style="@style/Text"
-                                        android:text="@{viewModel.meterParcelable.unitName}"
                                         android:paddingLeft="6dp"
-                                        android:textStyle="bold"
-                                        android:textSize="22dp"/>
+                                        android:text="@{viewModel.meterParcelable.unitName}"
+                                        android:textSize="22dp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
+
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingRight="42dp">
+
                                     <TextView
                                         style="@style/Text"
                                         android:text="Тип услуги"
-                                        android:textSize="13dp"/>
+                                        android:textSize="13dp" />
+
                                     <TextView
                                         android:id="@+id/type_of_service_name"
                                         style="@style/Text"
-                                        android:layout_width="84dp"
+                                        android:layout_width="wrap_content"
                                         android:text="@{viewModel.meterParcelable.typeOfServiceName}"
                                         android:textSize="16dp"/>
                                 </LinearLayout>
+
                                 <ImageView
                                     android:layout_width="34dp"
                                     android:layout_height="34dp"
                                     android:src="@{viewModel.meterParcelable.getIcon()}"
-                                    app:tint="@color/primary"/>
+                                    app:tint="@color/primary" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -376,7 +387,75 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:nestedScrollingEnabled="false"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                />
+
+                            <LinearLayout
+                                android:id="@+id/reading_on_error"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_marginBottom="40dp"
+                                android:visibility="gone"
+                                >
+                                <ImageView
+                                    android:layout_width="134dp"
+                                    android:layout_height="134dp"
+                                    android:src="@drawable/error_state"/>
+
+                                <TextView
+                                    style="@style/Text"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Что-то пошло не так"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="15dp"/>
+
+                                <TextView
+                                    style="@style/Text"
+                                    android:maxWidth="292dp"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Попробуйте перезагрузить телефон или подключиться к другой сети"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/reading_on_empty"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_marginBottom="40dp"
+                                android:visibility="gone"
+                                >
+                                <ImageView
+                                    android:layout_width="134dp"
+                                    android:layout_height="134dp"
+                                    android:src="@drawable/empty_state"/>
+
+                                <TextView
+                                    style="@style/Text"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Нет последних показаний"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="15dp"/>
+
+                                <TextView
+                                    style="@style/Text"
+                                    android:maxWidth="292dp"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Для добавления показаний за этот месяц нажмите кнопку “Добавить показания”"/>
+
+                            </LinearLayout>
 
                         </LinearLayout>
                     </LinearLayout>

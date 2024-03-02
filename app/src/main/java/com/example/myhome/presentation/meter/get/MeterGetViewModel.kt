@@ -1,6 +1,6 @@
 package com.example.myhome.presentation.meter.get
 
-import android.util.Log
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -63,7 +63,10 @@ class MeterGetViewModel @Inject constructor(
                                 _readingListState.value = Resource.Loading
                             }
                             is NetworkResult.Error -> {
-                                _readingListState.value = Resource.Error
+                                val errorMessage = result.exception.message
+                                if (errorMessage != null) {
+                                    _readingListState.value = Resource.Error(errorMessage)
+                                }
                             }
                         }
                     }

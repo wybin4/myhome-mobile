@@ -122,6 +122,7 @@
                         android:gravity="end">
 
                         <TextView
+                            android:gravity="end"
                             style="@style/DescriptionText"
                             android:text="Предыдущие показания"
                             android:layout_marginBottom="4dp"/>
@@ -150,8 +151,7 @@
                             android:id="@+id/btn_1"
                             style="@style/DigitButton"
                             android:layout_weight="1"
-                            android:text="1"
-                            />
+                            android:text="1" />
 
                         <Button
                             android:id="@+id/btn_2"
@@ -237,6 +237,7 @@
                             />
                         <ImageButton
                             android:id="@+id/btn_del"
+                            style="@style/DigitButtonDelete"
                             android:backgroundTint="@color/transparent"
                             android:layout_width="112dp"
                             android:layout_height="79dp"

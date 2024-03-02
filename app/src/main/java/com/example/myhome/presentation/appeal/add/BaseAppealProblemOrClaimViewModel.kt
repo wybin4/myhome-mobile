@@ -9,8 +9,6 @@ import com.example.myhome.common.models.ApartmentGetModel
 import com.example.myhome.common.models.SubscriberGetModel
 import com.example.myhome.common.usecases.ApartmentListUseCase
 import com.example.myhome.common.usecases.SubscriberListUseCase
-import com.example.myhome.utils.models.NetworkResult
-import com.example.myhome.utils.models.Resource
 import com.example.myhome.utils.models.asNetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -75,22 +73,7 @@ abstract class BaseAppealProblemOrClaimViewModel(
                 )
                     .asNetworkResult()
                     .collect { result ->
-                        when (result) {
-                            is NetworkResult.Success -> {
-                                val data = result.data
-                                if (data) {
-                                    _appealState.value = Resource.Success
-                                } else {
-                                    _appealState.value = Resource.Error
-                                }
-                            }
-                            is NetworkResult.Loading -> {
-                                _appealState.value = Resource.Loading
-                            }
-                            is NetworkResult.Error -> {
-                                _appealState.value = Resource.Error
-                            }
-                        }
+                        manageState(result)
                     }
             }
         } else {

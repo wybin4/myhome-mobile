@@ -10,10 +10,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.AppealGetViewBinding
 import com.example.myhome.databinding.AppealListItemBinding
+import com.example.myhome.databinding.AppealListItemLoadingBinding
 import com.example.myhome.databinding.AppealListViewBinding
+import com.example.myhome.utils.ConstantsUi
 import com.example.myhome.utils.adapters.CustomListAdapter
+import com.example.myhome.utils.adapters.InfiniteListAdapter
+import com.example.myhome.utils.managers.state.ListStateManager
 import com.example.myhome.utils.models.AppealUiModel
-import com.example.myhome.utils.models.Resource
+import com.example.myhome.utils.models.ListState
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,8 +31,11 @@ class AppealListView : Fragment() {
     private val viewModel by viewModels<AppealListViewModel>()
 
     private lateinit var appealListAdapter: CustomListAdapter<AppealUiModel, AppealListItemBinding>
+    private lateinit var appealInfiniteListAdapter: InfiniteListAdapter<String, AppealListItemLoadingBinding>
 
     private lateinit var bottomSheetDialog: BottomSheetDialog
+
+    private val listStateManager = ListStateManager(this::updateViewState)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,12 +45,40 @@ class AppealListView : Fragment() {
         bindingList.lifecycleOwner = this
 
         setupRecyclerView()
+        setupInfiniteRecyclerView()
+        setupGetSheet(inflater, container)
 
         bindingList.addAppealButton.setOnClickListener {
             findNavController().navigate(R.id.action_appealListView_to_appealPickView)
         }
 
-        bottomSheetDialog = BottomSheetDialog(requireActivity())
+        return bindingList.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeList()
+        observeResourceState()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchAppealList()
+    }
+
+    private fun updateViewState(state: ListState) {
+        bindingList.apply {
+            onLoading.visibility = state.loadingVisibility
+            onSuccess.visibility = state.successVisibility
+            onEmpty.visibility = state.emptyVisibility
+            onError.visibility = state.errorVisibility
+            addButtonLayout.visibility = state.addButtonLayoutVisibility ?: View.GONE
+            state.errorMessage?.let { errorLayout.error = it }
+        }
+    }
+
+    private fun setupGetSheet(inflater: LayoutInflater, container: ViewGroup?) {
+        bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.SheetDialog)
         _bindingGet = AppealGetViewBinding.inflate(inflater, container, false)
         bottomSheetDialog.setContentView(bindingGet.root)
 
@@ -54,56 +89,30 @@ class AppealListView : Fragment() {
                 bottomSheetDialog.show()
             }
         }
-
-        return bindingList.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        observeList()
-        observeResourceStates()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.fetchAppealList()
+    private fun setupInfiniteRecyclerView() {
+        appealInfiniteListAdapter = InfiniteListAdapter(
+            itemList = List(ConstantsUi.VERTICAL_LOADING_RECYCLER_VIEW_SIZE) { "" },
+            itemBindingInflater = { inflater, parent, attachToParent ->
+                AppealListItemLoadingBinding.inflate(inflater, parent, attachToParent)
+            },
+            setBinding = { binding, item ->
+                binding.item = item
+            }
+        )
+        bindingList.appealInfiniteRecyclerView.adapter = appealInfiniteListAdapter
+        bindingList.appealInfiniteRecyclerView.hasFixedSize()
     }
 
     private fun observeList() {
         viewModel.appealList.observe(viewLifecycleOwner) { appealListAdapter.submitList(it) }
     }
 
-
-    private fun observeResourceStates() {
+    private fun observeResourceState() {
         viewModel.appealListState.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Loading -> showLoadingState()
-                is Resource.Success -> showSuccessState()
-                is Resource.Empty -> showEmptyState()
-                is Resource.Error -> showErrorState()
-                else -> {}
-            }
+            listStateManager.observeStates(resource)
         }
-    }
-
-    private fun showLoadingState() {
-//        bindingList.onLoading.visibility = View.VISIBLE
-        bindingList.onSuccess.visibility = View.GONE
-    }
-
-    private fun showSuccessState() {
-        bindingList.onSuccess.visibility = View.VISIBLE
-//        bindingList.onLoading.visibility = View.GONE
-    }
-
-    private fun showEmptyState() {
-        TODO("Доделать")
-    }
-
-    private fun showErrorState() {
-        TODO("Доделать")
     }
 
     private fun setupRecyclerView() {

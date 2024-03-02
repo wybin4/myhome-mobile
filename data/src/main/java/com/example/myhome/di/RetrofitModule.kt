@@ -35,9 +35,9 @@ class RetrofitModule {
         val cacheSize = 10 * 1024 * 1024L // 10MB
         val cache = Cache(context.cacheDir, cacheSize)
         val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
 //            .addNetworkInterceptor { chain ->
 //
 //            }

@@ -18,6 +18,9 @@ class DigitPicker {
         val commaCount = result.count { it == ',' }
 
         val parts = result.split(',')
+        if (parts[0].length >= 3 && newVal != "," && commaCount < 1) {
+            return result
+        }
         if (commaCount > 0 && parts[1].length >= 3) {
             return result
         }

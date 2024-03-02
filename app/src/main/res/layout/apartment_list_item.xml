@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
@@ -11,14 +9,9 @@
     </data>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:background="@{apartment.selected ? @drawable/circle_button_night : @drawable/circle_button_unselected}"
+        style="@style/SwapButton"
         android:textColor="@{apartment.selected ? @color/white : @color/primary}"
-        android:singleLine="true"
-        android:textAllCaps="false"
-        app:cornerRadius="15dp"
-        android:layout_marginRight="20dp"
+        android:backgroundTint="@{apartment.selected ? @color/primary : @color/primary_light}"
         android:text="@{apartment.name}"/>
 
 </layout>

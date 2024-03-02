@@ -15,8 +15,6 @@ import com.example.myhome.common.usecases.SubscriberListUseCase
 import com.example.myhome.common.usecases.TypeOfServiceListUseCase
 import com.example.myhome.presentation.appeal.add.BaseAppealViewModel
 import com.example.myhome.utils.mappers.ImageMapper
-import com.example.myhome.utils.models.NetworkResult
-import com.example.myhome.utils.models.Resource
 import com.example.myhome.utils.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -43,8 +41,8 @@ class BaseAppealAddViewModel @Inject constructor(
     private val _subscriberList = MutableLiveData<List<SubscriberGetModel>>()
     private val subscriberList: LiveData<List<SubscriberGetModel>> = _subscriberList
 
-    private var selectIssuedAt: Date? = null
-    private var selectVerifiedAt: Date? = null
+    var selectIssuedAt: Date? = null
+    var selectVerifiedAt: Date? = null
     var selectedApartmentId: Int = -1
     var selectedTypeOfServiceId: Int = -1
     var selectedFactoryNumber: String = ""
@@ -107,22 +105,7 @@ class BaseAppealAddViewModel @Inject constructor(
                 )
                     .asNetworkResult()
                     .collect { result ->
-                        when (result) {
-                            is NetworkResult.Success -> {
-                                val data = result.data
-                                if (data) {
-                                    _appealState.value = Resource.Success
-                                } else {
-                                    _appealState.value = Resource.Error
-                                }
-                            }
-                            is NetworkResult.Loading -> {
-                                _appealState.value = Resource.Loading
-                            }
-                            is NetworkResult.Error -> {
-                                _appealState.value = Resource.Error
-                            }
-                        }
+                        manageState(result)
                     }
             }
         } else {

@@ -19,17 +19,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingHorizontal="22dp"
+                android:paddingHorizontal="15dp"
                 android:paddingVertical="16dp"
                 android:layout_marginBottom="24dp"
                 >
+
                 <LinearLayout
                     android:layout_width="47dp"
                     android:layout_height="47dp"
                     android:background="@drawable/circle_normal"
                     android:backgroundTint="@color/primary_light"
                     android:gravity="center"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="10dp"
                     >
 
                     <ImageView
@@ -38,11 +39,13 @@
                         android:src="@{appeal.getTypeIcon()}"
                         app:tint="@color/primary" />
                 </LinearLayout>
+
                 <LinearLayout
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_marginRight="15dp">
                     <TextView
                         style="@style/Text"
                         android:layout_width="wrap_content"

@@ -2,13 +2,15 @@ package com.example.myhome.utils.managers
 
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.databinding.DatePickersViewBinding
-import com.example.myhome.presentation.appeal.add.BaseAppealViewModel
 import com.example.myhome.utils.pickers.CustomDatePicker
+import java.util.Date
+import kotlin.reflect.KMutableProperty0
 
 class DatePickersManager(
     private val binding: DatePickersViewBinding,
     private val fragment: FragmentActivity,
-    private val viewModel: BaseAppealViewModel
+    private val verifiedAt: KMutableProperty0<Date?>,
+    private val issuedAt: KMutableProperty0<Date?>,
 ) {
     private lateinit var verifiedAtPicker: CustomDatePicker
     private lateinit var issuedAtPicker: CustomDatePicker
@@ -26,7 +28,7 @@ class DatePickersManager(
     private fun setup() {
         verifiedAtPicker = CustomDatePicker(
             fragment,
-            viewModel::selectVerifiedAt, binding.verifiedAt, binding.verifiedAtDatePicker,
+            verifiedAt, binding.verifiedAt, binding.verifiedAtDatePicker,
             "поверки"
         )
         binding.verifiedAt.setOnClickListener {
@@ -35,7 +37,7 @@ class DatePickersManager(
 
         issuedAtPicker = CustomDatePicker(
             fragment,
-            viewModel::selectIssuedAt, binding.issuedAt, binding.issuedAtDatePicker,
+            issuedAt, binding.issuedAt, binding.issuedAtDatePicker,
             "истечения"
         )
         binding.issuedAt.setOnClickListener {

@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.appeal.list
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,7 +49,10 @@ class AppealListViewModel @Inject constructor(
                             _appealListState.value = Resource.Loading
                         }
                         is NetworkResult.Error -> {
-                            _appealListState.value = Resource.Error
+                            val errorMessage = result.exception.message
+                            if (errorMessage != null) {
+                                _appealListState.value = Resource.Error(errorMessage)
+                            }
                         }
                     }
                 }

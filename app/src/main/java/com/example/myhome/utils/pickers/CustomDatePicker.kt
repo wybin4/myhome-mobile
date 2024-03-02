@@ -18,11 +18,7 @@ class CustomDatePicker(
     private val attribute: DatePickerListener,
     input: TextInputLayout,
     validateMessage: String
-): DateConverter, DateChangeListener {
-    init {
-        attribute.setDateChangeListener(this::onDateChanged)
-    }
-
+): DateConverter, DateChangeListener, ThemePicker {
     private val validator: InputValidator = InputValidator(
         input,
         { text: String? -> text?.length!! > 0 },"Выберите дату $validateMessage", { validate() }
@@ -33,7 +29,8 @@ class CustomDatePicker(
         { _, year, monthOfYear, dayOfMonth ->
             val calendar = Calendar.getInstance()
             calendar.set(year, monthOfYear, dayOfMonth)
-
+            selectedDate.set(calendar.time)
+            attribute.setText(formatDate())
             validate()
         },
         now[Calendar.YEAR],
@@ -44,6 +41,11 @@ class CustomDatePicker(
         locale = Locale.Builder().setLanguage("ru").setScript("Cyrl").build()
         setOkText("Выбрать")
         setCancelText("Отмена")
+    }
+
+    init {
+        attribute.setDateChangeListener(this::onDateChanged)
+        datePicker.isThemeDark = isDarkTheme(activity)
     }
 
     fun show() {

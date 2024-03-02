@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.myhome.databinding.DataStateBinding
+import com.example.myhome.databinding.DatePickersViewBinding
 import com.example.myhome.databinding.MeterUpdateViewBinding
-import com.example.myhome.utils.pickers.CustomDatePicker
+import com.example.myhome.utils.managers.state.data.DataStateManager
+import com.example.myhome.utils.managers.DatePickersManager
 import com.example.myhome.utils.pickers.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,12 +19,19 @@ import dagger.hilt.android.AndroidEntryPoint
 class MeterUpdateView : Fragment() {
     private var _binding: MeterUpdateViewBinding? = null
     private val binding get() = _binding!!
+
+    private var _dataStateBinding: DataStateBinding? = null
+    private val dataStateBinding get() = _dataStateBinding!!
+
+    private lateinit var datePickersBinding: DatePickersViewBinding
+
     private val viewModel by viewModels<MeterUpdateViewModel>()
 
-    private lateinit var verifiedAtPicker: CustomDatePicker
-    private lateinit var issuedAtPicker: CustomDatePicker
+    private lateinit var datePickersManager: DatePickersManager
 
     private lateinit var imagePicker: ImagePicker
+
+    private lateinit var dataAddStateManager: DataStateManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,32 +43,38 @@ class MeterUpdateView : Fragment() {
 
         viewModel.meterParcelable = requireArguments().getParcelable("meter")!!
 
-        setupDatePickers()
-
         setupImagePicker()
+
+        datePickersBinding = binding.datePickersLayout
+        datePickersManager = DatePickersManager(
+            datePickersBinding, requireActivity(),
+            viewModel::selectVerifiedAt, viewModel::selectIssuedAt
+        )
+
+        _dataStateBinding = DataStateBinding.inflate(inflater, container, false)
+        dataAddStateManager = DataStateManager(
+            requireActivity(), dataStateBinding,
+            "Обращение добавлено", "Благодарим за обращение! Оно будет обработано в кратчайшие сроки"
+            ) {
+            findNavController().popBackStack()
+        }
 
         binding.nextButton.setOnClickListener { nextClick() }
 
         return binding.root
     }
 
-    private fun setupDatePickers() {
-        verifiedAtPicker = CustomDatePicker(
-            requireActivity(),
-            viewModel::selectVerifiedAt, binding.verifiedAt, binding.verifiedAtDatePicker,
-            "поверки"
-        )
-        binding.verifiedAt.setOnClickListener {
-            verifiedAtPicker.show()
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeResourceState()
+    }
 
-        issuedAtPicker = CustomDatePicker(
-            requireActivity(),
-            viewModel::selectIssuedAt, binding.issuedAt, binding.issuedAtDatePicker,
-            "истечения"
-        )
-        binding.issuedAt.setOnClickListener {
-            issuedAtPicker.show()
+    private fun observeResourceState() {
+        viewModel.dataState.observe(viewLifecycleOwner) { resource ->
+            dataAddStateManager.observeGetState(resource)
+        }
+        viewModel.dataAddState.observe(viewLifecycleOwner) { resource ->
+            dataAddStateManager.observeAddState(resource)
         }
     }
 
@@ -69,10 +86,8 @@ class MeterUpdateView : Fragment() {
     }
 
     private fun nextClick() {
-        val isVerifiedAtValid = verifiedAtPicker.validate()
-        val isIssuedAtValid = issuedAtPicker.validate()
-
-        if (isVerifiedAtValid && isIssuedAtValid) {
+        val isDatePickersValid = datePickersManager.isDatePickersValid()
+        if (isDatePickersValid) {
             imagePicker.checkStoragePermission()
         }
     }

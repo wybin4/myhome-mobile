@@ -17,9 +17,10 @@ import com.example.myhome.utils.ConstantsUi.Companion.HORIZONTAL_LOADING_RECYCLE
 import com.example.myhome.utils.ConstantsUi.Companion.VERTICAL_LOADING_RECYCLER_VIEW_SIZE
 import com.example.myhome.utils.adapters.CustomListAdapter
 import com.example.myhome.utils.adapters.InfiniteListAdapter
+import com.example.myhome.utils.managers.state.ListStateManager
 import com.example.myhome.utils.models.ApartmentUiModel
+import com.example.myhome.utils.models.ListState
 import com.example.myhome.utils.models.MeterUiModel
-import com.example.myhome.utils.models.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +35,8 @@ class MeterListView : Fragment() {
     private lateinit var meterInfiniteListAdapter: InfiniteListAdapter<String, MeterListItemLoadingBinding>
     private lateinit var apartmentInfiniteListAdapter: InfiniteListAdapter<String, ApartmentListItemLoadingBinding>
 
+    private val listStateManager = ListStateManager(this::updateViewState)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,7 +49,10 @@ class MeterListView : Fragment() {
         setupCarouselView()
 
         binding.addMeterButton.setOnClickListener {
-            findNavController().navigate(R.id.action_MeterListView_to_MeterAddView)
+            addMeterClick()
+        }
+        binding.emptyAddMeterButton.setOnClickListener {
+            addMeterClick()
         }
 
         return binding.root
@@ -55,7 +61,7 @@ class MeterListView : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeResourceStates()
+        observeResourceState()
         observeLists()
     }
 
@@ -64,38 +70,30 @@ class MeterListView : Fragment() {
         viewModel.fetchMeterList()
     }
 
-    private fun observeResourceStates() {
+    private fun addMeterClick() {
+        findNavController().navigate(R.id.action_MeterListView_to_MeterAddView)
+    }
+
+    private fun updateViewState(state: ListState) {
+        binding.apply {
+            onLoading.visibility = state.loadingVisibility
+            onSuccess.visibility = state.successVisibility
+            onEmpty.visibility = state.emptyVisibility
+            onError.visibility = state.errorVisibility
+            emptyAddMeterButton.visibility = state.addButtonLayoutVisibility ?: View.GONE
+            state.errorMessage?.let { errorLayout.error = it }
+        }
+    }
+
+    private fun observeResourceState() {
         viewModel.meterListState.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Loading -> showLoadingState()
-                is Resource.Success -> showSuccessState()
-                is Resource.Empty -> showEmptyState()
-                is Resource.Error -> showErrorState()
-            }
+            listStateManager.observeStates(resource)
         }
     }
 
     private fun observeLists() {
         viewModel.meterList.observe(viewLifecycleOwner) { meterListAdapter.submitList(it) }
         viewModel.apartmentList.observe(viewLifecycleOwner) { apartmentListAdapter.submitList(it) }
-    }
-
-    private fun showLoadingState() {
-        binding.onLoading.visibility = View.VISIBLE
-        binding.onSuccess.visibility = View.GONE
-    }
-
-    private fun showSuccessState() {
-        binding.onSuccess.visibility = View.VISIBLE
-        binding.onLoading.visibility = View.GONE
-    }
-
-    private fun showEmptyState() {
-        TODO("Доделать")
-    }
-
-    private fun showErrorState() {
-        TODO("Доделать")
     }
 
     private fun setupInfiniteRecyclerViews() {

@@ -9,14 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.MeterGetViewBinding
-import com.example.myhome.databinding.MeterListItemLoadingBinding
 import com.example.myhome.databinding.ReadingListItemBinding
 import com.example.myhome.databinding.ReadingListItemLoadingBinding
 import com.example.myhome.utils.ConstantsUi
 import com.example.myhome.utils.adapters.CustomListAdapter
 import com.example.myhome.utils.adapters.InfiniteListAdapter
+import com.example.myhome.utils.managers.state.ListStateManager
+import com.example.myhome.utils.models.ListState
 import com.example.myhome.utils.models.ReadingUiModel
-import com.example.myhome.utils.models.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +26,8 @@ class MeterGetView : Fragment() {
     private val viewModel by viewModels<MeterGetViewModel>()
     private lateinit var readingListAdapter: CustomListAdapter<ReadingUiModel, ReadingListItemBinding>
     private lateinit var readingInfiniteListAdapter: InfiniteListAdapter<String, ReadingListItemLoadingBinding>
+
+    private val listStateManager = ListStateManager(this::updateViewState)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +53,7 @@ class MeterGetView : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeResourceStates()
+        observeResourceState()
         observeList()
     }
 
@@ -60,14 +62,9 @@ class MeterGetView : Fragment() {
         viewModel.fetchReadingList()
     }
 
-    private fun observeResourceStates() {
+    private fun observeResourceState() {
         viewModel.readingListState.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Loading -> showLoadingState()
-                is Resource.Success -> showSuccessState()
-                is Resource.Empty -> showEmptyState()
-                is Resource.Error -> showErrorState()
-            }
+            listStateManager.observeStates(resource)
         }
     }
 
@@ -86,22 +83,13 @@ class MeterGetView : Fragment() {
         }
     }
 
-    private fun showLoadingState() {
-        binding.readingInfiniteRecyclerView.visibility = View.VISIBLE
-        binding.readingRecyclerView.visibility = View.GONE
-    }
-
-    private fun showSuccessState() {
-        binding.readingRecyclerView.visibility = View.VISIBLE
-        binding.readingInfiniteRecyclerView.visibility = View.GONE
-    }
-
-    private fun showEmptyState() {
-        TODO("Доделать")
-    }
-
-    private fun showErrorState() {
-        TODO("Доделать")
+    private fun updateViewState(state: ListState) {
+        binding.apply {
+            readingInfiniteRecyclerView.visibility = state.loadingVisibility
+            readingRecyclerView.visibility = state.successVisibility
+            readingOnEmpty.visibility = state.emptyVisibility
+            readingOnError.visibility = state.errorVisibility
+        }
     }
 
     private fun setupActionButtons() {

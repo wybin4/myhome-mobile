@@ -92,12 +92,32 @@
         <item name="tint">@color/white</item>
     </style>
 
+    <style name="DigitButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">112sp</item>
+        <item name="android:layout_height">79sp</item>
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="android:background">@null</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="DigitButtonDelete">
+        <item name="tint">@color/white</item>
+    </style>
+
     <style name="Card">
         <item name="android:background">@drawable/round_corner_card_night</item>
     </style>
 
+    <style name="Dialog">
+        <item name="android:background">@drawable/dialog_night</item>
+    </style>
+
     <style name="BottomSheetDialog">
-        <item name="android:background">@color/white_night</item>
+        <item name="android:background">@drawable/bottom_dialog_night</item>
     </style>
 
 </resources>

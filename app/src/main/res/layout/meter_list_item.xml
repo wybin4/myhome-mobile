@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="22dp"
-                android:paddingVertical="16dp"
+                android:paddingVertical="20dp"
                 android:layout_marginBottom="24dp"
                 >
                 <LinearLayout
@@ -72,18 +72,32 @@
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/factory_number"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         style="@style/DescriptionText"
-                        android:layout_weight="1"
+                        android:layout_weight="0.5"
                         android:text="@{meter.factoryNumber}" />
 
-                    <TextView
-                        android:id="@+id/issued_at"
-                        style="@style/DescriptionText"
-                        android:layout_weight="1"
-                        android:textColor="@{meter.isIssued ? @color/red : @color/black}"
-                        android:text="@{`Поверка: ` + meter.formatIssuedAt()}"
-                        android:textAlignment="textEnd" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="end"
+                        >
+                        <TextView
+                            android:id="@+id/issued_at_true"
+                            style="@style/DescriptionText"
+                            android:textColor="@color/red"
+                            android:text="@{`Поверка: ` + meter.formatIssuedAt()}"
+                            android:textAlignment="textEnd"
+                            android:visibility="@{meter.isIssued}"/>
+
+                        <TextView
+                            android:id="@+id/issued_at_false"
+                            style="@style/Text"
+                            android:text="@{`Поверка: ` + meter.formatIssuedAt()}"
+                            android:textAlignment="textEnd"
+                            android:visibility="@{!meter.isIssued}"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 

@@ -41,7 +41,10 @@ class AppealVerifyView : Fragment() {
         setupImagePicker()
 
         datePickersBinding = binding.datePickersLayout
-        datePickersManager = DatePickersManager(datePickersBinding, requireActivity(), viewModel)
+        datePickersManager = DatePickersManager(
+            datePickersBinding, requireActivity(),
+            viewModel::selectVerifiedAt, viewModel::selectIssuedAt
+        )
 
         binding.nextButton.setOnClickListener { nextClick() }
 

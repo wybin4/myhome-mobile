@@ -86,11 +86,10 @@ class MeterListViewModel @Inject constructor(
                             _meterListState.value = Resource.Loading
                         }
                         is NetworkResult.Error -> {
-//                            val errorMessage = result.exception.message
-//                            if (errorMessage != null) {
-//                                Log.e("NetworkResult", errorMessage)
-//                            }
-                            _meterListState.value = Resource.Error
+                            val errorMessage = result.exception.message
+                            if (errorMessage != null) {
+                                _meterListState.value = Resource.Error(errorMessage)
+                            }
                         }
                     }
                 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -16,16 +16,55 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             >
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/scroll_view">
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:id="@+id/scroll_view"
+                android:paddingBottom="50dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/on_error"
+                        style="@style/ErrorListLayout"
+                        android:visibility="gone"
+                        >
+                        <include
+                            android:id="@+id/error_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            layout="@layout/list_error"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/on_empty"
+                        style="@style/EmptyListLayout"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"
+                        >
+                        <include
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            layout="@layout/list_empty"
+                            bind:title="@{`Счетчики еще не добавлены`}"
+                            bind:subtitle="@{`Для добавления счетчиков нажмите кнопку “Добавить счетчик”`}"
+                            />
+                        <Button
+                            android:id="@+id/empty_add_meter_button"
+                            style="@style/ActionButton"
+                            android:text="Добавить счётчик"
+                            android:layout_marginBottom="70dp"
+                            android:layout_marginHorizontal="28dp"/>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/on_loading"

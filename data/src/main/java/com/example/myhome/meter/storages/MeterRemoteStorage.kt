@@ -1,6 +1,6 @@
 package com.example.myhome.meter.storages
 
-import android.util.Log
+
 import com.example.myhome.meter.dtos.ApartmentWithMeterGetDto
 import com.example.myhome.meter.dtos.ApartmentWithMeterListDto
 import com.example.myhome.meter.dtos.MeterListDto

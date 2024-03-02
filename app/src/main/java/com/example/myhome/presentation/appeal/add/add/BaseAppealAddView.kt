@@ -38,7 +38,10 @@ abstract class BaseAppealAddView : Fragment() {
         layoutItemsBinding.viewModel = viewModel
 
         datePickersBinding = layoutItemsBinding.datePickersLayout
-        datePickersManager = DatePickersManager(datePickersBinding, requireActivity(), viewModel)
+        datePickersManager = DatePickersManager(
+            datePickersBinding, requireActivity(),
+            viewModel::selectVerifiedAt, viewModel::selectIssuedAt
+        )
 
         setupValidator()
         setupSelectors()

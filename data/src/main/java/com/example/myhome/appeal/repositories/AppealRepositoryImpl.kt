@@ -8,6 +8,7 @@ import com.example.myhome.appeal.models.AppealUpdateMeterModel
 import com.example.myhome.appeal.storages.AppealStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
 class AppealRepositoryImpl(
     private val appealStorage: AppealStorage,
