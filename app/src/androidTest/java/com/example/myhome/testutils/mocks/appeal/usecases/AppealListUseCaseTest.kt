@@ -1,10 +1,12 @@
 package com.example.myhome.testutils.mocks.appeal.usecases
 
-import com.example.myhome.appeal.models.AppealAddMeterModel
-import com.example.myhome.appeal.models.AppealUpdateMeterModel
-import com.example.myhome.appeal.usecases.AppealAddUseCase
+import com.example.myhome.appeal.models.AppealGetModel
+import com.example.myhome.appeal.usecases.AppealListUseCase
+import kotlinx.coroutines.flow.Flow
 
-class AppealAddUseCaseTest : AppealAddUseCase {
-    override suspend fun addMeter(appeal: AppealAddMeterModel) {}
-    override suspend fun updateMeter(appeal: AppealUpdateMeterModel) {}
+class AppealListUseCaseTest : AppealListUseCase {
+    override fun invoke(): Flow<List<AppealGetModel>> {
+        TODO("Not yet implemented")
+    }
+
 }

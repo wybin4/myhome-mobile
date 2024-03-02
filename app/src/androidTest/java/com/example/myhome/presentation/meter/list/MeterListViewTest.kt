@@ -90,7 +90,7 @@ class MeterListViewTest: BaseTest() {
                 hasDescendant(allOf(withId(R.id.type_of_service_name), withText("Газ"))),
                 hasDescendant(allOf(withId(R.id.current_reading), withText("16.9 м3"))),
                 hasDescendant(allOf(withId(R.id.icon), withDrawable(R.drawable.gas, R.color.red))),
-                hasDescendant(allOf(withId(R.id.issued_at), hasTextColor(R.color.red)))
+                hasDescendant(allOf(withId(R.id.issued_at_true), isDisplayed()))
             ))))
 
         onView(withId(R.id.meter_recycler_view))
@@ -98,7 +98,7 @@ class MeterListViewTest: BaseTest() {
                 hasDescendant(allOf(withId(R.id.type_of_service_name), withText("ГВС"))),
                 hasDescendant(allOf(withId(R.id.current_reading), withText("11.2 гКал"))),
                 hasDescendant(allOf(withId(R.id.icon), withDrawable(R.drawable.water, R.color.primary))),
-                hasDescendant(allOf(withId(R.id.issued_at), hasTextColor(R.color.black))) // только светлая тема
+                hasDescendant(allOf(withId(R.id.issued_at_false), isDisplayed()))
             ))))
     }
 

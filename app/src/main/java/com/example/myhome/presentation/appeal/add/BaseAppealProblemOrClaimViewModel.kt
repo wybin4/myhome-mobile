@@ -77,7 +77,7 @@ abstract class BaseAppealProblemOrClaimViewModel(
                     }
             }
         } else {
-            TODO("Ошибка?")
+            codeError()
         }
     }
 }

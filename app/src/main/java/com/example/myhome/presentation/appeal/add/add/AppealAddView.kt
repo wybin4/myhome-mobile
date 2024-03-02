@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.AppealAddViewBinding
+import com.example.myhome.utils.managers.state.data.DataStateManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,8 +37,15 @@ class AppealAddView : BaseAppealAddView() {
         }
     }
 
-    override fun showSuccessState() {
-        findNavController().navigate(R.id.action_appealAddView_to_appealListView)
+    override fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
+        super.setupDateManager(inflater, container)
+        dataStateManager = DataStateManager(
+            requireActivity(), dataStateBinding,
+            "Обращение добавлено", "Благодарим за обращение! Оно будет обработано в кратчайшие сроки",
+            "Ваш запрос на создание обращения в процессе обработки"
+        ) {
+            findNavController().navigate(R.id.action_appealAddView_to_appealListView)
+        }
     }
 
     override fun onDestroyView() {

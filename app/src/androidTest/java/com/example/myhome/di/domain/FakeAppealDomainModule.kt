@@ -1,7 +1,9 @@
 package com.example.myhome.di.domain
 
 import com.example.myhome.appeal.usecases.AppealAddUseCase
+import com.example.myhome.appeal.usecases.AppealListUseCase
 import com.example.myhome.testutils.mocks.appeal.usecases.AppealAddUseCaseTest
+import com.example.myhome.testutils.mocks.appeal.usecases.AppealListUseCaseTest
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.android.components.ViewModelComponent
@@ -16,5 +18,10 @@ class FakeAppealDomainModule {
     @Provides
     fun provideAppealAddUseCase(): AppealAddUseCase {
         return AppealAddUseCaseTest()
+    }
+
+    @Provides
+    fun provideAppealListUseCase(): AppealListUseCase {
+        return AppealListUseCaseTest()
     }
 }

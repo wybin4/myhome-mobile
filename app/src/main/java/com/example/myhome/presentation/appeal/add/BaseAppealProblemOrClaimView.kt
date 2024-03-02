@@ -6,19 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.myhome.common.models.ApartmentGetModel
 import com.example.myhome.databinding.AppealProblemOrClaimViewBinding
+import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.utils.InputValidator
 import com.example.myhome.utils.managers.SelectorManager
+import com.example.myhome.utils.managers.state.data.DataStateManager
 import com.example.myhome.utils.models.Resource
 
 abstract class BaseAppealProblemOrClaimView : Fragment() {
     private var _binding: AppealProblemOrClaimViewBinding? = null
     private val binding get() = _binding!!
+    protected lateinit var dataStateBinding: DataStateBinding
+
     protected abstract val viewModel: BaseAppealProblemOrClaimViewModel
 
     private lateinit var textValidator: InputValidator
     private lateinit var apartmentManager: SelectorManager<ApartmentGetModel>
+
+    protected lateinit var dataStateManager: DataStateManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +37,7 @@ abstract class BaseAppealProblemOrClaimView : Fragment() {
 
         setupValidator()
         setupSelector()
+        setupDateManager(inflater, container)
 
         binding.nextButton.setOnClickListener { nextClick() }
 
@@ -45,24 +53,13 @@ abstract class BaseAppealProblemOrClaimView : Fragment() {
     }
 
     private fun observeResourceState() {
-        viewModel.appealState.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Loading -> showLoadingState()
-                is Resource.Success -> showSuccessState()
-                is Resource.Error -> showErrorState()
-                else -> showErrorState()
-            }
+        viewModel.dataAddState.observe(viewLifecycleOwner) { resource ->
+            dataStateManager.observeAddState(resource)
         }
     }
 
-    private fun showLoadingState() {
-//        TODO("Доделать")
-    }
-
-    protected abstract fun showSuccessState()
-
-    private fun showErrorState() {
-        TODO("Доделать")
+    protected open fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
+        dataStateBinding = DataStateBinding.inflate(inflater, container, false)
     }
 
     private fun setupValidator() {

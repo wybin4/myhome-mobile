@@ -8,10 +8,19 @@
 
     </data>
 
-    <Button
+    <LinearLayout
         style="@style/SwapButton"
-        android:textColor="@{apartment.selected ? @color/white : @color/primary}"
+        android:background="@drawable/circle_button_night"
         android:backgroundTint="@{apartment.selected ? @color/primary : @color/primary_light}"
-        android:text="@{apartment.name}"/>
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@{apartment.selected ? @color/white : @color/primary}"
+            android:text="@{apartment.name}"
+            android:fontFamily="@font/robotomedium"
+            android:letterSpacing="0.05"
+            />
+    </LinearLayout>
 
 </layout>

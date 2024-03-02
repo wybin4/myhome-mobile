@@ -10,16 +10,19 @@ import androidx.fragment.app.viewModels
 import com.example.myhome.common.models.ApartmentGetModel
 import com.example.myhome.common.models.TypeOfServiceGetModel
 import com.example.myhome.databinding.AppealAddViewItemsBinding
+import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.databinding.DatePickersViewBinding
 import com.example.myhome.utils.pickers.ImagePicker
 import com.example.myhome.utils.InputValidator
 import com.example.myhome.utils.managers.DatePickersManager
 import com.example.myhome.utils.managers.SelectorManager
+import com.example.myhome.utils.managers.state.data.DataStateManager
 import com.example.myhome.utils.models.Resource
 
 abstract class BaseAppealAddView : Fragment() {
     protected lateinit var layoutItemsBinding: AppealAddViewItemsBinding
     private lateinit var datePickersBinding: DatePickersViewBinding
+    protected lateinit var dataStateBinding: DataStateBinding
 
     val viewModel by viewModels<BaseAppealAddViewModel>()
 
@@ -30,6 +33,8 @@ abstract class BaseAppealAddView : Fragment() {
     private lateinit var factoryNumberValidator: InputValidator
 
     protected lateinit var imagePicker: ImagePicker
+
+    protected lateinit var dataStateManager: DataStateManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +50,7 @@ abstract class BaseAppealAddView : Fragment() {
 
         setupValidator()
         setupSelectors()
+        setupDateManager(inflater, container)
 
         setupImagePicker()
 
@@ -63,24 +69,16 @@ abstract class BaseAppealAddView : Fragment() {
     }
 
     private fun observeResourceState() {
-        viewModel.appealState.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Loading -> showLoadingState()
-                is Resource.Success -> showSuccessState()
-                is Resource.Error -> showErrorState()
-                else -> showErrorState()
-            }
+        viewModel.dataState.observe(viewLifecycleOwner) { resource ->
+            dataStateManager.observeGetState(resource)
+        }
+        viewModel.dataAddState.observe(viewLifecycleOwner) { resource ->
+            dataStateManager.observeAddState(resource)
         }
     }
 
-    private fun showLoadingState() {
-//        TODO("Доделать")
-    }
-
-    protected open fun showSuccessState() {}
-
-    private fun showErrorState() {
-        TODO("Доделать")
+    protected open fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
+        dataStateBinding = DataStateBinding.inflate(inflater, container, false)
     }
 
     private fun setupSelectors() {

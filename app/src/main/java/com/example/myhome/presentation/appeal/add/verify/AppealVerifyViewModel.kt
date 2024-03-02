@@ -1,71 +1,67 @@
 package com.example.myhome.presentation.appeal.add.verify
 
-import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.appeal.models.AppealType
 import com.example.myhome.appeal.models.AppealUpdateMeterModel
 import com.example.myhome.appeal.usecases.AppealAddUseCase
-import com.example.myhome.common.models.SubscriberGetModel
 import com.example.myhome.common.usecases.SubscriberListUseCase
 import com.example.myhome.meter.usecases.MeterListUseCase
-import com.example.myhome.presentation.appeal.add.BaseAppealViewModel
 import com.example.myhome.utils.mappers.ImageMapper
 import com.example.myhome.utils.mappers.MeterUiMapper
 import com.example.myhome.utils.models.MeterListItemUiModel
+import com.example.myhome.utils.models.NetworkResult
+import com.example.myhome.utils.models.Resource
 import com.example.myhome.utils.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class AppealVerifyViewModel @Inject constructor(
     private val meterListUseCase: MeterListUseCase,
-    private val subscriberListUseCase: SubscriberListUseCase,
+    subscriberListUseCase: SubscriberListUseCase,
     private val meterUiMapper: MeterUiMapper,
     private val appealAddUseCase: AppealAddUseCase,
     private val imageMapper: ImageMapper
-) : BaseAppealViewModel(AppealType.VerifyIndividualMeter) {
+) : BaseAppealVerifyViewModel(subscriberListUseCase) {
     private val _meterList = MutableLiveData<List<MeterListItemUiModel>>()
     val meterList: LiveData<List<MeterListItemUiModel>> = _meterList
 
-    private val _subscriberList = MutableLiveData<List<SubscriberGetModel>>()
-    private val subscriberList: LiveData<List<SubscriberGetModel>> = _subscriberList
-
-    var selectIssuedAt: Date? = null
-    var selectVerifiedAt: Date? = null
     var selectedMeterId = -1
-    var selectAttachment: Bitmap? = null
 
     init {
-        fetchLists()
+        viewModelScope.launch {
+            fetchMeterList()
+            fetchSubscriberList()
+        }
     }
 
-    private fun fetchLists() {
-        viewModelScope.launch {
-            meterListUseCase()
-                .flowOn(Dispatchers.IO)
-                .catch {
-                    _meterList.value = listOf()
+    private suspend fun fetchMeterList() {
+        meterListUseCase()
+            .asNetworkResult()
+            .collect { result ->
+                when (result) {
+                    is NetworkResult.Success -> {
+                        val data = result.data
+                        if (data.isNotEmpty()) {
+                            setDataGetState(Resource.Success)
+                            _meterList.value = meterUiMapper.mapMeterListToUi(data)
+                        } else {
+                            setDataGetState(Resource.Empty)
+                        }
+                    }
+                    is NetworkResult.Loading -> {
+                        setDataGetState(Resource.Loading)
+                    }
+                    is NetworkResult.Error -> {
+                        val errorMessage = result.exception.message
+                        if (errorMessage != null) {
+                            setDataGetState(Resource.Error(errorMessage))
+                        }
+                    }
                 }
-                .collect {
-                    _meterList.value = meterUiMapper.mapMeterListToUi(it)
-                }
-
-            subscriberListUseCase()
-                .flowOn(Dispatchers.IO)
-                .catch {
-                    _subscriberList.value = listOf()
-                }
-                .collect {
-                    _subscriberList.value = it
-                }
-        }
+            }
     }
 
     fun updateMeter() {
@@ -91,7 +87,7 @@ class AppealVerifyViewModel @Inject constructor(
                     }
             }
         } else {
-            TODO("Ошибка?")
+            codeError()
         }
     }
 }

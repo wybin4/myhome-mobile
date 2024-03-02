@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.MeterAddViewBinding
 import com.example.myhome.presentation.appeal.add.add.BaseAppealAddView
+import com.example.myhome.utils.managers.state.data.DataStateManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,8 +37,16 @@ class MeterAddView : BaseAppealAddView() {
         }
     }
 
-    override fun showSuccessState() {
-        findNavController().navigate(R.id.action_meterAddView_to_meterListView)
+    override fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
+        super.setupDateManager(inflater, container)
+        dataStateManager = DataStateManager(
+            requireActivity(), dataStateBinding,
+            "Обращение добавлено", "Благодарим за обращение! Ваш запрос на добавление счетчика будет обработан в кратчайшие сроки.",
+            "Ваш запрос на добавление счетчика находится в процессе обработки"
+
+        ) {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {

@@ -1,10 +1,12 @@
 package com.example.myhome.di.domain
 
 import com.example.myhome.meter.usecases.ApartmentWithMeterListUseCase
+import com.example.myhome.meter.usecases.MeterListUseCase
 import com.example.myhome.testutils.mocks.meter.usecases.ApartmentWithMeterListUseCaseTest
 import com.example.myhome.meter.usecases.ReadingAddUseCase
 import com.example.myhome.testutils.mocks.meter.usecases.ReadingAddUseCaseTest
 import com.example.myhome.meter.usecases.ReadingListUseCase
+import com.example.myhome.testutils.mocks.meter.usecases.MeterListUseCaseTest
 import com.example.myhome.testutils.mocks.meter.usecases.ReadingListUseCaseTest
 import dagger.Module
 import dagger.Provides
@@ -30,5 +32,10 @@ class FakeMeterDomainModule {
     @Provides
     fun provideReadingListUseCase(): ReadingListUseCase {
         return ReadingListUseCaseTest()
+    }
+
+    @Provides
+    fun provideMeterListUseCase(): MeterListUseCase {
+        return MeterListUseCaseTest()
     }
 }

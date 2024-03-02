@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myhome.appeal.models.AppealType
 import com.example.myhome.utils.converters.AppealUiConverter
+import com.example.myhome.utils.models.AddResource
 import com.example.myhome.utils.models.NetworkResult
-import com.example.myhome.utils.models.Resource
 
 abstract class BaseAppealViewModel(
     private val appealType: AppealType
 ) : ViewModel(), AppealUiConverter {
-    private val _appealState = MutableLiveData<Resource>(Resource.Loading)
-    val appealState: LiveData<Resource> = _appealState
+    private val _dataAddState = MutableLiveData<AddResource>(AddResource.None)
+    val dataAddState: LiveData<AddResource> = _dataAddState
 
     fun getTypeString(): String {
         return getType(appealType)
@@ -23,20 +23,24 @@ abstract class BaseAppealViewModel(
             is NetworkResult.Success -> {
                 val data = result.data
                 if (data) {
-                    _appealState.value = Resource.Success
+                    _dataAddState.value = AddResource.Success
                 } else {
-                    _appealState.value = Resource.Error("") // ????
+                    _dataAddState.value = AddResource.CodeError
                 }
             }
             is NetworkResult.Loading -> {
-                _appealState.value = Resource.Loading
+                _dataAddState.value = AddResource.Loading
             }
             is NetworkResult.Error -> {
                 val errorMessage = result.exception.message
                 if (errorMessage != null) {
-                    _appealState.value = Resource.Error(errorMessage)
+                    _dataAddState.value = AddResource.NetworkError(errorMessage)
                 }
             }
         }
+    }
+
+    fun codeError() {
+        _dataAddState.value = AddResource.CodeError
     }
 }

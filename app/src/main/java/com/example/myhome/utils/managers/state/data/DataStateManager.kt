@@ -17,14 +17,15 @@ import com.example.myhome.utils.pickers.ColorPicker
 class DataStateManager(
     context: FragmentActivity,
     dataStateBinding: DataStateBinding,
-    titleText: String,
-    subtitleText: String,
+    successTitleText: String,
+    successSubtitleText: String,
+    loadingSubtitleText: String,
     goBack: () -> Unit
 ) : ColorPicker {
     private val dialog = Dialog(context)
     private val errorUi = DataErrorStateUi(context, dataStateBinding)
-    private val loadingUi = DataLoadingStateUi(dataStateBinding)
-    private val successUi = DataSuccessStateUi(context, dataStateBinding, titleText, subtitleText)
+    private val loadingUi = DataLoadingStateUi(context, dataStateBinding, loadingSubtitleText)
+    private val successUi = DataSuccessStateUi(context, dataStateBinding, successTitleText, successSubtitleText)
     private val dataAddStateManager = DataAddStateManager(dataStateBinding, errorUi, successUi, loadingUi, dialog, goBack)
     private val dataGetStateManager = DataGetStateManager(dataStateBinding, errorUi, dialog, goBack)
 
