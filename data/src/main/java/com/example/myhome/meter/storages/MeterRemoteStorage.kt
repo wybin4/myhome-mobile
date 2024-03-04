@@ -26,7 +26,11 @@ class MeterRemoteStorage(private val meterApiService: MeterApiService): MeterSto
         return meterApiService.listReading(request)
     }
 
-    override suspend fun addReading(reading: ReadingAddDto) {
-        meterApiService.addReading(reading)
+    override suspend fun addReading(reading: ReadingAddDto): Boolean {
+        val result = meterApiService.addReading(reading)
+        if (result != null) {
+            return true
+        }
+        return false
     }
 }

@@ -1,9 +1,13 @@
 package com.example.myhome.presentation.appeal.add.add
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.annotation.VisibleForTesting
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,13 +30,13 @@ abstract class BaseAppealAddView : Fragment() {
 
     val viewModel by viewModels<BaseAppealAddViewModel>()
 
-    private lateinit var apartmentManager: SelectorManager<ApartmentGetModel>
-    private lateinit var typeOfServiceManager: SelectorManager<TypeOfServiceGetModel>
+    lateinit var apartmentManager: SelectorManager<ApartmentGetModel>
+    lateinit var typeOfServiceManager: SelectorManager<TypeOfServiceGetModel>
 
-    private lateinit var datePickersManager: DatePickersManager
+    lateinit var datePickersManager: DatePickersManager
     private lateinit var factoryNumberValidator: InputValidator
 
-    protected lateinit var imagePicker: ImagePicker
+    lateinit var imagePicker: ImagePicker
 
     protected lateinit var dataStateManager: DataStateManager
 

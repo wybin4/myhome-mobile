@@ -11,8 +11,7 @@ import com.example.myhome.common.usecases.SubscriberListUseCase
 import com.example.myhome.presentation.appeal.add.verify.BaseAppealVerifyViewModel
 import com.example.myhome.utils.mappers.ImageMapper
 import com.example.myhome.utils.models.MeterGetToUpdateParcelableModel
-import com.example.myhome.utils.models.NetworkResult
-import com.example.myhome.utils.models.Resource
+import com.example.myhome.utils.models.asListResource
 import com.example.myhome.utils.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -40,26 +39,9 @@ class MeterUpdateViewModel @Inject constructor(
     private suspend fun fetchApartmentList() {
         apartmentListUseCase()
             .asNetworkResult()
-            .collect { result ->
-                when (result) {
-                    is NetworkResult.Success -> {
-                        val data = result.data
-                        if (data.isNotEmpty()) {
-                            setDataGetState(Resource.Success)
-                            _apartmentList.value = data
-                        } else {
-                            setDataGetState(Resource.Empty)
-                        }
-                    }
-                    is NetworkResult.Loading -> {
-                        setDataGetState(Resource.Loading)
-                    }
-                    is NetworkResult.Error -> {
-                        val errorMessage = result.exception.message
-                        if (errorMessage != null) {
-                            setDataGetState(Resource.Error(errorMessage))
-                        }
-                    }
+            .collect {
+                it.asListResource(mutableDataState) { data ->
+                    _apartmentList.value = data
                 }
             }
     }
@@ -83,7 +65,7 @@ class MeterUpdateViewModel @Inject constructor(
                 )
                     .asNetworkResult()
                     .collect { result ->
-                        manageState(result)
+                        manageAddState(result)
                     }
             }
         } else {

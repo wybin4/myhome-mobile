@@ -7,8 +7,10 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -50,6 +52,11 @@ class ImagePicker(
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         takePictureLauncher.launch(intent)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun publicForActivityResult(bitmap: Bitmap) {
+        forActivityResult(bitmap)
     }
 
     private fun handleActivityResult(result: ActivityResult) {

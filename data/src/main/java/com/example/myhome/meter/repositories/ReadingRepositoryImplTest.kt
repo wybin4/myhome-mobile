@@ -10,7 +10,9 @@ import java.util.Date
 class ReadingRepositoryTest: ReadingRepository {
     val date = Date()
 
-    override suspend fun addReading(reading: ReadingAddModel) { }
+    override fun addReading(reading: ReadingAddModel): Flow<Boolean> {
+        return flowOf(true)
+    }
 
     override fun listReading(meterId: Int): Flow<List<ReadingGetModel>> {
         return flowOf(listOf(

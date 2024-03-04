@@ -73,7 +73,7 @@ abstract class BaseAppealProblemOrClaimViewModel(
                 )
                     .asNetworkResult()
                     .collect { result ->
-                        manageState(result)
+                        manageAddState(result)
                     }
             }
         } else {

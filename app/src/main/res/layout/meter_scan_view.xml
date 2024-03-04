@@ -39,6 +39,7 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/meter_icon"
                             android:layout_width="17dp"
                             android:layout_height="17dp"
                             android:src="@{viewModel.meterParcelable.getIcon()}"
@@ -51,12 +52,14 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/address"
                             style="@style/Text"
                             android:text="@{viewModel.meterParcelable.address}"
                             android:textSize="16dp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/type_of_service_name"
                             style="@style/DescriptionText"
                             android:text="@{viewModel.meterParcelable.typeOfServiceName}" />
                     </LinearLayout>
@@ -128,6 +131,7 @@
                             android:layout_marginBottom="4dp"/>
 
                         <TextView
+                            android:id="@+id/previous_reading"
                             style="@style/Text"
                             android:text="@{viewModel.meterParcelable.previousReading + ` ` + viewModel.meterParcelable.unitName}"
                             android:textSize="20dp"

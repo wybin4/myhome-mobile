@@ -18,9 +18,9 @@ abstract class BaseAppealVerifyView : Fragment() {
 
     protected abstract val viewModel: BaseAppealVerifyViewModel
 
-    private lateinit var datePickersManager: DatePickersManager
+    lateinit var datePickersManager: DatePickersManager
 
-    protected lateinit var imagePicker: ImagePicker
+    lateinit var imagePicker: ImagePicker
 
     protected lateinit var dataStateManager: DataStateManager
 

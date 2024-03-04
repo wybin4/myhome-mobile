@@ -9,5 +9,5 @@ interface MeterStorage {
     suspend fun listApartmentWithMeter(): List<ApartmentWithMeterGetDto>
     suspend fun listMeter(): List<MeterListItemDto>
     suspend fun listReading(meterId: Int): List<ReadingGetDto>
-    suspend fun addReading(reading: ReadingAddDto)
+    suspend fun addReading(reading: ReadingAddDto): Boolean
 }

@@ -10,8 +10,8 @@ import com.example.myhome.utils.mappers.MeterUiMapper
 import com.example.myhome.utils.models.ApartmentUiModel
 import com.example.myhome.utils.models.MeterListToGetParcelableModel
 import com.example.myhome.utils.models.MeterUiModel
-import com.example.myhome.utils.models.NetworkResult
 import com.example.myhome.utils.models.Resource
+import com.example.myhome.utils.models.asListResource
 import com.example.myhome.utils.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -71,26 +71,9 @@ class MeterListViewModel @Inject constructor(
         viewModelScope.launch {
             apartmentWithMeterListUseCase()
                 .asNetworkResult()
-                .collect { result ->
-                    when (result) {
-                        is NetworkResult.Success -> {
-                            val data = result.data
-                            if (data.isNotEmpty()) {
-                                _meterListState.value = Resource.Success
-                                setupLists(data)
-                            } else {
-                                _meterListState.value = Resource.Empty
-                            }
-                        }
-                        is NetworkResult.Loading -> {
-                            _meterListState.value = Resource.Loading
-                        }
-                        is NetworkResult.Error -> {
-                            val errorMessage = result.exception.message
-                            if (errorMessage != null) {
-                                _meterListState.value = Resource.Error(errorMessage)
-                            }
-                        }
+                .collect {
+                    it.asListResource(_meterListState) { data ->
+                        setupLists(data)
                     }
                 }
         }

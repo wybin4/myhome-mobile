@@ -1,5 +1,6 @@
 package com.example.myhome.utils.managers
 
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.databinding.DatePickersViewBinding
 import com.example.myhome.utils.pickers.CustomDatePicker
@@ -10,7 +11,7 @@ class DatePickersManager(
     private val binding: DatePickersViewBinding,
     private val fragment: FragmentActivity,
     private val verifiedAt: KMutableProperty0<Date?>,
-    private val issuedAt: KMutableProperty0<Date?>,
+    private val issuedAt: KMutableProperty0<Date?>
 ) {
     private lateinit var verifiedAtPicker: CustomDatePicker
     private lateinit var issuedAtPicker: CustomDatePicker
@@ -43,6 +44,16 @@ class DatePickersManager(
         binding.issuedAt.setOnClickListener {
             issuedAtPicker.show()
         }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun setVerifiedAt(verifiedAt: Date) {
+        verifiedAtPicker.setDate(verifiedAt)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun setIssuedAt(issuedAd: Date) {
+        issuedAtPicker.setDate(issuedAd)
     }
 
 }

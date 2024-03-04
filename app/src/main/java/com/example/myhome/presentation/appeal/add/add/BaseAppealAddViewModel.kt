@@ -17,11 +17,9 @@ import com.example.myhome.presentation.appeal.add.BaseAppealViewModel
 import com.example.myhome.utils.mappers.ImageMapper
 import com.example.myhome.utils.models.NetworkResult
 import com.example.myhome.utils.models.Resource
+import com.example.myhome.utils.models.asListResource
 import com.example.myhome.utils.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -61,76 +59,25 @@ class BaseAppealAddViewModel @Inject constructor(
         viewModelScope.launch {
             apartmentListUseCase()
                 .asNetworkResult()
-                .collect { result ->
-                    when (result) {
-                        is NetworkResult.Success -> {
-                            val data = result.data
-                            if (data.isNotEmpty()) {
-                                _dataState.value = Resource.Success
-                                _apartmentList.value = data
-                            } else {
-                                _dataState.value = Resource.Empty
-                            }
-                        }
-                        is NetworkResult.Loading -> {
-                            _dataState.value = Resource.Loading
-                        }
-                        is NetworkResult.Error -> {
-                            val errorMessage = result.exception.message
-                            if (errorMessage != null) {
-                                _dataState.value = Resource.Error(errorMessage)
-                            }
-                        }
+                .collect {
+                    it.asListResource(_dataState) { data ->
+                        _apartmentList.value = data
                     }
                 }
 
             typeOfServiceListUseCase()
                 .asNetworkResult()
-                .collect { result ->
-                    when (result) {
-                        is NetworkResult.Success -> {
-                            val data = result.data
-                            if (data.isNotEmpty()) {
-                                _dataState.value = Resource.Success
-                                _typeOfServiceList.value = data
-                            } else {
-                                _dataState.value = Resource.Empty
-                            }
-                        }
-                        is NetworkResult.Loading -> {
-                            _dataState.value = Resource.Loading
-                        }
-                        is NetworkResult.Error -> {
-                            val errorMessage = result.exception.message
-                            if (errorMessage != null) {
-                                _dataState.value = Resource.Error(errorMessage)
-                            }
-                        }
+                .collect {
+                    it.asListResource(_dataState) { data ->
+                        _typeOfServiceList.value = data
                     }
                 }
 
             subscriberListUseCase()
                 .asNetworkResult()
-                .collect { result ->
-                    when (result) {
-                        is NetworkResult.Success -> {
-                            val data = result.data
-                            if (data.isNotEmpty()) {
-                                _dataState.value = Resource.Success
-                                _subscriberList.value = data
-                            } else {
-                                _dataState.value = Resource.Empty
-                            }
-                        }
-                        is NetworkResult.Loading -> {
-                            _dataState.value = Resource.Loading
-                        }
-                        is NetworkResult.Error -> {
-                            val errorMessage = result.exception.message
-                            if (errorMessage != null) {
-                                _dataState.value = Resource.Error(errorMessage)
-                            }
-                        }
+                .collect {
+                    it.asListResource(_dataState) { data ->
+                        _subscriberList.value = data
                     }
                 }
         }
@@ -158,7 +105,7 @@ class BaseAppealAddViewModel @Inject constructor(
                 )
                     .asNetworkResult()
                     .collect { result ->
-                        manageState(result)
+                        manageAddState(result)
                     }
             }
         } else {

@@ -46,11 +46,11 @@
                     android:layout_height="wrap_content"
                     android:hint="Квартира">
 
-                    <com.example.myhome.utils.listeners.SelectorListener
+                    <AutoCompleteTextView
                         android:id="@+id/apartment_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:editable="false" />
+                        android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 

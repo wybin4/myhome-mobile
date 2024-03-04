@@ -3,6 +3,7 @@ package com.example.myhome.utils.models
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.databinding.InverseMethod
 import com.example.myhome.common.models.Adaptive
 import com.example.myhome.common.models.DateConverter
 import com.example.myhome.common.models.Identifiable
@@ -78,7 +79,7 @@ class MeterListToGetParcelableModel(
     val isIssued: Boolean,
     val apartmentId: Int,
     val address: String,
-    val currentReading: Double?,
+    var currentReading: Double?,
     val typeOfServiceName: String,
     val typeOfServiceEngName: String,
     val unitName: String
@@ -100,12 +101,15 @@ class MeterListToGetParcelableModel(
     fun formatIssuedAt(): String {
         return formatDate(issuedAt)
     }
+
     fun formatVerifiedAt(): String {
         return formatDate(verifiedAt)
     }
+
     fun formatCurrentReading(): String {
         return doubleToString(currentReading)
     }
+
     fun getIcon(): Int? {
         return getMeterIcon(typeOfServiceEngName)
     }

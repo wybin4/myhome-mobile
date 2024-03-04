@@ -7,6 +7,7 @@ import com.example.myhome.appeal.models.AppealType
 import com.example.myhome.utils.converters.AppealUiConverter
 import com.example.myhome.utils.models.AddResource
 import com.example.myhome.utils.models.NetworkResult
+import com.example.myhome.utils.models.asAddResource
 
 abstract class BaseAppealViewModel(
     private val appealType: AppealType
@@ -18,26 +19,8 @@ abstract class BaseAppealViewModel(
         return getType(appealType)
     }
 
-    fun manageState(result: NetworkResult<Boolean>) {
-        when (result) {
-            is NetworkResult.Success -> {
-                val data = result.data
-                if (data) {
-                    _dataAddState.value = AddResource.Success
-                } else {
-                    _dataAddState.value = AddResource.CodeError
-                }
-            }
-            is NetworkResult.Loading -> {
-                _dataAddState.value = AddResource.Loading
-            }
-            is NetworkResult.Error -> {
-                val errorMessage = result.exception.message
-                if (errorMessage != null) {
-                    _dataAddState.value = AddResource.NetworkError(errorMessage)
-                }
-            }
-        }
+    fun manageAddState(result: NetworkResult<Boolean>) {
+        result.asAddResource(_dataAddState)
     }
 
     fun codeError() {

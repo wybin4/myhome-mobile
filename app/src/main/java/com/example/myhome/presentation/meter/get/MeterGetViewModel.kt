@@ -14,6 +14,7 @@ import com.example.myhome.utils.models.MeterListToGetParcelableModel
 import com.example.myhome.utils.models.MeterUiModel
 import com.example.myhome.utils.models.NetworkResult
 import com.example.myhome.utils.models.Resource
+import com.example.myhome.utils.models.asListResource
 import com.example.myhome.utils.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -48,26 +49,9 @@ class MeterGetViewModel @Inject constructor(
             viewModelScope.launch {
                 readingListUseCase(meterParcelable.id)
                     .asNetworkResult()
-                    .collect { result ->
-                        when (result) {
-                            is NetworkResult.Success -> {
-                                val data = result.data
-                                if (data.isNotEmpty()) {
-                                    _readingListState.value = Resource.Success
-                                    _readingList.value = data
-                                } else {
-                                    _readingListState.value = Resource.Empty
-                                }
-                            }
-                            is NetworkResult.Loading -> {
-                                _readingListState.value = Resource.Loading
-                            }
-                            is NetworkResult.Error -> {
-                                val errorMessage = result.exception.message
-                                if (errorMessage != null) {
-                                    _readingListState.value = Resource.Error(errorMessage)
-                                }
-                            }
+                    .collect {
+                        it.asListResource(_readingListState) { data ->
+                            _readingList.value = data
                         }
                     }
             }

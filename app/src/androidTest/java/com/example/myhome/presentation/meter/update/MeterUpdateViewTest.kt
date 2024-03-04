@@ -2,7 +2,8 @@ package com.example.myhome.presentation.meter.update
 
 import android.app.Activity
 import android.app.Instrumentation
-import android.provider.Settings
+import android.content.Intent
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -14,15 +15,17 @@ import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
 import com.example.myhome.R
-import com.example.myhome.common.models.DateConverter
+import com.example.myhome.TestFragmentActivity
 import com.example.myhome.di.ApartmentDataModule
 import com.example.myhome.di.AppealDataModule
 import com.example.myhome.di.SubscriberDataModule
 import com.example.myhome.testutils.BaseTest
-import com.example.myhome.testutils.espresso.DatePickerListenerViewActions
 import com.example.myhome.testutils.espresso.layoutHasErrorText
-import com.example.myhome.testutils.launchHiltFragment
+import com.example.myhome.testutils.getFragment
+import com.example.myhome.testutils.launchActivityScenario
+import com.example.myhome.testutils.providers.DateProvider
 import com.example.myhome.testutils.providers.MeterUITestListProvider.getMeterParcelableUpdate
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
@@ -31,35 +34,26 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.Calendar
-import java.util.Date
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 @UninstallModules(ApartmentDataModule::class, SubscriberDataModule::class, AppealDataModule::class)
-class MeterUpdateViewTest: BaseTest(), DateConverter {
-    private lateinit var scenario: AutoCloseable
+class MeterUpdateViewTest: BaseTest() {
+    private lateinit var scenario: ActivityScenario<TestFragmentActivity>
+    private lateinit var fragment: MeterUpdateView
 
-    private val calendar: Calendar = Calendar.getInstance()
-    private val year = calendar.get(Calendar.YEAR)
-    private val month = calendar.get(Calendar.MONTH)
-    private val dayOfMonth = 15
-
+    private val dateProvider = DateProvider()
     private val meterArg = getMeterParcelableUpdate(0)
-
-    private val expectedDateTime: Date = calendar.apply {
-        set(year, month + 1, dayOfMonth)
-    }.time
-    private val expectedDate = formatDate(expectedDateTime)
 
     @Before
     override fun setUp() {
         super.setUp()
-        scenario = launchHiltFragment {
+        scenario = launchActivityScenario  {
             MeterUpdateView().apply {
                 arguments = meterArg.toBundle()
             }
         }
+        fragment = scenario.getFragment()
         Intents.init()
     }
 
@@ -104,26 +98,29 @@ class MeterUpdateViewTest: BaseTest(), DateConverter {
 
     @Test
     fun testVerifiedAtDatePicker() {
-        onView(withId(R.id.verified_at))
-            .perform(DatePickerListenerViewActions.setDate(expectedDateTime))
+        runOnUiThread {
+            fragment.datePickersManager.setVerifiedAt(dateProvider.expectedDateTime)
+        }
 
         onView(withId(R.id.verified_at))
-            .check(matches(withText(expectedDate)))
+            .check(matches(withText(dateProvider.expectedDate)))
     }
 
     @Test
     fun testIssuedAtDatePicker() {
-        onView(withId(R.id.issued_at))
-            .perform(DatePickerListenerViewActions.setDate(expectedDateTime))
+        runOnUiThread {
+            fragment.datePickersManager.setIssuedAt(dateProvider.expectedDateTime)
+        }
 
         onView(withId(R.id.issued_at))
-            .check(matches(withText(expectedDate)))
+            .check(matches(withText(dateProvider.expectedDate)))
     }
 
     @Test
     fun testAllFieldsInvalidIssuedAtValid() {
-        onView(withId(R.id.issued_at))
-            .perform(DatePickerListenerViewActions.setDate(expectedDateTime))
+        runOnUiThread {
+            fragment.datePickersManager.setIssuedAt(dateProvider.expectedDateTime)
+        }
 
         onView(withId(R.id.next_button))
             .perform(click())
@@ -156,18 +153,17 @@ class MeterUpdateViewTest: BaseTest(), DateConverter {
     }
 
     @Test
-    fun testAllFieldsValid_AndNavigateToImagePicker() {
-        onView(withId(R.id.verified_at))
-            .perform(DatePickerListenerViewActions.setDate(expectedDateTime))
-
-        onView(withId(R.id.issued_at))
-            .perform(DatePickerListenerViewActions.setDate(expectedDateTime))
+    fun testAllFieldsValid_AndRequestGetContent_Successful() {
+        runOnUiThread {
+            fragment.datePickersManager.setVerifiedAt(dateProvider.expectedDateTime)
+            fragment.datePickersManager.setIssuedAt(dateProvider.expectedDateTime)
+        }
 
         onView(withId(R.id.next_button))
             .perform(click())
 
         val result = Instrumentation.ActivityResult(Activity.RESULT_OK, null)
-        intending(hasAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)).respondWith(result)
+        intending(hasAction(Intent.ACTION_GET_CONTENT)).respondWith(result)
     }
 
 }

@@ -1,24 +1,22 @@
 package com.example.myhome.utils.managers
 
 import android.R
-
 import android.widget.AutoCompleteTextView
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.common.models.Identifiable
 import com.example.myhome.utils.InputValidator
 import com.example.myhome.utils.adapters.SelectorAdapter
-import com.example.myhome.utils.listeners.SelectedIndexListener
-import com.example.myhome.utils.listeners.SelectorListener
 import com.google.android.material.textfield.TextInputLayout
 import kotlin.reflect.KMutableProperty0
 
 class SelectorManager<T : Identifiable>(
     private val fragmentActivity: FragmentActivity,
-    private val selectorList: SelectorListener,
+    private val selectorList: AutoCompleteTextView,
     private val selector: TextInputLayout,
     private val validateMessage: String,
     private var selectedId: KMutableProperty0<Int>
-) : SelectedIndexListener {
+) {
     private lateinit var adapter: SelectorAdapter<T>
     private lateinit var validator: InputValidator
 
@@ -26,8 +24,6 @@ class SelectorManager<T : Identifiable>(
         setupAdapter()
         setupSelector()
         setupValidator()
-
-        selectorList.setIndexChangeListener(this::onIndexChanged)
     }
 
     private fun setupSelector() {
@@ -76,9 +72,9 @@ class SelectorManager<T : Identifiable>(
         }
     }
 
-    override fun onIndexChanged(index: Int) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun setIndex(index: Int) {
         setSelectedItem(index)
     }
-
 
 }

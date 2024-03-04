@@ -8,7 +8,10 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.databinding.MeterScanViewBinding
+import com.example.myhome.utils.managers.state.data.add.DataAddStateManagerWrapper
+import com.example.myhome.utils.models.AddResource
 import com.example.myhome.utils.pickers.DigitPicker
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +22,9 @@ class MeterScanView : Fragment() {
     private val viewModel by viewModels<MeterScanViewModel>()
     
     private val digitPicker = DigitPicker()
+
+    private lateinit var dataAddStateBinding: DataStateBinding
+    private lateinit var dataAddStateManager: DataAddStateManagerWrapper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +42,41 @@ class MeterScanView : Fragment() {
             btnNext.setOnClickListener { nextClick() }
         }
 
+        setupDateManager(inflater, container)
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.dataAddState.observe(viewLifecycleOwner) { resource ->
+            dataAddStateManager.observeState(resource)
+        }
     }
 
     private fun nextClick() {
         if (binding.btnNext.isEnabled) {
-            val newValString = binding.currentReading.text.toString()
-            viewModel.addMeterReading(digitPicker.stringToDouble(newValString))
-            findNavController().popBackStack()
+            viewModel.addMeterReading(getCurrentReading())
+        }
+    }
+
+    private fun getCurrentReading(): Double {
+        val newValString = binding.currentReading.text.toString()
+        return digitPicker.stringToDouble(newValString)
+    }
+
+    private fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
+        dataAddStateBinding = DataStateBinding.inflate(inflater, container, false)
+        dataAddStateManager = DataAddStateManagerWrapper(
+            requireActivity(), dataAddStateBinding,
+            "Показание добавлено", "Мы высоко ценим вашу оперативность!",
+            "Показание получено и находится в очереди на добавление"
+        ) {
+            val navController = findNavController()
+            if (viewModel.dataAddState.value is AddResource.Success) {
+                navController.previousBackStackEntry?.savedStateHandle?.set("current_reading", getCurrentReading())
+            }
+            navController.popBackStack()
         }
     }
 

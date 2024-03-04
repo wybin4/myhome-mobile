@@ -29,5 +29,5 @@ interface MeterApiService {
     @POST("meter/add-meter-reading")
     suspend fun addReading(
         @Body request: ReadingAddDto
-    )
+    ): ReadingGetDto
 }

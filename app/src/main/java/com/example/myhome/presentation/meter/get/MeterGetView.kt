@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.meter.get
 
+import com.example.myhome.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.myhome.R
 import com.example.myhome.databinding.MeterGetViewBinding
 import com.example.myhome.databinding.ReadingListItemBinding
 import com.example.myhome.databinding.ReadingListItemLoadingBinding
@@ -18,6 +18,7 @@ import com.example.myhome.utils.managers.state.ListStateManager
 import com.example.myhome.utils.models.ListState
 import com.example.myhome.utils.models.ReadingUiModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MeterGetView : Fragment() {
@@ -43,6 +44,8 @@ class MeterGetView : Fragment() {
         }
         binding.verifiedAt.text = viewModel.meterParcelable.formatVerifiedAt()
 
+        observeCurrentReading()
+
         setupRecyclerView()
         setupInfiniteRecyclerView()
         setupActionButtons()
@@ -66,6 +69,24 @@ class MeterGetView : Fragment() {
         viewModel.readingListState.observe(viewLifecycleOwner) { resource ->
             listStateManager.observeStates(resource)
         }
+    }
+
+    private fun observeCurrentReading() {
+        val navController = requireActivity()
+            .supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_activity_main)
+            ?.findNavController()
+
+        navController?.currentBackStackEntry?.savedStateHandle?.getLiveData<Double>("current_reading")
+            ?.observe(viewLifecycleOwner) { reading ->
+                reading?.let {
+                    if (it > 0) {
+                        viewModel.meterParcelable.currentReading = it
+                        binding.currentReading.text = it.toString()
+                        binding.addReadingButton.visibility = View.GONE
+                    }
+                }
+            }
     }
 
     private fun observeList() {

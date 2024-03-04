@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class ReadingRepositoryTest : ReadingRepository {
-    override suspend fun addReading(reading: ReadingAddModel) { }
+    override fun addReading(reading: ReadingAddModel): Flow<Boolean> {
+        return flowOf(true)
+    }
 
     override fun listReading(meterId: Int): Flow<List<ReadingGetModel>> {
         return flowOf(readingList)

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -75,6 +76,11 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             actionBarBinding.title.text = destination.label
         }
+    }
+
+    fun getCurrentFragment(): Fragment? {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)
+        return navHostFragment?.childFragmentManager?.fragments?.firstOrNull()
     }
 
 }
