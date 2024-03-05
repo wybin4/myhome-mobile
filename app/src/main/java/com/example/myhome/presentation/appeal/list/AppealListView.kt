@@ -117,7 +117,6 @@ class AppealListView : Fragment() {
 
     private fun setupRecyclerView() {
         appealListAdapter = CustomListAdapter(
-            context = requireActivity(),
             itemBindingInflater = { inflater, parent, attachToParent ->
                 AppealListItemBinding.inflate(inflater, parent, attachToParent)
             },

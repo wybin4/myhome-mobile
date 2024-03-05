@@ -1,6 +1,5 @@
 package com.example.myhome.utils.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myhome.common.models.Adaptive
 
 class CustomListAdapter<T: Adaptive, B : ViewDataBinding>(
-    private val context: Context,
     private val itemBindingInflater: (LayoutInflater, ViewGroup, Boolean) -> B,
     private val setBinding: (B, T) -> Unit,
     private val onItemClick: ((item: T) -> Unit)?

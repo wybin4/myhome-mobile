@@ -124,7 +124,6 @@ class MeterListView : Fragment() {
 
     private fun setupRecyclerView() {
         meterListAdapter = CustomListAdapter(
-            context = requireActivity(),
             itemBindingInflater = { inflater, parent, attachToParent ->
                 MeterListItemBinding.inflate(inflater, parent, attachToParent)
             },
@@ -142,7 +141,6 @@ class MeterListView : Fragment() {
 
     private fun setupCarouselView() {
         apartmentListAdapter = CustomListAdapter(
-            context = requireActivity(),
             itemBindingInflater = { inflater, parent, attachToParent ->
                 ApartmentListItemBinding.inflate(inflater, parent, attachToParent)
             },

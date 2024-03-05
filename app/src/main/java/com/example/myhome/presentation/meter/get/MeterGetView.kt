@@ -131,7 +131,6 @@ class MeterGetView : Fragment() {
 
     private fun setupRecyclerView() {
         readingListAdapter = CustomListAdapter(
-            context = requireActivity(),
             itemBindingInflater = { inflater, parent, attachToParent ->
                 ReadingListItemBinding.inflate(inflater, parent, attachToParent)
             },

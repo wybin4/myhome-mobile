@@ -21,7 +21,7 @@ class AppealRemoteStorage(
     }
 
     override suspend fun listAppeal(): List<AppealGetDto> {
-        val events = eventApiService.listEvents(EventListDto(
+        val events = eventApiService.listEvent(EventListDto(
             userId = 1,
             events = listOf(EventType.Appeal)
         ))

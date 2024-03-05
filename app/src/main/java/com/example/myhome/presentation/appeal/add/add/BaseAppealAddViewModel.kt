@@ -15,7 +15,6 @@ import com.example.myhome.common.usecases.SubscriberListUseCase
 import com.example.myhome.common.usecases.TypeOfServiceListUseCase
 import com.example.myhome.presentation.appeal.add.BaseAppealViewModel
 import com.example.myhome.utils.mappers.ImageMapper
-import com.example.myhome.utils.models.NetworkResult
 import com.example.myhome.utils.models.Resource
 import com.example.myhome.utils.models.asListResource
 import com.example.myhome.utils.models.asNetworkResult

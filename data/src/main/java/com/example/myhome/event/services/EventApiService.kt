@@ -7,7 +7,7 @@ import retrofit2.http.POST
 
 interface EventApiService {
     @POST("event/get-events")
-    suspend fun listEvents(
+    suspend fun listEvent(
         @Body request: EventListDto
     ): EventGetDto
 }

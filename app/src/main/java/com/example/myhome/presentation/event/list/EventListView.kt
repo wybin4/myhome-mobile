@@ -5,28 +5,87 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.myhome.databinding.EventListViewBinding
+import com.example.myhome.utils.ConstantsUi.Companion.VERTICAL_LOADING_RECYCLER_VIEW_SIZE
+import com.example.myhome.utils.adapters.EventListAdapter
+import com.example.myhome.utils.adapters.InfiniteEventListAdapter
+import com.example.myhome.utils.managers.state.ListStateManager
+import com.example.myhome.utils.models.ListState
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EventListView : Fragment() {
     private var _binding: EventListViewBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by lazy { ViewModelProvider(this)[EventListViewModel::class.java] }
+    private val viewModel by viewModels<EventListViewModel>()
+
+    private lateinit var eventListAdapter: EventListAdapter
+    private lateinit var eventInfiniteListAdapter: InfiniteEventListAdapter
+
+    private val listStateManager = ListStateManager(this::updateViewState)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = EventListViewBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        setupRecyclerView()
+        setupInfiniteRecyclerView()
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeList()
+        observeResourceState()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchEventList()
+    }
+
+    private fun updateViewState(state: ListState) {
+        binding.apply {
+            onLoading.visibility = state.loadingVisibility
+            onSuccess.visibility = state.successVisibility
+            onEmpty.visibility = state.emptyVisibility
+            onError.visibility = state.errorVisibility
+            state.errorMessage?.let { errorLayout.error = it }
+        }
+    }
+
+    private fun setupInfiniteRecyclerView() {
+        eventInfiniteListAdapter = InfiniteEventListAdapter(
+            itemList = listOf("voting", "voting", "notification", "notification", "notification"),
+        )
+        binding.eventInfiniteRecyclerView.adapter = eventInfiniteListAdapter
+        binding.eventInfiniteRecyclerView.hasFixedSize()
+    }
+
+    private fun observeList() {
+        viewModel.eventList.observe(viewLifecycleOwner) { eventListAdapter.submitList(it) }
+    }
+
+    private fun observeResourceState() {
+        viewModel.eventListState.observe(viewLifecycleOwner) { resource ->
+            listStateManager.observeStates(resource)
+        }
+    }
+
+    private fun setupRecyclerView() {
+        eventListAdapter = EventListAdapter()
+        binding.eventRecyclerView.adapter = eventListAdapter
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }
