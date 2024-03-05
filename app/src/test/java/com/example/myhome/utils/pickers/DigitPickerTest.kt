@@ -1,6 +1,6 @@
 package com.example.myhome.utils.pickers
 
-import com.example.myhome.utils.pickers.DigitPicker
+import com.example.myhome.presentation.utils.pickers.DigitPicker
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 

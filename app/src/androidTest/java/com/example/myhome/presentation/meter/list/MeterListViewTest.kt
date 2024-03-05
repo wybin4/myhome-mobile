@@ -13,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.myhome.R
 import com.example.myhome.di.MeterDataModule
+import com.example.myhome.presentation.features.meter.list.MeterListView
 import com.example.myhome.testutils.BaseTest
 import com.example.myhome.testutils.espresso.atPosition
 import com.example.myhome.testutils.espresso.hasItemCount

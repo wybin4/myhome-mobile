@@ -8,12 +8,13 @@ import com.example.myhome.TestFragmentActivity
 import com.example.myhome.di.ApartmentDataModule
 import com.example.myhome.di.AppealDataModule
 import com.example.myhome.di.TypeOfServiceDataModule
+import com.example.myhome.presentation.features.meter.update.MeterUpdateView
 import com.example.myhome.testutils.BaseTest
 import com.example.myhome.testutils.getFragment
 import com.example.myhome.testutils.launchNavActivityScenario
 import com.example.myhome.testutils.providers.DateProvider
 import com.example.myhome.testutils.providers.ImageProvider
-import com.example.myhome.testutils.providers.MeterUITestListProvider
+import com.example.myhome.presentation.testutils.providers.MeterUITestListProvider
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import org.junit.After

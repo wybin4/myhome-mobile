@@ -1,11 +1,10 @@
 package com.example.myhome.di
 
-import com.example.myhome.event.mappers.EventRemoteMapper
-import com.example.myhome.event.repositories.EventRepository
-import com.example.myhome.event.repositories.EventRepositoryImpl
-import com.example.myhome.event.storages.EventRemoteStorage
-import com.example.myhome.event.storages.EventStorage
-import com.example.myhome.event.services.EventApiService
+import com.example.myhome.features.event.EventApiService
+import com.example.myhome.features.event.EventRemoteMapper
+import com.example.myhome.features.event.EventRepository
+import com.example.myhome.features.event.EventRepositoryImpl
+import com.example.myhome.features.event.EventStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +17,7 @@ class EventDataModule {
     @Provides
     @Singleton
     fun provideEventStorage(eventApiService: EventApiService): EventStorage {
-        return EventRemoteStorage(eventApiService)
+        return EventStorage(eventApiService)
     }
 
     @Provides

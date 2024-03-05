@@ -7,9 +7,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.myhome.R
 import com.example.myhome.di.MeterDataModule
+import com.example.myhome.presentation.features.meter.scan.MeterScanView
 import com.example.myhome.testutils.BaseTest
 import com.example.myhome.testutils.launchNavHiltFragment
-import com.example.myhome.testutils.providers.MeterUITestListProvider.getMeterParcelableScan
+import com.example.myhome.presentation.testutils.providers.MeterUITestListProvider.getMeterParcelableScan
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import org.junit.After

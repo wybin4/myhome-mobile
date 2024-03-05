@@ -1,5 +1,6 @@
 package com.example.myhome.utils.converters
 
+import com.example.myhome.presentation.utils.converters.DoubleNullableConverter
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

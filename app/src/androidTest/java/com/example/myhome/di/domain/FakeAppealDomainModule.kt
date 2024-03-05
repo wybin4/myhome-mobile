@@ -1,7 +1,8 @@
 package com.example.myhome.di.domain
 
-import com.example.myhome.appeal.usecases.AppealAddUseCase
-import com.example.myhome.appeal.usecases.AppealListUseCase
+import com.example.myhome.di.AppealDomainModule
+import com.example.myhome.features.appeal.usecases.AppealAddUseCase
+import com.example.myhome.features.appeal.usecases.AppealListUseCase
 import com.example.myhome.testutils.mocks.appeal.usecases.AppealAddUseCaseTest
 import com.example.myhome.testutils.mocks.appeal.usecases.AppealListUseCaseTest
 import dagger.Module

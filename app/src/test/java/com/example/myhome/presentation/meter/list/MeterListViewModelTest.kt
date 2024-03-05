@@ -1,14 +1,14 @@
 package com.example.myhome.presentation.meter.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.myhome.meter.usecases.ApartmentWithMeterListUseCase
-import com.example.myhome.testutils.providers.MeterUITestListProvider.getApartmentUiList
-import com.example.myhome.utils.mappers.MeterUiMapper
-import com.example.myhome.utils.models.ApartmentUiModel
-import com.example.myhome.utils.models.MeterUiModel
+import com.example.myhome.features.meter.usecases.ApartmentWithMeterListUseCase
+import com.example.myhome.presentation.features.meter.ApartmentUiModel
+import com.example.myhome.presentation.features.meter.MeterUiMapper
+import com.example.myhome.presentation.features.meter.MeterUiModel
+import com.example.myhome.presentation.features.meter.list.MeterListViewModel
+import com.example.myhome.presentation.testutils.providers.MeterUITestListProvider.getApartmentUiList
 import com.example.myhome.testutils.providers.MeterDomainTestListProvider.apartmentList
-import com.example.myhome.testutils.providers.MeterDomainTestListProvider.getMeterList
-import com.example.myhome.testutils.providers.MeterUITestListProvider.getMeterUiList
+import com.example.myhome.presentation.testutils.providers.MeterUITestListProvider.getMeterUiList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher

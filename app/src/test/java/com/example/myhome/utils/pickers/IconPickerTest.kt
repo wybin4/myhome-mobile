@@ -1,9 +1,10 @@
 package com.example.myhome.utils.pickers
 
-import com.example.myhome.utils.models.TypeOfServiceEngNames
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import com.example.myhome.R
+import com.example.myhome.presentation.features.common.models.TypeOfServiceEngNames
+import com.example.myhome.presentation.utils.pickers.IconPicker
 
 class IconPickerTest {
 

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.myhome.presentation.appeal.add.BaseAppealProblemOrClaimViewModel" />
+            type="com.example.myhome.presentation.features.appeal.add.BaseAppealProblemOrClaimViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

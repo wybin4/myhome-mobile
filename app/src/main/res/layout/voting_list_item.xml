@@ -4,7 +4,7 @@
     <data>
         <variable
             name="voting"
-            type="com.example.myhome.utils.models.VotingUiModel" />
+            type="com.example.myhome.presentation.features.event.VotingUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

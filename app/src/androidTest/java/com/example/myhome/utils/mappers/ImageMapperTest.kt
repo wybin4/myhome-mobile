@@ -3,6 +3,7 @@ package com.example.myhome.utils.mappers
 import android.graphics.Bitmap
 import android.util.Base64
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.myhome.presentation.utils.mappers.ImageMapper
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

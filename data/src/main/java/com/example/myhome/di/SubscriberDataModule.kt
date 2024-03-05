@@ -1,11 +1,10 @@
 package com.example.myhome.di
 
-import com.example.myhome.common.mappers.SubscriberRemoteMapper
-import com.example.myhome.common.repositories.SubscriberRepository
-import com.example.myhome.common.repositories.SubscriberRepositoryImpl
-import com.example.myhome.common.services.SubscriberApiService
-import com.example.myhome.common.storages.SubscriberRemoteStorage
-import com.example.myhome.common.storages.SubscriberStorage
+import com.example.myhome.features.common.CommonApiService
+import com.example.myhome.features.common.mappers.SubscriberRemoteMapper
+import com.example.myhome.features.common.repositories.SubscriberRepository
+import com.example.myhome.features.common.repositories.SubscriberRepositoryImpl
+import com.example.myhome.features.common.storages.SubscriberStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,8 +16,8 @@ import javax.inject.Singleton
 class SubscriberDataModule {
     @Provides
     @Singleton
-    fun provideSubscriberStorage(subscriberApiService: SubscriberApiService): SubscriberStorage {
-        return SubscriberRemoteStorage(subscriberApiService)
+    fun provideSubscriberStorage(commonApiService: CommonApiService): SubscriberStorage {
+        return SubscriberStorage(commonApiService)
     }
     @Provides
     @Singleton

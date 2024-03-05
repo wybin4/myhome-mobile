@@ -2,7 +2,7 @@ package com.example.myhome.testutils.espresso
 
 import android.view.View
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
-import com.example.myhome.utils.adapters.SelectorAdapter
+import com.example.myhome.presentation.utils.adapters.SelectorAdapter
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher

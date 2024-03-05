@@ -1,12 +1,10 @@
 package com.example.myhome.di
 
 import android.content.Context
-import com.example.myhome.appeal.services.AppealApiService
-import com.example.myhome.common.services.ApartmentApiService
-import com.example.myhome.common.services.SubscriberApiService
-import com.example.myhome.common.services.TypeOfServiceApiService
-import com.example.myhome.event.services.EventApiService
-import com.example.myhome.meter.services.MeterApiService
+import com.example.myhome.features.appeal.AppealApiService
+import com.example.myhome.features.common.CommonApiService
+import com.example.myhome.features.event.EventApiService
+import com.example.myhome.features.meter.MeterApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,20 +57,8 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideApartmentApiService(@Named("Normal") retrofit: Retrofit): ApartmentApiService {
-        return retrofit.create(ApartmentApiService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideTypeOfServiceApiService(@Named("Normal") retrofit: Retrofit): TypeOfServiceApiService {
-        return retrofit.create(TypeOfServiceApiService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSubscriberApiService(@Named("Normal") retrofit: Retrofit): SubscriberApiService {
-        return retrofit.create(SubscriberApiService::class.java)
+    fun provideCommonApiService(@Named("Normal") retrofit: Retrofit): CommonApiService {
+        return retrofit.create(CommonApiService::class.java)
     }
 
     @Provides

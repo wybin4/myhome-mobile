@@ -1,6 +1,7 @@
 package com.example.myhome.utils.mappers
 
-import com.example.myhome.testutils.providers.MeterUITestListProvider
+import com.example.myhome.presentation.features.meter.MeterUiMapper
+import com.example.myhome.presentation.testutils.providers.MeterUITestListProvider
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

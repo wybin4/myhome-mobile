@@ -1,12 +1,11 @@
 package com.example.myhome.di
 
-import com.example.myhome.appeal.mappers.AppealRemoteMapper
-import com.example.myhome.appeal.repositories.AppealRepository
-import com.example.myhome.appeal.repositories.AppealRepositoryImpl
-import com.example.myhome.appeal.services.AppealApiService
-import com.example.myhome.appeal.storages.AppealRemoteStorage
-import com.example.myhome.appeal.storages.AppealStorage
-import com.example.myhome.event.services.EventApiService
+import com.example.myhome.features.appeal.AppealApiService
+import com.example.myhome.features.appeal.AppealRemoteMapper
+import com.example.myhome.features.appeal.AppealRepository
+import com.example.myhome.features.appeal.AppealRepositoryImpl
+import com.example.myhome.features.appeal.AppealStorage
+import com.example.myhome.features.event.EventApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +21,7 @@ class AppealDataModule {
         appealApiService: AppealApiService,
         eventApiService: EventApiService
     ): AppealStorage {
-        return AppealRemoteStorage(appealApiService, eventApiService)
+        return AppealStorage(appealApiService, eventApiService)
     }
 
     @Provides

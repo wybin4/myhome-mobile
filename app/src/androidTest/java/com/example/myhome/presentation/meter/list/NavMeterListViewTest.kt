@@ -10,10 +10,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.myhome.R
 import com.example.myhome.di.MeterDataModule
-import com.example.myhome.utils.models.MeterListToGetParcelableModel
+import com.example.myhome.presentation.features.meter.MeterListToGetParcelableModel
+import com.example.myhome.presentation.features.meter.list.MeterListView
 import com.example.myhome.testutils.BaseTest
 import com.example.myhome.testutils.launchNavHiltFragment
-import com.example.myhome.testutils.providers.MeterUITestListProvider.getMeterParcelableGet
+import com.example.myhome.presentation.testutils.providers.MeterUITestListProvider.getMeterParcelableGet
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import org.junit.After

@@ -1,11 +1,10 @@
 package com.example.myhome.di
 
-import com.example.myhome.common.mappers.TypeOfServiceRemoteMapper
-import com.example.myhome.common.repositories.TypeOfServiceRepository
-import com.example.myhome.common.repositories.TypeOfServiceRepositoryImpl
-import com.example.myhome.common.services.TypeOfServiceApiService
-import com.example.myhome.common.storages.TypeOfServiceRemoteStorage
-import com.example.myhome.common.storages.TypeOfServiceStorage
+import com.example.myhome.features.common.CommonApiService
+import com.example.myhome.features.common.mappers.TypeOfServiceRemoteMapper
+import com.example.myhome.features.common.repositories.TypeOfServiceRepository
+import com.example.myhome.features.common.repositories.TypeOfServiceRepositoryImpl
+import com.example.myhome.features.common.storages.TypeOfServiceStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,12 +16,15 @@ import javax.inject.Singleton
 class TypeOfServiceDataModule {
     @Provides
     @Singleton
-    fun provideTypeOfServiceStorage(typeOfServiceApiService: TypeOfServiceApiService): TypeOfServiceStorage {
-        return TypeOfServiceRemoteStorage(typeOfServiceApiService)
+    fun provideTypeOfServiceStorage(commonApiService: CommonApiService): TypeOfServiceStorage {
+        return TypeOfServiceStorage(commonApiService)
     }
     @Provides
     @Singleton
-    fun provideTypeOfServiceRepository(typeOfServiceStorage: TypeOfServiceStorage, typeOfServiceRemoteMapper: TypeOfServiceRemoteMapper): TypeOfServiceRepository {
+    fun provideTypeOfServiceRepository(
+        typeOfServiceStorage: TypeOfServiceStorage,
+        typeOfServiceRemoteMapper: TypeOfServiceRemoteMapper
+    ): TypeOfServiceRepository {
         return TypeOfServiceRepositoryImpl(
             typeOfServiceStorage,
             typeOfServiceRemoteMapper

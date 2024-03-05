@@ -21,12 +21,13 @@ import com.example.myhome.TestFragmentActivity
 import com.example.myhome.di.ApartmentDataModule
 import com.example.myhome.di.AppealDataModule
 import com.example.myhome.di.SubscriberDataModule
+import com.example.myhome.presentation.features.meter.update.MeterUpdateView
 import com.example.myhome.testutils.BaseTest
 import com.example.myhome.testutils.espresso.layoutHasErrorText
 import com.example.myhome.testutils.getFragment
 import com.example.myhome.testutils.launchActivityScenario
 import com.example.myhome.testutils.providers.DateProvider
-import com.example.myhome.testutils.providers.MeterUITestListProvider.getMeterParcelableUpdate
+import com.example.myhome.presentation.testutils.providers.MeterUITestListProvider.getMeterParcelableUpdate
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import org.hamcrest.CoreMatchers.not

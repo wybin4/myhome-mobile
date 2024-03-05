@@ -1,45 +1,45 @@
 package com.example.myhome.testutils.providers
 
-import com.example.myhome.meter.models.ApartmentWithMeterGetModel
-import com.example.myhome.meter.models.MeterGetModel
-import com.example.myhome.meter.models.MeterListItemModel
-import com.example.myhome.meter.models.ReadingGetModel
+import com.example.myhome.features.meter.models.ApartmentWithMeterListItemModel
+import com.example.myhome.features.meter.models.MeterListItemExtendedModel
+import com.example.myhome.features.meter.models.MeterListItemModel
+import com.example.myhome.features.meter.models.ReadingListItemModel
 import com.example.myhome.testutils.providers.DateDomainProvider.date
 import java.util.Calendar
 import java.util.Date
 
 object MeterDomainTestListProvider {
     val apartmentList = listOf(
-        ApartmentWithMeterGetModel(1, "пер. Соборный 99, кв. 12", getMeterList()),
-        ApartmentWithMeterGetModel(2, "ул. Малюгина 124, кв. 12", emptyList())
+        ApartmentWithMeterListItemModel(1, "пер. Соборный 99, кв. 12", getMeterList()),
+        ApartmentWithMeterListItemModel(2, "ул. Малюгина 124, кв. 12", emptyList())
     )
 
     val meterListItems = listOf(
-        MeterListItemModel(1, "Газ", 1, "пер. Соборный 99, кв. 12"),
-        MeterListItemModel(2, "ХВС", 1, "пер. Соборный 99, кв. 12"),
-        MeterListItemModel(3, "ГВС", 1, "пер. Соборный 99, кв. 12"),
+        MeterListItemExtendedModel(1, "Газ", 1, "пер. Соборный 99, кв. 12"),
+        MeterListItemExtendedModel(2, "ХВС", 1, "пер. Соборный 99, кв. 12"),
+        MeterListItemExtendedModel(3, "ГВС", 1, "пер. Соборный 99, кв. 12"),
     )
 
     val readingList = listOf(
-        ReadingGetModel(
+        ReadingListItemModel(
             id = 4,
             readAt = date,
             consumption = 1.291,
             reading = 5.867
         ),
-        ReadingGetModel(
+        ReadingListItemModel(
             id = 3,
             readAt = date,
             consumption = 1.3,
             reading = 4.576
         ),
-        ReadingGetModel(
+        ReadingListItemModel(
             id = 2,
             readAt = date,
             consumption = 2.21,
             reading = 3.276
         ),
-        ReadingGetModel(
+        ReadingListItemModel(
             id = 1,
             readAt = date,
             consumption = 1.005,
@@ -47,13 +47,13 @@ object MeterDomainTestListProvider {
         )
     )
 
-    fun getMeterList(): List<MeterGetModel> {
+    fun getMeterList(): List<MeterListItemModel> {
         val notIssuedDate = notIssuedDate()
 
         return listOf(
-            MeterGetModel(1, "12332132131231", date, date, 1, "Газ", "Gas",16.9, "м3"),
-            MeterGetModel(2, "12332132131232", date, notIssuedDate, 2, "ХВС", "Water",null, "м3"),
-            MeterGetModel(3, "12132132131232", date, notIssuedDate, 3, "ГВС", "Water",11.2, "гКал")
+            MeterListItemModel(1, "12332132131231", date, date, 1, "Газ", "Gas",16.9, "м3"),
+            MeterListItemModel(2, "12332132131232", date, notIssuedDate, 2, "ХВС", "Water",null, "м3"),
+            MeterListItemModel(3, "12132132131232", date, notIssuedDate, 3, "ГВС", "Water",11.2, "гКал")
         )
     }
 

@@ -13,14 +13,15 @@ class InputValidatorTest {
     @Mock
     private lateinit var textInputLayout: TextInputLayout
 
-    private lateinit var inputValidator: InputValidator
+    private lateinit var inputValidator: com.example.myhome.presentation.utils.InputValidator
 
     @Before
     fun setup() {
         textInputLayout = Mockito.mock(TextInputLayout::class.java)
-        inputValidator = InputValidator(textInputLayout, {
-                text -> text?.length ?: 0 >= 5 // строка длиннее 5 символов
-        }, "Ошибка????") { }
+        inputValidator =
+            com.example.myhome.presentation.utils.InputValidator(textInputLayout, { text ->
+                text?.length ?: 0 >= 5 // строка длиннее 5 символов
+            }, "Ошибка????") { }
     }
 
     @After
@@ -61,9 +62,10 @@ class InputValidatorTest {
         val input = "Чево"
         val errorResetMock: () -> Unit = Mockito.mock()
 
-        inputValidator = InputValidator(textInputLayout, {
-                text -> text?.length ?: 0 >= 5 // строка длиннее 5 символов
-        }, "Ошибка????") { errorResetMock() }
+        inputValidator =
+            com.example.myhome.presentation.utils.InputValidator(textInputLayout, { text ->
+                text?.length ?: 0 >= 5 // строка длиннее 5 символов
+            }, "Ошибка????") { errorResetMock() }
 
         inputValidator.validate(input)
         inputValidator.validate(input)

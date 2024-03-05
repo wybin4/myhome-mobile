@@ -1,6 +1,6 @@
 package com.example.myhome.testutils.providers
 
-import com.example.myhome.common.models.DateConverter
+import com.example.myhome.models.DateConverter
 import java.util.Calendar
 import java.util.Date
 

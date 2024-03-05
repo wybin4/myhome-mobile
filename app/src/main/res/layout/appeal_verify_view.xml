@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.myhome.presentation.appeal.add.verify.AppealVerifyViewModel" />
+            type="com.example.myhome.presentation.features.appeal.add.verify.AppealVerifyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

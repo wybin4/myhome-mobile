@@ -1,7 +1,7 @@
 package com.example.myhome.di.data
 
-import com.example.myhome.appeal.repositories.AppealRepository
 import com.example.myhome.di.AppealDataModule
+import com.example.myhome.features.appeal.AppealRepository
 import com.example.myhome.testutils.mocks.appeal.repositories.AppealRepositoryTest
 import dagger.Module
 import dagger.Provides

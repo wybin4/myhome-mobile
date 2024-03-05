@@ -1,9 +1,8 @@
 package com.example.myhome.di.data
 
 import com.example.myhome.di.MeterDataModule
-import com.example.myhome.di.domain.MeterDomainModule
-import com.example.myhome.meter.repositories.MeterRepository
-import com.example.myhome.meter.repositories.ReadingRepository
+import com.example.myhome.features.meter.repositories.MeterRepository
+import com.example.myhome.features.meter.repositories.ReadingRepository
 import com.example.myhome.testutils.mocks.meter.repositories.MeterRepositoryTest
 import com.example.myhome.testutils.mocks.meter.repositories.ReadingRepositoryTest
 import dagger.Module

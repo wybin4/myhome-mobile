@@ -4,7 +4,7 @@
         <data>
             <variable
                 name="viewModel"
-                type="com.example.myhome.presentation.appeal.add.add.BaseAppealAddViewModel" />
+                type="com.example.myhome.presentation.features.appeal.add.add.BaseAppealAddViewModel" />
         </data>
 
     <LinearLayout

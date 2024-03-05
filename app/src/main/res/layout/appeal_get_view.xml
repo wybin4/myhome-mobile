@@ -5,7 +5,7 @@
     <data>
         <variable
             name="appeal"
-            type="com.example.myhome.utils.models.AppealUiModel" />
+            type="com.example.myhome.presentation.features.appeal.AppealUiModel" />
 
     </data>
 

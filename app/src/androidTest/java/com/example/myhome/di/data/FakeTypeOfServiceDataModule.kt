@@ -1,7 +1,7 @@
 package com.example.myhome.di.data
 
-import com.example.myhome.common.repositories.TypeOfServiceRepository
 import com.example.myhome.di.TypeOfServiceDataModule
+import com.example.myhome.features.common.repositories.TypeOfServiceRepository
 import com.example.myhome.testutils.mocks.common.repositories.TypeOfServiceRepositoryTest
 import dagger.Module
 import dagger.Provides

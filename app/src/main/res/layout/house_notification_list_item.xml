@@ -4,7 +4,7 @@
     <data>
         <variable
             name="notification"
-            type="com.example.myhome.utils.models.HouseNotificationUiModel" />
+            type="com.example.myhome.presentation.features.event.HouseNotificationUiModel" />
     </data>
 
 

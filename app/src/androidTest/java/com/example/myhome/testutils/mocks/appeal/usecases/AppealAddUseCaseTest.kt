@@ -1,9 +1,9 @@
 package com.example.myhome.testutils.mocks.appeal.usecases
 
-import com.example.myhome.appeal.models.AppealAddMeterModel
-import com.example.myhome.appeal.models.AppealProblemOrClaimModel
-import com.example.myhome.appeal.models.AppealUpdateMeterModel
-import com.example.myhome.appeal.usecases.AppealAddUseCase
+import com.example.myhome.features.appeal.models.AppealAddMeterModel
+import com.example.myhome.features.appeal.models.AppealProblemOrClaimModel
+import com.example.myhome.features.appeal.models.AppealUpdateMeterModel
+import com.example.myhome.features.appeal.usecases.AppealAddUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

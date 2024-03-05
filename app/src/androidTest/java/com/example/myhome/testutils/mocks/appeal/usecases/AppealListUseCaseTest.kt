@@ -1,11 +1,11 @@
 package com.example.myhome.testutils.mocks.appeal.usecases
 
-import com.example.myhome.appeal.models.AppealGetModel
-import com.example.myhome.appeal.usecases.AppealListUseCase
+import com.example.myhome.features.appeal.models.AppealListItemModel
+import com.example.myhome.features.appeal.usecases.AppealListUseCase
 import kotlinx.coroutines.flow.Flow
 
 class AppealListUseCaseTest : AppealListUseCase {
-    override fun invoke(): Flow<List<AppealGetModel>> {
+    override fun invoke(): Flow<List<AppealListItemModel>> {
         TODO("Not yet implemented")
     }
 

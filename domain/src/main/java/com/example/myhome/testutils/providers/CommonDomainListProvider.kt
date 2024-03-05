@@ -1,47 +1,47 @@
 package com.example.myhome.testutils.providers
 
-import com.example.myhome.common.models.ApartmentGetModel
-import com.example.myhome.common.models.SubscriberGetModel
-import com.example.myhome.common.models.TypeOfServiceGetModel
+import com.example.myhome.features.common.models.ApartmentListItemModel
+import com.example.myhome.features.common.models.SubscriberListItemModel
+import com.example.myhome.features.common.models.TypeOfServiceListItemModel
 import com.example.myhome.testutils.providers.MeterDomainTestListProvider.apartmentList
 
-public object CommonDomainTestListProvider {
-    fun getApartmentList(): List<ApartmentGetModel> {
+object CommonDomainTestListProvider {
+    fun getApartmentList(): List<ApartmentListItemModel> {
         return apartmentList.map {
-            ApartmentGetModel(
+            ApartmentListItemModel(
                 id = it.id,
-                name = it.address,
+                address = it.address,
                 subscriberId = it.id
             )
         }
     }
 
-    fun getTypeOfServiceList(): List<TypeOfServiceGetModel> {
+    fun getTypeOfServiceList(): List<TypeOfServiceListItemModel> {
         return listOf(
-            TypeOfServiceGetModel(
+            TypeOfServiceListItemModel(
                 id = 1, name = "Газ",
             ),
-            TypeOfServiceGetModel(
+            TypeOfServiceListItemModel(
                 id = 2, name = "ХВС",
             ),
-            TypeOfServiceGetModel(
+            TypeOfServiceListItemModel(
                 id = 3, name = "ГВС",
             ),
-            TypeOfServiceGetModel(
+            TypeOfServiceListItemModel(
                 id = 4, name = "Электроэнергия",
             ),
-            TypeOfServiceGetModel(
+            TypeOfServiceListItemModel(
                 id = 4, name = "Отопление",
             ),
         )
     }
 
-    fun getSubscriberList(): List<SubscriberGetModel> {
+    fun getSubscriberList(): List<SubscriberListItemModel> {
         return listOf(
-            SubscriberGetModel(
+            SubscriberListItemModel(
                 managementCompanyId = 1, subscriberId = 1,
             ),
-            SubscriberGetModel(
+            SubscriberListItemModel(
                 managementCompanyId = 1, subscriberId = 2,
             )
         )

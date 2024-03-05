@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/list_meter"
-        android:name="com.example.myhome.presentation.meter.list.MeterListView"
+        android:name="com.example.myhome.presentation.features.meter.list.MeterListView"
         android:label="@string/title_nav_meters"
         tools:layout="@layout/meter_list_view">
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/add_meter"
-        android:name="com.example.myhome.presentation.meter.add.MeterAddView"
+        android:name="com.example.myhome.presentation.features.meter.add.MeterAddView"
         android:label="@string/title_add_meter"
         tools:layout="@layout/meter_add_view">
         <action
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/get_meter"
-        android:name="com.example.myhome.presentation.meter.get.MeterGetView"
+        android:name="com.example.myhome.presentation.features.meter.get.MeterGetView"
         android:label="@string/title_get_meter"
         tools:layout="@layout/meter_get_view">
         <action
@@ -46,13 +46,13 @@
             app:destination="@id/scan_meter" />
         <argument
             android:name="meter"
-            app:argType="com.example.myhome.utils.models.MeterListToGetParcelableModel" />
+            app:argType="com.example.myhome.presentation.features.meter.MeterListToGetParcelableModel" />
 
     </fragment>
 
     <fragment
         android:id="@+id/scan_meter"
-        android:name="com.example.myhome.presentation.meter.scan.MeterScanView"
+        android:name="com.example.myhome.presentation.features.meter.scan.MeterScanView"
         android:label="@string/title_scan_meter"
         tools:layout="@layout/meter_scan_view">
         <action
@@ -60,12 +60,12 @@
             app:destination="@id/get_meter" />
         <argument
             android:name="meter"
-            app:argType="com.example.myhome.utils.models.MeterGetToScanParcelableModel" />
+            app:argType="com.example.myhome.presentation.features.meter.MeterGetToScanParcelableModel" />
     </fragment>
 
     <fragment
         android:id="@+id/update_meter"
-        android:name="com.example.myhome.presentation.meter.update.MeterUpdateView"
+        android:name="com.example.myhome.presentation.features.meter.update.MeterUpdateView"
         android:label="@string/title_update_meter"
         tools:layout="@layout/meter_update_view">
         <action
@@ -73,7 +73,7 @@
             app:destination="@id/get_meter" />
         <argument
             android:name="meter"
-            app:argType="com.example.myhome.utils.models.MeterGetToUpdateParcelableModel" />
+            app:argType="com.example.myhome.presentation.features.meter.MeterGetToUpdateParcelableModel" />
     </fragment>
 
 <!--    <fragment-->
@@ -85,12 +85,12 @@
 
     <fragment
         android:id="@+id/navigation_events"
-        android:name="com.example.myhome.presentation.event.list.EventListView"
+        android:name="com.example.myhome.presentation.features.event.list.EventListView"
         android:label="@string/title_events"/>
 
     <fragment
         android:id="@+id/list_appeal"
-        android:name="com.example.myhome.presentation.appeal.list.AppealListView"
+        android:name="com.example.myhome.presentation.features.appeal.list.AppealListView"
         android:label="@string/title_appeals">
         <action
             android:id="@+id/action_appealListView_to_appealPickView"
@@ -99,7 +99,7 @@
 
     <fragment
         android:id="@+id/pick_appeal"
-        android:name="com.example.myhome.presentation.appeal.pick.AppealPickView"
+        android:name="com.example.myhome.presentation.features.appeal.pick.AppealPickView"
         android:label="@string/title_add_appeal">
         <action
             android:id="@+id/action_appealPickView_to_appealAddView"
@@ -120,7 +120,7 @@
 
     <fragment
         android:id="@+id/add_appeal"
-        android:name="com.example.myhome.presentation.appeal.add.add.AppealAddView"
+        android:name="com.example.myhome.presentation.features.appeal.add.add.AppealAddView"
         android:label="@string/title_add_appeal">
         <action
             android:id="@+id/action_appealAddView_to_appealPickView"
@@ -132,7 +132,7 @@
 
     <fragment
         android:id="@+id/verify_appeal"
-        android:name="com.example.myhome.presentation.appeal.add.verify.AppealVerifyView"
+        android:name="com.example.myhome.presentation.features.appeal.add.verify.AppealVerifyView"
         android:label="@string/title_add_appeal">
         <action
             android:id="@+id/action_appealVerifyView_to_appealPickView"
@@ -144,7 +144,7 @@
 
     <fragment
         android:id="@+id/problem_appeal"
-        android:name="com.example.myhome.presentation.appeal.add.problem.AppealProblemView"
+        android:name="com.example.myhome.presentation.features.appeal.add.problem.AppealProblemView"
         android:label="@string/title_add_appeal">
         <action
             android:id="@+id/action_appealProblemView_to_appealPickView"
@@ -156,7 +156,7 @@
 
     <fragment
         android:id="@+id/claim_appeal"
-        android:name="com.example.myhome.presentation.appeal.add.claim.AppealClaimView"
+        android:name="com.example.myhome.presentation.features.appeal.add.claim.AppealClaimView"
         android:label="@string/title_add_appeal">
         <action
             android:id="@+id/action_appealClaimView_to_appealPickView"
@@ -169,7 +169,7 @@
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_chats"-->
-<!--        android:name="com.example.myhome.presentation.chat.list.ChatListView"-->
+<!--        android:name="com.example.myhome.presentation.features.chat.list.ChatListView"-->
 <!--        android:label="@string/title_chats" />-->
 
 <!--    <fragment-->

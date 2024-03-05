@@ -1,7 +1,7 @@
 package com.example.myhome.di.data
 
-import com.example.myhome.common.repositories.ApartmentRepository
 import com.example.myhome.di.ApartmentDataModule
+import com.example.myhome.features.common.repositories.ApartmentRepository
 import com.example.myhome.testutils.mocks.common.repositories.ApartmentRepositoryTest
 import dagger.Module
 import dagger.Provides

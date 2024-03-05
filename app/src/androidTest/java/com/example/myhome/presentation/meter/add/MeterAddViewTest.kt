@@ -22,6 +22,7 @@ import com.example.myhome.TestFragmentActivity
 import com.example.myhome.di.ApartmentDataModule
 import com.example.myhome.di.AppealDataModule
 import com.example.myhome.di.TypeOfServiceDataModule
+import com.example.myhome.presentation.features.meter.add.MeterAddView
 import com.example.myhome.testutils.BaseTest
 import com.example.myhome.testutils.espresso.hasTextAtPosition
 import com.example.myhome.testutils.espresso.layoutHasErrorText
@@ -109,12 +110,12 @@ class MeterAddViewTest: BaseTest() {
 
         onView(withId(R.id.apartment_list))
             .check(matches(hasTextAtPosition(
-                0, getApartmentList()[0].name
+                0, getApartmentList()[0].address
             )))
 
         onView(withId(R.id.apartment_list))
             .check(matches(hasTextAtPosition(
-                1, getApartmentList()[1].name
+                1, getApartmentList()[1].address
             )))
     }
 

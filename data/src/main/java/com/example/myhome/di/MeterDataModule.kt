@@ -1,14 +1,13 @@
 package com.example.myhome.di
 
-import com.example.myhome.meter.repositories.MeterRepositoryImpl
-import com.example.myhome.meter.storages.MeterStorage
-import com.example.myhome.meter.mappers.MeterRemoteMapper
-import com.example.myhome.meter.mappers.ReadingRemoteMapper
-import com.example.myhome.meter.repositories.MeterRepository
-import com.example.myhome.meter.repositories.ReadingRepository
-import com.example.myhome.meter.repositories.ReadingRepositoryImpl
-import com.example.myhome.meter.services.MeterApiService
-import com.example.myhome.meter.storages.MeterRemoteStorage
+import com.example.myhome.features.meter.MeterApiService
+import com.example.myhome.features.meter.MeterStorage
+import com.example.myhome.features.meter.mappers.MeterRemoteMapper
+import com.example.myhome.features.meter.mappers.ReadingRemoteMapper
+import com.example.myhome.features.meter.repositories.MeterRepository
+import com.example.myhome.features.meter.repositories.MeterRepositoryImpl
+import com.example.myhome.features.meter.repositories.ReadingRepository
+import com.example.myhome.features.meter.repositories.ReadingRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +30,7 @@ class MeterDataModule {
     @Provides
     @Singleton
     fun provideMeterStorage(meterApiService: MeterApiService): MeterStorage {
-        return MeterRemoteStorage(meterApiService)
+        return MeterStorage(meterApiService)
     }
     @Provides
     @Singleton

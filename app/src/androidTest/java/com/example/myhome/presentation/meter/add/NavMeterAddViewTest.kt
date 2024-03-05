@@ -13,6 +13,7 @@ import com.example.myhome.TestFragmentActivity
 import com.example.myhome.di.ApartmentDataModule
 import com.example.myhome.di.AppealDataModule
 import com.example.myhome.di.TypeOfServiceDataModule
+import com.example.myhome.presentation.features.meter.add.MeterAddView
 import com.example.myhome.testutils.BaseTest
 import com.example.myhome.testutils.getFragment
 import com.example.myhome.testutils.launchNavActivityScenario

@@ -1,10 +1,10 @@
 package com.example.myhome.testutils.mocks.appeal.repositories
 
-import com.example.myhome.appeal.models.AppealAddMeterModel
-import com.example.myhome.appeal.models.AppealGetModel
-import com.example.myhome.appeal.models.AppealProblemOrClaimModel
-import com.example.myhome.appeal.models.AppealUpdateMeterModel
-import com.example.myhome.appeal.repositories.AppealRepository
+import com.example.myhome.features.appeal.AppealRepository
+import com.example.myhome.features.appeal.models.AppealAddMeterModel
+import com.example.myhome.features.appeal.models.AppealListItemModel
+import com.example.myhome.features.appeal.models.AppealProblemOrClaimModel
+import com.example.myhome.features.appeal.models.AppealUpdateMeterModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -25,7 +25,7 @@ class AppealRepositoryTest : AppealRepository {
         return flowOf(true)
     }
 
-    override fun listAppeal(): Flow<List<AppealGetModel>> {
+    override fun listAppeal(): Flow<List<AppealListItemModel>> {
         TODO("Not yet implemented")
     }
 }

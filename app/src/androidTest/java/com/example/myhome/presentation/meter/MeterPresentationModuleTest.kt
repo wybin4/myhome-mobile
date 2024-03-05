@@ -14,8 +14,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.myhome.MainActivity
 import com.example.myhome.R
 import com.example.myhome.di.MeterDataModule
-import com.example.myhome.presentation.meter.add.MeterAddView
-import com.example.myhome.presentation.meter.update.MeterUpdateView
+import com.example.myhome.presentation.features.meter.add.MeterAddView
+import com.example.myhome.presentation.features.meter.update.MeterUpdateView
 import com.example.myhome.testutils.BaseTest
 import com.example.myhome.testutils.providers.DateProvider
 import com.example.myhome.testutils.providers.ImageProvider
