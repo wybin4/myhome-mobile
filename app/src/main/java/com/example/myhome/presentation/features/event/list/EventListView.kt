@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import com.example.myhome.databinding.EventListViewBinding
 import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.state.list.ListStateManager
-import com.example.myhome.presentation.utils.adapters.EventListAdapter
-import com.example.myhome.presentation.utils.adapters.InfiniteEventListAdapter
+import com.example.myhome.presentation.features.event.adapters.EventListAdapter
+import com.example.myhome.presentation.features.event.adapters.InfiniteEventListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -78,7 +78,9 @@ class EventListView : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        eventListAdapter = EventListAdapter()
+        eventListAdapter = EventListAdapter(requireActivity()) {
+            viewModel.updateVoting(it.id)
+        }
         binding.eventRecyclerView.adapter = eventListAdapter
     }
 

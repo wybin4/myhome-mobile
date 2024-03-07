@@ -1,8 +1,9 @@
 package com.example.myhome.features.event
 
 import com.example.myhome.features.event.dto.EventListResponse
-import com.example.myhome.features.event.dto.HouseNotificationGetDto
-import com.example.myhome.features.event.dto.VotingGetDto
+import com.example.myhome.features.event.dto.HouseNotificationListItemResponse
+import com.example.myhome.features.event.dto.VotingListItemResponse
+import com.example.myhome.features.event.dto.VotingUpdateRequest
 import com.example.myhome.features.event.models.EventListModel
 import com.example.myhome.features.event.models.EventNotificationListModel
 import com.example.myhome.features.event.models.EventVotingListModel
@@ -10,9 +11,10 @@ import com.example.myhome.features.event.models.HouseNotificationListItemModel
 import com.example.myhome.features.event.models.OptionListItemModel
 import com.example.myhome.features.event.models.VoteListItemModel
 import com.example.myhome.features.event.models.VotingListItemModel
+import com.example.myhome.features.event.models.VotingUpdateModel
 
 class EventRemoteMapper {
-    private fun mapVotingListToDomain(votingList: List<VotingGetDto>): List<VotingListItemModel> {
+    private fun mapVotingListToDomain(votingList: List<VotingListItemResponse>): List<VotingListItemModel> {
         return votingList.map {
             val options = it.options.map { option ->
                 val votes = option.votes.map { vote ->
@@ -32,7 +34,7 @@ class EventRemoteMapper {
 
             VotingListItemModel(
                 id = it.id,
-                result = it.result,
+                resultId = it.resultId,
                 options = options,
                 managementCompanyName = it.name,
                 houseId = it.houseId,
@@ -44,7 +46,7 @@ class EventRemoteMapper {
         }
     }
 
-    private fun mapNotificationListToDomain(notificationList: List<HouseNotificationGetDto>): List<HouseNotificationListItemModel> {
+    private fun mapNotificationListToDomain(notificationList: List<HouseNotificationListItemResponse>): List<HouseNotificationListItemModel> {
         return notificationList.map {
             HouseNotificationListItemModel(
                 id = it.id,
@@ -70,6 +72,13 @@ class EventRemoteMapper {
                 votings = votingList,
                 totalCount = eventList.votings.totalCount
             )
+        )
+    }
+
+    fun updateToRemote(vote: VotingUpdateModel): VotingUpdateRequest {
+        return VotingUpdateRequest(
+            optionId = vote.optionId,
+            userId = vote.userId
         )
     }
 }

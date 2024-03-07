@@ -1,10 +1,10 @@
 package com.example.myhome.presentation.features.event
 
 import com.example.myhome.features.event.models.EventType
-import com.example.myhome.features.event.models.OptionListItemModel
 import com.example.myhome.features.event.models.VotingStatus
 import com.example.myhome.models.DateConverter
 import com.example.myhome.models.DateTimeConverter
+import com.example.myhome.presentation.utils.pickers.ProportionPicker
 import java.util.Date
 
 data class EventUiModel(
@@ -28,8 +28,7 @@ data class HouseNotificationUiModel (
 
 data class VotingUiModel (
     val id: Int,
-    val result: String?,
-    val options: List<OptionListItemModel>,
+    val options: List<OptionUiModel>,
     val managementCompanyName: String,
     val title: String,
     val createdAt: Date,
@@ -42,5 +41,32 @@ data class VotingUiModel (
 
     fun formatExpiredAt(): String {
         return formatDate(expiredAt)
+    }
+
+    fun isSomeSelected(): Boolean {
+        return options.any { it.selected }
+    }
+
+    fun isClosed(): Boolean {
+        return status == VotingStatus.Close
+    }
+
+}
+
+data class OptionUiModel (
+    val id: Int,
+    val text: String,
+    var proportion: Double,
+    var numberOfVotes: Int,
+    var selected: Boolean = false,
+    var isResult: Boolean = false
+): ProportionPicker {
+    fun getFormattedProportion(): String {
+        val proportionString = "%.0f".format(proportion)
+        return "$proportionString%"
+    }
+
+    fun calculateProportion(totalVotes: Int) {
+        proportion = calculateProportion(numberOfVotes, totalVotes)
     }
 }

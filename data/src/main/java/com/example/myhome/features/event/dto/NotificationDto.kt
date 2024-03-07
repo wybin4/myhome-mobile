@@ -4,7 +4,7 @@ import com.example.myhome.features.event.models.HouseNotificationType
 import com.example.myhome.models.DateTimeConverter
 import java.util.Date
 
-data class HouseNotificationGetDto (
+data class HouseNotificationListItemResponse (
     val id: Int,
     val houseId: Int,
     val title: String,

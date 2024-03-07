@@ -3,9 +3,11 @@ package com.example.myhome.presentation.features.event
 import com.example.myhome.features.event.models.EventListModel
 import com.example.myhome.features.event.models.EventType
 import com.example.myhome.features.event.models.HouseNotificationListItemModel
+import com.example.myhome.features.event.models.OptionListItemModel
 import com.example.myhome.features.event.models.VotingListItemModel
+import com.example.myhome.presentation.utils.pickers.ProportionPicker
 
-interface EventUiConverter {
+interface EventUiConverter: ProportionPicker {
     fun notificationListToUi(notification: HouseNotificationListItemModel): HouseNotificationUiModel {
         return HouseNotificationUiModel(
             id = notification.id,
@@ -16,11 +18,26 @@ interface EventUiConverter {
             )
     }
 
+    fun optionListToUi(options: List<OptionListItemModel>, resultId: Int?): List<OptionUiModel> {
+        val totalVotes = options.sumOf { it.numberOfVotes }
+
+        return options.map { option ->
+            val selected = option.votes.any { vote -> vote.userId == 1 }
+            OptionUiModel(
+                id = option.id,
+                text = option.text,
+                numberOfVotes = option.numberOfVotes,
+                proportion = calculateProportion(option.numberOfVotes, totalVotes),
+                selected = selected,
+                isResult = option.id == resultId
+            )
+        }
+    }
+
     fun votingListToUi(voting: VotingListItemModel): VotingUiModel {
         return VotingUiModel(
             id = voting.id,
-            result = voting.result,
-            options = voting.options,
+            options = optionListToUi(voting.options, voting.resultId),
             managementCompanyName = voting.managementCompanyName,
             title = voting.title,
             createdAt = voting.createdAt,

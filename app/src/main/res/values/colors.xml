@@ -16,7 +16,7 @@
 
     <color name="primary">#6C63FF</color>
     <color name="primary_light">#146C63FF</color>
-    <color name="primary_light_clicked">#4F6C63FF</color>
+    <color name="primary_light_clicked">#636C63FF</color>
     <color name="primary_loading">#40B982FF</color>
 
     <color name="red">#EB5858</color>
@@ -26,6 +26,8 @@
 
     <color name="description_normal">#616161</color>
     <color name="description_night">#D5D5D5</color>
+    <color name="description_light">#14616161</color>
+    <color name="description_light_clicked">#4F616161</color>
 
     <color name="card_border_normal">#EFEFEF</color>
     <color name="card_border_night">#232323</color>

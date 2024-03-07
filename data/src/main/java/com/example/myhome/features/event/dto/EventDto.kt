@@ -22,11 +22,11 @@ data class EventAppealListResponse(
 )
 
 data class EventNotificationListResponse(
-    val notifications: List<HouseNotificationGetDto>,
+    val notifications: List<HouseNotificationListItemResponse>,
     val totalCount: Int
 )
 
 data class EventVotingListResponse(
-    val votings: List<VotingGetDto>,
+    val votings: List<VotingListItemResponse>,
     val totalCount: Int
 )

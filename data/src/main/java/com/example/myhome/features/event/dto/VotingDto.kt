@@ -5,10 +5,10 @@ import com.example.myhome.models.DateConverter
 import com.example.myhome.models.DateTimeConverter
 import java.util.Date
 
-data class VotingGetDto (
+data class VotingListItemResponse (
     val id: Int,
-    val result: String?,
-    val options: List<OptionGetDto>,
+    val resultId: Int?,
+    val options: List<OptionListItemResponse>,
     val name: String,
     val houseId: Int,
     val title: String,
@@ -25,16 +25,21 @@ data class VotingGetDto (
     }
 }
 
-data class OptionGetDto (
+data class OptionListItemResponse (
     val id: Int,
     val votingId: Int,
     val text: String,
     val numberOfVotes: Int,
-    val votes: List<VoteGetDto>
+    val votes: List<VoteListItemResponse>
 )
 
-data class VoteGetDto (
+data class VoteListItemResponse (
     val id: Int,
+    val optionId: Int,
+    val userId: Int
+)
+
+data class VotingUpdateRequest (
     val optionId: Int,
     val userId: Int
 )

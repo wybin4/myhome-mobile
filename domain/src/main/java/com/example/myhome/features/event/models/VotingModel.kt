@@ -4,7 +4,7 @@ import java.util.Date
 
 data class VotingListItemModel (
     val id: Int,
-    val result: String?,
+    val resultId: Int?,
     val options: List<OptionListItemModel>,
     val managementCompanyName: String,
     val houseId: Int,
@@ -24,4 +24,9 @@ data class OptionListItemModel (
 data class VoteListItemModel (
     val id: Int,
     val userId: Int
+)
+
+data class VotingUpdateModel (
+    val optionId: Int,
+    val userId: Int,
 )
