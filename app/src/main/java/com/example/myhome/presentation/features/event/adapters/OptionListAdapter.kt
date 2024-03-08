@@ -1,11 +1,12 @@
 package com.example.myhome.presentation.features.event.adapters
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.databinding.OptionItemBinding
-import com.example.myhome.presentation.features.event.OptionUiManager
+import com.example.myhome.presentation.features.event.managers.OptionUiManager
 import com.example.myhome.presentation.features.event.OptionUiModel
 import com.example.myhome.presentation.utils.pickers.ColorPicker
 
@@ -41,6 +42,7 @@ class OptionListAdapter(
     private fun setOnClickListener(binding: OptionItemBinding, option: OptionUiModel) {
         if (!isVotingClosed && !optionUiManager.isSomeSelected) {
             binding.root.setOnClickListener {
+                Log.e("itemToClick", "itemToClick")
                 onItemClick(option, options)
 
                 option.selected = true

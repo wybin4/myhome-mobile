@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.features.event
 
+import android.util.Log
 import com.example.myhome.features.event.models.EventListModel
 import com.example.myhome.features.event.models.EventType
 import com.example.myhome.features.event.models.HouseNotificationListItemModel

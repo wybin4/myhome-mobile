@@ -2,7 +2,7 @@ package com.example.myhome.di.data
 
 import com.example.myhome.di.AppealDataModule
 import com.example.myhome.features.appeal.AppealRepository
-import com.example.myhome.testutils.mocks.appeal.repositories.AppealRepositoryTest
+import com.example.myhome.testutils.mocks.appeal.AppealRepositoryTest
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent

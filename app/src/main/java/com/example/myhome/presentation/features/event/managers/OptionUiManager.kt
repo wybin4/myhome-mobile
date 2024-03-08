@@ -1,11 +1,15 @@
-package com.example.myhome.presentation.features.event
+package com.example.myhome.presentation.features.event.managers
 
 import android.content.res.ColorStateList
+import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.R
 import com.example.myhome.databinding.OptionItemBinding
+import com.example.myhome.presentation.features.event.OptionUiModel
 import com.example.myhome.presentation.utils.pickers.ColorPicker
 
 class OptionUiManager(
@@ -55,6 +59,7 @@ class OptionUiManager(
 
             selectedIndicator.setVisibility(option.selected)
             selectedIndicator.backgroundTintList = ColorStateList.valueOf(secondaryColor)
+            selectedIndicator.setWidth(wrapper, option.proportion)
 
             wrapper.backgroundTintList = ColorStateList.valueOf(secondaryColor)
             circle.backgroundTintList = ColorStateList.valueOf(primaryColor)
@@ -62,6 +67,15 @@ class OptionUiManager(
             text.setupText(option.text, primaryColor)
             proportion.setupText(option.getFormattedProportion(), primaryColor)
             proportion.setVisibility(isSomeSelected || isVotingClosed)
+        }
+    }
+
+    private fun FrameLayout.setWidth(parent: FrameLayout, value: Double) {
+        parent.post {
+            val widthInPixels = (width * value) / 100
+            val layoutParams = this.layoutParams as FrameLayout.LayoutParams
+            layoutParams.width = widthInPixels.toInt() + 10
+            this.layoutParams = layoutParams
         }
     }
 

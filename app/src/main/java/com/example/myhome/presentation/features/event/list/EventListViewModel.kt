@@ -4,16 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.appeal.models.AppealAddMeterModel
 import com.example.myhome.features.event.models.VotingUpdateModel
 import com.example.myhome.features.event.usecases.EventListUseCase
 import com.example.myhome.features.event.usecases.VotingUpdateUseCase
 import com.example.myhome.presentation.features.event.EventUiMapper
 import com.example.myhome.presentation.features.event.EventUiModel
-import com.example.myhome.presentation.models.AddResource
 import com.example.myhome.presentation.models.NetworkResult
 import com.example.myhome.presentation.models.Resource
-import com.example.myhome.presentation.models.asAddResource
 import com.example.myhome.presentation.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

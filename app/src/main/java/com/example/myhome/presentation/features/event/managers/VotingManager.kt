@@ -1,9 +1,11 @@
-package com.example.myhome.presentation.features.event
+package com.example.myhome.presentation.features.event.managers
 
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.databinding.OptionItemBinding
+import com.example.myhome.presentation.features.event.OptionUiModel
+import com.example.myhome.presentation.features.event.VotingUiModel
 import com.example.myhome.presentation.features.event.adapters.OptionListAdapter
 
 class VotingManager(

@@ -18,7 +18,7 @@ data class OptionListItemModel (
     val id: Int,
     val text: String,
     val numberOfVotes: Int,
-    val votes: List<VoteListItemModel>
+    var votes: List<VoteListItemModel>
 )
 
 data class VoteListItemModel (
