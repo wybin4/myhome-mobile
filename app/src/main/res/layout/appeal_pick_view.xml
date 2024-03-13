@@ -34,9 +34,9 @@
                         android:layout_marginRight="41dp">
                         <LinearLayout
                             android:id="@+id/add_picked_icon"
-                            style="@style/PickCardIconLayout">
+                            style="@style/IconBlackWhiteLayout">
                             <ImageView
-                                style="@style/PickCardIcon"
+                                style="@style/IconBlackWhite"
                                 android:src="@drawable/meter"/>
                         </LinearLayout>
                         <TextView
@@ -48,9 +48,9 @@
                         style="@style/PickCardLayout">
                         <LinearLayout
                             android:id="@+id/verify_picked_icon"
-                            style="@style/PickCardIconLayout">
+                            style="@style/IconBlackWhiteLayout">
                             <ImageView
-                                style="@style/PickCardIcon"
+                                style="@style/IconBlackWhite"
                                 android:src="@drawable/meter"/>
                         </LinearLayout>
                         <TextView
@@ -71,9 +71,9 @@
                         android:layout_marginRight="41dp">
                         <LinearLayout
                             android:id="@+id/problem_or_question_picked_icon"
-                            style="@style/PickCardIconLayout">
+                            style="@style/IconBlackWhiteLayout">
                             <ImageView
-                                style="@style/PickCardIcon"
+                                style="@style/IconBlackWhite"
                                 android:src="@drawable/problem_or_question" />
                         </LinearLayout>
 
@@ -87,9 +87,9 @@
                         style="@style/PickCardLayout">
                         <LinearLayout
                             android:id="@+id/claim_picked_icon"
-                            style="@style/PickCardIconLayout">
+                            style="@style/IconBlackWhiteLayout">
                             <ImageView
-                                style="@style/PickCardIcon"
+                                style="@style/IconBlackWhite"
                                 android:src="@drawable/claim"/>
                         </LinearLayout>
                         <TextView

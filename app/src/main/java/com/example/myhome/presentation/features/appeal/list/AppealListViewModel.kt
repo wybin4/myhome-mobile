@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myhome.features.appeal.usecases.AppealListUseCase
-import com.example.myhome.presentation.features.appeal.AppealUiMapper
+import com.example.myhome.presentation.features.appeal.AppealUiConverter
 import com.example.myhome.presentation.features.appeal.AppealUiModel
 import com.example.myhome.presentation.models.Resource
 import com.example.myhome.presentation.models.asListResource
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AppealListViewModel @Inject constructor(
     private val appealListUseCase: AppealListUseCase,
-    private val appealUiMapper: AppealUiMapper
+    private val appealUiConverter: AppealUiConverter
 ) : ViewModel() {
     private val _appealList = MutableLiveData<List<AppealUiModel>>()
     val appealList: LiveData<List<AppealUiModel>> = _appealList
@@ -35,7 +35,7 @@ class AppealListViewModel @Inject constructor(
                 .asNetworkResult()
                 .collect {
                     it.asListResource(_appealListState) { data ->
-                        _appealList.value = appealUiMapper.appealListToUi(data)
+                        _appealList.value = appealUiConverter.appealListToUi(data)
                     }
                 }
         }

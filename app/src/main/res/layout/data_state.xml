@@ -29,10 +29,10 @@
                     />
 
                 <ImageView
-                    android:id="@+id/unknown_error_img"
+                    android:id="@+id/code_error_img"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:src="@drawable/unknown_error_state"
+                    android:src="@drawable/code_error_state"
                     android:layout_marginBottom="20dp"
                     android:visibility="gone"/>
 

@@ -35,12 +35,8 @@ class MeterListViewModel @Inject constructor(
 
     var selectedApartmentId: Int = -1
 
-    init {
-        fetchMeterList()
-    }
-
     fun mapMeterUiToGetParcel(meter: MeterUiModel): MeterListToGetParcelableModel {
-        return meterUiMapper.mapMeterUiToGetParcel(meter)
+        return meterUiMapper.meterUiToGetParcel(meter)
     }
 
     fun changeSelectedApartment(apartment: ApartmentUiModel) {
@@ -49,7 +45,7 @@ class MeterListViewModel @Inject constructor(
         val selectedApartment = apartmentAndMeterList.find { it.id == selectedApartmentId }
 
         selectedApartment?.let {
-            _meterList.value = setIsIssued(meterUiMapper.mapApartmentWithMeterToUi(it))
+            _meterList.value = setIsIssued(meterUiMapper.apartmentWithMeterToUi(it))
         } ?: run {
             _meterList.value = emptyList()
         }
@@ -86,7 +82,7 @@ class MeterListViewModel @Inject constructor(
         val fstApartment = list.first()
         selectedApartmentId = fstApartment.id
 
-        _apartmentList.value = setSelected(meterUiMapper.mapApartmentListToUi(list))
-        _meterList.value = setIsIssued(meterUiMapper.mapApartmentWithMeterToUi(fstApartment))
+        _apartmentList.value = setSelected(meterUiMapper.apartmentListToUi(list))
+        _meterList.value = setIsIssued(meterUiMapper.apartmentWithMeterToUi(fstApartment))
     }
 }

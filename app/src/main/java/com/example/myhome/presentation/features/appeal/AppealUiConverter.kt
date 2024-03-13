@@ -3,8 +3,9 @@ package com.example.myhome.presentation.features.appeal
 import com.example.myhome.features.appeal.models.AppealListItemModel
 import com.example.myhome.features.appeal.models.AppealStatus
 import com.example.myhome.features.appeal.models.AppealType
+import javax.inject.Inject
 
-interface AppealUiConverter {
+class AppealUiConverter @Inject constructor() {
     fun appealListToUi(appeals: List<AppealListItemModel>): List<AppealUiModel> {
         return appeals.map {
             AppealUiModel(

@@ -2,6 +2,7 @@ package com.example.myhome.di
 
 import android.content.Context
 import com.example.myhome.features.appeal.AppealApiService
+import com.example.myhome.features.charge.ChargeApiService
 import com.example.myhome.features.common.CommonApiService
 import com.example.myhome.features.event.EventApiService
 import com.example.myhome.features.meter.MeterApiService
@@ -71,5 +72,11 @@ class RetrofitModule {
     @Singleton
     fun provideEventApiService(@Named("Normal") retrofit: Retrofit): EventApiService {
         return retrofit.create(EventApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChargeApiService(@Named("Normal") retrofit: Retrofit): ChargeApiService {
+        return retrofit.create(ChargeApiService::class.java)
     }
 }

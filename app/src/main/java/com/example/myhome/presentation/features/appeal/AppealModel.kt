@@ -17,7 +17,7 @@ data class AppealUiModel(
     val description: String,
     val attachment: String?,
     val createdAt: Date
-) : Adaptive, IconPicker, DateConverter, AppealUiConverter {
+) : Adaptive, IconPicker, DateConverter, AppealUiPicker {
     fun getTypeIcon(): Int? {
         return getAppealTypeIcon(typeOfAppeal)
     }

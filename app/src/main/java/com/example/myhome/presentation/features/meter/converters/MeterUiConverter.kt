@@ -1,44 +1,10 @@
-package com.example.myhome.presentation.features.meter
+package com.example.myhome.presentation.features.meter.converters
 
 import com.example.myhome.features.meter.models.ApartmentWithMeterListItemModel
 import com.example.myhome.features.meter.models.MeterListItemExtendedModel
-
-interface MeterParcelableConverter {
-    fun meterUiToGetParcel(meter: MeterUiModel): MeterListToGetParcelableModel {
-        return MeterListToGetParcelableModel(
-            id = meter.id,
-            factoryNumber = meter.factoryNumber,
-            verifiedAt = meter.verifiedAt,
-            issuedAt = meter.issuedAt,
-            isIssued = meter.isIssued,
-            apartmentId = meter.apartmentId,
-            address = meter.address,
-            currentReading = meter.currentReading,
-            typeOfServiceName = meter.typeOfServiceName,
-            typeOfServiceEngName = meter.typeOfServiceEngName,
-            unitName = meter.unitName
-        )
-    }
-
-    fun meterGetToScanParcel(meter: MeterListToGetParcelableModel, prevReading: Double): MeterGetToScanParcelableModel {
-        return MeterGetToScanParcelableModel(
-            meterId = meter.id,
-            address = meter.address,
-            previousReading = prevReading,
-            typeOfServiceName = meter.typeOfServiceName,
-            typeOfServiceEngName = meter.typeOfServiceEngName,
-            unitName = meter.unitName
-        )
-    }
-
-    fun meterGetToUpdateParcel(meter: MeterListToGetParcelableModel): MeterGetToUpdateParcelableModel {
-        return MeterGetToUpdateParcelableModel(
-            meterId = meter.id,
-            meterName = meter.address + ", " + meter.typeOfServiceName,
-            apartmentId = meter.apartmentId
-        )
-    }
-}
+import com.example.myhome.presentation.features.meter.ApartmentUiModel
+import com.example.myhome.presentation.features.meter.MeterExtendedUiModel
+import com.example.myhome.presentation.features.meter.MeterUiModel
 
 interface MeterUiConverter {
     fun apartmentWithMeterToUi(apartment: ApartmentWithMeterListItemModel): List<MeterUiModel> {

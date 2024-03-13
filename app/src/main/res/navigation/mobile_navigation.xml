@@ -84,7 +84,7 @@
 <!--        />-->
 
     <fragment
-        android:id="@+id/navigation_events"
+        android:id="@+id/list_event"
         android:name="com.example.myhome.presentation.features.event.list.EventListView"
         android:label="@string/title_events"/>
 
@@ -164,6 +164,31 @@
         <action
             android:id="@+id/action_appealClaimView_to_appealListView"
             app:destination="@id/list_appeal" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/list_charge"
+        android:name="com.example.myhome.presentation.features.charge.list.ChargeListView"
+        android:label="@string/title_nav_charges"
+        tools:layout="@layout/charge_list_view">
+        <action
+            android:id="@+id/action_ChargeListView_to_ChargeGetView"
+            app:destination="@id/get_charge">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/get_charge"
+        android:name="com.example.myhome.presentation.features.charge.get.ChargeGetView"
+        android:label="@string/title_get_charge"
+        tools:layout="@layout/charge_get_view">
+        <action
+            android:id="@+id/action_chargeGetView_to_chargeListView"
+            app:destination="@id/list_charge" />
+        <argument
+            android:name="charge"
+            app:argType="com.example.myhome.presentation.features.charge.models.ChargeListToGetParcelableModel" />
 
     </fragment>
 

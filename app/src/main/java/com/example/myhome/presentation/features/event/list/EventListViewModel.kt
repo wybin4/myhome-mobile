@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myhome.features.event.models.VotingUpdateModel
 import com.example.myhome.features.event.usecases.EventListUseCase
 import com.example.myhome.features.event.usecases.VotingUpdateUseCase
-import com.example.myhome.presentation.features.event.EventUiMapper
+import com.example.myhome.presentation.features.event.EventUiConverter
 import com.example.myhome.presentation.features.event.EventUiModel
 import com.example.myhome.presentation.models.NetworkResult
 import com.example.myhome.presentation.models.Resource
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class EventListViewModel @Inject constructor(
     private val eventListUseCase: EventListUseCase,
     private val votingUpdateUseCase: VotingUpdateUseCase,
-    private val eventUiMapper: EventUiMapper
+    private val eventUiConverter: EventUiConverter
 ) : ViewModel() {
     private val _eventList = MutableLiveData<List<EventUiModel>>()
     val eventList: LiveData<List<EventUiModel>> = _eventList
@@ -42,7 +42,7 @@ class EventListViewModel @Inject constructor(
                             val data = it.data
                             if (data.notifications.totalCount > 0 || data.votings.totalCount > 0) {
                                 _eventListState.value = Resource.Success
-                                _eventList.value = eventUiMapper.mapListToUi(data)
+                                _eventList.value = eventUiConverter.eventListToUi(data)
                             } else {
                                 _eventListState.value = Resource.Empty
                             }

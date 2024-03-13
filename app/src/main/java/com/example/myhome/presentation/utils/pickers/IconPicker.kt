@@ -3,6 +3,7 @@ package com.example.myhome.presentation.utils.pickers
 import com.example.myhome.R
 import com.example.myhome.features.appeal.models.AppealStatus
 import com.example.myhome.features.appeal.models.AppealType
+import com.example.myhome.presentation.features.charge.models.AmountChange
 import com.example.myhome.presentation.features.common.models.TypeOfServiceEngNames
 
 interface IconPicker {
@@ -34,4 +35,13 @@ interface IconPicker {
             else -> null
         }
     }
+
+    fun getAmountChangeIcon(amountChange: AmountChange): Int? {
+        return when (amountChange) {
+            AmountChange.Positive -> R.drawable.arrow_top
+            AmountChange.Negative -> R.drawable.arrow_bottom
+            else -> null
+        }
+    }
+
 }

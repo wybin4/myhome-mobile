@@ -6,8 +6,9 @@ import com.example.myhome.features.common.models.TypeOfServiceListItemModel
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.common.models.SubscriberUiModel
 import com.example.myhome.presentation.features.common.models.TypeOfServiceUiModel
+import javax.inject.Inject
 
-interface AppealUiConverter {
+class CommonUiConverter @Inject constructor() {
     fun apartmentListToUi(apartments: List<ApartmentListItemModel>): List<ApartmentExtendedUiModel> {
         return apartments.map {
             ApartmentExtendedUiModel(

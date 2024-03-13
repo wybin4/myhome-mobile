@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhome.presentation.models.Adaptive
 
-class CustomListAdapter<T: Adaptive, B : ViewDataBinding>(
+open class CustomListAdapter<T: Adaptive, B : ViewDataBinding>(
     private val itemBindingInflater: (LayoutInflater, ViewGroup, Boolean) -> B,
     private val setBinding: (B, T) -> Unit,
     private val onItemClick: ((item: T) -> Unit)?

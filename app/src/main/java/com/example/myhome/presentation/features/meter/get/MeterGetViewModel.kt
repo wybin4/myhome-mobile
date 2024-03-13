@@ -31,11 +31,11 @@ class MeterGetViewModel @Inject constructor(
     lateinit var meterParcelable : MeterListToGetParcelableModel
 
     fun mapMeterGetToScanParcel(meter: MeterListToGetParcelableModel, prev: Double): MeterGetToScanParcelableModel {
-        return meterUiMapper.mapMeterGetToScanParcel(meter, prev)
+        return meterUiMapper.meterGetToScanParcel(meter, prev)
     }
 
     fun mapMeterGetToUpdateParcel(meter: MeterListToGetParcelableModel): MeterGetToUpdateParcelableModel {
-        return meterUiMapper.mapMeterGetToUpdateParcel(meter)
+        return meterUiMapper.meterGetToUpdateParcel(meter)
     }
 
     fun fetchReadingList() {
@@ -50,7 +50,7 @@ class MeterGetViewModel @Inject constructor(
                     }
             }
         } else {
-            TODO("Ошибка!")
+            _readingListState.value = Resource.Empty
         }
     }
 }

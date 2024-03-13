@@ -19,7 +19,7 @@ class DataErrorStateUi(
             title.text = "Что-то пошло не так"
             subtitle.text = "Пожалуйста, попробуйте позже или обратитесь в службу поддержки для получения помощи"
 
-            unknownErrorImg.visibility = View.VISIBLE
+            codeErrorImg.visibility = View.VISIBLE
 
             backButton.text = "Назад"
             backButton.setTextColor(getColor(R.color.red))

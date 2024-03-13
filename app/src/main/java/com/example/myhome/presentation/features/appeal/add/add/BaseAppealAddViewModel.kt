@@ -11,7 +11,7 @@ import com.example.myhome.features.common.usecases.ApartmentListUseCase
 import com.example.myhome.features.common.usecases.SubscriberListUseCase
 import com.example.myhome.features.common.usecases.TypeOfServiceListUseCase
 import com.example.myhome.presentation.features.appeal.add.BaseAppealViewModel
-import com.example.myhome.presentation.features.common.CommonUiMapper
+import com.example.myhome.presentation.features.common.CommonUiConverter
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.common.models.SubscriberUiModel
 import com.example.myhome.presentation.features.common.models.TypeOfServiceUiModel
@@ -30,7 +30,7 @@ class BaseAppealAddViewModel @Inject constructor(
     val subscriberListUseCase: SubscriberListUseCase,
     val typeOfServiceListUseCase: TypeOfServiceListUseCase,
     private val appealAddUseCase: AppealAddUseCase,
-    private val commonUiMapper: CommonUiMapper,
+    private val commonUiMapper: CommonUiConverter,
     private val imageMapper: ImageMapper
 ) : BaseAppealViewModel(AppealType.AddIndividualMeter) {
     private val _apartmentList = MutableLiveData<List<ApartmentExtendedUiModel>>()
@@ -62,7 +62,7 @@ class BaseAppealAddViewModel @Inject constructor(
                 .asNetworkResult()
                 .collect {
                     it.asListResource(_dataState) { data ->
-                        _apartmentList.value = commonUiMapper.mapApartmentListToUi(data)
+                        _apartmentList.value = commonUiMapper.apartmentListToUi(data)
                     }
                 }
 

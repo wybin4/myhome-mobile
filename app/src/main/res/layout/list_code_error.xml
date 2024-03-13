@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="error"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/code_error_state_primary"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            style="@style/Text"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Что-то пошло не так"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            style="@style/Text"
+            android:maxWidth="292dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Пожалуйста, попробуйте позже или обратитесь в службу поддержки для получения помощи"
+            android:layout_marginBottom="9dp"/>
+
+    </LinearLayout>
+</layout>

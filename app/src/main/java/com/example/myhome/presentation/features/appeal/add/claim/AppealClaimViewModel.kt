@@ -6,7 +6,7 @@ import com.example.myhome.features.appeal.usecases.AppealAddUseCase
 import com.example.myhome.features.common.usecases.ApartmentListUseCase
 import com.example.myhome.features.common.usecases.SubscriberListUseCase
 import com.example.myhome.presentation.features.appeal.add.BaseAppealProblemOrClaimViewModel
-import com.example.myhome.presentation.features.common.CommonUiMapper
+import com.example.myhome.presentation.features.common.CommonUiConverter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,9 +16,9 @@ class AppealClaimViewModel @Inject constructor(
     private val appealAddUseCase: AppealAddUseCase,
     apartmentListUseCase: ApartmentListUseCase,
     subscriberListUseCase: SubscriberListUseCase,
-    commonUiMapper: CommonUiMapper
+    commonUiConverter: CommonUiConverter
 ) : BaseAppealProblemOrClaimViewModel(
-    apartmentListUseCase, subscriberListUseCase, commonUiMapper,
+    apartmentListUseCase, subscriberListUseCase, commonUiConverter,
     AppealType.Claim
 ) {
     override fun pickUseCase(appeal: AppealProblemOrClaimModel): Flow<Boolean> {

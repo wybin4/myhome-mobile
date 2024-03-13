@@ -1,14 +1,14 @@
 package com.example.myhome.presentation.features.event
 
-import android.util.Log
 import com.example.myhome.features.event.models.EventListModel
 import com.example.myhome.features.event.models.EventType
 import com.example.myhome.features.event.models.HouseNotificationListItemModel
 import com.example.myhome.features.event.models.OptionListItemModel
 import com.example.myhome.features.event.models.VotingListItemModel
 import com.example.myhome.presentation.utils.pickers.ProportionPicker
+import javax.inject.Inject
 
-interface EventUiConverter: ProportionPicker {
+class EventUiConverter @Inject constructor(): ProportionPicker {
     fun notificationListToUi(notification: HouseNotificationListItemModel): HouseNotificationUiModel {
         return HouseNotificationUiModel(
             id = notification.id,

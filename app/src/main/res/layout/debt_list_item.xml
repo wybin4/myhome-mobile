@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/issued_card"
+        style="@style/AttentionCard"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="15dp"
+        android:layout_marginBottom="20dp"
+        >
+        <TextView
+            android:id="@+id/debt_text"
+            android:textAlignment="textStart"
+            style="@style/AttentionCardText"
+            />
+    </LinearLayout>
+
+</layout>

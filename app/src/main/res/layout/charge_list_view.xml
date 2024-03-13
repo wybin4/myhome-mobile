@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:id="@+id/scroll_view"
+                android:paddingBottom="50dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/on_network_error"
+                        style="@style/ErrorListLayout"
+                        android:visibility="gone"
+                        >
+                        <include
+                            android:id="@+id/network_error_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            layout="@layout/list_network_error"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/on_code_error"
+                        style="@style/ErrorListLayout"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"
+                        >
+                        <include
+                            android:id="@+id/code_error_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            layout="@layout/list_code_error"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/on_empty"
+                        style="@style/EmptyListLayout"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"
+                        >
+                        <include
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            layout="@layout/list_empty"
+                            bind:title="@{`Ещё ничего не начислено`}"
+                            bind:subtitle="@{`Пожалуйста, ожидайте. Квитанции появятся, как только управляющая компания их выставит`}"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/on_loading"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        >
+                        <LinearLayout
+                            android:paddingHorizontal="28dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                style="@style/Card"
+                                android:paddingVertical="30dp"
+                                android:paddingHorizontal="20dp"
+                                android:layout_marginBottom="30dp">
+
+                                <LinearLayout
+                                    android:layout_width="96dp"
+                                    android:layout_height="17dp"
+                                    style="@style/ItemLoading"
+                                    android:layout_marginBottom="12dp"/>
+                                <LinearLayout
+                                    android:layout_width="190dp"
+                                    android:layout_height="40dp"
+                                    style="@style/ItemLoading"/>
+
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/charge_infinite_recycler_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:nestedScrollingEnabled="false"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/on_success"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="28dp"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            style="@style/Card"
+                            android:paddingVertical="30dp"
+                            android:paddingHorizontal="20dp"
+                            android:layout_marginBottom="30dp">
+
+                            <TextView
+                                style="@style/DescriptionText"
+                                android:text="Текущий долг"
+                                android:layout_marginBottom="7dp"/>
+
+                            <TextView
+                                style="@style/Text"
+                                android:text="1 535,35₽"
+                                android:textSize="38dp"
+                                android:textStyle="bold"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/debt_list_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/charge_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

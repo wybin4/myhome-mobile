@@ -88,7 +88,7 @@
                                 android:layout_marginBottom="6dp"/>
 
                             <LinearLayout
-                                style="@style/Circle"
+                                style="@style/CircleBlackPrimary"
                                 android:layout_width="21dp"
                                 android:layout_height="21dp"
                                 android:layout_gravity="end"

@@ -6,8 +6,8 @@ import com.example.myhome.presentation.features.meter.MeterGetToScanParcelableMo
 import com.example.myhome.presentation.features.meter.MeterGetToUpdateParcelableModel
 import com.example.myhome.presentation.features.meter.MeterListToGetParcelableModel
 import com.example.myhome.presentation.features.meter.MeterUiModel
-import com.example.myhome.presentation.features.meter.MeterParcelableConverter
-import com.example.myhome.presentation.features.meter.MeterUiConverter
+import com.example.myhome.presentation.features.meter.converters.MeterParcelableConverter
+import com.example.myhome.presentation.features.meter.converters.MeterUiConverter
 import com.example.myhome.testutils.providers.MeterDomainTestListProvider.apartmentList
 import com.example.myhome.testutils.providers.MeterDomainTestListProvider.readingList
 

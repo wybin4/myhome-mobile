@@ -4,6 +4,7 @@ import com.example.myhome.features.event.models.EventType
 import com.example.myhome.features.event.models.VotingStatus
 import com.example.myhome.models.DateConverter
 import com.example.myhome.models.DateTimeConverter
+import com.example.myhome.presentation.utils.converters.PercentConverter
 import com.example.myhome.presentation.utils.pickers.ProportionPicker
 import java.util.Date
 
@@ -60,10 +61,9 @@ data class OptionUiModel (
     var numberOfVotes: Int,
     var selected: Boolean = false,
     var isResult: Boolean = false
-): ProportionPicker {
+): ProportionPicker, PercentConverter {
     fun getFormattedProportion(): String {
-        val proportionString = "%.0f".format(proportion)
-        return "$proportionString%"
+        return formatDouble0F(proportion)
     }
 
     fun calculateProportion(totalVotes: Int) {

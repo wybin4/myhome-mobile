@@ -7,7 +7,7 @@ import com.example.myhome.features.appeal.models.AppealProblemOrClaimModel
 import com.example.myhome.features.appeal.models.AppealType
 import com.example.myhome.features.common.usecases.ApartmentListUseCase
 import com.example.myhome.features.common.usecases.SubscriberListUseCase
-import com.example.myhome.presentation.features.common.CommonUiMapper
+import com.example.myhome.presentation.features.common.CommonUiConverter
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.common.models.SubscriberUiModel
 import com.example.myhome.presentation.models.asNetworkResult
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 abstract class BaseAppealProblemOrClaimViewModel(
     private val apartmentListUseCase: ApartmentListUseCase,
     private val subscriberListUseCase: SubscriberListUseCase,
-    private val commonUiMapper: CommonUiMapper,
+    private val commonUiConverter: CommonUiConverter,
     appealType: AppealType
 ) : BaseAppealViewModel(appealType) {
     private val _apartmentList = MutableLiveData<List<ApartmentExtendedUiModel>>()
@@ -44,7 +44,7 @@ abstract class BaseAppealProblemOrClaimViewModel(
                     _apartmentList.value = listOf()
                 }
                 .collect {
-                    _apartmentList.value = commonUiMapper.mapApartmentListToUi(it)
+                    _apartmentList.value = commonUiConverter.apartmentListToUi(it)
                 }
 
             subscriberListUseCase()
@@ -53,7 +53,7 @@ abstract class BaseAppealProblemOrClaimViewModel(
                     _subscriberList.value = listOf()
                 }
                 .collect {
-                    _subscriberList.value = commonUiMapper.mapSubscriberListToUi(it)
+                    _subscriberList.value = commonUiConverter.subscriberListToUi(it)
                 }
         }
     }

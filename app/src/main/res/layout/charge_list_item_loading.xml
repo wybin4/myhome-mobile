@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="item"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp"
+                >
+
+                    <LinearLayout
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:background="@drawable/circle_normal"
+                        android:backgroundTint="@color/primary_loading"
+                        android:layout_marginRight="14dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1.0"
+                    android:layout_gravity="center">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            style="@style/ItemLoading"
+                            android:layout_height="17dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginBottom="7dp"/>
+                        <LinearLayout
+                            style="@style/ItemLoading"
+                            android:layout_height="17dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginRight="30dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="40dp">
+
+                        <LinearLayout
+                            style="@style/ItemLoading"
+                            android:layout_height="17dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginBottom="7dp"/>
+                        <LinearLayout
+                            style="@style/ItemLoading"
+                            android:layout_height="17dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="30dp"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

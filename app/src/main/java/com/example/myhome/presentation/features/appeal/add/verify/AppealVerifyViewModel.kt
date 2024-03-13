@@ -41,7 +41,7 @@ class AppealVerifyViewModel @Inject constructor(
             .asNetworkResult()
             .collect {
                 it.asListResource(mutableDataState) { data ->
-                    _meterList.value = meterUiMapper.mapMeterListToUi(data)
+                    _meterList.value = meterUiMapper.meterListToUi(data)
                 }
             }
 

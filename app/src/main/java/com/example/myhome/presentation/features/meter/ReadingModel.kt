@@ -3,6 +3,7 @@ package com.example.myhome.presentation.features.meter
 import android.os.Parcel
 import com.example.myhome.models.DateConverter
 import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.ParcelableModel
 import java.util.Date
 
 data class ReadingUiModel(

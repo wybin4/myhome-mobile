@@ -1,6 +1,5 @@
 package com.example.myhome.presentation.features.event.adapters
 
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -42,7 +41,6 @@ class OptionListAdapter(
     private fun setOnClickListener(binding: OptionItemBinding, option: OptionUiModel) {
         if (!isVotingClosed && !optionUiManager.isSomeSelected) {
             binding.root.setOnClickListener {
-                Log.e("itemToClick", "itemToClick")
                 onItemClick(option, options)
 
                 option.selected = true

@@ -43,8 +43,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupActionBar() {
          appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.list_meter, R.id.navigation_events,
-                R.id.list_appeal
+                R.id.list_meter, R.id.list_event,
+                R.id.list_appeal, R.id.list_charge
             )
         )
 

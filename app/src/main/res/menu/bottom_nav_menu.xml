@@ -6,20 +6,20 @@
         android:icon="@drawable/meters_logo"
         android:title="@string/title_meters" />
 
-    <!--    <item-->
-    <!--        android:id="@+id/navigation_charges"-->
-    <!--        android:icon="@drawable/charges_logo"-->
-    <!--        android:title="@string/title_charges" />-->
+    <item
+        android:id="@+id/list_charge"
+        android:icon="@drawable/charges_logo"
+        android:title="@string/title_charges" />
 
     <item
-        android:id="@+id/navigation_events"
+        android:id="@+id/list_event"
         android:icon="@drawable/events_logo"
         android:title="@string/title_events" />
 
     <item
         android:id="@+id/list_appeal"
         android:icon="@drawable/appeals_logo"
-        android:title="@string/title_events" />
+        android:title="@string/title_appeals" />
 
 <!--    <item-->
 <!--        android:id="@+id/navigation_chats"-->
