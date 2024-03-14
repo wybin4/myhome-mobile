@@ -7,6 +7,7 @@ data class SinglePaymentDocumentListItemModel (
     val apartmentName: String,
     val apartmentId: Int,
     val managementCompanyName: String,
+    val managementCompanyCheckingAccount: String,
     val createdAt: Date
 )
 

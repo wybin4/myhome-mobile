@@ -16,6 +16,7 @@ data class ChargeUiModel(
     override val id: Int,
     val apartmentName: String,
     val managementCompanyName: String,
+    val managementCompanyCheckingAccount: String,
     val periodName: String,
     val outstandingDebt: Double,
     val originalDebt: Double,
@@ -42,6 +43,7 @@ data class ChargeUiModel(
 class ChargeListToGetParcelableModel(
     val id: Int,
     val managementCompanyName: String,
+    val managementCompanyCheckingAccount: String,
     val apartmentName: String,
     val periodName: String,
     val originalDebt: Double,
@@ -50,6 +52,7 @@ class ChargeListToGetParcelableModel(
     constructor(parcel: Parcel) : this(
         id = parcel.readInt(),
         managementCompanyName = parcel.readString() ?: "",
+        managementCompanyCheckingAccount = parcel.readString() ?: "",
         apartmentName = parcel.readString() ?: "",
         periodName = parcel.readString() ?: "",
         originalDebt = parcel.readDouble(),
@@ -73,6 +76,7 @@ class ChargeListToGetParcelableModel(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(managementCompanyName)
+        parcel.writeString(managementCompanyCheckingAccount)
         parcel.writeString(apartmentName)
         parcel.writeString(periodName)
         parcel.writeDouble(originalDebt)
@@ -83,12 +87,14 @@ class ChargeListToGetParcelableModel(
 class ChargeGetToPayParcelableModel(
     val id: Int,
     val managementCompanyName: String,
+    val managementCompanyCheckingAccount: String,
     val periodName: String,
     val outstandingDebt: Double
 ) : ParcelableModel(), MoneyConverter {
     constructor(parcel: Parcel) : this(
         id = parcel.readInt(),
         managementCompanyName = parcel.readString() ?: "",
+        managementCompanyCheckingAccount = parcel.readString() ?: "",
         periodName = parcel.readString() ?: "",
         outstandingDebt = parcel.readDouble()
     )
@@ -102,6 +108,7 @@ class ChargeGetToPayParcelableModel(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(managementCompanyName)
+        parcel.writeString(managementCompanyCheckingAccount)
         parcel.writeString(periodName)
         parcel.writeDouble(outstandingDebt)
     }

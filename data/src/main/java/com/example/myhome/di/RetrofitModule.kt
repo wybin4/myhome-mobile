@@ -25,24 +25,28 @@ class RetrofitModule {
     companion object {
         private const val BASE_URL = "https://wealthy-barnacle-secure.ngrok-free.app/api/"
     }
+
     @Provides
     @Singleton
-    @Named("Normal")
-    fun provideRetrofit(
+    fun provideOkHttpClient(
         @ApplicationContext context: Context
-    ): Retrofit {
+    ): OkHttpClient {
         val cacheSize = 10 * 1024 * 1024L // 10MB
         val cache = Cache(context.cacheDir, cacheSize)
-        val okHttpClient = OkHttpClient.Builder()
+        return OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
-//            .addNetworkInterceptor { chain ->
-//
-//            }
             .cache(cache)
             .build()
+    }
 
+    @Provides
+    @Singleton
+    @Named("Normal")
+    fun provideNormalRetrofit(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)

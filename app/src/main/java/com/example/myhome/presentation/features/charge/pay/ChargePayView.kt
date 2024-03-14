@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.presentation.BaseDigitPickerView
+import com.example.myhome.presentation.features.charge.PaymentHandler
 import com.example.myhome.presentation.features.charge.PaymentPicker
-import com.example.myhome.presentation.state.data.add.DataAddStateManagerWrapper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,28 +16,23 @@ class ChargePayView : BaseDigitPickerView() {
     override val viewModel by viewModels<ChargePayViewModel>()
 
     override val digitPicker = PaymentPicker()
+    private lateinit var paymentHandler: PaymentHandler
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        paymentHandler = PaymentHandler(requireActivity())
+
         viewModel.сhargeParcelable = requireArguments().getParcelable("charge")!!
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
-        super.setupDateManager(inflater, container)
-        dataAddStateManager = DataAddStateManagerWrapper(
-            requireActivity(), dataAddStateBinding,
-            "Спасибо за оплату", "Ваш платеж находится в обработке",
-            "Платеж получен и находится в очереди на обработку"
-        ) {
-            val navController = findNavController()
-//            if (viewModel.dataAddState.value is AddResource.Success) {
-//                navController.previousBackStackEntry?.savedStateHandle?.set("current_reading", getNewValue())
-//            }
-            navController.popBackStack()
+    override fun addNewValue(newValue: Double) {
+        viewModel.сhargeParcelable.apply {
+            paymentHandler.handlePayment(newValue, id, managementCompanyCheckingAccount)
         }
+        findNavController().popBackStack()
     }
 
     override fun setNewValue(new: Double, prev: Double) {

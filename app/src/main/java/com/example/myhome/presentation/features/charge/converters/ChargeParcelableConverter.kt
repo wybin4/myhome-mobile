@@ -9,6 +9,7 @@ interface ChargeParcelableConverter {
         return ChargeListToGetParcelableModel(
             id = charge.id,
             managementCompanyName = charge.managementCompanyName,
+            managementCompanyCheckingAccount = charge.managementCompanyCheckingAccount,
             apartmentName = charge.apartmentName,
             periodName = charge.periodName,
             originalDebt = charge.originalDebt,
@@ -20,6 +21,7 @@ interface ChargeParcelableConverter {
         return ChargeGetToPayParcelableModel(
             id = charge.id,
             managementCompanyName = charge.managementCompanyName,
+            managementCompanyCheckingAccount = charge.managementCompanyCheckingAccount,
             periodName = charge.periodName,
             outstandingDebt = charge.outstandingDebt
         )

@@ -15,7 +15,7 @@ fun <T1, T2> NetworkResult<Pair<List<T1>, List<T2>>>.pairNetworkResultAsChargeLi
     when (this) {
         is NetworkResult.Success -> {
             val data = this.data
-            if (data.first.isNotEmpty() || data.second.isNotEmpty()) {
+            if (data.first.isNotEmpty() && data.second.isNotEmpty()) {
                 state.value = ChargeListResource.Success
                 onSuccess(data)
             } else {

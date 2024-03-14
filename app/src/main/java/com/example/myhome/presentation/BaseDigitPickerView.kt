@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.databinding.DigitPickerViewBinding
-import com.example.myhome.presentation.state.data.add.DataAddStateManagerWrapper
-import com.example.myhome.presentation.features.meter.ReadingPicker
 import com.example.myhome.presentation.utils.pickers.DigitPicker
 
 abstract class BaseDigitPickerView : Fragment() {
@@ -18,9 +15,6 @@ abstract class BaseDigitPickerView : Fragment() {
     protected abstract val viewModel: BaseDigitPickerViewModel
 
     protected abstract val digitPicker: DigitPicker
-
-    protected lateinit var dataAddStateBinding: DataStateBinding
-    protected lateinit var dataAddStateManager: DataAddStateManagerWrapper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,25 +30,15 @@ abstract class BaseDigitPickerView : Fragment() {
             btnNext.setOnClickListener { nextClick() }
         }
 
-        setupDateManager(inflater, container)
-
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.dataAddState.observe(viewLifecycleOwner) { resource ->
-            dataAddStateManager.observeState(resource)
-        }
-    }
+    abstract fun addNewValue(newValue: Double)
 
     private fun nextClick() {
         if (binding.btnNext.isEnabled) {
-            viewModel.addNewValue(getNewValue())
+            addNewValue(getNewValue())
         }
-    }
-    protected open fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
-        dataAddStateBinding = DataStateBinding.inflate(inflater, container, false)
     }
 
     private val digitClickListener = View.OnClickListener { view ->

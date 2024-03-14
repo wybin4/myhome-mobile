@@ -19,7 +19,7 @@ class MeterScanViewModel @Inject constructor(
 ) : BaseDigitPickerViewModel(), IconPicker {
     lateinit var meterParcelable : MeterGetToScanParcelableModel
 
-    override fun addNewValue(newValue: Double) {
+     fun addNewValue(newValue: Double) {
         viewModelScope.launch {
             readingAddUseCase(
                 ReadingAddModel(

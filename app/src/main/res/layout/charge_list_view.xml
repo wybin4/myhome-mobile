@@ -55,7 +55,6 @@
                     <LinearLayout
                         android:id="@+id/on_empty"
                         style="@style/EmptyListLayout"
-                        android:layout_marginTop="30dp"
                         android:visibility="gone"
                         >
                         <include
@@ -134,8 +133,8 @@
                                 android:layout_marginBottom="7dp"/>
 
                             <TextView
+                                android:id="@+id/total_debt"
                                 style="@style/Text"
-                                android:text="1 535,35₽"
                                 android:textSize="38dp"
                                 android:textStyle="bold"/>
 

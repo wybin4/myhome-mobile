@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myhome.features.charge.usecases.ChargeListUseCase
 import com.example.myhome.presentation.features.charge.ChargeUiMapper
+import com.example.myhome.presentation.features.charge.converters.MoneyConverter
 import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
 import com.example.myhome.presentation.features.charge.models.ChargeUiModel
 import com.example.myhome.presentation.features.charge.models.SpdDebtRelationTextListItem
@@ -19,7 +20,7 @@ import com.example.myhome.presentation.features.charge.models.networkresults.pai
 class ChargeListViewModel @Inject constructor(
     private val chargeListUseCase: ChargeListUseCase,
     val chargeUiMapper: ChargeUiMapper
-) : ViewModel() {
+) : ViewModel(), MoneyConverter {
     private val _chargeList = MutableLiveData<List<ChargeUiModel>>()
     val chargeList: LiveData<List<ChargeUiModel>> = _chargeList
 

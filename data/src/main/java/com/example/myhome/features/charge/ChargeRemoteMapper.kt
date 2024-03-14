@@ -19,6 +19,7 @@ class ChargeRemoteMapper {
                 apartmentName = it.apartmentName,
                 apartmentId = it.apartmentId,
                 managementCompanyName = it.mcName,
+                managementCompanyCheckingAccount = it.mcCheckingAccount,
                 createdAt = it.formatCreatedAt()
             )
         }

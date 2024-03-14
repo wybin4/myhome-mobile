@@ -13,7 +13,6 @@ abstract class BaseDigitPickerViewModel: ViewModel() {
     fun manageAddState(result: NetworkResult<Boolean>) {
         result.asAddResource(_dataAddState)
     }
-    abstract fun addNewValue(newValue: Double)
     abstract fun isCardLeftTextVisible(): Boolean
     abstract fun getCardLeftText(): String
     abstract fun isIcon(): Boolean

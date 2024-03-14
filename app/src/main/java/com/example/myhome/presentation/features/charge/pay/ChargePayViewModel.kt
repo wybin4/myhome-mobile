@@ -1,6 +1,5 @@
 package com.example.myhome.presentation.features.charge.pay
 
-import android.util.Log
 import com.example.myhome.presentation.BaseDigitPickerViewModel
 import com.example.myhome.presentation.features.charge.converters.MoneyConverter
 import com.example.myhome.presentation.features.charge.models.ChargeGetToPayParcelableModel
@@ -9,26 +8,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ChargePayViewModel @Inject constructor(
-//    private val readingAddUseCase: ReadingAddUseCase
-) : BaseDigitPickerViewModel(), IconPicker, MoneyConverter {
-    lateinit var сhargeParcelable : ChargeGetToPayParcelableModel
-    override fun addNewValue(newValue: Double) {
-        Log.e("addNewValue", newValue.toString())
-//        viewModelScope.launch {
-//            readingAddUseCase(
-//                ReadingAddModel(
-//                    сhargeId = сhargeParcelable.сhargeId,
-//                    reading = newReading,
-//                    readAt = Date()
-//                )
-//            )
-//                .asNetworkResult()
-//                .collect {
-//                    it.asAddResource(_dataAddState)
-//                }
-//        }
-    }
+class ChargePayViewModel @Inject constructor() : BaseDigitPickerViewModel(), IconPicker, MoneyConverter {
+    lateinit var сhargeParcelable: ChargeGetToPayParcelableModel
 
     override fun isCardLeftTextVisible(): Boolean = true
 

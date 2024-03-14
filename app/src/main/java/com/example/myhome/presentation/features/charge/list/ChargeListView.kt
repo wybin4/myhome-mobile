@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.ChargeListItemBinding
@@ -82,7 +83,11 @@ class ChargeListView : Fragment() {
 
     private fun observeLists() {
         viewModel.chargeList.observe(viewLifecycleOwner) { chargeListAdapter.submitList(it) }
-        viewModel.debtList.observe(viewLifecycleOwner) { debtListAdapter.updateList(it) }
+        viewModel.debtList.observe(viewLifecycleOwner) {
+            debtListAdapter.updateList(it)
+            val totalDebtValue = it.sumOf { debt -> debt.outstandingDebt }
+            binding.totalDebt.text = viewModel.formatDouble2F(totalDebtValue)
+        }
     }
 
     private fun setupInfiniteRecyclerView() {
