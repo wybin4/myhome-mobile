@@ -54,7 +54,7 @@
         android:id="@+id/scan_meter"
         android:name="com.example.myhome.presentation.features.meter.scan.MeterScanView"
         android:label="@string/title_scan_meter"
-        tools:layout="@layout/meter_scan_view">
+        tools:layout="@layout/digit_picker_view">
         <action
             android:id="@+id/action_meterScanView_to_meterGetView"
             app:destination="@id/get_meter" />
@@ -86,12 +86,14 @@
     <fragment
         android:id="@+id/list_event"
         android:name="com.example.myhome.presentation.features.event.list.EventListView"
-        android:label="@string/title_events"/>
+        android:label="@string/title_events"
+        tools:layout="@layout/event_list_view"/>
 
     <fragment
         android:id="@+id/list_appeal"
         android:name="com.example.myhome.presentation.features.appeal.list.AppealListView"
-        android:label="@string/title_appeals">
+        android:label="@string/title_appeals"
+        tools:layout="@layout/appeal_list_view">
         <action
             android:id="@+id/action_appealListView_to_appealPickView"
             app:destination="@id/pick_appeal" />
@@ -100,7 +102,8 @@
     <fragment
         android:id="@+id/pick_appeal"
         android:name="com.example.myhome.presentation.features.appeal.pick.AppealPickView"
-        android:label="@string/title_add_appeal">
+        android:label="@string/title_add_appeal"
+        tools:layout="@layout/appeal_pick_view">
         <action
             android:id="@+id/action_appealPickView_to_appealAddView"
             app:destination="@id/add_appeal" />
@@ -121,7 +124,8 @@
     <fragment
         android:id="@+id/add_appeal"
         android:name="com.example.myhome.presentation.features.appeal.add.add.AppealAddView"
-        android:label="@string/title_add_appeal">
+        android:label="@string/title_add_appeal"
+        tools:layout="@layout/appeal_add_view">
         <action
             android:id="@+id/action_appealAddView_to_appealPickView"
             app:destination="@id/pick_appeal" />
@@ -133,7 +137,8 @@
     <fragment
         android:id="@+id/verify_appeal"
         android:name="com.example.myhome.presentation.features.appeal.add.verify.AppealVerifyView"
-        android:label="@string/title_add_appeal">
+        android:label="@string/title_add_appeal"
+        tools:layout="@layout/appeal_verify_view">
         <action
             android:id="@+id/action_appealVerifyView_to_appealPickView"
             app:destination="@id/pick_appeal" />
@@ -145,7 +150,8 @@
     <fragment
         android:id="@+id/problem_appeal"
         android:name="com.example.myhome.presentation.features.appeal.add.problem.AppealProblemView"
-        android:label="@string/title_add_appeal">
+        android:label="@string/title_add_appeal"
+        tools:layout="@layout/appeal_problem_or_claim_view">
         <action
             android:id="@+id/action_appealProblemView_to_appealPickView"
             app:destination="@id/pick_appeal" />
@@ -157,7 +163,8 @@
     <fragment
         android:id="@+id/claim_appeal"
         android:name="com.example.myhome.presentation.features.appeal.add.claim.AppealClaimView"
-        android:label="@string/title_add_appeal">
+        android:label="@string/title_add_appeal"
+        tools:layout="@layout/appeal_problem_or_claim_view">
         <action
             android:id="@+id/action_appealClaimView_to_appealPickView"
             app:destination="@id/pick_appeal" />
@@ -186,9 +193,23 @@
         <action
             android:id="@+id/action_chargeGetView_to_chargeListView"
             app:destination="@id/list_charge" />
+        <action
+            android:id="@+id/action_chargeGetView_to_chargePayView"
+            app:destination="@id/pay_charge" />
         <argument
             android:name="charge"
             app:argType="com.example.myhome.presentation.features.charge.models.ChargeListToGetParcelableModel" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/pay_charge"
+        android:name="com.example.myhome.presentation.features.charge.pay.ChargePayView"
+        android:label="@string/title_pay_charge"
+        tools:layout="@layout/digit_picker_view">
+        <action
+            android:id="@+id/action_chargePayView_to_chargeGetView"
+            app:destination="@id/get_charge" />
 
     </fragment>
 

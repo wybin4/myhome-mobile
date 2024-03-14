@@ -44,7 +44,7 @@ class MeterScanViewTest: BaseTest() {
 
     @Test
     fun testMeterInfoDisplayedCorrectly_OnFragmentCreation() {
-        onView(withId(R.id.meter_icon))
+        onView(withId(R.id.icon))
             .check(matches(withDrawable(R.drawable.gas, R.color.white)))
 
         onView(withId(R.id.address))
@@ -56,13 +56,13 @@ class MeterScanViewTest: BaseTest() {
 
     @Test
     fun testPreviousReadingDisplayedCorrectly_OnStart() {
-        onView(withId(R.id.previous_reading))
+        onView(withId(R.id.right_text))
             .check(matches(withText("5.867 м3")))
     }
 
     @Test
     fun testConsumptionDisplayedCorrectly_OnStart() {
-        onView(withId(R.id.consumption))
+        onView(withId(R.id.left_text))
             .check(matches(withText("0")))
     }
 
@@ -82,10 +82,10 @@ class MeterScanViewTest: BaseTest() {
         onView(withId(R.id.btn_next))
             .check(matches(isEnabled()))
 
-        onView(withId(R.id.current_reading))
+        onView(withId(R.id.entered_text))
             .check(matches(withText("7,321")))
 
-        onView(withId(R.id.consumption)) // 7.321 - 5.867
+        onView(withId(R.id.left_text)) // 7.321 - 5.867
             .check(matches(withText("1.454")))
 
     }

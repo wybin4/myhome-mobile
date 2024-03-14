@@ -128,7 +128,7 @@ class MeterGetToScanParcelableModel(
     val typeOfServiceName: String,
     val typeOfServiceEngName: String,
     val unitName: String
-) : ParcelableModel(), IconPicker {
+) : ParcelableModel() {
     constructor(parcel: Parcel) : this(
         meterId = parcel.readInt(),
         address = parcel.readString() ?: "",
@@ -137,10 +137,6 @@ class MeterGetToScanParcelableModel(
         typeOfServiceEngName = parcel.readString() ?: "",
         unitName = parcel.readString() ?: ""
     )
-
-    fun getIcon(): Int? {
-        return getMeterIcon(typeOfServiceEngName)
-    }
 
     fun toBundle(): Bundle {
         return Bundle().apply {

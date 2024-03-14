@@ -8,6 +8,7 @@ import com.example.myhome.features.charge.usecases.PaymentListUseCase
 import com.example.myhome.features.charge.usecases.SinglePaymentDocumentGetUseCase
 import com.example.myhome.presentation.features.charge.ChargeUiMapper
 import com.example.myhome.presentation.features.charge.converters.ChargeUiConverter
+import com.example.myhome.presentation.features.charge.models.ChargeGetToPayParcelableModel
 import com.example.myhome.presentation.features.charge.models.ChargeListToGetParcelableModel
 import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
 import com.example.myhome.presentation.features.charge.models.PaymentUiModel
@@ -39,6 +40,10 @@ class ChargeGetViewModel @Inject constructor(
     val spdState: LiveData<ChargeGetResource> = _spdState
 
     lateinit var chargeParcelable : ChargeListToGetParcelableModel
+
+    fun mapChargeGetToPayParcel(): ChargeGetToPayParcelableModel {
+        return chargeUiMapper.chargeGetToPayParcel(chargeParcelable)
+    }
 
     fun fetchData() {
         if (chargeParcelable !== null) {

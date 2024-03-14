@@ -1,34 +1,31 @@
 package com.example.myhome.presentation.utils.pickers
 
-class DigitPicker {
-    fun doubleToString(value: Double): String {
-        return String.format("%.3f", value)
-    }
+abstract class DigitPicker {
+    abstract fun doubleToString(value: Double): String
+    abstract fun calcResult(new: Double, prev: Double): String
+    abstract fun addDigit(newVal: String, prevString: String): String
 
     fun stringToDouble(value: String): Double {
         return value.replace(',', '.').toDoubleOrNull() ?: 0.0
     }
 
-    fun addDigit(newVal: String, prevString: String): String {
-        var result = prevString
-        if (prevString == "0" && newVal != ",") {
-            result = ""
-        }
-
+    protected fun isResultReturn(
+        newVal: String, result: String,
+        digitsBeforeComma: Int, digitsAfterComma: Int
+    ): String? {
         val commaCount = result.count { it == ',' }
 
         val parts = result.split(',')
-        if (parts[0].length >= 3 && newVal != "," && commaCount < 1) {
+        if (parts[0].length >= digitsBeforeComma && newVal != "," && commaCount < 1) {
             return result
         }
-        if (commaCount > 0 && parts[1].length >= 3) {
+        if (commaCount > 0 && parts[1].length >= digitsAfterComma) {
             return result
         }
         if (commaCount > 0 && newVal == ",") {
             return result
         }
-
-        return result + newVal
+        return null
     }
 
     fun clearDigit(text: String): String? {
@@ -40,11 +37,5 @@ class DigitPicker {
         return null
     }
 
-    fun calcConsumption(new: Double, prev: Double): String {
-        return if (new > prev) {
-            doubleToString(new - prev)
-        } else {
-            "0"
-        }
-    }
+
 }

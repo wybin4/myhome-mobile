@@ -1,11 +1,14 @@
 package com.example.myhome.presentation.features.charge.get
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.myhome.R
 import com.example.myhome.databinding.ChargeGetViewBinding
 import com.example.myhome.databinding.PaymentListItemBinding
 import com.example.myhome.presentation.features.charge.ChargeListAdapter
@@ -33,6 +36,7 @@ class ChargeGetView : Fragment() {
         viewModel.chargeParcelable = requireArguments().getParcelable("charge")!!
 
         setupRecyclerView()
+        setupActionButtons()
 
         return binding.root
     }
@@ -47,6 +51,22 @@ class ChargeGetView : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.fetchData()
+    }
+
+    private fun setupActionButtons() {
+        binding.getSpdButton.setOnClickListener {
+            Log.e("getSpdButton", "clicked")
+//            val bundle = viewModel.mapMeterGetToUpdateParcel(viewModel.meterParcelable).toBundle()
+//            findNavController().navigate(R.id.action_meterGetView_to_meterUpdateView, bundle)
+        }
+        if (viewModel.chargeParcelable.outstandingDebt > 0) {
+            binding.payChargeButton.setOnClickListener {
+                val bundle = viewModel.mapChargeGetToPayParcel().toBundle()
+                findNavController().navigate(R.id.action_chargeGetView_to_chargePayView, bundle)
+            }
+        } else {
+            binding.payChargeButton.visibility = View.GONE
+        }
     }
 
     private fun observeResourceState() {

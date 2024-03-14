@@ -6,6 +6,7 @@
     <string name="title_get_meter">Счётчик</string>
     <string name="title_nav_charges">Начисления</string>
     <string name="title_get_charge">Начисление</string>
+    <string name="title_pay_charge">Оплата</string>
     <string name="title_scan_meter">Показания</string>
     <string name="title_update_meter">Поверка счётчика</string>
     <string name="title_charges">Начисления</string>

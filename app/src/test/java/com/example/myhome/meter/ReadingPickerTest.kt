@@ -1,12 +1,12 @@
-package com.example.myhome.utils.pickers
+package com.example.myhome.meter
 
-import com.example.myhome.presentation.utils.pickers.DigitPicker
+import com.example.myhome.presentation.features.meter.ReadingPicker
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 
-class DigitPickerTest {
+class ReadingPickerTest {
 
-    private val digitPicker = DigitPicker()
+    private val digitPicker = ReadingPicker()
 
     @Test
     fun `doubleToString converts digit with three decimal places to the correct format`() {
@@ -82,13 +82,13 @@ class DigitPickerTest {
 
     @Test
     fun `calcConsumption returns difference string in correct format when new is greater than old`() {
-        val result = digitPicker.calcConsumption(15.5, 12.2)
+        val result = digitPicker.calcResult(15.5, 12.2)
         assertEquals("3,300", result)
     }
 
     @Test
     fun `calcConsumption returns zero if new is less than old`() {
-        val result = digitPicker.calcConsumption(12.2, 15.5)
+        val result = digitPicker.calcResult(12.2, 15.5)
         assertEquals("0", result)
     }
 

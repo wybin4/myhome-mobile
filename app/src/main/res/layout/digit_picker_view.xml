@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.myhome.presentation.BaseDigitPickerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="23dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_corner_card_normal"
+                android:backgroundTint="@color/primary_light"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/DescriptionText"
+                    android:layout_marginRight="15dp"
+                    android:gravity="center"
+                    android:text="@{viewModel.getCardLeftText()}"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="@{viewModel.isCardLeftTextVisible()}"/>
+
+                <LinearLayout
+                    android:layout_width="43dp"
+                    android:layout_height="43dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/circle_night"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:src="@{viewModel.getIcon()}"
+                        app:tint="@color/white"
+                        android:visibility="@{viewModel.isIcon()}"/>
+
+                    <TextView
+                        android:id="@+id/icon_text"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:text="@{viewModel.getIconText()}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{!viewModel.isIcon()}"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/address"
+                        style="@style/Text"
+                        android:text="@{viewModel.getTitle()}"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/type_of_service_name"
+                        style="@style/DescriptionText"
+                        android:text="@{viewModel.getSubtitle()}" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/entered_text"
+                        style="@style/Text"
+                        android:text="0"
+                        android:textSize="40dp"
+                        android:textStyle="bold"
+                        android:paddingRight="10dp" />
+
+                    <TextView
+                        style="@style/Text"
+                        android:text="@{viewModel.getUnit()}"
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/DescriptionText"
+                        android:text="@{viewModel.getLeftTitle()}"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/left_text"
+                        style="@style/Text"
+                        android:textColor="@color/primary"
+                        android:text="0"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="end">
+
+                    <TextView
+                        android:gravity="end"
+                        style="@style/DescriptionText"
+                        android:text="@{viewModel.getRightTitle()}"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/right_text"
+                        style="@style/Text"
+                        android:text="@{viewModel.getRightText()}"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="30dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_1"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="1" />
+
+                    <Button
+                        android:id="@+id/btn_2"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="2" />
+
+                    <Button
+                        android:id="@+id/btn_3"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_4"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="4" />
+
+                    <Button
+                        android:id="@+id/btn_5"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="5" />
+
+                    <Button
+                        android:id="@+id/btn_6"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="6" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_7"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="7" />
+
+                    <Button
+                        android:id="@+id/btn_8"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="8" />
+
+                    <Button
+                        android:id="@+id/btn_9"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="9" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_comma"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="," />
+
+                    <Button
+                        android:id="@+id/btn_0"
+                        style="@style/DigitButton"
+                        android:layout_weight="1"
+                        android:text="0" />
+
+                    <ImageButton
+                        android:id="@+id/btn_del"
+                        style="@style/DigitButtonDelete"
+                        android:backgroundTint="@color/transparent"
+                        android:layout_width="112dp"
+                        android:layout_height="79dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/delete" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_next"
+                style="@style/ActionButton"
+                android:layout_height="70dp"
+                android:textSize="16dp"
+                android:text="Внести"
+                android:enabled="false" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

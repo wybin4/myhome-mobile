@@ -79,3 +79,30 @@ class ChargeListToGetParcelableModel(
         parcel.writeDouble(outstandingDebt)
     }
 }
+
+class ChargeGetToPayParcelableModel(
+    val id: Int,
+    val managementCompanyName: String,
+    val periodName: String,
+    val outstandingDebt: Double
+) : ParcelableModel(), MoneyConverter {
+    constructor(parcel: Parcel) : this(
+        id = parcel.readInt(),
+        managementCompanyName = parcel.readString() ?: "",
+        periodName = parcel.readString() ?: "",
+        outstandingDebt = parcel.readDouble()
+    )
+
+    fun toBundle(): Bundle {
+        return Bundle().apply {
+            putParcelable("charge", this@ChargeGetToPayParcelableModel)
+        }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeString(managementCompanyName)
+        parcel.writeString(periodName)
+        parcel.writeDouble(outstandingDebt)
+    }
+}
