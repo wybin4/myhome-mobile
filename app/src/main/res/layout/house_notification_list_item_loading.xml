@@ -6,47 +6,38 @@
             type="String" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        style="@style/Card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="22dp"
+        android:paddingVertical="25dp"
+        android:layout_marginBottom="24dp"
+        >
 
             <LinearLayout
-                style="@style/Card"
+                style="@style/ItemLoading"
+                android:layout_height="17dp"
+                android:layout_width="104dp"
+                android:layout_marginBottom="12dp"/>
+            <LinearLayout
+                style="@style/ItemLoading"
+                android:layout_height="35dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingHorizontal="22dp"
-                android:paddingVertical="25dp"
-                android:layout_marginBottom="24dp"
-                >
+                android:layout_marginBottom="22dp"/>
+            <LinearLayout
+                style="@style/ItemLoading"
+                android:layout_height="63dp"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="30dp"/>
 
-                    <LinearLayout
-                        style="@style/ItemLoading"
-                        android:layout_height="17dp"
-                        android:layout_width="104dp"
-                        android:layout_marginBottom="12dp"/>
-                    <LinearLayout
-                        style="@style/ItemLoading"
-                        android:layout_height="35dp"
-                        android:layout_width="match_parent"
-                        android:layout_marginBottom="22dp"/>
-                    <LinearLayout
-                        style="@style/ItemLoading"
-                        android:layout_height="63dp"
-                        android:layout_width="match_parent"
-                        android:layout_marginBottom="30dp"/>
+            <LinearLayout
+                style="@style/ItemLoading"
+                android:layout_height="17dp"
+                android:layout_width="104dp"
+                android:layout_marginBottom="10dp"/>
 
-                    <LinearLayout
-                        style="@style/ItemLoading"
-                        android:layout_height="17dp"
-                        android:layout_width="104dp"
-                        android:layout_marginBottom="10dp"/>
+    </LinearLayout>
 
-            </LinearLayout>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

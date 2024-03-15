@@ -1,6 +1,6 @@
 package com.example.myhome.presentation.features.charge.models
 
-import com.example.myhome.presentation.features.charge.converters.CombinedDateConverter
+import com.example.myhome.presentation.utils.converters.CombinedDateConverter
 import com.example.myhome.presentation.models.Adaptive
 import java.util.Date
 

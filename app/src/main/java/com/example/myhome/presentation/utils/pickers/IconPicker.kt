@@ -5,6 +5,7 @@ import com.example.myhome.features.appeal.models.AppealStatus
 import com.example.myhome.features.appeal.models.AppealType
 import com.example.myhome.presentation.features.charge.models.AmountChange
 import com.example.myhome.presentation.features.common.models.TypeOfServiceEngNames
+import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiType
 
 interface IconPicker {
     fun getMeterIcon(name: String): Int? {
@@ -41,6 +42,14 @@ interface IconPicker {
             AmountChange.Positive -> R.drawable.arrow_top
             AmountChange.Negative -> R.drawable.arrow_bottom
             else -> null
+        }
+    }
+
+    fun getServiceNotificationIcon(type: ServiceNotificationUiType): Int {
+        return when (type) {
+            ServiceNotificationUiType.System -> R.drawable.system_warning
+            ServiceNotificationUiType.User -> R.drawable.user_warning
+            else -> R.drawable.question
         }
     }
 

@@ -51,6 +51,8 @@ dependencies {
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
     implementation("com.squareup.retrofit2:converter-gson:${retrofitVersion}")
+    // socket-client
+    implementation("io.socket:socket.io-client:2.1.0")
     // hilt
     implementation("com.google.dagger:hilt-android:${hiltVersion}")
     kapt("com.google.dagger:hilt-compiler:${hiltVersion}")

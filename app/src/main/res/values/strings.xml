@@ -14,5 +14,6 @@
     <string name="title_appeals">Обращения</string>
     <string name="title_add_appeal">Добавление обращения</string>
     <string name="title_chats">Чаты</string>
+    <string name="title_service_notifications">Уведомления</string>
     <string name="attachment"><u>Вложение</u></string>
 </resources>

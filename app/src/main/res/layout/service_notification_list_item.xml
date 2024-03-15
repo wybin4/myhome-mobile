@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="notification"
+            type="com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp">
+
+        <!--            иконка-->
+        <LinearLayout
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:background="@drawable/circle_normal"
+            android:backgroundTint="@color/primary_light"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@{notification.getIcon()}"/>
+        </LinearLayout>
+
+        <!--            текст-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:gravity="center_vertical">
+                <TextView
+                    style="@style/Text"
+                    android:text="@{notification.title}"
+                    android:textStyle="bold"
+                    android:layout_marginRight="8dp"/>
+                <LinearLayout
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:background="@drawable/circle_normal"
+                    android:backgroundTint="@color/red"
+                    android:layout_marginTop="1dp"
+                    android:visibility="@{!notification.isRead()}"/>
+            </LinearLayout>
+
+            <TextView
+                style="@style/Text"
+                android:text="@{notification.text}"
+                android:layout_marginBottom="14dp"/>
+            <TextView
+                style="@style/DescriptionText"
+                android:text="@{notification.formatText()}"
+                android:textSize="13dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

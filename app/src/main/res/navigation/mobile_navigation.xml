@@ -218,8 +218,8 @@
 <!--        android:name="com.example.myhome.presentation.features.chat.list.ChatListView"-->
 <!--        android:label="@string/title_chats" />-->
 
-<!--    <fragment-->
-<!--        android:id="@+id/list_appeal"-->
-<!--        android:name="com.example.myhome.ui.notifications.NotificationsFragment"-->
-<!--        android:label="@string/title_appeals"/>-->
+    <fragment
+        android:id="@+id/list_service_notification"
+        android:name="com.example.myhome.presentation.features.servicenotification.list.ServiceNotificationListView"
+        android:label="@string/title_service_notifications"/>
 </navigation>
