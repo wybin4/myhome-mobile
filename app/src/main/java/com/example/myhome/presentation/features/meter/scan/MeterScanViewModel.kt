@@ -1,32 +1,27 @@
 package com.example.myhome.presentation.features.meter.scan
 
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.meter.models.ReadingAddModel
-import com.example.myhome.features.meter.usecases.ReadingAddUseCase
+import com.example.myhome.features.meter.repositories.ReadingRepository
 import com.example.myhome.presentation.BaseDigitPickerViewModel
 import com.example.myhome.presentation.features.meter.MeterGetToScanParcelableModel
-import com.example.myhome.presentation.models.asAddResource
+import com.example.myhome.presentation.features.meter.mappers.ReadingMapper
 import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.utils.pickers.IconPicker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class MeterScanViewModel @Inject constructor(
-    private val readingAddUseCase: ReadingAddUseCase
+    private val readingRepository: ReadingRepository,
+    private val readingMapper: ReadingMapper
 ) : BaseDigitPickerViewModel(), IconPicker {
     lateinit var meterParcelable : MeterGetToScanParcelableModel
 
      fun addNewValue(newValue: Double) {
         viewModelScope.launch {
-            readingAddUseCase(
-                ReadingAddModel(
-                    meterId = meterParcelable.meterId,
-                    reading = newValue,
-                    readAt = Date()
-                )
+            readingRepository.addReading(
+                readingMapper.addToRemote(meterParcelable.meterId, newValue)
             )
                 .asNetworkResult()
                 .collect { manageAddState(it) }

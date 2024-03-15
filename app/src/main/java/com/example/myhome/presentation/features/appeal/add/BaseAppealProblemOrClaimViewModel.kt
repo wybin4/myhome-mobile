@@ -3,10 +3,10 @@ package com.example.myhome.presentation.features.appeal.add
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.appeal.models.AppealProblemOrClaimModel
 import com.example.myhome.features.appeal.models.AppealType
-import com.example.myhome.features.common.usecases.ApartmentListUseCase
-import com.example.myhome.features.common.usecases.SubscriberListUseCase
+import com.example.myhome.features.common.repositories.ApartmentRepository
+import com.example.myhome.features.common.repositories.SubscriberRepository
+import com.example.myhome.presentation.features.appeal.AppealProblemOrClaimUiModel
 import com.example.myhome.presentation.features.common.CommonUiConverter
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.common.models.SubscriberUiModel
@@ -18,8 +18,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 abstract class BaseAppealProblemOrClaimViewModel(
-    private val apartmentListUseCase: ApartmentListUseCase,
-    private val subscriberListUseCase: SubscriberListUseCase,
+    private val apartmentRepository: ApartmentRepository,
+    private val subscriberRepository: SubscriberRepository,
     private val commonUiConverter: CommonUiConverter,
     appealType: AppealType
 ) : BaseAppealViewModel(appealType) {
@@ -38,7 +38,7 @@ abstract class BaseAppealProblemOrClaimViewModel(
 
     private fun fetchLists() {
         viewModelScope.launch {
-            apartmentListUseCase()
+            apartmentRepository.listApartment()
                 .flowOn(Dispatchers.IO)
                 .catch {
                     _apartmentList.value = listOf()
@@ -47,7 +47,7 @@ abstract class BaseAppealProblemOrClaimViewModel(
                     _apartmentList.value = commonUiConverter.apartmentListToUi(it)
                 }
 
-            subscriberListUseCase()
+            subscriberRepository.listSubscriber()
                 .flowOn(Dispatchers.IO)
                 .catch {
                     _subscriberList.value = listOf()
@@ -58,7 +58,7 @@ abstract class BaseAppealProblemOrClaimViewModel(
         }
     }
 
-    protected abstract fun pickUseCase(appeal: AppealProblemOrClaimModel): Flow<Boolean>
+    protected abstract fun pickUseCase(appeal: AppealProblemOrClaimUiModel): Flow<Boolean>
 
     fun claim() {
         val selectedSubscriberId = apartmentList.value?.find { it.id == selectedApartmentId }?.subscriberId
@@ -67,7 +67,7 @@ abstract class BaseAppealProblemOrClaimViewModel(
         if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
             viewModelScope.launch {
                 pickUseCase(
-                    AppealProblemOrClaimModel(
+                    AppealProblemOrClaimUiModel(
                         managementCompanyId = selectedManagementCompanyId,
                         subscriberId = selectedSubscriberId,
                         text = selectedText

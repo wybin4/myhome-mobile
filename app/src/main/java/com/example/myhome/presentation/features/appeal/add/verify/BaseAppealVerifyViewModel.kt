@@ -4,9 +4,10 @@ import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.appeal.models.AppealType
-import com.example.myhome.features.common.models.SubscriberListItemModel
-import com.example.myhome.features.common.usecases.SubscriberListUseCase
+import com.example.myhome.features.common.repositories.SubscriberRepository
 import com.example.myhome.presentation.features.appeal.add.BaseAppealViewModel
+import com.example.myhome.presentation.features.common.CommonUiConverter
+import com.example.myhome.presentation.features.common.models.SubscriberUiModel
 import com.example.myhome.presentation.models.Resource
 import com.example.myhome.presentation.models.asListResource
 import com.example.myhome.presentation.models.asNetworkResult
@@ -16,10 +17,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 open class BaseAppealVerifyViewModel @Inject constructor(
-    val subscriberListUseCase: SubscriberListUseCase,
+    private val subscriberRepository: SubscriberRepository,
+    private val commonUiConverter: CommonUiConverter
 ) : BaseAppealViewModel(AppealType.VerifyIndividualMeter) {
-    private val _subscriberList = MutableLiveData<List<SubscriberListItemModel>>()
-    protected val subscriberList: LiveData<List<SubscriberListItemModel>> = _subscriberList
+    private val _subscriberList = MutableLiveData<List<SubscriberUiModel>>()
+    protected val subscriberList: LiveData<List<SubscriberUiModel>> = _subscriberList
 
     protected val mutableDataState = MutableLiveData<Resource>(Resource.Loading)
     val dataState: LiveData<Resource> = mutableDataState
@@ -29,11 +31,11 @@ open class BaseAppealVerifyViewModel @Inject constructor(
     var selectAttachment: Bitmap? = null
 
     protected suspend fun fetchSubscriberList() {
-        subscriberListUseCase()
+        subscriberRepository.listSubscriber()
             .asNetworkResult()
             .collect {
                 it.asListResource(mutableDataState) { data ->
-                    _subscriberList.value = data
+                    _subscriberList.value = commonUiConverter.subscriberListToUi(data)
                 }
         }
     }

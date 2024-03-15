@@ -1,24 +1,24 @@
 package com.example.myhome.features.meter.repositories
 
-import com.example.myhome.features.meter.MeterStorage
-import com.example.myhome.features.meter.mappers.MeterRemoteMapper
-import com.example.myhome.features.meter.models.ApartmentWithMeterListItemModel
-import com.example.myhome.features.meter.models.MeterListItemExtendedModel
+import com.example.myhome.features.meter.MeterApiService
+import com.example.myhome.features.meter.dtos.ApartmentWithMeterListItemResponse
+import com.example.myhome.features.meter.dtos.ApartmentWithMeterListRequest
+import com.example.myhome.features.meter.dtos.MeterExtendedListItemResponse
+import com.example.myhome.features.meter.dtos.MeterListRequestExtended
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class MeterRepositoryImpl(
-    private val meterStorage: MeterStorage,
-    private val meterRemoteMapper: MeterRemoteMapper
+    private val meterApiService: MeterApiService
 ): MeterRepository {
-    override fun listApartmentWithMeter(): Flow<List<ApartmentWithMeterListItemModel>> = flow {
-        val result = meterStorage.listApartmentWithMeter()
-        emit(meterRemoteMapper.mapApartmentWithMeterListToDomain(result))
+    override fun listApartmentWithMeter(): Flow<List<ApartmentWithMeterListItemResponse>> = flow {
+        val request = ApartmentWithMeterListRequest(userId = 1)
+        emit(meterApiService.listApartmentWithMeter(request))
     }
 
-    override fun listMeter(): Flow<List<MeterListItemExtendedModel>> = flow {
-        val result = meterStorage.listMeter()
-        emit(meterRemoteMapper.mapMeterListToDomain(result))
+    override fun listMeter(): Flow<List<MeterExtendedListItemResponse>> = flow {
+        val request = MeterListRequestExtended(userId = 1)
+        emit(meterApiService.listMeter(request))
     }
 
 }

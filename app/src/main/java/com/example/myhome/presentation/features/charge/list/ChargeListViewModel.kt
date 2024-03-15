@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.charge.usecases.ChargeListUseCase
+import com.example.myhome.features.charge.repositories.ChargeRepository
 import com.example.myhome.presentation.features.charge.ChargeUiMapper
 import com.example.myhome.presentation.features.charge.converters.MoneyConverter
 import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
@@ -18,7 +18,7 @@ import com.example.myhome.presentation.features.charge.models.networkresults.pai
 
 @HiltViewModel
 class ChargeListViewModel @Inject constructor(
-    private val chargeListUseCase: ChargeListUseCase,
+    private val chargeRepository: ChargeRepository,
     val chargeUiMapper: ChargeUiMapper
 ) : ViewModel(), MoneyConverter {
     private val _chargeList = MutableLiveData<List<ChargeUiModel>>()
@@ -32,7 +32,7 @@ class ChargeListViewModel @Inject constructor(
 
     fun fetchChargeList() {
         viewModelScope.launch {
-            chargeListUseCase()
+            chargeRepository.listCharge()
                 .pairAsNetworkResult()
                 .collect {
                     it.pairNetworkResultAsChargeListResource(_listState) { data ->

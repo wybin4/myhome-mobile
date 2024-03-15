@@ -3,12 +3,14 @@ package com.example.myhome.presentation.features.meter.update
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.appeal.models.AppealUpdateMeterModel
-import com.example.myhome.features.appeal.usecases.AppealAddUseCase
-import com.example.myhome.features.common.models.ApartmentListItemModel
-import com.example.myhome.features.common.usecases.ApartmentListUseCase
-import com.example.myhome.features.common.usecases.SubscriberListUseCase
+import com.example.myhome.features.appeal.repositories.AppealRepository
+import com.example.myhome.features.common.repositories.ApartmentRepository
+import com.example.myhome.features.common.repositories.SubscriberRepository
+import com.example.myhome.presentation.features.appeal.AppealMapper
+import com.example.myhome.presentation.features.appeal.AppealUpdateMeterUiModel
 import com.example.myhome.presentation.features.appeal.add.verify.BaseAppealVerifyViewModel
+import com.example.myhome.presentation.features.common.CommonUiConverter
+import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.meter.MeterGetToUpdateParcelableModel
 import com.example.myhome.presentation.models.asListResource
 import com.example.myhome.presentation.models.asNetworkResult
@@ -19,13 +21,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MeterUpdateViewModel @Inject constructor(
-    subscriberListUseCase: SubscriberListUseCase,
-    private val apartmentListUseCase: ApartmentListUseCase,
-    private val appealAddUseCase: AppealAddUseCase,
+    subscriberRepository: SubscriberRepository,
+    private val apartmentRepository: ApartmentRepository,
+    private val appealRepository: AppealRepository,
+    private val appealMapper: AppealMapper,
+    private val commonUiConverter: CommonUiConverter,
     private val imageMapper: ImageMapper
-) : BaseAppealVerifyViewModel(subscriberListUseCase) {
-    private val _apartmentList = MutableLiveData<List<ApartmentListItemModel>>()
-    private val apartmentList: LiveData<List<ApartmentListItemModel>> = _apartmentList
+) : BaseAppealVerifyViewModel(subscriberRepository, commonUiConverter) {
+    private val _apartmentList = MutableLiveData<List<ApartmentExtendedUiModel>>()
+    private val apartmentList: LiveData<List<ApartmentExtendedUiModel>> = _apartmentList
 
     lateinit var meterParcelable : MeterGetToUpdateParcelableModel
 
@@ -37,30 +41,32 @@ class MeterUpdateViewModel @Inject constructor(
     }
 
     private suspend fun fetchApartmentList() {
-        apartmentListUseCase()
+        apartmentRepository.listApartment()
             .asNetworkResult()
             .collect {
                 it.asListResource(mutableDataState) { data ->
-                    _apartmentList.value = data
+                    _apartmentList.value = commonUiConverter.apartmentListToUi(data)
                 }
             }
     }
 
     fun updateMeter() {
-        val selectedSubscriberId = apartmentList.value?.find { it.id == meterParcelable.apartmentId }?.subscriberId
-        val selectedManagementCompanyId = subscriberList.value?.find { it.subscriberId == selectedSubscriberId }?.managementCompanyId
+        val selectedSubscriberId = apartmentList.value?.find { it.id == meterParcelable.apartmentId }?.id
+        val selectedManagementCompanyId = subscriberList.value?.find { it.id == selectedSubscriberId }?.managementCompanyId
         val attachment = imageMapper.mapImageToDomain(selectAttachment!!)
 
         if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
             viewModelScope.launch {
-                appealAddUseCase.updateMeter(
-                    AppealUpdateMeterModel(
-                        meterId = meterParcelable.meterId,
-                        verifiedAt = selectVerifiedAt!!,
-                        issuedAt = selectIssuedAt!!,
-                        managementCompanyId = selectedManagementCompanyId,
-                        subscriberId = selectedSubscriberId,
-                        attachment = attachment
+                appealRepository.updateMeter(
+                    appealMapper.updateToRemote(
+                        AppealUpdateMeterUiModel(
+                            meterId = meterParcelable.meterId,
+                            verifiedAt = selectVerifiedAt!!,
+                            issuedAt = selectIssuedAt!!,
+                            managementCompanyId = selectedManagementCompanyId,
+                            subscriberId = selectedSubscriberId,
+                            attachment = attachment
+                        )
                     )
                 )
                     .asNetworkResult()

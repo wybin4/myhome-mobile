@@ -4,12 +4,13 @@ import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.appeal.models.AppealAddMeterModel
 import com.example.myhome.features.appeal.models.AppealType
-import com.example.myhome.features.appeal.usecases.AppealAddUseCase
-import com.example.myhome.features.common.usecases.ApartmentListUseCase
-import com.example.myhome.features.common.usecases.SubscriberListUseCase
-import com.example.myhome.features.common.usecases.TypeOfServiceListUseCase
+import com.example.myhome.features.appeal.repositories.AppealRepository
+import com.example.myhome.features.common.repositories.ApartmentRepository
+import com.example.myhome.features.common.repositories.SubscriberRepository
+import com.example.myhome.features.common.repositories.TypeOfServiceRepository
+import com.example.myhome.presentation.features.appeal.AppealAddMeterUiModel
+import com.example.myhome.presentation.features.appeal.AppealMapper
 import com.example.myhome.presentation.features.appeal.add.BaseAppealViewModel
 import com.example.myhome.presentation.features.common.CommonUiConverter
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
@@ -26,10 +27,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BaseAppealAddViewModel @Inject constructor(
-    val apartmentListUseCase: ApartmentListUseCase,
-    val subscriberListUseCase: SubscriberListUseCase,
-    val typeOfServiceListUseCase: TypeOfServiceListUseCase,
-    private val appealAddUseCase: AppealAddUseCase,
+    private val apartmentRepository: ApartmentRepository,
+    private val subscriberRepository: SubscriberRepository,
+    private val typeOfServiceRepository: TypeOfServiceRepository,
+    private val appealRepository: AppealRepository,
+    private val appealMapper: AppealMapper,
     private val commonUiMapper: CommonUiConverter,
     private val imageMapper: ImageMapper
 ) : BaseAppealViewModel(AppealType.AddIndividualMeter) {
@@ -58,7 +60,7 @@ class BaseAppealAddViewModel @Inject constructor(
 
     private fun fetchLists() {
         viewModelScope.launch {
-            apartmentListUseCase()
+            apartmentRepository.listApartment()
                 .asNetworkResult()
                 .collect {
                     it.asListResource(_dataState) { data ->
@@ -66,7 +68,7 @@ class BaseAppealAddViewModel @Inject constructor(
                     }
                 }
 
-            typeOfServiceListUseCase()
+            typeOfServiceRepository.listTypeOfService()
                 .asNetworkResult()
                 .collect {
                     it.asListResource(_dataState) { data ->
@@ -74,7 +76,7 @@ class BaseAppealAddViewModel @Inject constructor(
                     }
                 }
 
-            subscriberListUseCase()
+            subscriberRepository.listSubscriber()
                 .asNetworkResult()
                 .collect {
                     it.asListResource(_dataState) { data ->
@@ -91,17 +93,19 @@ class BaseAppealAddViewModel @Inject constructor(
 
         if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
             viewModelScope.launch {
-                appealAddUseCase.addMeter(
-                    AppealAddMeterModel(
-                        id = null,
-                        apartmentId = selectedApartmentId,
-                        typeOfServiceId = selectedTypeOfServiceId,
-                        factoryNumber = selectedFactoryNumber,
-                        verifiedAt = selectVerifiedAt!!,
-                        issuedAt = selectIssuedAt!!,
-                        attachment = attachment,
-                        managementCompanyId = selectedManagementCompanyId,
-                        subscriberId = selectedSubscriberId,
+                appealRepository.addMeter(
+                    appealMapper.addToRemote(
+                        AppealAddMeterUiModel(
+                            id = null,
+                            apartmentId = selectedApartmentId,
+                            typeOfServiceId = selectedTypeOfServiceId,
+                            factoryNumber = selectedFactoryNumber,
+                            verifiedAt = selectVerifiedAt!!,
+                            issuedAt = selectIssuedAt!!,
+                            attachment = attachment,
+                            managementCompanyId = selectedManagementCompanyId,
+                            subscriberId = selectedSubscriberId,
+                        )
                     )
                 )
                     .asNetworkResult()

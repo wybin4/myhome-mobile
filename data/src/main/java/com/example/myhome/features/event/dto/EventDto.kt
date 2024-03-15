@@ -1,7 +1,7 @@
 package com.example.myhome.features.event.dto
 
 import com.example.myhome.models.UserRole
-import com.example.myhome.features.appeal.AppealAddResponse
+import com.example.myhome.features.appeal.AppealListItemResponse
 import com.example.myhome.features.event.models.EventType
 
 data class EventListRequest (
@@ -17,7 +17,7 @@ data class EventListResponse (
 )
 
 data class EventAppealListResponse(
-    val appeals: List<AppealAddResponse>,
+    val appeals: List<AppealListItemResponse>,
     val totalCount: Int
 )
 

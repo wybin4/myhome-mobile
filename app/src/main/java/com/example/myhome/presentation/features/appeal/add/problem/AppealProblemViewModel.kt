@@ -1,10 +1,11 @@
 package com.example.myhome.presentation.features.appeal.add.problem
 
-import com.example.myhome.features.appeal.models.AppealProblemOrClaimModel
 import com.example.myhome.features.appeal.models.AppealType
-import com.example.myhome.features.appeal.usecases.AppealAddUseCase
-import com.example.myhome.features.common.usecases.ApartmentListUseCase
-import com.example.myhome.features.common.usecases.SubscriberListUseCase
+import com.example.myhome.features.appeal.repositories.AppealRepository
+import com.example.myhome.features.common.repositories.ApartmentRepository
+import com.example.myhome.features.common.repositories.SubscriberRepository
+import com.example.myhome.presentation.features.appeal.AppealMapper
+import com.example.myhome.presentation.features.appeal.AppealProblemOrClaimUiModel
 import com.example.myhome.presentation.features.appeal.add.BaseAppealProblemOrClaimViewModel
 import com.example.myhome.presentation.features.common.CommonUiConverter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,15 +14,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppealProblemViewModel @Inject constructor(
-    private val appealAddUseCase: AppealAddUseCase,
-    apartmentListUseCase: ApartmentListUseCase,
-    subscriberListUseCase: SubscriberListUseCase,
+    private val appealRepository: AppealRepository,
+    apartmentRepository: ApartmentRepository,
+    subscriberRepository: SubscriberRepository,
+    private val appealMapper: AppealMapper,
     commonUiConverter: CommonUiConverter
 ) : BaseAppealProblemOrClaimViewModel(
-    apartmentListUseCase, subscriberListUseCase, commonUiConverter,
+    apartmentRepository, subscriberRepository, commonUiConverter,
     AppealType.ProblemOrQuestion
 ) {
-    override fun pickUseCase(appeal: AppealProblemOrClaimModel): Flow<Boolean> {
-        return appealAddUseCase.problem(appeal)
+    override fun pickUseCase(appeal: AppealProblemOrClaimUiModel): Flow<Boolean> {
+        return appealRepository.problem(appealMapper.problemToRemote(appeal))
     }
 }

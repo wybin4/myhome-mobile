@@ -45,7 +45,6 @@ dependencies {
     val espressoVersion = "3.5.1"
 
     // projects
-    implementation(project(":domain"))
     implementation(project(":data"))
 
     implementation("androidx.core:core-ktx:1.9.0")
@@ -73,9 +72,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
     // async testing
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
     androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
     // espresso
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")

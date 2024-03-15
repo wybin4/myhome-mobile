@@ -1,95 +1,103 @@
 package com.example.myhome.presentation.testutils.providers
 
-import com.example.myhome.features.event.models.EventListModel
-import com.example.myhome.features.event.models.EventNotificationListModel
-import com.example.myhome.features.event.models.EventVotingListModel
-import com.example.myhome.features.event.models.HouseNotificationListItemModel
+import com.example.myhome.features.event.dto.EventAppealListResponse
+import com.example.myhome.features.event.dto.EventListResponse
+import com.example.myhome.features.event.dto.EventNotificationListResponse
+import com.example.myhome.features.event.dto.EventVotingListResponse
+import com.example.myhome.features.event.dto.HouseNotificationListItemResponse
+import com.example.myhome.features.event.dto.OptionListItemResponse
+import com.example.myhome.features.event.dto.VoteListItemResponse
+import com.example.myhome.features.event.dto.VotingListItemResponse
 import com.example.myhome.features.event.models.HouseNotificationType
-import com.example.myhome.features.event.models.OptionListItemModel
-import com.example.myhome.features.event.models.VoteListItemModel
-import com.example.myhome.features.event.models.VotingListItemModel
 import com.example.myhome.features.event.models.VotingStatus
-import com.example.myhome.presentation.features.event.HouseNotificationUiModel
-import com.example.myhome.presentation.features.event.OptionUiModel
-import com.example.myhome.presentation.features.event.VotingUiModel
-import com.example.myhome.testutils.providers.DateDomainProvider.date
-import com.example.myhome.testutils.providers.DateDomainProvider.subtractDays
+import com.example.myhome.testutils.DateDomainProvider.getDateString
+import com.example.myhome.testutils.DateDomainProvider.subtractDaysString
 
 object EventUITestListProvider {
     private val notificationList = listOf(
-        HouseNotificationListItemModel(
+        HouseNotificationListItemResponse(
             id = 1,
             title = "Отключение холодной воды",
-            createdAt = subtractDays(1),
+            createdAt = subtractDaysString(1),
             text = "???",
-            managementCompanyName = "ТСЖ Прогресс",
-            type = HouseNotificationType.Accident
+            name = "ТСЖ Прогресс",
+            type = HouseNotificationType.Accident,
+            houseId = 1
         ),
-        HouseNotificationListItemModel(
+        HouseNotificationListItemResponse(
             id = 2,
             title = "Отключение горячей воды",
-            createdAt = subtractDays(4),
+            createdAt = subtractDaysString(4),
             text = "534543534",
-            managementCompanyName = "ТСЖ Прогресс",
-            type = HouseNotificationType.Accident
+            name = "ТСЖ Прогресс",
+            type = HouseNotificationType.Accident,
+            houseId = 1
         ),
-        HouseNotificationListItemModel(
+        HouseNotificationListItemResponse(
             id = 1,
             title = "Отключение холодной воды",
-            createdAt = subtractDays(5),
+            createdAt = subtractDaysString(5),
             text = "213123123",
-            managementCompanyName = "ТСЖ Прогресс",
-            type = HouseNotificationType.Accident
+            name = "ТСЖ Прогресс",
+            type = HouseNotificationType.Accident,
+            houseId = 1
         )
     )
 
     private val voteList = mutableListOf(
-        VoteListItemModel(
+        VoteListItemResponse(
             id = 2,
-            userId = 2
+            userId = 2,
+            optionId = 1
         ),
-        VoteListItemModel(
+        VoteListItemResponse(
             id = 3,
-            userId = 3
+            userId = 3,
+            optionId = 1
         )
     )
 
     private val optionList = listOf(
-        OptionListItemModel(
+        OptionListItemResponse(
             id = 1,
             text = "За",
             numberOfVotes = 2,
-            votes = voteList
+            votes = voteList,
+            votingId = 1
         ),
-        OptionListItemModel(
+        OptionListItemResponse(
             id = 2,
             text = "Против",
             numberOfVotes = 1,
             votes = listOf(
-                VoteListItemModel(
+                VoteListItemResponse(
                     id = 4,
-                    userId = 4
+                    userId = 4,
+                    optionId = 2
                 )
-            )
+            ),
+            votingId = 1
         ),
-        OptionListItemModel(
+        OptionListItemResponse(
             id = 3,
             text = "Воздержусь",
             numberOfVotes = 1,
             votes = listOf(
-                VoteListItemModel(
+                VoteListItemResponse(
                     id = 5,
-                    userId = 5
+                    userId = 5,
+                    optionId = 3
                 )
-            )
+            ),
+            votingId = 1
         )
     )
 
-    private fun getOptionSelected(): List<OptionListItemModel> {
+    private fun getOptionSelected(): List<OptionListItemResponse> {
         val modifiedOptions = optionList.toMutableList()
         modifiedOptions[0] = modifiedOptions[0].copy(
             votes = modifiedOptions[0].votes.toMutableList().apply {
-                add(VoteListItemModel(id = 1, userId = 1))
+                add(VoteListItemResponse(optionId = 1, userId = 1, id = 1))
             }
         )
         return modifiedOptions
@@ -97,45 +105,45 @@ object EventUITestListProvider {
 
 
     private val votingList = listOf(
-        VotingListItemModel(
+        VotingListItemResponse(
             id = 4,
-            managementCompanyName = "ТСЖ Прогресс",
+            name = "ТСЖ Прогресс",
             title = "Установка домофона",
-            createdAt = subtractDays(7),
-            expiredAt = date,
+            createdAt = subtractDaysString(7),
+            expiredAt = getDateString(),
             status = VotingStatus.Close,
             houseId = 1,
             resultId = 1,
             options = getOptionSelected()
         ),
-        VotingListItemModel(
+        VotingListItemResponse(
             id = 3,
-            managementCompanyName = "ТСЖ Прогресс",
+            name = "ТСЖ Прогресс",
             title = "Установка домофона",
-            createdAt = subtractDays(6),
-            expiredAt = date,
+            createdAt = subtractDaysString(6),
+            expiredAt = getDateString(),
             status = VotingStatus.Close,
             houseId = 1,
             resultId = 1,
             options = optionList
         ),
-        VotingListItemModel(
+        VotingListItemResponse(
             id = 2,
-            managementCompanyName = "ТСЖ Прогресс",
+            name = "ТСЖ Прогресс",
             title = "Установка домофона",
-            createdAt = subtractDays(3),
-            expiredAt = date,
+            createdAt = subtractDaysString(3),
+            expiredAt = getDateString(),
             status = VotingStatus.Open,
             houseId = 1,
             resultId = null,
             options = getOptionSelected()
         ),
-        VotingListItemModel(
+        VotingListItemResponse(
             id = 1,
-            managementCompanyName = "ТСЖ Прогресс",
+            name = "ТСЖ Прогресс",
             title = "Установка домофона с видеонаблюдением",
-            createdAt = subtractDays(2),
-            expiredAt = date,
+            createdAt = subtractDaysString(2),
+            expiredAt = getDateString(),
             status = VotingStatus.Open,
             houseId = 1,
             resultId = null,
@@ -143,14 +151,18 @@ object EventUITestListProvider {
         )
     )
 
-    val eventList = EventListModel(
-        notifications = EventNotificationListModel(
+    val eventList = EventListResponse(
+        notifications = EventNotificationListResponse(
             notifications = notificationList,
             totalCount = 3
         ),
-        votings = EventVotingListModel(
+        votings = EventVotingListResponse(
             votings = votingList,
             totalCount = 4
+        ),
+        appeals = EventAppealListResponse(
+            appeals = emptyList(),
+            totalCount = 0
         )
     )
 

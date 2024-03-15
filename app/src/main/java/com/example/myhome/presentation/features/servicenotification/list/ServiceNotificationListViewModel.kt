@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.servicenotification.ServiceNotificationListUseCase
+import com.example.myhome.features.servicenotification.repositories.ServiceNotificationRepository
 import com.example.myhome.presentation.features.servicenotification.ServiceNotificationUiConverter
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
 import com.example.myhome.presentation.models.Resource
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ServiceNotificationListViewModel @Inject constructor(
-    private val notificationListUseCase: ServiceNotificationListUseCase,
+    private val notificationRepository: ServiceNotificationRepository,
     private val notificationUiConverter: ServiceNotificationUiConverter
 ) : ViewModel() {
     private val _notificationList = MutableLiveData<List<ServiceNotificationUiModel>>()
@@ -27,7 +27,7 @@ class ServiceNotificationListViewModel @Inject constructor(
 
     fun fetchNotificationList() {
         viewModelScope.launch {
-            notificationListUseCase()
+            notificationRepository.listNotification()
                 .asNetworkResult()
                 .collect {
                     it.asListResource(_listState) { data ->

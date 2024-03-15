@@ -1,15 +1,15 @@
 package com.example.myhome.presentation.features.common
 
-import com.example.myhome.features.common.models.ApartmentListItemModel
-import com.example.myhome.features.common.models.SubscriberListItemModel
-import com.example.myhome.features.common.models.TypeOfServiceListItemModel
+import com.example.myhome.features.common.dtos.ApartmentListItemResponse
+import com.example.myhome.features.common.dtos.SubscriberListItemResponse
+import com.example.myhome.features.common.dtos.TypeOfServiceListItemResponse
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.common.models.SubscriberUiModel
 import com.example.myhome.presentation.features.common.models.TypeOfServiceUiModel
 import javax.inject.Inject
 
 class CommonUiConverter @Inject constructor() {
-    fun apartmentListToUi(apartments: List<ApartmentListItemModel>): List<ApartmentExtendedUiModel> {
+    fun apartmentListToUi(apartments: List<ApartmentListItemResponse>): List<ApartmentExtendedUiModel> {
         return apartments.map {
             ApartmentExtendedUiModel(
                 id = it.id,
@@ -19,7 +19,7 @@ class CommonUiConverter @Inject constructor() {
         }
     }
 
-    fun typeOfServiceListToUi(typesOfService: List<TypeOfServiceListItemModel>): List<TypeOfServiceUiModel> {
+    fun typeOfServiceListToUi(typesOfService: List<TypeOfServiceListItemResponse>): List<TypeOfServiceUiModel> {
         return typesOfService.map {
             TypeOfServiceUiModel(
                 id = it.id,
@@ -28,7 +28,7 @@ class CommonUiConverter @Inject constructor() {
         }
     }
 
-    fun subscriberListToUi(subscribers: List<SubscriberListItemModel>): List<SubscriberUiModel> {
+    fun subscriberListToUi(subscribers: List<SubscriberListItemResponse>): List<SubscriberUiModel> {
         return subscribers.map {
             SubscriberUiModel(
                 id = it.subscriberId,

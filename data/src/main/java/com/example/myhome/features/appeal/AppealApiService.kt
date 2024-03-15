@@ -7,5 +7,5 @@ interface AppealApiService {
     @POST("appeal/add-appeal")
     suspend fun addAppeal(
         @Body request: AppealAddRequest
-    ): AppealAddResponse
+    ): AppealListItemResponse
 }

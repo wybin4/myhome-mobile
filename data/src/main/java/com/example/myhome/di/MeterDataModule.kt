@@ -1,9 +1,6 @@
 package com.example.myhome.di
 
 import com.example.myhome.features.meter.MeterApiService
-import com.example.myhome.features.meter.MeterStorage
-import com.example.myhome.features.meter.mappers.MeterRemoteMapper
-import com.example.myhome.features.meter.mappers.ReadingRemoteMapper
 import com.example.myhome.features.meter.repositories.MeterRepository
 import com.example.myhome.features.meter.repositories.MeterRepositoryImpl
 import com.example.myhome.features.meter.repositories.ReadingRepository
@@ -19,33 +16,14 @@ import javax.inject.Singleton
 class MeterDataModule {
     @Provides
     @Singleton
-    fun provideReadingRepository(meterStorage: MeterStorage, readingRemoteMapper: ReadingRemoteMapper): ReadingRepository {
-        return ReadingRepositoryImpl(meterStorage, readingRemoteMapper)
+    fun provideReadingRepository(meterApiService: MeterApiService): ReadingRepository {
+        return ReadingRepositoryImpl(meterApiService)
     }
+
     @Provides
     @Singleton
-    fun provideReadingMapper(): ReadingRemoteMapper {
-        return ReadingRemoteMapper()
-    }
-    @Provides
-    @Singleton
-    fun provideMeterStorage(meterApiService: MeterApiService): MeterStorage {
-        return MeterStorage(meterApiService)
-    }
-    @Provides
-    @Singleton
-    fun provideMeterRepository(
-        meterStorage: MeterStorage,
-        meterRemoteMapper: MeterRemoteMapper
-    ): MeterRepository {
-        return MeterRepositoryImpl(
-            meterStorage, meterRemoteMapper
-        )
-    }
-    @Provides
-    @Singleton
-    fun provideMeterMapper(): MeterRemoteMapper {
-        return MeterRemoteMapper()
+    fun provideMeterRepository(meterApiService: MeterApiService): MeterRepository {
+        return MeterRepositoryImpl(meterApiService)
     }
 
 }

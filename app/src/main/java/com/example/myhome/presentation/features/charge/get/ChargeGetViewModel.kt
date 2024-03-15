@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.charge.usecases.PaymentListUseCase
-import com.example.myhome.features.charge.usecases.SinglePaymentDocumentGetUseCase
+import com.example.myhome.features.charge.repositories.ChargeRepository
 import com.example.myhome.presentation.features.charge.ChargeUiMapper
-import com.example.myhome.presentation.features.charge.converters.ChargeUiConverter
 import com.example.myhome.presentation.features.charge.models.ChargeGetToPayParcelableModel
 import com.example.myhome.presentation.features.charge.models.ChargeListToGetParcelableModel
 import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
@@ -23,8 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChargeGetViewModel @Inject constructor(
-    private val paymentListUseCase: PaymentListUseCase,
-    private val spdGetUseCase: SinglePaymentDocumentGetUseCase,
+    private val chargeRepository: ChargeRepository,
     private val chargeUiMapper: ChargeUiMapper
 ) : ViewModel() {
     private val _paymentList = MutableLiveData<List<PaymentUiModel>>()
@@ -48,7 +45,7 @@ class ChargeGetViewModel @Inject constructor(
     fun fetchData() {
         if (chargeParcelable !== null) {
             viewModelScope.launch {
-                spdGetUseCase(chargeParcelable.id)
+                chargeRepository.getSinglePaymentDocument(chargeParcelable.id)
                     .asNetworkResult()
                     .collect {
                         it.asChargeGetResource(_spdState) { data ->
@@ -56,7 +53,7 @@ class ChargeGetViewModel @Inject constructor(
                         }
                     }
 
-                paymentListUseCase(chargeParcelable.id)
+                chargeRepository.listPayment(chargeParcelable.id)
                     .asNetworkResult()
                     .collect {
                         it.asChargeListResource(_paymentState) { data ->

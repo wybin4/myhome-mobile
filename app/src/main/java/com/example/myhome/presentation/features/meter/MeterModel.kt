@@ -2,7 +2,6 @@ package com.example.myhome.presentation.features.meter
 
 import android.os.Bundle
 import android.os.Parcel
-import android.os.Parcelable
 import com.example.myhome.models.DateConverter
 import com.example.myhome.presentation.models.Adaptive
 import com.example.myhome.presentation.models.ParcelableModel

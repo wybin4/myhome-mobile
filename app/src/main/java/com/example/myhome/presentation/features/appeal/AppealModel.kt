@@ -57,3 +57,30 @@ data class AppealUiModel(
     }
 
 }
+
+data class AppealAddMeterUiModel(
+    val id: Int?,
+    val factoryNumber: String,
+    val verifiedAt: Date,
+    val issuedAt: Date,
+    val apartmentId: Int,
+    val typeOfServiceId: Int,
+    val attachment: String,
+    val managementCompanyId: Int,
+    val subscriberId: Int
+)
+
+data class AppealUpdateMeterUiModel(
+    val meterId: Int,
+    val verifiedAt: Date,
+    val issuedAt: Date,
+    val managementCompanyId: Int,
+    val subscriberId: Int,
+    val attachment: String
+)
+
+data class AppealProblemOrClaimUiModel(
+    val managementCompanyId: Int,
+    val subscriberId: Int,
+    val text: String,
+)

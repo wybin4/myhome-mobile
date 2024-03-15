@@ -1,7 +1,11 @@
 package com.example.myhome.features.appeal
 
+import com.example.myhome.features.appeal.models.AddIndividualMeterData
+import com.example.myhome.features.appeal.models.AppealData
 import com.example.myhome.features.appeal.models.AppealStatus
 import com.example.myhome.features.appeal.models.AppealType
+import com.example.myhome.features.appeal.models.ProblemOrClaimData
+import com.example.myhome.features.appeal.models.VerifyIndividualMeterData
 import com.example.myhome.models.DateConverter
 import java.util.Date
 
@@ -60,7 +64,7 @@ data class AppealClaimAddRequest(
     data = data
 )
 
-data class AppealAddResponse (
+data class AppealListItemResponse (
     val id: Int,
     val managementCompanyId: Int,
     val subscriberId: Int,

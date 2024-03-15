@@ -1,9 +1,8 @@
 package com.example.myhome.di
 
 import com.example.myhome.features.charge.ChargeApiService
-import com.example.myhome.features.charge.ChargeRemoteMapper
-import com.example.myhome.features.charge.ChargeRepository
-import com.example.myhome.features.charge.ChargeRepositoryImpl
+import com.example.myhome.features.charge.repositories.ChargeRepository
+import com.example.myhome.features.charge.repositories.ChargeRepositoryImpl
 import com.example.myhome.features.charge.ChargeStorage
 import dagger.Module
 import dagger.Provides
@@ -23,18 +22,9 @@ class ChargeDataModule {
     @Provides
     @Singleton
     fun provideChargeRepository(
-        chargeStorage: ChargeStorage, chargeRemoteMapper: ChargeRemoteMapper
+        chargeStorage: ChargeStorage
     ): ChargeRepository {
-        return ChargeRepositoryImpl(
-            chargeStorage,
-            chargeRemoteMapper
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun provideChargeMapper(): ChargeRemoteMapper {
-        return ChargeRemoteMapper()
+        return ChargeRepositoryImpl(chargeStorage)
     }
 
 }

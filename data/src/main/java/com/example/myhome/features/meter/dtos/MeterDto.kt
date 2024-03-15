@@ -13,7 +13,7 @@ data class MeterListRequestExtended(
     val isNotAllInfo: Boolean = true
 )
 
-data class MeterListItemResponseExtended(
+data class MeterExtendedListItemResponse(
     val id: Int,
     val factoryNumber: String,
     val verifiedAt: String,

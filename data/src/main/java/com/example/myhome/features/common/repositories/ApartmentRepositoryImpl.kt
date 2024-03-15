@@ -1,17 +1,15 @@
 package com.example.myhome.features.common.repositories
 
-import com.example.myhome.features.common.mappers.ApartmentRemoteMapper
-import com.example.myhome.features.common.models.ApartmentListItemModel
-import com.example.myhome.features.common.storages.ApartmentStorage
+import com.example.myhome.features.common.CommonApiService
+import com.example.myhome.features.common.dtos.ApartmentListItemResponse
+import com.example.myhome.features.common.dtos.ApartmentListRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class ApartmentRepositoryImpl(
-    private val apartmentStorage: ApartmentStorage,
-    private val apartmentRemoteMapper: ApartmentRemoteMapper
+    private val commonApiService: CommonApiService
 ): ApartmentRepository {
-    override fun listApartment(): Flow<List<ApartmentListItemModel>> = flow {
-        val result = apartmentStorage.listApartment()
-        emit(apartmentRemoteMapper.mapListToDomain(result))
+    override fun listApartment(): Flow<List<ApartmentListItemResponse>> = flow {
+        emit(commonApiService.listApartment(ApartmentListRequest()))
     }
 }

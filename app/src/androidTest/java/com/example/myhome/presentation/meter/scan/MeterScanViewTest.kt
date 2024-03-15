@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 import com.example.myhome.R
 import com.example.myhome.presentation.features.meter.scan.MeterScanView
 import com.example.myhome.testutils.espresso.withDrawable
-import com.example.myhome.testutils.providers.MeterDomainTestListProvider.apartmentList
+import com.example.myhome.testutils.MeterDomainTestListProvider.apartmentList
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
@@ -48,7 +48,7 @@ class MeterScanViewTest: BaseTest() {
             .check(matches(withDrawable(R.drawable.gas, R.color.white)))
 
         onView(withId(R.id.address))
-            .check(matches(withText(apartmentList[0].address)))
+            .check(matches(withText(apartmentList[0].apartmentFullAddress)))
 
         onView(withId(R.id.type_of_service_name))
             .check(matches(withText("Газ")))

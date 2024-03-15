@@ -1,13 +1,12 @@
 package com.example.myhome.presentation.meter.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.myhome.features.meter.usecases.ApartmentWithMeterListUseCase
 import com.example.myhome.presentation.features.meter.ApartmentUiModel
-import com.example.myhome.presentation.features.meter.MeterUiMapper
+import com.example.myhome.presentation.features.meter.mappers.MeterMapper
 import com.example.myhome.presentation.features.meter.MeterUiModel
 import com.example.myhome.presentation.features.meter.list.MeterListViewModel
 import com.example.myhome.presentation.testutils.providers.MeterUITestListProvider.getApartmentUiList
-import com.example.myhome.testutils.providers.MeterDomainTestListProvider.apartmentList
+import com.example.myhome.testutils.MeterDomainTestListProvider.apartmentList
 import com.example.myhome.presentation.testutils.providers.MeterUITestListProvider.getMeterUiList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +25,7 @@ class MeterListViewModelTest {
     @get:Rule var rule: TestRule = InstantTaskExecutorRule()
 
     private lateinit var apartmentWithMeterListUseCase: ApartmentWithMeterListUseCase
-    private lateinit var meterUiMapper: MeterUiMapper
+    private lateinit var meterMapper: MeterMapper
     private lateinit var viewModel: MeterListViewModel
 
     private val dispatcher = StandardTestDispatcher()
@@ -37,13 +36,13 @@ class MeterListViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        meterUiMapper = Mockito.mock(MeterUiMapper::class.java)
+        meterMapper = Mockito.mock(MeterMapper::class.java)
         apartmentWithMeterListUseCase = Mockito.mock(ApartmentWithMeterListUseCase::class.java)
 
-        Mockito.`when`(meterUiMapper.apartmentWithMeterToUi(any())).thenReturn(testMetersUi)
-        Mockito.`when`(meterUiMapper.apartmentListToUi(any())).thenReturn(testApartmentUi)
+        Mockito.`when`(meterMapper.apartmentWithMeterToUi(any())).thenReturn(testMetersUi)
+        Mockito.`when`(meterMapper.apartmentListToUi(any())).thenReturn(testApartmentUi)
 
-        viewModel = MeterListViewModel(apartmentWithMeterListUseCase, meterUiMapper)
+        viewModel = MeterListViewModel(apartmentWithMeterListUseCase, meterMapper)
         viewModel.setupLists(testApartments)
     }
 

@@ -3,12 +3,14 @@ package com.example.myhome.presentation.features.appeal.add.verify
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.appeal.models.AppealUpdateMeterModel
-import com.example.myhome.features.appeal.usecases.AppealAddUseCase
-import com.example.myhome.features.common.usecases.SubscriberListUseCase
-import com.example.myhome.features.meter.usecases.MeterListUseCase
+import com.example.myhome.features.appeal.repositories.AppealRepository
+import com.example.myhome.features.common.repositories.SubscriberRepository
+import com.example.myhome.features.meter.repositories.MeterRepository
+import com.example.myhome.presentation.features.appeal.AppealMapper
+import com.example.myhome.presentation.features.appeal.AppealUpdateMeterUiModel
+import com.example.myhome.presentation.features.common.CommonUiConverter
 import com.example.myhome.presentation.features.meter.MeterExtendedUiModel
-import com.example.myhome.presentation.features.meter.MeterUiMapper
+import com.example.myhome.presentation.features.meter.mappers.MeterMapper
 import com.example.myhome.presentation.models.asListResource
 import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.utils.mappers.ImageMapper
@@ -18,12 +20,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppealVerifyViewModel @Inject constructor(
-    private val meterListUseCase: MeterListUseCase,
-    subscriberListUseCase: SubscriberListUseCase,
-    private val meterUiMapper: MeterUiMapper,
-    private val appealAddUseCase: AppealAddUseCase,
+    private val meterRepository: MeterRepository,
+    subscriberRepository: SubscriberRepository,
+    private val appealRepository: AppealRepository,
+    private val appealMapper: AppealMapper,
+    private val commonUiConverter: CommonUiConverter,
+    private val meterMapper: MeterMapper,
     private val imageMapper: ImageMapper
-) : BaseAppealVerifyViewModel(subscriberListUseCase) {
+) : BaseAppealVerifyViewModel(subscriberRepository, commonUiConverter) {
     private val _meterList = MutableLiveData<List<MeterExtendedUiModel>>()
     val meterList: LiveData<List<MeterExtendedUiModel>> = _meterList
 
@@ -37,11 +41,11 @@ class AppealVerifyViewModel @Inject constructor(
     }
 
     private suspend fun fetchMeterList() {
-        meterListUseCase()
+        meterRepository.listMeter()
             .asNetworkResult()
             .collect {
                 it.asListResource(mutableDataState) { data ->
-                    _meterList.value = meterUiMapper.meterListToUi(data)
+                    _meterList.value = meterMapper.meterListToUi(data)
                 }
             }
 
@@ -49,19 +53,21 @@ class AppealVerifyViewModel @Inject constructor(
 
     fun updateMeter() {
         val selectedSubscriberId = meterList.value?.find { it.id == selectedMeterId }?.subscriberId
-        val selectedManagementCompanyId = subscriberList.value?.find { it.subscriberId == selectedSubscriberId }?.managementCompanyId
+        val selectedManagementCompanyId = subscriberList.value?.find { it.id == selectedSubscriberId }?.managementCompanyId
         val attachment = imageMapper.mapImageToDomain(selectAttachment!!)
 
         if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
             viewModelScope.launch {
-                appealAddUseCase.updateMeter(
-                    AppealUpdateMeterModel(
-                        meterId = selectedMeterId,
-                        verifiedAt = selectVerifiedAt!!,
-                        issuedAt = selectIssuedAt!!,
-                        managementCompanyId = selectedManagementCompanyId,
-                        subscriberId = selectedSubscriberId,
-                        attachment = attachment
+                appealRepository.updateMeter(
+                    appealMapper.updateToRemote(
+                        AppealUpdateMeterUiModel(
+                            meterId = selectedMeterId,
+                            verifiedAt = selectVerifiedAt!!,
+                            issuedAt = selectIssuedAt!!,
+                            managementCompanyId = selectedManagementCompanyId,
+                            subscriberId = selectedSubscriberId,
+                            attachment = attachment
+                        )
                     )
                 )
                     .asNetworkResult()

@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.meter.models.ApartmentWithMeterListItemModel
-import com.example.myhome.features.meter.usecases.ApartmentWithMeterListUseCase
+import com.example.myhome.features.meter.dtos.ApartmentWithMeterListItemResponse
+import com.example.myhome.features.meter.repositories.MeterRepository
 import com.example.myhome.presentation.features.meter.ApartmentUiModel
 import com.example.myhome.presentation.features.meter.MeterListToGetParcelableModel
-import com.example.myhome.presentation.features.meter.MeterUiMapper
+import com.example.myhome.presentation.features.meter.mappers.MeterMapper
 import com.example.myhome.presentation.features.meter.MeterUiModel
 import com.example.myhome.presentation.models.Resource
 import com.example.myhome.presentation.models.asListResource
@@ -19,10 +19,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MeterListViewModel @Inject constructor(
-    private val apartmentWithMeterListUseCase: ApartmentWithMeterListUseCase,
-    private val meterUiMapper: MeterUiMapper
+    private val meterRepository: MeterRepository,
+    private val meterMapper: MeterMapper
 ) : ViewModel() {
-    private var apartmentAndMeterList: List<ApartmentWithMeterListItemModel> = listOf()
+    private var apartmentAndMeterList: List<ApartmentWithMeterListItemResponse> = listOf()
 
     private val _apartmentList = MutableLiveData<List<ApartmentUiModel>>()
     val apartmentList: LiveData<List<ApartmentUiModel>> = _apartmentList
@@ -36,16 +36,16 @@ class MeterListViewModel @Inject constructor(
     var selectedApartmentId: Int = -1
 
     fun mapMeterUiToGetParcel(meter: MeterUiModel): MeterListToGetParcelableModel {
-        return meterUiMapper.meterUiToGetParcel(meter)
+        return meterMapper.meterUiToGetParcel(meter)
     }
 
     fun changeSelectedApartment(apartment: ApartmentUiModel) {
         selectedApartmentId = apartment.id
         _apartmentList.value = _apartmentList.value?.let { setSelected(it) }
-        val selectedApartment = apartmentAndMeterList.find { it.id == selectedApartmentId }
+        val selectedApartment = apartmentAndMeterList.find { it.apartmentId == selectedApartmentId }
 
         selectedApartment?.let {
-            _meterList.value = setIsIssued(meterUiMapper.apartmentWithMeterToUi(it))
+            _meterList.value = setIsIssued(meterMapper.apartmentWithMeterToUi(it))
         } ?: run {
             _meterList.value = emptyList()
         }
@@ -65,7 +65,7 @@ class MeterListViewModel @Inject constructor(
 
     fun fetchMeterList() {
         viewModelScope.launch {
-            apartmentWithMeterListUseCase()
+            meterRepository.listApartmentWithMeter()
                 .asNetworkResult()
                 .collect {
                     it.asListResource(_meterListState) { data ->
@@ -76,13 +76,13 @@ class MeterListViewModel @Inject constructor(
 
     }
 
-    fun setupLists(list: List<ApartmentWithMeterListItemModel>) {
+    fun setupLists(list: List<ApartmentWithMeterListItemResponse>) {
         apartmentAndMeterList = list
 
         val fstApartment = list.first()
-        selectedApartmentId = fstApartment.id
+        selectedApartmentId = fstApartment.apartmentId
 
-        _apartmentList.value = setSelected(meterUiMapper.apartmentListToUi(list))
-        _meterList.value = setIsIssued(meterUiMapper.apartmentWithMeterToUi(fstApartment))
+        _apartmentList.value = setSelected(meterMapper.apartmentListToUi(list))
+        _meterList.value = setIsIssued(meterMapper.apartmentWithMeterToUi(fstApartment))
     }
 }

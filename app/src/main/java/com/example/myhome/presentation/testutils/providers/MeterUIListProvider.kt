@@ -1,6 +1,6 @@
 package com.example.myhome.presentation.testutils.providers
 
-import com.example.myhome.features.meter.models.ApartmentWithMeterListItemModel
+import com.example.myhome.features.meter.dtos.ApartmentWithMeterListItemResponse
 import com.example.myhome.presentation.features.meter.ApartmentUiModel
 import com.example.myhome.presentation.features.meter.MeterGetToScanParcelableModel
 import com.example.myhome.presentation.features.meter.MeterGetToUpdateParcelableModel
@@ -8,8 +8,8 @@ import com.example.myhome.presentation.features.meter.MeterListToGetParcelableMo
 import com.example.myhome.presentation.features.meter.MeterUiModel
 import com.example.myhome.presentation.features.meter.converters.MeterParcelableConverter
 import com.example.myhome.presentation.features.meter.converters.MeterUiConverter
-import com.example.myhome.testutils.providers.MeterDomainTestListProvider.apartmentList
-import com.example.myhome.testutils.providers.MeterDomainTestListProvider.readingList
+import com.example.myhome.testutils.MeterDomainTestListProvider.apartmentList
+import com.example.myhome.testutils.MeterDomainTestListProvider.readingList
 
 object MeterUITestListProvider: MeterParcelableConverter, MeterUiConverter {
     fun getMeterUiList(): List<MeterUiModel> {
@@ -31,12 +31,12 @@ object MeterUITestListProvider: MeterParcelableConverter, MeterUiConverter {
         return meterGetToScanParcel(getMeterParcelableGet(id), prevReading)
     }
 
-    fun getApartmentWithMeterList(): List<ApartmentWithMeterListItemModel> {
+    fun getApartmentWithMeterList(): List<ApartmentWithMeterListItemResponse> {
         return apartmentList
     }
 
     fun getApartmentUiList(): List<ApartmentUiModel> {
-        val selectedId = apartmentList.first().id
+        val selectedId = apartmentList.first().apartmentId
         return apartmentListToUi(apartmentList).map {
             it.setSelected(selectedId)
         }

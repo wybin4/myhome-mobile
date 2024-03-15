@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.event.models.VotingUpdateModel
-import com.example.myhome.features.event.usecases.EventListUseCase
-import com.example.myhome.features.event.usecases.VotingUpdateUseCase
-import com.example.myhome.presentation.features.event.EventUiConverter
+import com.example.myhome.features.event.repositories.EventRepository
+import com.example.myhome.presentation.features.event.EventMapper
 import com.example.myhome.presentation.features.event.EventUiModel
 import com.example.myhome.presentation.models.NetworkResult
 import com.example.myhome.presentation.models.Resource
@@ -18,9 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventListViewModel @Inject constructor(
-    private val eventListUseCase: EventListUseCase,
-    private val votingUpdateUseCase: VotingUpdateUseCase,
-    private val eventUiConverter: EventUiConverter
+    private val eventRepository: EventRepository,
+    private val eventMapper: EventMapper
 ) : ViewModel() {
     private val _eventList = MutableLiveData<List<EventUiModel>>()
     val eventList: LiveData<List<EventUiModel>> = _eventList
@@ -34,7 +31,7 @@ class EventListViewModel @Inject constructor(
 
     fun fetchEventList() {
         viewModelScope.launch {
-            eventListUseCase()
+            eventRepository.listEvent()
                 .asNetworkResult()
                 .collect {
                     when (it) {
@@ -42,7 +39,7 @@ class EventListViewModel @Inject constructor(
                             val data = it.data
                             if (data.notifications.totalCount > 0 || data.votings.totalCount > 0) {
                                 _eventListState.value = Resource.Success
-                                _eventList.value = eventUiConverter.eventListToUi(data)
+                                _eventList.value = eventMapper.eventListToUi(data)
                             } else {
                                 _eventListState.value = Resource.Empty
                             }
@@ -63,11 +60,8 @@ class EventListViewModel @Inject constructor(
 
     fun updateVoting(optionId: Int) {
         viewModelScope.launch {
-            votingUpdateUseCase(
-                VotingUpdateModel(
-                    optionId = optionId,
-                    userId = 1
-                )
+            eventRepository.updateVoting(
+                eventMapper.votingToRemote(optionId, userId = 1)
             ).collect{}
         }
     }

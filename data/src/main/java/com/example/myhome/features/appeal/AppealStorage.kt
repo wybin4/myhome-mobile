@@ -16,7 +16,7 @@ class AppealStorage(
         return false
     }
 
-    suspend fun listAppeal(): List<AppealAddResponse> {
+    suspend fun listAppeal(): List<AppealListItemResponse> {
         val events = eventApiService.listEvent(
             EventListRequest(
             userId = 1,

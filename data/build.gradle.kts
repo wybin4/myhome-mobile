@@ -38,7 +38,6 @@ dependencies {
     val hiltVersion = "2.50"
 
     // projects
-    implementation(project(":domain"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     //junit
