@@ -143,7 +143,7 @@ interface ChargeUiConverter: MonthYearConverter, ChargeCalculator {
                     id = spd.id,
                     apartmentName = spd.apartmentName,
                     managementCompanyName = spd.mcName,
-                    managementCompanyCheckingAccount = spd.managementCompanyCheckingAccount,
+                    managementCompanyCheckingAccount = spd.mcCheckingAccount,
                     periodName = formatDate(spd.formatCreatedAt()),
                     percent = spdDebtRelation.percent,
                     amountChange = spdDebtRelation.amountChange,

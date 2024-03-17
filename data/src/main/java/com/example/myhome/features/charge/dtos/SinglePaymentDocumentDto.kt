@@ -16,7 +16,6 @@ data class SinglePaymentDocumentListItemResponse(
     val apartmentId: Int,
     val mcName: String,
     val mcCheckingAccount: String,
-    val managementCompanyCheckingAccount: String,
     val createdAt: String
 ): DateConverter {
     fun formatCreatedAt(): Date {

@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import com.example.myhome.MainViewModel
 import com.example.myhome.databinding.ServiceNotificationListItemBinding
 import com.example.myhome.databinding.ServiceNotificationListItemLoadingBinding
 import com.example.myhome.databinding.ServiceNotificationListViewBinding
@@ -21,12 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class ServiceNotificationListView : Fragment() {
     private var _binding: ServiceNotificationListViewBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<ServiceNotificationListViewModel>()
+    private val viewModel: MainViewModel by activityViewModels()
 
     private lateinit var notificationListAdapter: CustomListAdapter<ServiceNotificationUiModel, ServiceNotificationListItemBinding>
     private lateinit var notificationInfiniteListAdapter: InfiniteListAdapter<String, ServiceNotificationListItemLoadingBinding>
-
-    private val listStateManager = ListStateManager(this::updateViewState)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,24 +47,15 @@ class ServiceNotificationListView : Fragment() {
         observeLists()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchNotificationList()
-    }
-
-    private fun updateViewState(state: ListState) {
-        binding.apply {
-            notificationInfiniteRecyclerView.visibility = state.loadingVisibility
-            notificationRecyclerView.visibility = state.successVisibility
-            onEmpty.visibility = state.emptyVisibility
-            onError.visibility = state.errorVisibility
-            state.errorMessage?.let { errorLayout.error = it }
-        }
-    }
-
     private fun observeResourceState() {
-        viewModel.listState.observe(viewLifecycleOwner) { resource ->
-            listStateManager.observeStates(resource)
+        viewModel.listState.observe(viewLifecycleOwner) { state ->
+            binding.apply {
+                notificationInfiniteRecyclerView.visibility = state.loadingVisibility
+                notificationRecyclerView.visibility = state.successVisibility
+                onEmpty.visibility = state.emptyVisibility
+                onError.visibility = state.errorVisibility
+                state.errorMessage?.let { errorLayout.error = it }
+            }
         }
     }
 

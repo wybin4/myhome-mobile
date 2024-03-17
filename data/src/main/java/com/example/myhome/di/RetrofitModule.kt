@@ -23,7 +23,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
     companion object {
-        private const val BASE_URL = "https://wealthy-barnacle-secure.ngrok-free.app/api/"
+        private const val BASE_URL = "https://personally-poetic-cattle.ngrok-free.app/api/"
     }
 
     @Provides
@@ -34,9 +34,9 @@ class RetrofitModule {
         val cacheSize = 10 * 1024 * 1024L // 10MB
         val cache = Cache(context.cacheDir, cacheSize)
         return OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(1, TimeUnit.SECONDS)
+            .readTimeout(1, TimeUnit.SECONDS)
+            .writeTimeout(1, TimeUnit.SECONDS)
             .cache(cache)
             .build()
     }

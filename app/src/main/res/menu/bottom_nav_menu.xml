@@ -21,20 +21,9 @@
         android:icon="@drawable/appeals_logo"
         android:title="@string/title_appeals" />
 
-
-    <item
-        android:id="@+id/list_service_notification"
-        android:icon="@drawable/appeals_logo"
-        android:title="@string/title_service_notifications" />
-
 <!--    <item-->
 <!--        android:id="@+id/navigation_chats"-->
 <!--        android:icon="@drawable/chats_logo"-->
 <!--        android:title="@string/title_chats" />-->
-
-<!--    <item-->
-<!--        android:id="@+id/list_appeal"-->
-<!--        android:icon="@drawable/appeals_logo"-->
-<!--        android:title="@string/title_appeals" />-->
 
 </menu>
