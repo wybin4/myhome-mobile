@@ -57,8 +57,13 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     >
+                    <LinearLayout
+                        style="@style/ItemLoading"
+                        android:layout_height="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="30dp"/>
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/chat_infinite_recycler_view"
+                        android:id="@+id/user_infinite_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
@@ -74,14 +79,38 @@
                     android:orientation="vertical"
                     android:visibility="gone"
                     >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_input"
+                        android:paddingHorizontal="11dp"
+                        android:paddingVertical="8dp"
+                        android:layout_marginBottom="30dp">
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/search_glass"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="8dp"/>
+                        <EditText
+                            android:textSize="14dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Поиск по пользователям"
+                            android:background="@null"
+                            android:inputType="text|textNoSuggestions"/>
+                    </LinearLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/chat_recycler_view"
+                        android:id="@+id/user_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-                </LinearLayout>
 
+
+                </LinearLayout>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

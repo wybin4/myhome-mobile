@@ -21,7 +21,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.myhome.databinding.ActivityMainBinding
 import com.example.myhome.databinding.CustomActionBarBinding
 import com.example.myhome.features.SocketService
-import com.example.myhome.presentation.features.servicenotification.NotificationListState
+import com.example.myhome.presentation.state.list.ListStateWithUnread
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,6 +64,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        startService()
+        startService(Intent(this, NotificationService::class.java))
+
         checkIntent(intent)
     }
 
@@ -89,7 +92,8 @@ class MainActivity : AppCompatActivity() {
          appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.list_meter, R.id.list_event,
-                R.id.list_appeal, R.id.list_charge
+                R.id.list_appeal, R.id.list_charge,
+                R.id.list_chat
             )
         )
 
@@ -117,7 +121,7 @@ class MainActivity : AppCompatActivity() {
                 navView.visibility = View.GONE
             }
             isNotificationDestination = destination.id == R.id.list_service_notification
-            updateNotificationListButton(viewModel.listState.value!!)
+            updateNotificationListButton(viewModel.notificationListState.value!!)
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -126,7 +130,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeResourceState() {
-        viewModel.listState.observe(this) { resource ->
+        viewModel.notificationListState.observe(this) { resource ->
             actionBarBinding.apply {
                 updateNotificationListButton(resource)
                 unreadDot.visibility = resource.dotVisibility
@@ -134,9 +138,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateNotificationListButton(resource: NotificationListState) {
+    private fun updateNotificationListButton(resource: ListStateWithUnread) {
         actionBarBinding.apply {
-            if (resource is NotificationListState.Error || isNotificationDestination) {
+            if (resource is ListStateWithUnread.Error || isNotificationDestination) {
                 notificationListButton.visibility = View.INVISIBLE
             } else {
                 notificationListButton.visibility = View.VISIBLE
@@ -149,14 +153,8 @@ class MainActivity : AppCompatActivity() {
         return navHostFragment?.childFragmentManager?.fragments?.firstOrNull()
     }
 
-    override fun onResume() {
-        super.onResume()
-        startService()
-        startService(Intent(this, NotificationService::class.java))
-    }
-
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         stopService(Intent(this, NotificationService::class.java))
         unbindService(viewModel.getServiceConnection())
     }

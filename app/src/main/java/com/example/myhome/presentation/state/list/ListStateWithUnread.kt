@@ -1,16 +1,16 @@
-package com.example.myhome.presentation.features.servicenotification
+package com.example.myhome.presentation.state.list
 
 import android.view.View
 
-sealed class NotificationListState {
-    data class Success(val hasUnread: Boolean) : NotificationListState()
-    data object Loading : NotificationListState()
-    data object Empty : NotificationListState()
-    data class Error(val message: String) : NotificationListState()
+sealed class ListStateWithUnread  {
+    data class Success(val countUnread: Int) : ListStateWithUnread()
+    data object Loading : ListStateWithUnread()
+    data object Empty : ListStateWithUnread()
+    data class Error(val message: String) : ListStateWithUnread()
 
     val dotVisibility: Int
         get() = when(this) {
-            is Success -> if (hasUnread) View.VISIBLE else View.GONE
+            is Success -> if (countUnread > 0) View.VISIBLE else View.GONE
             else -> View.GONE
         }
 

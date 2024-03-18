@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="chat"
+            type="com.example.myhome.presentation.features.chat.ChatUiModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="18dp">
+
+        <!--            иконка-->
+        <LinearLayout
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:background="@drawable/circle_normal"
+            android:backgroundTint="@color/primary_light"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{chat.formatReceiverName()}"
+                android:textSize="17dp"
+                android:textColor="@color/primary"/>
+        </LinearLayout>
+
+        <!--            текст-->
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1">
+
+            <TextView
+                style="@style/Text"
+                android:text="@{chat.receiverName}"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp"/>
+
+            <TextView
+                style="@style/Text"
+                android:textSize="13dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="@{chat.formatMessageText()}"
+                />
+
+        </LinearLayout>
+
+
+        <!--                    время и число сообщений-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                style="@style/DescriptionText"
+                android:text="@{chat.formatMessageAt()}"
+                android:layout_marginBottom="6dp"/>
+
+            <LinearLayout
+                style="@style/CircleBlackPrimary"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:visibility="@{chat.countUnread > 0}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{chat.formatCountUnread()}"
+                    android:textColor="@color/white"
+                    android:textSize="11dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -24,12 +24,12 @@ class ChargePayView : BaseDigitPickerView() {
     ): View {
         paymentHandler = PaymentHandler(requireActivity())
 
-        viewModel.сhargeParcelable = requireArguments().getParcelable("charge")!!
+        viewModel.chargeParcelable = requireArguments().getParcelable("charge")!!
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun addNewValue(newValue: Double) {
-        viewModel.сhargeParcelable.apply {
+        viewModel.chargeParcelable.apply {
             paymentHandler.handlePayment(newValue, id, managementCompanyCheckingAccount)
         }
         findNavController().popBackStack()

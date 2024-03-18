@@ -37,6 +37,7 @@ class NotificationService: Service(), NotificationListener, IconPicker {
 
         override fun onServiceDisconnected(name: ComponentName?) {
             isSocketServiceBound = false
+            socketService.removeListener(this@NotificationService)
         }
     }
 

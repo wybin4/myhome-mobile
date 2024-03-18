@@ -3,28 +3,36 @@ package com.example.myhome
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myhome.features.SocketService
 import com.example.myhome.features.servicenotification.models.NotificationStatus
+import com.example.myhome.presentation.features.chat.ChatMapper
+import com.example.myhome.presentation.features.chat.ChatUiModel
 import com.example.myhome.presentation.features.servicenotification.ServiceNotificationUiConverter
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
-import com.example.myhome.presentation.features.servicenotification.NotificationListState
+import com.example.myhome.presentation.state.list.ListStateWithUnread
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val notificationUiConverter: ServiceNotificationUiConverter
+    private val notificationUiConverter: ServiceNotificationUiConverter,
+    private val chatMapper: ChatMapper
 ) : ViewModel() {
-    var socketService: SocketService? = null
-
-    private val _listState = MutableLiveData<NotificationListState>(NotificationListState.Loading)
-    val listState: LiveData<NotificationListState> = _listState
+    private val _notificationListState = MutableLiveData<ListStateWithUnread>(ListStateWithUnread.Loading)
+    val notificationListState: LiveData<ListStateWithUnread> = _notificationListState
 
     private val _notificationList = MutableLiveData<List<ServiceNotificationUiModel>>()
     val notificationList: LiveData<List<ServiceNotificationUiModel>> = _notificationList
+
+    private val _chatListState = MutableLiveData<ListStateWithUnread>(ListStateWithUnread.Loading)
+    val chatListState: LiveData<ListStateWithUnread> = _chatListState
+
+    private val _chatList = MutableLiveData<List<ChatUiModel>>()
+    val chatList: LiveData<List<ChatUiModel>> = _chatList
 
     private val localBinder: MutableLiveData<SocketService.LocalBinder?> = MutableLiveData<SocketService.LocalBinder?>()
 
@@ -32,18 +40,9 @@ class MainViewModel @Inject constructor(
         override fun onServiceConnected(className: ComponentName, iBinder: IBinder) {
             val binder: SocketService.LocalBinder = iBinder as SocketService.LocalBinder
             localBinder.postValue(binder)
-            socketService = binder.getService()
-            socketService!!.notificationList.observeForever { notifications ->
-                if (notifications.isNotEmpty()) {
-                    val hasUnread = notifications.count { it.status == NotificationStatus.Unread } > 0
-                    _listState.value = NotificationListState.Success(hasUnread)
-                } else {
-                    _listState.value = NotificationListState.Empty
-                }
-                _notificationList.value = notificationUiConverter.notificationListToUi(notifications)
-            }
-            socketService!!.socketError.observeForever { message ->
-                _listState.value = NotificationListState.Error(message)
+            binder.getService().let { service ->
+                setupNotifications(service)
+                setupChats(service)
             }
         }
 
@@ -54,6 +53,37 @@ class MainViewModel @Inject constructor(
 
     fun getServiceConnection(): ServiceConnection {
         return serviceConnection
+    }
+
+    private fun setupNotifications(service: SocketService) {
+        service.notificationList.observeForever { notifications ->
+            if (notifications.isNotEmpty()) {
+                val countUnread = notifications.count { it.status == NotificationStatus.Unread }
+                _notificationListState.value = ListStateWithUnread.Success(countUnread)
+                _notificationList.value = notificationUiConverter.notificationListToUi(notifications)
+            } else {
+                _notificationListState.value = ListStateWithUnread.Empty
+            }
+        }
+        service.socketError.observeForever { message ->
+            _notificationListState.value = ListStateWithUnread.Error(message)
+        }
+    }
+
+    private fun setupChats(service: SocketService) {
+        service.chatList.observeForever { chats ->
+            if (chats.isNotEmpty()) {
+                val uiChatList = chatMapper.chatListToUi(chats)
+                _chatList.value = uiChatList
+                val countUnread = uiChatList.sumOf { it.countUnread }
+                _chatListState.value = ListStateWithUnread.Success(countUnread)
+            } else {
+                _chatListState.value = ListStateWithUnread.Empty
+            }
+        }
+        service.socketError.observeForever { message ->
+            _chatListState.value = ListStateWithUnread.Error(message)
+        }
     }
 
 }

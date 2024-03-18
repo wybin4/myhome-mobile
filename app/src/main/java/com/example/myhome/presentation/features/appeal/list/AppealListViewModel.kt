@@ -25,10 +25,6 @@ class AppealListViewModel @Inject constructor(
     private val _appealListState = MutableLiveData<Resource>(Resource.Loading)
     val appealListState: LiveData<Resource> = _appealListState
 
-    init {
-        fetchAppealList()
-    }
-
     fun fetchAppealList() {
         viewModelScope.launch {
             appealRepository.listAppeal()

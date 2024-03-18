@@ -213,13 +213,14 @@
 
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_chats"-->
-<!--        android:name="com.example.myhome.presentation.features.chat.list.ChatListView"-->
-<!--        android:label="@string/title_chats" />-->
+    <fragment
+        android:id="@+id/list_chat"
+        android:name="com.example.myhome.presentation.features.chat.list.ChatListView"
+        android:label="@string/title_chats" />
 
     <fragment
         android:id="@+id/list_service_notification"
-        android:name="com.example.myhome.presentation.features.servicenotification.list.ServiceNotificationListView"
+        android:name="com.example.myhome.presentation.features.servicenotification.ServiceNotificationListView"
         android:label="@string/title_service_notifications"/>
+
 </navigation>

@@ -3,13 +3,14 @@ package com.example.myhome.presentation.features.charge.pay
 import com.example.myhome.presentation.BaseDigitPickerViewModel
 import com.example.myhome.presentation.features.charge.converters.MoneyConverter
 import com.example.myhome.presentation.features.charge.models.ChargeGetToPayParcelableModel
+import com.example.myhome.presentation.utils.pickers.CharPicker
 import com.example.myhome.presentation.utils.pickers.IconPicker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ChargePayViewModel @Inject constructor() : BaseDigitPickerViewModel(), IconPicker, MoneyConverter {
-    lateinit var сhargeParcelable: ChargeGetToPayParcelableModel
+class ChargePayViewModel @Inject constructor() : BaseDigitPickerViewModel(), IconPicker, MoneyConverter, CharPicker {
+    lateinit var chargeParcelable: ChargeGetToPayParcelableModel
 
     override fun isCardLeftTextVisible(): Boolean = true
 
@@ -19,20 +20,9 @@ class ChargePayViewModel @Inject constructor() : BaseDigitPickerViewModel(), Ico
 
     override fun getIcon(): Int? = null
 
-    override fun getIconText(): String = getFirstLetterAfterQuote(сhargeParcelable.managementCompanyName)
+    override fun getIconText(): String = processString(chargeParcelable.managementCompanyName)
 
-    private fun getFirstLetterAfterQuote(input: String): String {
-        val quoteCharacters = charArrayOf('\'', '"', '«')
-        val quoteIndex = input.indexOfAny(quoteCharacters)
-        return if (quoteIndex != -1 && quoteIndex < input.length - 1) {
-            val substring = input.substring(quoteIndex + 1)
-            substring.firstOrNull { it.isLetter() }
-        } else {
-            "?"
-        }.toString()
-    }
-
-    override fun getTitle(): String = сhargeParcelable.managementCompanyName
+    override fun getTitle(): String = chargeParcelable.managementCompanyName
 
     override fun getSubtitle(): String = "Управляющая компания"
 
@@ -40,10 +30,10 @@ class ChargePayViewModel @Inject constructor() : BaseDigitPickerViewModel(), Ico
 
     override fun getLeftTitle(): String = "Остаток долга"
 
-    override fun getPrevValue(): Double = сhargeParcelable.outstandingDebt
+    override fun getPrevValue(): Double = chargeParcelable.outstandingDebt
 
     override fun getRightText(): String {
-        return formatDouble2F(сhargeParcelable.outstandingDebt)
+        return formatDouble2F(chargeParcelable.outstandingDebt)
     }
 
     override fun getUnit(): String = "₽"

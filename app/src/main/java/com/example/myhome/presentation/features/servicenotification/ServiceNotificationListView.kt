@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.features.servicenotification.list
+package com.example.myhome.presentation.features.servicenotification
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,8 +12,6 @@ import com.example.myhome.databinding.ServiceNotificationListItemLoadingBinding
 import com.example.myhome.databinding.ServiceNotificationListViewBinding
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
-import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +46,7 @@ class ServiceNotificationListView : Fragment() {
     }
 
     private fun observeResourceState() {
-        viewModel.listState.observe(viewLifecycleOwner) { state ->
+        viewModel.notificationListState.observe(viewLifecycleOwner) { state ->
             binding.apply {
                 notificationInfiniteRecyclerView.visibility = state.loadingVisibility
                 notificationRecyclerView.visibility = state.successVisibility

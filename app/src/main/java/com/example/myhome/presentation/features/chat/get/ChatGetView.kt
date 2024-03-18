@@ -5,14 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.myhome.databinding.ChatGetViewBinding
+import com.example.myhome.presentation.features.chat.add.ChatAddViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChatGetView : Fragment() {
     private var _binding: ChatGetViewBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by lazy { ViewModelProvider(this)[ChatGetViewModel::class.java] }
+    private val viewModel by viewModels<ChatGetViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

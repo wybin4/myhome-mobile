@@ -21,9 +21,9 @@
         android:icon="@drawable/appeals_logo"
         android:title="@string/title_appeals" />
 
-<!--    <item-->
-<!--        android:id="@+id/navigation_chats"-->
-<!--        android:icon="@drawable/chats_logo"-->
-<!--        android:title="@string/title_chats" />-->
+    <item
+        android:id="@+id/list_chat"
+        android:icon="@drawable/chats_logo"
+        android:title="@string/title_chats" />
 
 </menu>
