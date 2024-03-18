@@ -4,9 +4,11 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.servicenotification.ServiceNotificationListItemResponse
+import com.example.myhome.models.NotificationListener
 import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
@@ -16,13 +18,11 @@ import org.json.JSONException
 
 class SocketService: Service() {
     private val binder = LocalBinder()
-
     private val gson = Gson()
+    private val listeners = mutableListOf<NotificationListener>()
+
     private val _notificationList = MutableLiveData<List<ServiceNotificationListItemResponse>>()
     val notificationList: LiveData<List<ServiceNotificationListItemResponse>> = _notificationList
-
-    private val _newNotification = MutableLiveData<ServiceNotificationListItemResponse>()
-    val newNotification: LiveData<ServiceNotificationListItemResponse> = _newNotification
 
     private val _socketError = MutableLiveData<String>()
     val socketError: LiveData<String> = _socketError
@@ -35,6 +35,10 @@ class SocketService: Service() {
 
     inner class LocalBinder : Binder() {
         fun getService(): SocketService = this@SocketService
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return START_STICKY
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -52,6 +56,15 @@ class SocketService: Service() {
         disconnectSocket()
         stopListeners()
     }
+
+    fun addListener(listener: NotificationListener) {
+        listeners.add(listener)
+    }
+
+    fun removeListener(listener: NotificationListener) {
+        listeners.remove(listener)
+    }
+
 
     private val onNotificationList = Emitter.Listener { args ->
         try {
@@ -75,7 +88,10 @@ class SocketService: Service() {
             val currentList = _notificationList.value.orEmpty().toMutableList()
             val newList = listOf(notification) + currentList
             _notificationList.postValue(newList)
-            _newNotification.postValue(notification)
+            Log.e("SocketService", listeners.toString())
+            for (listener in listeners) {
+                listener.onNewNotification(notification)
+            }
         } catch (e: JSONException) {
             _socketError.postValue("Failed to get notification")
         }

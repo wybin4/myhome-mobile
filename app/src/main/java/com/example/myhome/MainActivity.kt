@@ -1,20 +1,17 @@
 package com.example.myhome
 
 import android.Manifest
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -24,8 +21,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.myhome.databinding.ActivityMainBinding
 import com.example.myhome.databinding.CustomActionBarBinding
 import com.example.myhome.features.SocketService
-import com.example.myhome.presentation.features.servicenotification.list.ServiceNotificationListView
-import com.example.myhome.presentation.state.list.NotificationListState
+import com.example.myhome.presentation.features.servicenotification.NotificationListState
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,6 +51,34 @@ class MainActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.nav_host_fragment_activity_main)
         setupNavigation(mainBinding.navView)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    101
+                )
+            }
+        }
+
+        checkIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent != null) {
+            checkIntent(intent)
+        }
+    }
+
+    private fun checkIntent(intent: Intent) {
+        val fragmentToOpen = intent.getStringExtra("fragment_to_open")
+        if (fragmentToOpen == "ServiceNotificationListView") {
+            navController.navigate(R.id.list_service_notification)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -108,11 +132,6 @@ class MainActivity : AppCompatActivity() {
                 unreadDot.visibility = resource.dotVisibility
             }
         }
-        viewModel.newNotification.observe(this) {
-            if (it != null) {
-                sendNotification(this)
-            }
-        }
     }
 
     private fun updateNotificationListButton(resource: NotificationListState) {
@@ -130,40 +149,16 @@ class MainActivity : AppCompatActivity() {
         return navHostFragment?.childFragmentManager?.fragments?.firstOrNull()
     }
 
-    private fun sendNotification(context: Context) {
-        val channelId = "CHANNEL_ID_NOTIFICATION"
-        val notificationBuilder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.notifications_logo)
-            .setContentTitle("Notification Title")
-            .setContentText("Some text for notification here")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        val intent = Intent(context, ServiceNotificationListView::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        notificationBuilder.setContentIntent(pendingIntent)
-
-        val notificationManager = NotificationManagerCompat.from(context)
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        notificationManager.notify(0, notificationBuilder.build())
-    }
-
     override fun onResume() {
         super.onResume()
         startService()
+        startService(Intent(this, NotificationService::class.java))
     }
 
     override fun onStop() {
         super.onStop()
-        if (viewModel.getBinder() != null) {
-            unbindService(viewModel.getServiceConnection())
-        }
+        stopService(Intent(this, NotificationService::class.java))
+        unbindService(viewModel.getServiceConnection())
     }
 
     private fun startService() {

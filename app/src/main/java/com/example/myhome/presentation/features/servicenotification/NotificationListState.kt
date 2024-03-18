@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.state.list
+package com.example.myhome.presentation.features.servicenotification
 
 import android.view.View
 
