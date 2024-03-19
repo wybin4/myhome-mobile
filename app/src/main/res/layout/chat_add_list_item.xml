@@ -3,8 +3,8 @@
 
     <data>
         <variable
-            name="item"
-            type="String" />
+            name="receiver"
+            type="com.example.myhome.presentation.features.chat.models.ReceiverUiModel" />
     </data>
 
     <LinearLayout
@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Л"
+                android:text="@{receiver.formatName()}"
                 android:textSize="17dp"
                 android:textColor="@color/primary"/>
         </LinearLayout>
@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ладнов Александр"
+                android:text="@{receiver.name}"
                 android:textSize="16dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14dp"
-                android:text="Собственник"
+                android:text="@{receiver.formatUserRole()}"
                 android:textColor="@color/description_normal"/>
 
         </LinearLayout>

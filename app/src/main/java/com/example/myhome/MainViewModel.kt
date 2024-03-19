@@ -3,14 +3,13 @@ package com.example.myhome
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myhome.features.SocketService
 import com.example.myhome.features.servicenotification.models.NotificationStatus
 import com.example.myhome.presentation.features.chat.ChatMapper
-import com.example.myhome.presentation.features.chat.ChatUiModel
+import com.example.myhome.presentation.features.chat.models.ChatUiModel
 import com.example.myhome.presentation.features.servicenotification.ServiceNotificationUiConverter
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
 import com.example.myhome.presentation.state.list.ListStateWithUnread

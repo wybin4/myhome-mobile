@@ -4,7 +4,7 @@
     <data>
         <variable
             name="chat"
-            type="com.example.myhome.presentation.features.chat.ChatUiModel" />
+            type="com.example.myhome.presentation.features.chat.models.ChatUiModel" />
     </data>
 
     <LinearLayout

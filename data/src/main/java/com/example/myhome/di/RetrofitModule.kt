@@ -3,6 +3,7 @@ package com.example.myhome.di
 import android.content.Context
 import com.example.myhome.features.appeal.AppealApiService
 import com.example.myhome.features.charge.ChargeApiService
+import com.example.myhome.features.chat.ChatApiService
 import com.example.myhome.features.common.CommonApiService
 import com.example.myhome.features.event.EventApiService
 import com.example.myhome.features.meter.MeterApiService
@@ -34,9 +35,9 @@ class RetrofitModule {
         val cacheSize = 10 * 1024 * 1024L // 10MB
         val cache = Cache(context.cacheDir, cacheSize)
         return OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.SECONDS)
-            .readTimeout(1, TimeUnit.SECONDS)
-            .writeTimeout(1, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
             .cache(cache)
             .build()
     }
@@ -82,5 +83,11 @@ class RetrofitModule {
     @Singleton
     fun provideChargeApiService(@Named("Normal") retrofit: Retrofit): ChargeApiService {
         return retrofit.create(ChargeApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatApiService(@Named("Normal") retrofit: Retrofit): ChatApiService {
+        return retrofit.create(ChatApiService::class.java)
     }
 }

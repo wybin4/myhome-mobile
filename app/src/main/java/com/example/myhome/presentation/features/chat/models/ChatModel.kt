@@ -1,7 +1,13 @@
-package com.example.myhome.presentation.features.chat
+package com.example.myhome.presentation.features.chat.models
 
+import android.os.Bundle
+import android.os.Parcel
+import com.example.myhome.presentation.features.charge.converters.MoneyConverter
 import com.example.myhome.presentation.features.chat.converters.CombinedTimeConverter
 import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.ParcelableModel
+import com.example.myhome.presentation.models.readDate
+import com.example.myhome.presentation.models.writeDate
 import com.example.myhome.presentation.utils.pickers.CharPicker
 import java.util.Date
 
@@ -33,5 +39,29 @@ data class ChatUiModel(
 
     fun formatReceiverName(): String {
         return processString(receiverName)
+    }
+}
+
+class ChatAddToGetParcelableModel(
+    val id: Int,
+    val receiverName: String,
+    val createdAt: Date
+) : ParcelableModel() {
+    constructor(parcel: Parcel) : this(
+        id = parcel.readInt(),
+        receiverName = parcel.readString() ?: "",
+        createdAt = parcel.readDate() ?: Date()
+    )
+
+    fun toBundle(): Bundle {
+        return Bundle().apply {
+            putParcelable("chat", this@ChatAddToGetParcelableModel)
+        }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeString(receiverName)
+        parcel.writeDate(createdAt)
     }
 }

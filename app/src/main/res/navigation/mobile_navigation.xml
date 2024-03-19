@@ -216,7 +216,43 @@
     <fragment
         android:id="@+id/list_chat"
         android:name="com.example.myhome.presentation.features.chat.list.ChatListView"
-        android:label="@string/title_chats" />
+        android:label="@string/title_chats">
+        <action
+            android:id="@+id/action_chatListView_to_chatAddView"
+            app:destination="@id/add_chat" />
+        <action
+            android:id="@+id/action_chatListView_to_chatGetView"
+            app:destination="@id/get_chat" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_chat"
+        android:name="com.example.myhome.presentation.features.chat.add.ChatAddView"
+        android:label="@string/title_add_chats">
+
+        <action
+            android:id="@+id/action_chatAddView_to_chatListView"
+            app:destination="@id/list_chat" />
+        <action
+            android:id="@+id/action_chatAddView_to_chatGetView"
+            app:destination="@id/get_chat" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/get_chat"
+        android:name="com.example.myhome.presentation.features.chat.get.ChatGetView"
+        android:label="@string/title_chats">
+
+        <action
+            android:id="@+id/action_chatGetView_to_chatListView"
+            app:destination="@id/list_chat"/>
+        <argument
+            android:name="chat"
+            app:argType="com.example.myhome.presentation.features.chat.models.ChatAddToGetParcelableModel" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/list_service_notification"

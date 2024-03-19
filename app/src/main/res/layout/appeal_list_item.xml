@@ -7,73 +7,65 @@
             type="com.example.myhome.presentation.features.appeal.AppealUiModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <LinearLayout
+        style="@style/Card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="16dp"
+        android:layout_marginBottom="24dp"
+        >
 
-            <LinearLayout
-                style="@style/Card"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:background="@drawable/circle_normal"
+            android:backgroundTint="@color/primary_light"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@{appeal.getTypeIcon()}"
+                app:tint="@color/primary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="15dp">
+            <TextView
+                style="@style/Text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="16dp"
-                android:layout_marginBottom="24dp"
-                >
+                android:text="@{appeal.getTitleWithType()}"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"
+                />
+            <TextView
+                style="@style/DescriptionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{appeal.getSubtitle()}"
+                android:textSize="12dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@{appeal.getStatusIcon()}"/>
+        </LinearLayout>
+    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="47dp"
-                    android:layout_height="47dp"
-                    android:background="@drawable/circle_normal"
-                    android:backgroundTint="@color/primary_light"
-                    android:gravity="center"
-                    android:layout_marginRight="10dp"
-                    >
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@{appeal.getTypeIcon()}"
-                        app:tint="@color/primary" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="15dp">
-                    <TextView
-                        style="@style/Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{appeal.getTitleWithType()}"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="4dp"
-                        />
-                    <TextView
-                        style="@style/DescriptionText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{appeal.getSubtitle()}"
-                        android:textSize="12dp"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@{appeal.getStatusIcon()}"/>
-                </LinearLayout>
-            </LinearLayout>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -25,10 +25,6 @@ class EventListViewModel @Inject constructor(
     private val _eventListState = MutableLiveData<Resource>(Resource.Loading)
     val eventListState: LiveData<Resource> = _eventListState
 
-    init {
-        fetchEventList()
-    }
-
     fun fetchEventList() {
         viewModelScope.launch {
             eventRepository.listEvent()

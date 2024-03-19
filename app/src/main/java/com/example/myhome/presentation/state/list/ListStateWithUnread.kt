@@ -20,6 +20,9 @@ sealed class ListStateWithUnread  {
     val errorVisibility: Int
         get() = if (this is Error) View.VISIBLE else View.GONE
 
+    val addButtonVisibility: Int
+        get() = if (this is Empty || this is Success) View.VISIBLE else View.GONE
+
     val emptyVisibility: Int
         get() = if (this is Empty) View.VISIBLE else View.GONE
 

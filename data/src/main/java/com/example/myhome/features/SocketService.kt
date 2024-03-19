@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.chat.ChatListItemResponse
@@ -76,7 +75,15 @@ class SocketService: Service() {
             val chat = gson.fromJson(chatJson, ChatListItemResponse::class.java)
             list.add(chat)
         }
-        _chatList.postValue(list.sortedByDescending { it.createdAt })
+        _chatList.postValue(list)
+    }
+
+    private val onNewChat = Emitter.Listener { args ->
+        val chatJson = args[0].toString()
+        val chat = gson.fromJson(chatJson, ChatListItemResponse::class.java)
+        val currentList = _chatList.value.orEmpty().toMutableList()
+        val newList = listOf(chat) + currentList
+        _chatList.postValue(newList)
     }
 
     private val onNotificationList = Emitter.Listener { args ->
@@ -142,6 +149,7 @@ class SocketService: Service() {
         socket?.apply {
             on("notifications", onNotificationList)
             on("chats", onChatList)
+            on("newChat", onNewChat)
             on("newNotification", onNewNotification)
             on("readNotifications", onReadNotifications)
             on(Socket.EVENT_CONNECT_ERROR, onConnectError)
@@ -153,6 +161,7 @@ class SocketService: Service() {
         socket?.apply {
             off("notifications", onNotificationList)
             off("chats", onChatList)
+            on("newChat", onNewChat)
             on("newNotification", onNewNotification)
             on("readNotifications", onReadNotifications)
             off(Socket.EVENT_CONNECT_ERROR, onConnectError)

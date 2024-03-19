@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.myhome.MainViewModel
+import com.example.myhome.R
 import com.example.myhome.databinding.ChatListItemBinding
 import com.example.myhome.databinding.ChatListItemLoadingBinding
 import com.example.myhome.databinding.ChatListViewBinding
 import com.example.myhome.presentation.ConstantsUi
-import com.example.myhome.presentation.features.chat.ChatUiModel
+import com.example.myhome.presentation.features.chat.models.ChatUiModel
 import com.example.myhome.presentation.utils.adapters.CustomListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +37,10 @@ class ChatListView : Fragment() {
 
         setupRecyclerView()
         setupInfiniteRecyclerView()
+
+        binding.addButton.setOnClickListener {
+            findNavController().navigate(R.id.action_chatListView_to_chatAddView)
+        }
 
         return binding.root
     }
@@ -70,7 +76,7 @@ class ChatListView : Fragment() {
                 onSuccess.visibility = state.successVisibility
                 onEmpty.visibility = state.emptyVisibility
                 onError.visibility = state.errorVisibility
-//            addButtonLayout.visibility = state.addButtonLayoutVisibility ?: View.GONE
+                addButton.visibility = state.addButtonVisibility
                 state.errorMessage?.let { errorLayout.error = it }
             }
         }

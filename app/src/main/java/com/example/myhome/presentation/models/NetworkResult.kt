@@ -42,6 +42,32 @@ fun <T> NetworkResult<T>.asAddResource(state: MutableLiveData<AddResource>) {
     }
 }
 
+fun <T> NetworkResult<T>.asAddResourceWithData(
+    state: MutableLiveData<AddResource>,
+    onSuccess: (data: T) -> Unit
+) {
+    when (this) {
+        is NetworkResult.Success -> {
+            val data = this.data
+            if (data != null) {
+                state.value = AddResource.Success
+                onSuccess(data)
+            } else {
+                state.value = AddResource.CodeError
+            }
+        }
+        is NetworkResult.Loading -> {
+            state.value = AddResource.Loading
+        }
+        is NetworkResult.Error -> {
+            val errorMessage = this.exception.message
+            if (errorMessage != null) {
+                state.value = AddResource.NetworkError(errorMessage)
+            }
+        }
+    }
+}
+
 fun <T> NetworkResult<List<T>>.asListResource(
     state: MutableLiveData<Resource>,
     onSuccess: (data: List<T>) -> Unit

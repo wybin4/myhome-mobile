@@ -13,13 +13,24 @@ data class ChatListRequest(
 data class ChatListItemResponse(
     val id: Int,
     val createdAt: String,
-    val messages: List<MessageListItemResponse>,
-    val users: List<ChatUserListItemResponse>
+    val lastMessage: MessageListItemResponse?,
+    val countUnread: Int,
+    val receiverName: String,
+    val messages: List<MessageListItemResponse>
 ): DateConverter {
     fun formatCreatedAt(): Date {
         return parseDate(createdAt)
     }
 }
+
+data class ChatAddRequest(
+    val users: List<ChatAddRequestItem>
+)
+
+data class ChatAddRequestItem(
+    val userId: Int,
+    val userRole: UserRole
+)
 
 data class ChatUserListItemResponse(
     val userId: Int,

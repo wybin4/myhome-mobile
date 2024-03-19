@@ -2,6 +2,7 @@ package com.example.myhome.presentation.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.util.Date
 
 open class ParcelableModel() : Parcelable {
     constructor(parcel: Parcel) : this()
@@ -26,4 +27,18 @@ open class ParcelableModel() : Parcelable {
             }
         }
     }
+}
+
+fun Parcel.readDate(): Date? {
+    return readLong().let { time ->
+        if (time != 0L) {
+            Date(time)
+        } else {
+            null
+        }
+    }
+}
+
+fun Parcel.writeDate(date: Date?) {
+    writeLong(date?.time ?: 0L)
 }
