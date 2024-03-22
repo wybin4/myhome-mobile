@@ -1,70 +1,43 @@
 package com.example.myhome.features
 
-import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.myhome.features.chat.ChatListItemResponse
+import com.example.myhome.features.chat.dtos.ChatListItemResponse
+import com.example.myhome.features.chat.dtos.MessageAddRequest
+import com.example.myhome.features.chat.dtos.MessageListItemResponse
 import com.example.myhome.features.servicenotification.ServiceNotificationListItemResponse
-import com.example.myhome.models.NotificationListener
-import com.google.gson.Gson
-import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import org.json.JSONArray
 
-class SocketService: Service() {
+class CommonSocketService: BaseSocketService() {
     private val binder = LocalBinder()
-    private val gson = Gson()
-    private val listeners = mutableListOf<NotificationListener>()
 
     private val _notificationList = MutableLiveData<List<ServiceNotificationListItemResponse>>()
     val notificationList: LiveData<List<ServiceNotificationListItemResponse>> = _notificationList
 
+    private val _newMessage = MutableLiveData<MessageListItemResponse>()
+    val newMessage: LiveData<MessageListItemResponse> = _newMessage
+
+    private val _newNotification = MutableLiveData<ServiceNotificationListItemResponse>()
+    val newNotification: LiveData<ServiceNotificationListItemResponse> = _newNotification
+
     private val _chatList = MutableLiveData<List<ChatListItemResponse>>()
     val chatList: LiveData<List<ChatListItemResponse>> = _chatList
 
-    private val _socketError = MutableLiveData<String>()
-    val socketError: LiveData<String> = _socketError
-
-    companion object {
-        private const val SOCKET_URL = "https://personally-poetic-cattle.ngrok-free.app"
-    }
-
-    private var socket: Socket? = null
-
     inner class LocalBinder : Binder() {
-        fun getService(): SocketService = this@SocketService
+        fun getService(): CommonSocketService = this@CommonSocketService
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return START_STICKY
     }
 
-    override fun onBind(intent: Intent): IBinder {
+    override fun onBind(intent: Intent?): IBinder? {
         return binder
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        initializeSocket()
-        startListeners()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disconnectSocket()
-        stopListeners()
-    }
-
-    fun addListener(listener: NotificationListener) {
-        listeners.add(listener)
-    }
-
-    fun removeListener(listener: NotificationListener) {
-        listeners.remove(listener)
     }
 
     private val onChatList = Emitter.Listener { args ->
@@ -76,6 +49,17 @@ class SocketService: Service() {
             list.add(chat)
         }
         _chatList.postValue(list)
+    }
+
+    fun sendSocketMessage(message: MessageAddRequest) {
+        val jsonMessage = gson.toJson(message)
+        socket?.emit("addMessage", jsonMessage)
+    }
+
+    private val onNewMessage = Emitter.Listener { args ->
+        val messageJson = args[0].toString()
+        val message = gson.fromJson(messageJson, MessageListItemResponse::class.java)
+        _newMessage.postValue(message)
     }
 
     private val onNewChat = Emitter.Listener { args ->
@@ -103,9 +87,7 @@ class SocketService: Service() {
         val currentList = _notificationList.value.orEmpty().toMutableList()
         val newList = listOf(notification) + currentList
         _notificationList.postValue(newList)
-        for (listener in listeners) {
-            listener.onNewNotification(notification)
-        }
+        _newNotification.postValue(notification)
     }
 
     private val onReadNotifications = Emitter.Listener { args ->
@@ -129,27 +111,12 @@ class SocketService: Service() {
         _notificationList.postValue(sortedList)
     }
 
-    private val onConnectError = Emitter.Listener { _ ->
-        _socketError.postValue("Websocket connection error")
-    }
-
-    private fun initializeSocket() {
-        try {
-            val options = IO.Options().apply {
-                transports = arrayOf("websocket")
-                forceNew = true
-            }
-            socket = IO.socket(SOCKET_URL, options)
-        } catch (e: Exception) {
-            _socketError.postValue("Failed to initialize socket")
-        }
-    }
-
-    private fun startListeners() {
+    override fun startListeners() {
         socket?.apply {
             on("notifications", onNotificationList)
             on("chats", onChatList)
             on("newChat", onNewChat)
+            on("newMessage", onNewMessage)
             on("newNotification", onNewNotification)
             on("readNotifications", onReadNotifications)
             on(Socket.EVENT_CONNECT_ERROR, onConnectError)
@@ -157,18 +124,15 @@ class SocketService: Service() {
         }
     }
 
-    private fun stopListeners() {
+    override fun stopListeners() {
         socket?.apply {
             off("notifications", onNotificationList)
             off("chats", onChatList)
             on("newChat", onNewChat)
+            on("newMessage", onNewMessage)
             on("newNotification", onNewNotification)
             on("readNotifications", onReadNotifications)
             off(Socket.EVENT_CONNECT_ERROR, onConnectError)
         }
-    }
-
-    private fun disconnectSocket() {
-        socket?.disconnect()
     }
 }

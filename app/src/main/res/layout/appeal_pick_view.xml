@@ -36,7 +36,7 @@
                             android:id="@+id/add_picked_icon"
                             style="@style/IconBlackWhiteLayout">
                             <ImageView
-                                style="@style/IconBlackWhite"
+                                style="@style/IconWhite"
                                 android:src="@drawable/meter"/>
                         </LinearLayout>
                         <TextView
@@ -50,7 +50,7 @@
                             android:id="@+id/verify_picked_icon"
                             style="@style/IconBlackWhiteLayout">
                             <ImageView
-                                style="@style/IconBlackWhite"
+                                style="@style/IconWhite"
                                 android:src="@drawable/meter"/>
                         </LinearLayout>
                         <TextView
@@ -73,7 +73,7 @@
                             android:id="@+id/problem_or_question_picked_icon"
                             style="@style/IconBlackWhiteLayout">
                             <ImageView
-                                style="@style/IconBlackWhite"
+                                style="@style/IconWhite"
                                 android:src="@drawable/problem_or_question" />
                         </LinearLayout>
 
@@ -89,7 +89,7 @@
                             android:id="@+id/claim_picked_icon"
                             style="@style/IconBlackWhiteLayout">
                             <ImageView
-                                style="@style/IconBlackWhite"
+                                style="@style/IconWhite"
                                 android:src="@drawable/claim"/>
                         </LinearLayout>
                         <TextView

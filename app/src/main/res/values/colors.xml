@@ -16,6 +16,8 @@
 
     <color name="primary">#6C63FF</color>
     <color name="primary_light">#146C63FF</color>
+    <color name="primary_light_normal_without_alpha">#EBEAFF</color>
+    <color name="primary_light_night_without_alpha">#5653A3</color>
     <color name="primary_light_clicked">#636C63FF</color>
     <color name="primary_loading">#40B982FF</color>
 
@@ -32,7 +34,7 @@
     <color name="card_border_normal">#EFEFEF</color>
     <color name="card_border_night">#232323</color>
 
-    <color name="input_border">#D3D3D3</color>
+    <color name="input_border_normal">#D3D3D3</color>
 
     <color name="darken">#41000000</color>
 

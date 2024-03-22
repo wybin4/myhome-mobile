@@ -1,6 +1,6 @@
 package com.example.myhome.di
 
-import com.example.myhome.features.SocketService
+import com.example.myhome.features.CommonSocketService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,8 +13,8 @@ class SocketModule {
 
     @Provides
     @Singleton
-    fun provideSocketService(): SocketService {
-        return SocketService()
+    fun provideCommonSocketService(): CommonSocketService {
+        return CommonSocketService()
     }
 
 }

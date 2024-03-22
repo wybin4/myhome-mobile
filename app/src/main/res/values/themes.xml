@@ -155,6 +155,20 @@
         <item name="cornerRadius">15dp</item>
     </style>
 
+    <style name="ChatBlackWhite">
+        <item name="android:background">@drawable/round_corner_button</item>
+        <item name="android:backgroundTint">@color/black</item>
+    </style>
+
+    <style name="ChatPrimaryLight">
+        <item name="android:background">@color/primary_light_normal_without_alpha</item>
+        <item name="android:backgroundTint">@color/primary_light_normal_without_alpha</item>
+    </style>
+
+    <style name="ChatPrimaryLightTail">
+        <item name="tint">@color/primary_light_normal_without_alpha</item>
+    </style>
+
     <style name="ImageLikeText">
         <item name="tint">@color/black</item>
     </style>
@@ -177,6 +191,14 @@
 
     <style name="Card">
         <item name="android:background">@drawable/round_corner_card_normal</item>
+    </style>
+
+    <style name="TextInput">
+        <item name="android:background">@drawable/round_corner_input_normal</item>
+    </style>
+
+    <style name="BackgroundWithElevation">
+        <item name="android:background">@color/white</item>
     </style>
 
     <style name="ChargeBill">
@@ -206,10 +228,18 @@
         <item name="android:layout_marginBottom">20dp</item>
     </style>
 
-    <style name="IconBlackWhite">
+    <style name="IconWhite">
         <item name="android:layout_width">23dp</item>
         <item name="android:layout_height">23dp</item>
         <item name="tint">@color/white</item>
+    </style>
+
+    <style name="IconBlackPrimary">
+        <item name="tint">@color/black</item>
+    </style>
+
+    <style name="IconBlackWhite">
+        <item name="tint">@color/black</item>
     </style>
 
     <style name="PickCardText" parent="Text">

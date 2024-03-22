@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myhome.features.chat.ChatListItemResponse
+import com.example.myhome.features.chat.dtos.ChatListItemResponse
 import com.example.myhome.features.chat.repositories.ChatRepository
 import com.example.myhome.presentation.features.chat.ChatMapper
 import com.example.myhome.presentation.features.chat.models.ChatAddToGetParcelableModel
@@ -41,7 +41,7 @@ class ChatAddViewModel @Inject constructor(
 
     fun addChat(receiver: ReceiverUiModel) {
         viewModelScope.launch {
-            chatRepository.addChat(chatMapper.addToRemote(receiver))
+            chatRepository.addChat(chatMapper.chatAddToRemote(receiver))
                 .asNetworkResult()
                 .collect {
                     it.asAddResourceWithData(_chatAddState) { data ->

@@ -29,7 +29,6 @@ fun clickOnItemInLinearLayout(parentPosition: Int, childPosition: Int, linearLay
 
             val itemToClick = linearLayout.getChildAt(childPosition)
                 ?: throw IllegalStateException("No child view found at position $childPosition in LinearLayout with id $linearLayoutId")
-            Log.e("itemToClick", itemToClick.toString())
             itemToClick.performClick()
         }
     }

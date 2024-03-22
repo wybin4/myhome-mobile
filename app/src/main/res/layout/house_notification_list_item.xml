@@ -34,12 +34,10 @@
                     android:layout_marginBottom="12dp"/>
 
                 <TextView
+                    style="@style/Text"
                     android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
                     android:text="@{notification.title}"
-                    android:textColor="@color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -50,9 +48,9 @@
                     android:layout_marginBottom="25dp"/>
                 <!--                    время-->
                 <LinearLayout
+                    style="@style/CircleBlackPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/circle_normal"
                     android:paddingHorizontal="11dp">
                     <TextView
                         android:layout_width="wrap_content"

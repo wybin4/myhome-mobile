@@ -326,7 +326,7 @@
                                         android:layout_gravity="center_horizontal"
                                         >
                                         <ImageView
-                                            style="@style/IconBlackWhite"
+                                            style="@style/IconWhite"
                                             android:layout_width="28dp"
                                             android:layout_height="28dp"
                                             android:src="@drawable/charge_money_big"

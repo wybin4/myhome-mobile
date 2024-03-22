@@ -1,172 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
-            name="viewModel"
-            type="com.example.myhome.presentation.features.chat.get.ChatGetViewModel" />
+            name="chat"
+            type="com.example.myhome.presentation.features.chat.models.ChatAddToGetParcelableModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
+            style="@style/BackgroundWithElevation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="17dp"
+            android:paddingVertical="13dp"
+            android:elevation="1dp">
+
+            <ImageView
+                style="@style/IconBlackWhite"
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_arrow"
+                android:layout_gravity="center"
+                android:layout_marginEnd="21dp"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="28dp"
-                android:orientation="vertical"
-                android:layout_weight="1"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:background="@drawable/circle_normal"
+                android:backgroundTint="@color/primary_light"
+                android:gravity="center"
+                android:layout_marginEnd="15dp"
                 >
 
-                <!--            дата-->
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/circle_normal"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="2dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="18dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Сегодня"
-                        android:textColor="@color/white"/>
-                </LinearLayout>
-
-                <!--            сообщение-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="end"
-                    android:layout_marginBottom="10dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        >
-                        <!--                    текст-->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/round_corner_button"
-                            android:backgroundTint="@color/primary_light"
-                            >
-                            <TextView
-                                android:layout_width="200dp"
-                                android:layout_height="wrap_content"
-                                android:text="Разберитесь, пожалуйста, с 23 квартирой"
-                                android:textColor="@color/black"
-                                android:padding="12dp"/>
-                        </LinearLayout>
-                        <!--                    хвост-->
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:rotation="120"
-                            android:layout_marginLeft="-5dp"
-                            android:src="@drawable/chat_tail"
-                            app:tint="@color/primary_light"
-                            android:layout_gravity="end|bottom"/>
-                    </LinearLayout>
-
-                    <!--                время-->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13dp"
-                        android:text="10:15"
-                        android:layout_gravity="end"/>
-
-                </LinearLayout>
-
-                <!--            сообщение-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="start"
-                    android:layout_marginBottom="10dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        >
-
-                        <!--                    хвост-->
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_gravity="end|bottom"
-                            android:layout_marginLeft="1dp"
-                            android:layout_marginRight="-10dp"
-                            android:rotation="120"
-                            android:src="@drawable/chat_tail"
-                            app:tint="@color/black" />
-
-                        <!--                    текст-->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/round_corner_button"
-                            >
-                            <TextView
-                                android:layout_width="200dp"
-                                android:layout_height="wrap_content"
-                                android:text="Попробуем поговорить, но ничего не обещаем."
-                                android:textColor="@color/white"
-                                android:padding="12dp"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!--                время-->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13dp"
-                        android:text="10:22"/>
-
-                </LinearLayout>
-
+                    android:textColor="@color/primary"
+                    android:textSize="16dp"
+                    android:text="@{chat.formatReceiverName()}"/>
             </LinearLayout>
 
-<!--            поле для ввода-->
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{chat.receiverName}"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    style="@style/DescriptionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{chat.formatCreatedAt()}"
+                    android:textSize="14dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/scroll_view"
+            android:paddingBottom="50dp"
+            android:layout_marginTop="75dp"
+            android:paddingHorizontal="15dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/primary_light"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="12dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/smile"
-                    android:layout_marginRight="16dp"/>
-                <EditText
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/message_recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:inputType="text|textNoSuggestions"
-                    />
-                <ImageView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/send_arrow"
-                    android:layout_marginLeft="16dp"/>
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:visibility="gone"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/on_error"
+                    style="@style/ErrorListLayout"
+                    android:visibility="gone"
+                    >
+                    <include
+                        android:id="@+id/error_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/list_network_error"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/on_empty"
+                    style="@style/EmptyListLayout"
+                    android:visibility="gone"
+                    >
+                    <include
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        layout="@layout/list_empty"
+                        bind:title="@{`Пока что чат пуст`}"
+                        bind:subtitle="@{`Давайте начнем разговор!`}"
+                        />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/message_infinite_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    />
 
             </LinearLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            style="@style/ChatPrimaryLight"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp">
+            <ImageView
+                style="@style/IconBlackWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/smile"
+                android:layout_marginEnd="16dp"/>
+            <EditText
+                android:id="@+id/entered_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:inputType="text|textNoSuggestions"
+                />
+            <ImageView
+                style="@style/IconBlackWhite"
+                android:id="@+id/send_message_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/send_arrow"
+                android:layout_marginStart="16dp"/>
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

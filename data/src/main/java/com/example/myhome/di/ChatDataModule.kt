@@ -14,7 +14,10 @@ import javax.inject.Singleton
 class ChatDataModule {
     @Provides
     @Singleton
-    fun provideChatRepository(chatApiService: ChatApiService): ChatRepository {
+    fun provideChatRepository(
+        chatApiService: ChatApiService
+    ): ChatRepository {
         return ChatRepositoryImpl(chatApiService)
     }
+
 }

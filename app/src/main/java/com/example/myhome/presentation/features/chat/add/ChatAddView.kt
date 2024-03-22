@@ -83,8 +83,7 @@ class ChatAddView : Fragment() {
         viewModel.receiverList.observe(viewLifecycleOwner) { chatListAdapter.submitList(it) }
         viewModel.chatAddData.observe(viewLifecycleOwner) {
             val bundle = viewModel.addToGetParcel(it).toBundle()
-            findNavController().popBackStack()
-            findNavController().navigate(R.id.action_chatListView_to_chatGetView, bundle)
+            findNavController().navigate(R.id.action_chatAddView_to_chatGetView, bundle)
         }
     }
 

@@ -13,6 +13,7 @@ import com.example.myhome.databinding.ChatListItemBinding
 import com.example.myhome.databinding.ChatListItemLoadingBinding
 import com.example.myhome.databinding.ChatListViewBinding
 import com.example.myhome.presentation.ConstantsUi
+import com.example.myhome.presentation.features.chat.ChatMapper
 import com.example.myhome.presentation.features.chat.models.ChatUiModel
 import com.example.myhome.presentation.utils.adapters.CustomListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
@@ -27,6 +28,8 @@ class ChatListView : Fragment() {
 
     private lateinit var chatListAdapter: CustomListAdapter<ChatUiModel, ChatListItemBinding>
     private lateinit var chatInfiniteListAdapter: InfiniteListAdapter<String, ChatListItemLoadingBinding>
+
+    private val chatMapper = ChatMapper()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,7 +94,8 @@ class ChatListView : Fragment() {
                 binding.chat = item
             },
             onItemClick = { item ->
-                // do smth
+                val bundle = chatMapper.chatListToGetParcel(item).toBundle()
+                findNavController().navigate(R.id.action_chatListView_to_chatGetView, bundle)
             }
         )
 

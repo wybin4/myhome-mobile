@@ -20,7 +20,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myhome.databinding.ActivityMainBinding
 import com.example.myhome.databinding.CustomActionBarBinding
-import com.example.myhome.features.SocketService
+import com.example.myhome.features.CommonSocketService
 import com.example.myhome.presentation.state.list.ListStateWithUnread
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,8 +64,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        startService()
-        startService(Intent(this, NotificationService::class.java))
+        startServices()
 
         checkIntent(intent)
     }
@@ -120,6 +119,11 @@ class MainActivity : AppCompatActivity() {
                 actionBarBinding.placeholder.visibility = View.GONE
                 navView.visibility = View.GONE
             }
+            if (destination.id == R.id.get_chat) {
+                supportActionBar?.hide()
+            } else {
+                supportActionBar?.show()
+            }
             isNotificationDestination = destination.id == R.id.list_service_notification
             updateNotificationListButton(viewModel.notificationListState.value!!)
         }
@@ -159,15 +163,12 @@ class MainActivity : AppCompatActivity() {
         unbindService(viewModel.getServiceConnection())
     }
 
-    private fun startService() {
-        val serviceIntent = Intent(this, SocketService::class.java)
-        startService(serviceIntent)
-        bindService()
-    }
+    private fun startServices() {
+        val commonSocketServiceIntent = Intent(this, CommonSocketService::class.java)
+        startService(commonSocketServiceIntent)
+        bindService(commonSocketServiceIntent, viewModel.getServiceConnection(), BIND_AUTO_CREATE)
 
-    private fun bindService() {
-        val serviceBindIntent = Intent(this, SocketService::class.java)
-        bindService(serviceBindIntent, viewModel.getServiceConnection(), BIND_AUTO_CREATE)
+        startService(Intent(this, NotificationService::class.java))
     }
 
 }

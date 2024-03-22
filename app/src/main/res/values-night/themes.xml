@@ -113,6 +113,20 @@
         <item name="cornerRadius">15dp</item>
     </style>
 
+    <style name="ChatBlackWhite">
+        <item name="android:background">@drawable/round_corner_button</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="ChatPrimaryLight">
+        <item name="android:background">@color/primary_light_night_without_alpha</item>
+        <item name="android:backgroundTint">@color/primary_light_night_without_alpha</item>
+    </style>
+
+    <style name="ChatPrimaryLightTail">
+        <item name="tint">@color/primary_light_night_without_alpha</item>
+    </style>
+
     <style name="ImageLikeText">
         <item name="tint">@color/white</item>
     </style>
@@ -137,6 +151,14 @@
         <item name="android:background">@drawable/round_corner_card_night</item>
     </style>
 
+    <style name="TextInput">
+        <item name="android:background">@drawable/round_corner_input_night</item>
+    </style>
+
+    <style name="BackgroundWithElevation">
+        <item name="android:background">@color/white_night</item>
+    </style>
+
     <style name="ChargeBill">
         <item name="srcCompat">@drawable/charge_bill_night</item>
     </style>
@@ -148,5 +170,14 @@
     <style name="BottomSheetDialog">
         <item name="android:background">@drawable/bottom_dialog_night</item>
     </style>
+
+    <style name="IconBlackPrimary">
+        <item name="tint">@color/primary</item>
+    </style>
+
+    <style name="IconBlackWhite">
+        <item name="tint">@color/white</item>
+    </style>
+
 
 </resources>

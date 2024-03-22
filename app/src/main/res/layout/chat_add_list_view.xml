@@ -55,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     >
                     <LinearLayout
                         style="@style/ItemLoading"
@@ -76,13 +77,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
                     >
 
                     <LinearLayout
+                        style="@style/TextInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/round_corner_input"
                         android:paddingHorizontal="11dp"
                         android:paddingVertical="8dp"
                         android:layout_marginBottom="30dp">
