@@ -27,6 +27,8 @@ class ChatGetViewModel @Inject constructor(
     private val chatRepository: ChatRepository,
     private val chatMapper: ChatMapper
 ): ViewModel() {
+    var isItView = false
+
     private var loadingIdCounter = 0
 
     lateinit var chatParcelable: ChatAddToGetParcelableModel
@@ -59,22 +61,45 @@ class ChatGetViewModel @Inject constructor(
         service.newMessage.observeForever { message ->
             if (message != null) {
                 val messageId = message.id
-                val currentList = messageList.value.orEmpty()
-                val index = currentList.indexOfFirst { it.createdAt == message.createdAt }
-                if (index != -1) {
-                    val updatedList = currentList.toMutableList()
-                    updatedList[index] = updatedList[index].copy(
-                        id = messageId,
-                        messageState = MessageState.Success(message.status == MessageStatus.Read)
-                    )
-                    _messageList.postValue(updatedList)
+                val newMessageUi = chatMapper.messageToUi(message)
+                if (newMessageUi.isItMe) {
+                    val currentList = messageList.value.orEmpty()
+                    val index = currentList.indexOfFirst { it.createdAt == message.createdAt }
+                    if (index != -1) {
+                        val updatedList = currentList.toMutableList()
+                        updatedList[index] = updatedList[index].copy(
+                            id = messageId,
+                            messageState = MessageState.Success(message.status == MessageStatus.Read)
+                        )
+                        _messageList.postValue(updatedList)
+                    } else {
+                        updateMessageStatesInList(MessageState.Error)
+                    }
                 } else {
-                    updateMessageStatesInList(MessageState.Error)
+                    val currentList = messageList.value.orEmpty()
+                    _messageList.postValue(currentList + newMessageUi)
+                    if (isItView) {
+                        service.readSocketMessage(chatMapper.messageReadToRemote(chatParcelable.id, messageId))
+                    }
                 }
             } else {
                 updateMessageStatesInList(MessageState.Error)
             }
         }
+        service.readMessages.observeForever { messages ->
+            if (messages.isNotEmpty()) {
+                val updatedMessageList = _messageList.value?.map { message ->
+                    val updatedMessage = messages.find { it.id == message.id }
+                    if (updatedMessage != null && updatedMessage.status == MessageStatus.Read) {
+                        message.copy(messageState = MessageState.Success(true))
+                    } else {
+                        message
+                    }
+                }
+                updatedMessageList?.let { _messageList.value = it }
+            }
+        }
+
         service.socketError.observeForever {
             updateMessageStatesInList(MessageState.Error)
         }

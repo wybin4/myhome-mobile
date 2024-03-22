@@ -4,7 +4,9 @@ import com.example.myhome.features.chat.MessageStatus
 import com.example.myhome.models.UserRole
 
 data class MessageListRequest(
-    val chatId: Int
+    val chatId: Int,
+    val userId: Int,
+    val userRole: UserRole = UserRole.Owner
 )
 
 data class MessageListItemResponse(
@@ -22,4 +24,11 @@ data class MessageAddRequest(
     val senderId: Int,
     val senderRole: UserRole = UserRole.Owner,
     val createdAt: Long
+)
+
+data class MessageReadRequest(
+    val messageId: Int,
+    val chatId: Int,
+    val senderId: Int,
+    val senderRole: UserRole = UserRole.Owner,
 )

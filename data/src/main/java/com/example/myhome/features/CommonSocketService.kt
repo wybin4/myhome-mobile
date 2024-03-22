@@ -3,11 +3,13 @@ package com.example.myhome.features
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.chat.dtos.ChatListItemResponse
 import com.example.myhome.features.chat.dtos.MessageAddRequest
 import com.example.myhome.features.chat.dtos.MessageListItemResponse
+import com.example.myhome.features.chat.dtos.MessageReadRequest
 import com.example.myhome.features.servicenotification.ServiceNotificationListItemResponse
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -21,6 +23,9 @@ class CommonSocketService: BaseSocketService() {
 
     private val _newMessage = MutableLiveData<MessageListItemResponse>()
     val newMessage: LiveData<MessageListItemResponse> = _newMessage
+
+    private val _readMessages = MutableLiveData<List<MessageListItemResponse>>()
+    val readMessages: LiveData<List<MessageListItemResponse>> = _readMessages
 
     private val _newNotification = MutableLiveData<ServiceNotificationListItemResponse>()
     val newNotification: LiveData<ServiceNotificationListItemResponse> = _newNotification
@@ -56,10 +61,26 @@ class CommonSocketService: BaseSocketService() {
         socket?.emit("addMessage", jsonMessage)
     }
 
+    fun readSocketMessage(message: MessageReadRequest) {
+        val jsonMessage = gson.toJson(message)
+        socket?.emit("readMessage", jsonMessage)
+    }
+
     private val onNewMessage = Emitter.Listener { args ->
         val messageJson = args[0].toString()
         val message = gson.fromJson(messageJson, MessageListItemResponse::class.java)
         _newMessage.postValue(message)
+    }
+
+    private val onReadMessages = Emitter.Listener { args ->
+        val messages = args[0] as JSONArray
+        val list = mutableListOf<MessageListItemResponse>()
+        for (i in 0 until messages.length()) {
+            val messageJson = messages.getJSONObject(i).toString()
+            val message = gson.fromJson(messageJson, MessageListItemResponse::class.java)
+            list.add(message)
+        }
+        _readMessages.postValue(list)
     }
 
     private val onNewChat = Emitter.Listener { args ->
@@ -117,6 +138,7 @@ class CommonSocketService: BaseSocketService() {
             on("chats", onChatList)
             on("newChat", onNewChat)
             on("newMessage", onNewMessage)
+            on("readMessages", onReadMessages)
             on("newNotification", onNewNotification)
             on("readNotifications", onReadNotifications)
             on(Socket.EVENT_CONNECT_ERROR, onConnectError)
@@ -128,10 +150,11 @@ class CommonSocketService: BaseSocketService() {
         socket?.apply {
             off("notifications", onNotificationList)
             off("chats", onChatList)
-            on("newChat", onNewChat)
-            on("newMessage", onNewMessage)
-            on("newNotification", onNewNotification)
-            on("readNotifications", onReadNotifications)
+            off("newChat", onNewChat)
+            off("newMessage", onNewMessage)
+            off("readMessages", onReadMessages)
+            off("newNotification", onNewNotification)
+            off("readNotifications", onReadNotifications)
             off(Socket.EVENT_CONNECT_ERROR, onConnectError)
         }
     }

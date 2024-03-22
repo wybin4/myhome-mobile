@@ -6,6 +6,7 @@ import com.example.myhome.features.chat.dtos.ChatListItemResponse
 import com.example.myhome.features.chat.dtos.ChatListRequest
 import com.example.myhome.features.chat.dtos.ChatUserListItemResponse
 import com.example.myhome.features.chat.dtos.MessageListRequest
+import com.example.myhome.models.UserRole
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -13,7 +14,7 @@ class ChatRepositoryImpl(
     private val chatApiService: ChatApiService
 ): ChatRepository {
     override fun listMessage(chatId: Int) = flow {
-        val request = MessageListRequest(chatId)
+        val request = MessageListRequest(chatId = chatId, userId = 1)
         emit(chatApiService.listMessage(request))
     }
 

@@ -7,11 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DiffUtil
 import com.example.myhome.R
 import com.example.myhome.databinding.ChatGetViewBinding
 import com.example.myhome.databinding.MessageListItemBinding
@@ -71,6 +68,7 @@ class ChatGetView : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.isItView = true
         viewModel.fetchMessageList()
     }
 
@@ -116,6 +114,11 @@ class ChatGetView : Fragment() {
         )
         binding.messageRecyclerView.adapter = messageListAdapter
         binding.messageRecyclerView.itemAnimator = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.isItView = false
     }
 
     override fun onDestroyView() {
