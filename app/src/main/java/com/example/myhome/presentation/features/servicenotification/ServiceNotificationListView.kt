@@ -82,13 +82,14 @@ class ServiceNotificationListView : Fragment() {
             },
             setBinding = { binding, item ->
                 binding.notification = item
-            },
-            onItemClick = { item ->
-//                val bundle = viewModel.notificationUiMapper.notificationUiToGetParcel(item).toBundle()
-//                findNavController().navigate(R.id.action_NotificationListView_to_NotificationGetView, bundle)
-            }
+            }, onItemClick = null
         )
         binding.notificationRecyclerView.adapter = notificationListAdapter
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.readNotifications()
     }
 
     override fun onDestroyView() {

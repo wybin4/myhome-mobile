@@ -2,8 +2,7 @@ package com.example.myhome.presentation.features.chat.models
 
 import android.os.Bundle
 import android.os.Parcel
-import com.example.myhome.models.UnixTimeConverter
-import com.example.myhome.presentation.features.charge.converters.MoneyConverter
+import com.example.myhome.presentation.features.chat.MessageFormatter
 import com.example.myhome.presentation.features.chat.converters.CombinedTimeConverter
 import com.example.myhome.presentation.models.Adaptive
 import com.example.myhome.presentation.models.ParcelableModel
@@ -21,7 +20,7 @@ data class ChatUiModel(
     val isMyMessageLast: Boolean,
     val countUnread: Int,
     val createdAt: Date
-) : Adaptive, CombinedTimeConverter, CharPicker {
+) : Adaptive, CombinedTimeConverter, CharPicker, MessageFormatter {
     fun formatMessageAt(): String {
         return if (lastMessageAt != null) {
             val date = Date(lastMessageAt)
@@ -36,9 +35,7 @@ data class ChatUiModel(
     }
 
     fun formatCountUnread(): String {
-        return if (countUnread < 100) {
-            countUnread.toString()
-        } else "99+"
+        return formatCountUnread(countUnread)
     }
 
     fun formatReceiverName(): String {

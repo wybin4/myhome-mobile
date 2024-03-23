@@ -12,6 +12,11 @@
         android:title="@string/title_charges" />
 
     <item
+        android:id="@+id/list_chat"
+        android:icon="@drawable/chats_logo"
+        android:title="@string/title_chats" />
+
+    <item
         android:id="@+id/list_event"
         android:icon="@drawable/events_logo"
         android:title="@string/title_events" />
@@ -20,10 +25,5 @@
         android:id="@+id/list_appeal"
         android:icon="@drawable/appeals_logo"
         android:title="@string/title_appeals" />
-
-    <item
-        android:id="@+id/list_chat"
-        android:icon="@drawable/chats_logo"
-        android:title="@string/title_chats" />
 
 </menu>

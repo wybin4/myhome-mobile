@@ -37,7 +37,7 @@
                             style="@style/IconBlackWhiteLayout">
                             <ImageView
                                 style="@style/IconWhite"
-                                android:src="@drawable/meter"/>
+                                android:src="@drawable/meters_logo"/>
                         </LinearLayout>
                         <TextView
                             style="@style/PickCardText"
@@ -51,7 +51,7 @@
                             style="@style/IconBlackWhiteLayout">
                             <ImageView
                                 style="@style/IconWhite"
-                                android:src="@drawable/meter"/>
+                                android:src="@drawable/meters_logo"/>
                         </LinearLayout>
                         <TextView
                             style="@style/PickCardText"
@@ -90,7 +90,7 @@
                             style="@style/IconBlackWhiteLayout">
                             <ImageView
                                 style="@style/IconWhite"
-                                android:src="@drawable/claim"/>
+                                android:src="@drawable/events_logo"/>
                         </LinearLayout>
                         <TextView
                             style="@style/PickCardText"

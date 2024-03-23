@@ -20,10 +20,10 @@ interface IconPicker {
 
     fun getAppealTypeIcon(type: AppealType): Int? {
         return when (type) {
-            AppealType.AddIndividualMeter -> R.drawable.meter
-            AppealType.VerifyIndividualMeter -> R.drawable.meter
+            AppealType.AddIndividualMeter -> R.drawable.meters_logo
+            AppealType.VerifyIndividualMeter -> R.drawable.meters_logo
             AppealType.ProblemOrQuestion -> R.drawable.problem_or_question
-            AppealType.Claim -> R.drawable.claim
+            AppealType.Claim -> R.drawable.events_logo
             else -> null
         }
     }

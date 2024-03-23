@@ -1,6 +1,5 @@
 package com.example.myhome.presentation.features.chat.converters
 
-import android.util.Log
 import com.example.myhome.features.chat.MessageStatus
 import com.example.myhome.features.chat.dtos.ChatListItemResponse
 import com.example.myhome.features.chat.dtos.ChatUserListItemResponse

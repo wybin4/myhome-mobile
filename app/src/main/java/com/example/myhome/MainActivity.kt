@@ -6,12 +6,18 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.annotation.DimenRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
+import androidx.databinding.Observable
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -19,16 +25,21 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myhome.databinding.ActivityMainBinding
+import com.example.myhome.databinding.BottomNavChatItemBinding
 import com.example.myhome.databinding.CustomActionBarBinding
 import com.example.myhome.features.CommonSocketService
 import com.example.myhome.presentation.state.list.ListStateWithUnread
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var actionBarBinding: CustomActionBarBinding
+    private lateinit var chatCircleBinding: BottomNavChatItemBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -63,6 +74,18 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+
+        viewModel.unreadMessagesCount.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                val unreadMessagesCount = viewModel.unreadMessagesCount.get()
+                if (unreadMessagesCount > 0) {
+                    chatCircleBinding.messageCount.visibility = View.VISIBLE
+                    chatCircleBinding.messageCount.text = viewModel.formatCountUnread(unreadMessagesCount)
+                } else {
+                    chatCircleBinding.messageCount.visibility = View.GONE
+                }
+            }
+        })
 
         startServices()
 
@@ -110,6 +133,14 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigation(navView: BottomNavigationView) {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        val navMenuView = navView.getChildAt(0) as BottomNavigationMenuView
+        val itemView = navMenuView.getChildAt(2) as BottomNavigationItemView
+        chatCircleBinding = BottomNavChatItemBinding.inflate(
+            LayoutInflater.from(this),
+            navMenuView,
+            false
+        )
+        itemView.addView(chatCircleBinding.root)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isStartDestination = destination.id in appBarConfiguration.topLevelDestinations
             if (isStartDestination) {
@@ -124,6 +155,11 @@ class MainActivity : AppCompatActivity() {
             } else {
                 supportActionBar?.show()
             }
+            if (destination.id == R.id.list_chat) {
+                chatCircleBinding.messageCount.setMarginTop(R.dimen.chat_non_top_margin)
+            } else {
+                chatCircleBinding.messageCount.setMarginTop(R.dimen.chat_top_margin)
+            }
             isNotificationDestination = destination.id == R.id.list_service_notification
             updateNotificationListButton(viewModel.notificationListState.value!!)
         }
@@ -131,6 +167,13 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             actionBarBinding.title.text = destination.label
         }
+    }
+
+    private fun TextView.setMarginTop(@DimenRes marginTopResId: Int) {
+        val marginTop = resources.getDimensionPixelSize(marginTopResId)
+        val params = layoutParams as ViewGroup.MarginLayoutParams
+        params.topMargin = marginTop
+        layoutParams = params
     }
 
     private fun observeResourceState() {

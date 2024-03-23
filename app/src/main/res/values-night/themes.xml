@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Myhome" parent="Theme.MaterialComponents.DayNight">
         <item name="colorAccent">@color/primary</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnSurface">@color/primary_logo_clicked</item>
     </style>
 
     <style name="ActionButton">
@@ -99,6 +101,10 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BottomNavView">
+        <item name="android:background">@color/black_background</item>
     </style>
 
     <style name="WhiteBlackText">

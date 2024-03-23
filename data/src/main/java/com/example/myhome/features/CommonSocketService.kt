@@ -66,6 +66,10 @@ class CommonSocketService: BaseSocketService() {
         socket?.emit("readMessage", jsonMessage)
     }
 
+    fun readSocketNotifications() {
+        socket?.emit("readNotifications")
+    }
+
     private val onNewMessage = Emitter.Listener { args ->
         val messageJson = args[0].toString()
         val message = gson.fromJson(messageJson, MessageListItemResponse::class.java)
