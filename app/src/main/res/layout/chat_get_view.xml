@@ -21,7 +21,8 @@
             android:orientation="horizontal"
             android:paddingHorizontal="17dp"
             android:paddingVertical="13dp"
-            android:elevation="1dp">
+            android:elevation="1dp"
+            >
 
             <ImageView
                 style="@style/IconBlackWhite"

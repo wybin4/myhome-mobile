@@ -13,17 +13,21 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:weightSum="1">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{payment.getFormattedPayedAt()}"
                 android:textColor="@color/primary"
-                android:layout_marginRight="13dp"/>
+                android:layout_weight="0.3"
+                android:textSize="13dp"/>
 
             <TextView
                 style="@style/DescriptionText"
-                android:text="@{payment.getFormattedAmount()}"/>
+                android:text="@{payment.getFormattedAmount()}"
+                android:layout_weight="0.7"
+                android:textSize="13dp"/>
         </LinearLayout>
 
         <ImageView

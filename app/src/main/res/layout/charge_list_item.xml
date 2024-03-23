@@ -54,31 +54,36 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:layout_gravity="center">
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0.7"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="2dp">
 
                         <TextView
                             style="@style/Text"
                             android:text="@{charge.apartmentName}"
                             android:fontFamily="@font/robotomedium"
                             android:layout_marginBottom="2dp"
-                            android:textSize="15dp"/>
+                            android:textSize="14dp"/>
 
                         <TextView
                             style="@style/DescriptionText"
-                            android:text="@{charge.periodName}"/>
+                            android:text="@{charge.periodName}"
+                            android:textSize="13dp"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:layout_weight="0.3"
                         >
 
                         <TextView
@@ -88,7 +93,8 @@
                             android:textColor="@color/primary"
                             android:fontFamily="@font/robotomedium"
                             android:layout_marginBottom="2dp"
-                            android:textSize="17dp"/>
+                            android:textSize="16dp"
+                            android:layout_gravity="end"/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -106,6 +112,7 @@
                                 android:id="@+id/amount_change_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textSize="13dp"
                                 android:text="@{charge.formatPercent()}"/>
                         </LinearLayout>
 

@@ -15,7 +15,7 @@
     <color name="transparent">#00FFFFFF</color>
 
     <color name="primary">#6C63FF</color>
-    <color name="primary_light">#146C63FF</color>
+    <color name="primary_light">#266C63FF</color>
     <color name="primary_light_normal_without_alpha">#EBEAFF</color>
     <color name="primary_light_night_without_alpha">#5653A3</color>
     <color name="primary_light_clicked">#636C63FF</color>
@@ -28,7 +28,7 @@
 
     <color name="description_normal">#616161</color>
     <color name="description_night">#D5D5D5</color>
-    <color name="description_light">#14616161</color>
+    <color name="description_light">#26616161</color>
     <color name="description_light_clicked">#4F616161</color>
 
     <color name="card_border_normal">#EFEFEF</color>

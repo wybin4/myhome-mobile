@@ -14,6 +14,6 @@ data class PaymentUiModel(
     }
 
     fun getFormattedAmount(): String {
-        return "Оплата в размере " + String.format("%.2f", amount) + " ₽"
+        return "Оплачено " + String.format("%.2f", amount) + " ₽"
     }
 }

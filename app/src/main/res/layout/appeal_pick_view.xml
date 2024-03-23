@@ -31,7 +31,7 @@
                     <LinearLayout
                         android:id="@+id/add_picked_layout"
                         style="@style/PickCardLayout"
-                        android:layout_marginRight="41dp">
+                        android:layout_marginRight="31dp">
                         <LinearLayout
                             android:id="@+id/add_picked_icon"
                             style="@style/IconBlackWhiteLayout">
@@ -68,7 +68,7 @@
                     <LinearLayout
                         android:id="@+id/problem_or_question_picked_layout"
                         style="@style/PickCardLayout"
-                        android:layout_marginRight="41dp">
+                        android:layout_marginRight="31dp">
                         <LinearLayout
                             android:id="@+id/problem_or_question_picked_icon"
                             style="@style/IconBlackWhiteLayout">

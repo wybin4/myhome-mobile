@@ -160,7 +160,7 @@
     </style>
 
     <style name="ChargeBill">
-        <item name="srcCompat">@drawable/charge_bill_night</item>
+        <item name="android:background">@drawable/charge_bill_night</item>
     </style>
 
     <style name="Dialog">

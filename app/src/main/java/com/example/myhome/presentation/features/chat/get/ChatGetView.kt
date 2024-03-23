@@ -68,8 +68,12 @@ class ChatGetView : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.isItView = true
         viewModel.fetchMessageList()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.isItView = true
     }
 
     private fun updateViewState(state: ListState) {

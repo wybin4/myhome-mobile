@@ -11,12 +11,13 @@ import com.example.myhome.R
 import com.example.myhome.databinding.OptionItemBinding
 import com.example.myhome.presentation.features.event.OptionUiModel
 import com.example.myhome.presentation.utils.pickers.ColorPicker
+import com.example.myhome.presentation.utils.pickers.ThemePicker
 
 class OptionUiManager(
     private val context: FragmentActivity,
     private val isVotingClosed: Boolean,
     var isSomeSelected: Boolean
-): ColorPicker {
+): ColorPicker, ThemePicker {
     private object ColorConstants {
         val COLOR_CLOSED = R.color.description_normal
         val COLOR_CLOSED_LIGHT_CLICKED = R.color.description_light_clicked
@@ -54,6 +55,8 @@ class OptionUiManager(
     fun toggle(binding: OptionItemBinding, option: OptionUiModel) {
         val primaryColor = resolvePrimaryColor(option.selected)
         val secondaryColor = resolveSecondaryColor()
+        val circleColor =resolvePrimaryColor(false)
+        val isItDarkTheme = isDarkTheme(context)
         binding.apply {
             resultLayout.setVisibility(option.isResult)
 
@@ -62,7 +65,12 @@ class OptionUiManager(
             selectedIndicator.setWidth(wrapper, option.proportion)
 
             wrapper.backgroundTintList = ColorStateList.valueOf(secondaryColor)
-            circle.backgroundTintList = ColorStateList.valueOf(primaryColor)
+            circleCenter.backgroundTintList = ColorStateList.valueOf(primaryColor)
+            if (isItDarkTheme) {
+                circle.backgroundTintList = ColorStateList.valueOf(circleColor)
+            } else {
+                circle.backgroundTintList = ColorStateList.valueOf(getColor(context, R.color.white))
+            }
 
             text.setupText(option.text, primaryColor)
             proportion.setupText(option.getFormattedProportion(), primaryColor)
@@ -72,9 +80,9 @@ class OptionUiManager(
 
     private fun FrameLayout.setWidth(parent: FrameLayout, value: Double) {
         parent.post {
-            val widthInPixels = (width * value) / 100
+            val widthInPixels = (parent.width * value) / 100
             val layoutParams = this.layoutParams as FrameLayout.LayoutParams
-            layoutParams.width = widthInPixels.toInt() + 10
+            layoutParams.width = widthInPixels.toInt() + 20
             this.layoutParams = layoutParams
         }
     }
