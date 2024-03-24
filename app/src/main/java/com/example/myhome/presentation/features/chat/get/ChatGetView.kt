@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
@@ -50,8 +51,15 @@ class ChatGetView : Fragment() {
         setupInfiniteRecyclerView()
 
         binding.backButton.setOnClickListener {
-            findNavController().navigate(R.id.action_chatGetView_to_chatListView)
+            navigateBack()
         }
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigateBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+
         binding.sendMessageButton.setOnClickListener {
             viewModel.sendMessage(binding.enteredText.text.toString())
             binding.enteredText.setText("")
@@ -74,6 +82,10 @@ class ChatGetView : Fragment() {
     override fun onStart() {
         super.onStart()
         viewModel.isItView = true
+    }
+
+    private fun navigateBack() {
+        findNavController().navigate(R.id.action_chatGetView_to_chatListView)
     }
 
     private fun updateViewState(state: ListState) {

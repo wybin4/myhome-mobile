@@ -23,14 +23,15 @@ class ChatAddViewModel @Inject constructor(
     private val chatRepository: ChatRepository,
     private val chatMapper: ChatMapper
 ): ViewModel() {
+    private var originalReceiverList: List<ReceiverUiModel> = emptyList()
     private val _receiverList = MutableLiveData<List<ReceiverUiModel>>()
     val receiverList: LiveData<List<ReceiverUiModel>> = _receiverList
 
     private val _receiverListState = MutableLiveData<Resource>(Resource.Loading)
     val receiverListState: LiveData<Resource> = _receiverListState
 
-    private val _chatAddState = MutableLiveData<AddResource>(AddResource.Loading)
-    val chatAddState: LiveData<AddResource> = _chatAddState // OBSERVE
+    private val _chatAddState = MutableLiveData<AddResource>(AddResource.None)
+    val chatAddState: LiveData<AddResource> = _chatAddState
 
     private val _chatAddData = MutableLiveData<ChatListItemResponse>()
     val chatAddData: LiveData<ChatListItemResponse> = _chatAddData
@@ -51,15 +52,28 @@ class ChatAddViewModel @Inject constructor(
         }
     }
 
-    fun fetchChatList() {
+    fun fetchReceiverList() {
         viewModelScope.launch {
             chatRepository.listReceiver()
                 .asNetworkResult()
                 .collect {
                     it.asListResource(_receiverListState) { data ->
-                        _receiverList.value = chatMapper.receiverListToUi(data)
+                        originalReceiverList = chatMapper.receiverListToUi(data)
+                        _receiverList.value = originalReceiverList
                     }
                 }
         }
     }
+
+    fun filterReceiverListByName(name: String) {
+        val filteredList = if (name.isNotBlank()) {
+            _receiverList.value?.filter { receiver ->
+                receiver.name.contains(name, ignoreCase = true)
+            }
+        } else {
+            originalReceiverList
+        }
+        _receiverList.postValue(filteredList ?: emptyList())
+    }
+
 }

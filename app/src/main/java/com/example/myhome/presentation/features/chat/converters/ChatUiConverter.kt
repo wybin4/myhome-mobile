@@ -17,19 +17,30 @@ interface ChatUiConverter {
 
     fun chatListToUi(chats: List<ChatListItemResponse>): List<ChatUiModel> {
         return chats
-            .filter { it.lastMessage != null }
             .map {
-                ChatUiModel(
-                    id = it.id,
-                    receiverName = it.receiverName,
-                    lastMessageText = it.lastMessage!!.text,
-                    lastMessageAt = it.lastMessage!!.createdAt,
-                    isMyMessageLast = isItMe(it.lastMessage!!.sender),
-                    countUnread = it.countUnread,
-                    createdAt = it.formatCreatedAt()
-                )
+                if (it.lastMessage != null) {
+                    ChatUiModel(
+                        id = it.id,
+                        receiverName = it.receiverName,
+                        lastMessageText = it.lastMessage!!.text,
+                        lastMessageAt = it.lastMessage!!.createdAt,
+                        isMyMessageLast = isItMe(it.lastMessage!!.sender),
+                        countUnread = it.countUnread,
+                        createdAt = it.formatCreatedAt()
+                    )
+                } else {
+                    ChatUiModel(
+                        id = it.id,
+                        receiverName = it.receiverName,
+                        lastMessageText = null,
+                        lastMessageAt = null,
+                        isMyMessageLast = false,
+                        countUnread = it.countUnread,
+                        createdAt = it.formatCreatedAt()
+                    )
+                }
             }
-            .sortedByDescending { it.lastMessageAt }
+            .sortedByDescending { it.lastMessageAt ?: it.createdAt.time }
     }
 
     fun receiverListToUi(receivers: List<ChatUserListItemResponse>): List<ReceiverUiModel> {

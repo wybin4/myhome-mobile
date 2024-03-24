@@ -141,6 +141,9 @@ class ChatGetViewModel @Inject constructor(
         )
         val newList = currentList + loadingMessage
         _messageList.postValue(newList)
+        if (_messageListState.value == Resource.Empty) {
+            _messageListState.value = Resource.Success
+        }
         val socketService = localBinder.value?.getService()
         socketService?.sendSocketMessage(chatMapper.messageAddToRemote(chatParcelable.id, text, createdAt))
     }

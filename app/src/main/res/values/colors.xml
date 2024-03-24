@@ -15,7 +15,7 @@
     <color name="primary_light_normal_without_alpha">#EBEAFF</color>
     <color name="primary_light_night_without_alpha">#5653A3</color>
     <color name="primary_light_clicked">#636C63FF</color>
-    <color name="primary_logo_clicked">#BC6C63FF</color>
+    <color name="primary_logo_clicked">#8A6C63FF</color>
     <color name="primary_loading">#406C63FF</color>
 
     <color name="red">#EB5858</color>

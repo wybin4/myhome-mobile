@@ -1,6 +1,8 @@
 package com.example.myhome.presentation.features.chat.add
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +13,10 @@ import com.example.myhome.R
 import com.example.myhome.databinding.ChatAddListItemBinding
 import com.example.myhome.databinding.ChatAddListItemLoadingBinding
 import com.example.myhome.databinding.ChatAddListViewBinding
+import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.chat.models.ReceiverUiModel
+import com.example.myhome.presentation.features.chat.ChatDataAddStateManager
 import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomListAdapter
@@ -30,6 +34,8 @@ class ChatAddView : Fragment() {
     private lateinit var chatInfiniteListAdapter: InfiniteListAdapter<String, ChatAddListItemLoadingBinding>
 
     private val listStateManager = ListStateManager(this::updateViewState)
+    private lateinit var dataAddStateManager: ChatDataAddStateManager
+    private lateinit var dataAddStateBinding: DataStateBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +46,18 @@ class ChatAddView : Fragment() {
 
         setupRecyclerView()
         setupInfiniteRecyclerView()
+        setupDateManager(inflater, container)
+
+        binding.receiverSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val nameFilter = s?.toString() ?: ""
+                viewModel.filterReceiverListByName(nameFilter)
+            }
+
+            override fun afterTextChanged(s: Editable?) { }
+        })
 
         return binding.root
     }
@@ -52,7 +70,15 @@ class ChatAddView : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.fetchChatList()
+        viewModel.fetchReceiverList()
+    }
+
+    private fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
+        dataAddStateBinding = DataStateBinding.inflate(inflater, container, false)
+        dataAddStateManager = ChatDataAddStateManager(
+            requireActivity(), dataAddStateBinding,
+            "Ваш запрос на создание чата в процессе обработки"
+        ) { }
     }
 
     private fun updateViewState(state: ListState) {
@@ -91,6 +117,9 @@ class ChatAddView : Fragment() {
         viewModel.receiverListState.observe(viewLifecycleOwner) { resource ->
             listStateManager.observeStates(resource)
         }
+        viewModel.chatAddState.observe(viewLifecycleOwner) { resource ->
+            dataAddStateManager.observeState(resource)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -103,8 +132,8 @@ class ChatAddView : Fragment() {
             },
             onItemClick = { viewModel.addChat(it) }
         )
-
         binding.receiverRecyclerView.adapter = chatListAdapter
+        binding.receiverRecyclerView.itemAnimator = null
     }
 
     override fun onDestroyView() {

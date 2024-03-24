@@ -3,7 +3,6 @@
     <style name="Theme.Myhome" parent="Theme.MaterialComponents.DayNight">
         <item name="colorAccent">@color/primary</item>
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorOnSurface">@color/primary_logo_clicked</item>
     </style>
 
     <style name="ActionButton">

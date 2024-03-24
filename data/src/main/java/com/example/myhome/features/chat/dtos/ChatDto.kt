@@ -1,6 +1,7 @@
 package com.example.myhome.features.chat.dtos
 
 import com.example.myhome.models.DateConverter
+import com.example.myhome.models.DateTimeConverter
 import com.example.myhome.models.UserRole
 import java.util.Date
 
@@ -15,9 +16,9 @@ data class ChatListItemResponse(
     val lastMessage: MessageListItemResponse?,
     val countUnread: Int,
     val receiverName: String
-): DateConverter {
+): DateTimeConverter {
     fun formatCreatedAt(): Date {
-        return parseDate(createdAt)
+        return parseDateTime(createdAt)
     }
 }
 
