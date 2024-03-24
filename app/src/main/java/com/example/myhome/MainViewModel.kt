@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import com.example.myhome.features.CommonSocketService
 import com.example.myhome.features.servicenotification.models.NotificationStatus
 import com.example.myhome.presentation.features.chat.ChatMapper
-import com.example.myhome.presentation.features.chat.MessageFormatter
 import com.example.myhome.presentation.features.chat.models.ChatUiModel
 import com.example.myhome.presentation.features.servicenotification.ServiceNotificationUiConverter
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
@@ -22,7 +21,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val notificationUiConverter: ServiceNotificationUiConverter,
     private val chatMapper: ChatMapper
-) : ViewModel(), MessageFormatter {
+) : ViewModel() {
     private val _notificationListState = MutableLiveData<ListStateWithUnread>(ListStateWithUnread.Loading)
     val notificationListState: LiveData<ListStateWithUnread> = _notificationListState
 
@@ -93,8 +92,7 @@ class MainViewModel @Inject constructor(
         service.newMessage.observeForever { message ->
             val messageUi = chatMapper.messageToUi(message)
             if (!messageUi.isItMe) {
-                var unreadCount = unreadMessagesCount.get()
-                unreadMessagesCount.set(unreadCount++)
+                unreadMessagesCount.set(unreadMessagesCount.get() + 1)
             }
         }
         service.socketError.observeForever { message ->
