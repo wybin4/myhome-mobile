@@ -15,8 +15,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.CommonSocketService
+import com.example.myhome.features.chat.dtos.MessageAddResponse
 import com.example.myhome.features.servicenotification.ServiceNotificationListItemResponse
-import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiType
 import com.example.myhome.presentation.utils.pickers.IconPicker
 
 class NotificationService : Service(), IconPicker {
@@ -33,6 +33,11 @@ class NotificationService : Service(), IconPicker {
                 service.newNotification.observeForever { notification ->
                     if (notification != null) {
                         onNewNotification(notification)
+                    }
+                }
+                service.newMessage.observeForever { message ->
+                    if (message != null) {
+                        onNewMessage(message)
                     }
                 }
             }
@@ -58,27 +63,24 @@ class NotificationService : Service(), IconPicker {
         unbindService(serviceConnection)
     }
 
-    fun onNewNotification(notification: ServiceNotificationListItemResponse) {
-        val context = applicationContext
-
-        val notificationBuilder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(
-                getServiceNotificationIcon(
-                    ServiceNotificationUiType.fromServiceNotificationType(notification.type)
-                )
-            )
+    private fun createNotificationBuilder(
+        title: String, text: String, fragmentToOpen: String, chatId: String?
+    ): NotificationCompat.Builder {
+        val notificationBuilder = NotificationCompat.Builder(applicationContext, channelId)
+            .setSmallIcon(R.drawable.chats_logo)
             .setColor(ContextCompat.getColor(this, R.color.primary))
-            .setContentTitle(notification.title)
-            .setContentText(notification.text)
+            .setContentTitle(title)
+            .setContentText(text)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)
 
-        val intent = Intent(context, MainActivity::class.java).apply {
-            putExtra("fragment_to_open", "ServiceNotificationListView")
+        val intent = Intent(applicationContext, MainActivity::class.java).apply {
+            putExtra("fragment_to_open", fragmentToOpen)
+            chatId?.let { putExtra("chat_id", it) }
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
 
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         notificationBuilder.setContentIntent(pendingIntent)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -93,6 +95,26 @@ class NotificationService : Service(), IconPicker {
             }
         }
 
+        return notificationBuilder
+    }
+
+    fun onNewNotification(notification: ServiceNotificationListItemResponse) {
+        val notificationBuilder = createNotificationBuilder(
+            notification.title, notification.text,
+            "ServiceNotificationListView", null
+        )
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(notification.id, notificationBuilder.build())
     }
+
+    fun onNewMessage(message: MessageAddResponse) {
+        val chatId = message.chatId.toString()
+        val notificationBuilder = createNotificationBuilder(
+            message.sender.name, message.text,
+            "ChatGetView", chatId
+        )
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(message.id, notificationBuilder.build())
+    }
+
 }

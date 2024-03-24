@@ -3,6 +3,7 @@ package com.example.myhome.presentation.features.chat.get
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -61,7 +62,7 @@ class ChatGetViewModel @Inject constructor(
         service.newMessage.observeForever { message ->
             if (message != null) {
                 val messageId = message.id
-                val newMessageUi = chatMapper.messageToUi(message)
+                val newMessageUi = chatMapper.messageAddToUi(message)
                 if (newMessageUi.isItMe) {
                     val currentList = messageList.value.orEmpty()
                     val index = currentList.indexOfFirst { it.createdAt == message.createdAt }
@@ -140,7 +141,7 @@ class ChatGetViewModel @Inject constructor(
             messageState = MessageState.Loading
         )
         val newList = currentList + loadingMessage
-        _messageList.postValue(newList)
+        _messageList.value = newList
         if (_messageListState.value == Resource.Empty) {
             _messageListState.value = Resource.Success
         }

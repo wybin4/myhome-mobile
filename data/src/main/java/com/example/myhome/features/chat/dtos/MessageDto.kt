@@ -26,6 +26,16 @@ data class MessageAddRequest(
     val createdAt: Long
 )
 
+data class MessageAddResponse(
+    val id: Int,
+    val sender: ChatUserListItemResponse,
+    val text: String,
+    val createdAt: Long,
+    val readAt: String?,
+    val status: MessageStatus,
+    val chatId: Int
+)
+
 data class MessageReadRequest(
     val messageId: Int,
     val chatId: Int,

@@ -3,6 +3,7 @@ package com.example.myhome.presentation.features.chat.converters
 import com.example.myhome.features.chat.MessageStatus
 import com.example.myhome.features.chat.dtos.ChatListItemResponse
 import com.example.myhome.features.chat.dtos.ChatUserListItemResponse
+import com.example.myhome.features.chat.dtos.MessageAddResponse
 import com.example.myhome.features.chat.dtos.MessageListItemResponse
 import com.example.myhome.models.UserRole
 import com.example.myhome.presentation.features.chat.models.ChatUiModel
@@ -54,6 +55,18 @@ interface ChatUiConverter {
     }
 
     fun messageToUi(message: MessageListItemResponse): MessageUiModel {
+        return message.run {
+            MessageUiModel(
+                id = id,
+                text = text,
+                createdAt = createdAt,
+                isItMe = isItMe(sender),
+                messageState = MessageState.Success(status == MessageStatus.Read)
+            )
+        }
+    }
+
+    fun messageAddToUi(message: MessageAddResponse): MessageUiModel {
         return message.run {
             MessageUiModel(
                 id = id,

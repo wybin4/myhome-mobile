@@ -3,6 +3,8 @@ package com.example.myhome.presentation.features.chat.get
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -61,7 +63,15 @@ class ChatGetView : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
 
         binding.sendMessageButton.setOnClickListener {
-            viewModel.sendMessage(binding.enteredText.text.toString())
+            val enteredText = binding.enteredText.text.toString()
+            if (enteredText.length in 1..999) {
+                viewModel.sendMessage(enteredText)
+            } else if (enteredText.length > 999) {
+                val messageChunks = enteredText.chunked(1000)
+                messageChunks.forEach { chunk ->
+                    viewModel.sendMessage(chunk)
+                }
+            }
             binding.enteredText.setText("")
         }
 

@@ -2,6 +2,7 @@ package com.example.myhome
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.Observable
@@ -68,6 +69,12 @@ class MainActivity : AppCompatActivity() {
         val fragmentToOpen = intent.getStringExtra("fragment_to_open")
         if (fragmentToOpen == "ServiceNotificationListView") {
             navController.navigate(R.id.list_service_notification)
+        } else if (fragmentToOpen == "ChatGetView") {
+            val chatId = intent.getStringExtra("chat_id")
+            if (chatId != null) {
+                Log.e("ChatGetView", chatId)
+            }
+//            navController.navigate(R.id.get_chat)
         }
     }
 

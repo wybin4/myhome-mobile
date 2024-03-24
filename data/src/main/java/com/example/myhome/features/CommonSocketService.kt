@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.chat.dtos.ChatListItemResponse
 import com.example.myhome.features.chat.dtos.MessageAddRequest
+import com.example.myhome.features.chat.dtos.MessageAddResponse
 import com.example.myhome.features.chat.dtos.MessageListItemResponse
 import com.example.myhome.features.chat.dtos.MessageReadRequest
 import com.example.myhome.features.servicenotification.ServiceNotificationListItemResponse
@@ -21,8 +22,8 @@ class CommonSocketService: BaseSocketService() {
     private val _notificationList = MutableLiveData<List<ServiceNotificationListItemResponse>>()
     val notificationList: LiveData<List<ServiceNotificationListItemResponse>> = _notificationList
 
-    private val _newMessage = MutableLiveData<MessageListItemResponse>()
-    val newMessage: LiveData<MessageListItemResponse> = _newMessage
+    private val _newMessage = MutableLiveData<MessageAddResponse>()
+    val newMessage: LiveData<MessageAddResponse> = _newMessage
 
     private val _readMessages = MutableLiveData<List<MessageListItemResponse>>()
     val readMessages: LiveData<List<MessageListItemResponse>> = _readMessages
@@ -72,7 +73,7 @@ class CommonSocketService: BaseSocketService() {
 
     private val onNewMessage = Emitter.Listener { args ->
         val messageJson = args[0].toString()
-        val message = gson.fromJson(messageJson, MessageListItemResponse::class.java)
+        val message = gson.fromJson(messageJson, MessageAddResponse::class.java)
         _newMessage.postValue(message)
     }
 

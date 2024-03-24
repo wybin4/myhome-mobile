@@ -90,7 +90,7 @@ class MainViewModel @Inject constructor(
             }
         }
         service.newMessage.observeForever { message ->
-            val messageUi = chatMapper.messageToUi(message)
+            val messageUi = chatMapper.messageAddToUi(message)
             if (!messageUi.isItMe) {
                 unreadMessagesCount.set(unreadMessagesCount.get() + 1)
             }
