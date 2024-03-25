@@ -1,8 +1,10 @@
 package com.example.myhome.presentation.utils.pickers.permissions
 
 import android.Manifest
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 
+@SuppressLint("InlinedApi")
 class NotificationPermissionPicker(activity: AppCompatActivity) : PermissionPicker(
     activity,
     Manifest.permission.POST_NOTIFICATIONS,

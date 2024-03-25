@@ -8,6 +8,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
@@ -17,9 +18,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.CommonSocketService
 import com.example.myhome.features.chat.dtos.MessageAddResponse
 import com.example.myhome.features.servicenotification.ServiceNotificationListItemResponse
+import com.example.myhome.presentation.features.chat.converters.ChatUiConverter
 import com.example.myhome.presentation.utils.pickers.IconPicker
 
-class NotificationService : Service(), IconPicker {
+class NotificationService : Service(), IconPicker, ChatUiConverter {
     private val localBinder: MutableLiveData<CommonSocketService.LocalBinder?> = MutableLiveData<CommonSocketService.LocalBinder?>()
 
     private val channelId = "CHANNEL_ID_NOTIFICATION"
@@ -67,8 +69,9 @@ class NotificationService : Service(), IconPicker {
         title: String, text: String, fragmentToOpen: String, chatId: String?
     ): NotificationCompat.Builder {
         val notificationBuilder = NotificationCompat.Builder(applicationContext, channelId)
-            .setSmallIcon(R.drawable.chats_logo)
-            .setColor(ContextCompat.getColor(this, R.color.primary))
+            .setLargeIcon(BitmapFactory.decodeResource(applicationContext.resources, R.drawable.myhome_logo_wth_back))
+            .setSmallIcon(R.drawable.myhome_logo_wth_back)
+            .setColor(ContextCompat.getColor(applicationContext, R.color.primary))
             .setContentTitle(title)
             .setContentText(text)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -108,13 +111,16 @@ class NotificationService : Service(), IconPicker {
     }
 
     fun onNewMessage(message: MessageAddResponse) {
-        val chatId = message.chatId.toString()
-        val notificationBuilder = createNotificationBuilder(
-            message.sender.name, message.text,
-            "ChatGetView", chatId
-        )
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(message.id, notificationBuilder.build())
+        val messageUi = messageAddToUi(message)
+        if (!messageUi.isItMe) {
+            val chatId = message.chatId.toString()
+            val notificationBuilder = createNotificationBuilder(
+                message.sender.name, message.text,
+                "ChatGetView", chatId
+            )
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.notify(message.id, notificationBuilder.build())
+        }
     }
 
 }

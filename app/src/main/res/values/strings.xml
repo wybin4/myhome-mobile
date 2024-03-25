@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">myhome</string>
+    <string name="app_name">My Home</string>
     <string name="title_meters">Счётчики</string>
     <string name="title_nav_meters">Счётчики и показания</string>
     <string name="title_add_meter">Добавление счётчика</string>
