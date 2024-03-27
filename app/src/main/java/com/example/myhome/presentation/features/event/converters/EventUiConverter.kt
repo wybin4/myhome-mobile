@@ -73,8 +73,8 @@ interface EventUiConverter: ProportionPicker {
     }
 
     fun eventListToUi(events: EventListResponse): List<EventUiModel> {
-        val notificationList = notificationListToEventList(events.notifications.notifications)
-        val votingList = votingListToEventList(events.votings.votings)
+        val notificationList = notificationListToEventList(events.notifications)
+        val votingList = votingListToEventList(events.votings)
         return (notificationList + votingList).sortedByDescending { it.createdAt }
     }
 

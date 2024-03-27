@@ -1,12 +1,15 @@
 package com.example.myhome.presentation.features.appeal.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.example.myhome.R
 import com.example.myhome.databinding.AppealGetViewBinding
 import com.example.myhome.databinding.AppealListItemBinding
@@ -14,12 +17,14 @@ import com.example.myhome.databinding.AppealListItemLoadingBinding
 import com.example.myhome.databinding.AppealListViewBinding
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.appeal.AppealUiModel
+import com.example.myhome.presentation.models.Resource
 import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.state.list.ListStateManager
-import com.example.myhome.presentation.utils.adapters.CustomListAdapter
+import com.example.myhome.presentation.utils.adapters.CustomPagingAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AppealListView : Fragment() {
@@ -30,7 +35,7 @@ class AppealListView : Fragment() {
 
     private val viewModel by viewModels<AppealListViewModel>()
 
-    private lateinit var appealListAdapter: CustomListAdapter<AppealUiModel, AppealListItemBinding>
+    private lateinit var appealListAdapter: CustomPagingAdapter<AppealUiModel, AppealListItemBinding>
     private lateinit var appealInfiniteListAdapter: InfiniteListAdapter<String, AppealListItemLoadingBinding>
 
     private lateinit var bottomSheetDialog: BottomSheetDialog
@@ -106,17 +111,33 @@ class AppealListView : Fragment() {
     }
 
     private fun observeList() {
-        viewModel.appealList.observe(viewLifecycleOwner) { appealListAdapter.submitList(it) }
+        viewModel.appealList.observe(viewLifecycleOwner) {
+            lifecycleScope.launch {
+                appealListAdapter.submitData(it)
+            }
+        }
     }
 
     private fun observeResourceState() {
         viewModel.appealListState.observe(viewLifecycleOwner) { resource ->
             listStateManager.observeStates(resource)
         }
+        appealListAdapter.addLoadStateListener { loadState ->
+            when(loadState.refresh) {
+                is LoadState.Error -> {
+                    val errorMessage = (loadState.refresh as LoadState.Error).error.message
+                    viewModel.setState(Resource.Error(errorMessage ?: ""))
+                }
+                else -> {}
+            }
+            if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && appealListAdapter.itemCount < 1) {
+                viewModel.setState(Resource.Empty)
+            }
+        }
     }
 
     private fun setupRecyclerView() {
-        appealListAdapter = CustomListAdapter(
+        appealListAdapter = CustomPagingAdapter(
             itemBindingInflater = { inflater, parent, attachToParent ->
                 AppealListItemBinding.inflate(inflater, parent, attachToParent)
             },
@@ -127,9 +148,7 @@ class AppealListView : Fragment() {
                 bindingGet.appeal = item
                 bottomSheetDialog.show()
             }
-
         )
-
         bindingList.appealRecyclerView.adapter = appealListAdapter
     }
 

@@ -17,16 +17,18 @@ class AppealDataModule {
     @Provides
     @Singleton
     fun provideAppealStorage(
-        appealApiService: AppealApiService,
-        eventApiService: EventApiService
+        appealApiService: AppealApiService
     ): AppealStorage {
-        return AppealStorage(appealApiService, eventApiService)
+        return AppealStorage(appealApiService)
     }
 
     @Provides
     @Singleton
-    fun provideAppealRepository(appealStorage: AppealStorage): AppealRepository {
-        return AppealRepositoryImpl(appealStorage)
+    fun provideAppealRepository(
+        appealStorage: AppealStorage,
+        eventApiService: EventApiService
+    ): AppealRepository {
+        return AppealRepositoryImpl(appealStorage, eventApiService)
     }
 
 }

@@ -90,4 +90,5 @@ class RetrofitModule {
     fun provideChatApiService(@Named("Normal") retrofit: Retrofit): ChatApiService {
         return retrofit.create(ChatApiService::class.java)
     }
+
 }

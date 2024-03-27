@@ -1,5 +1,6 @@
 package com.example.myhome.testutils.mocks.appeal
 
+import androidx.paging.PagingData
 import com.example.myhome.features.appeal.AppealAddMeterAddRequest
 import com.example.myhome.features.appeal.AppealClaimAddRequest
 import com.example.myhome.features.appeal.AppealListItemResponse
@@ -26,7 +27,7 @@ class AppealRepositoryTest : AppealRepository {
         return flowOf(true)
     }
 
-    override fun listAppeal(): Flow<List<AppealListItemResponse>> {
+    override fun listAppeal(): Flow<PagingData<AppealListItemResponse>> {
         TODO("Not yet implemented")
     }
 }

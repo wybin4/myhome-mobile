@@ -1,9 +1,6 @@
 package com.example.myhome.presentation.testutils.providers
 
-import com.example.myhome.features.event.dto.EventAppealListResponse
 import com.example.myhome.features.event.dto.EventListResponse
-import com.example.myhome.features.event.dto.EventNotificationListResponse
-import com.example.myhome.features.event.dto.EventVotingListResponse
 import com.example.myhome.features.event.dto.HouseNotificationListItemResponse
 import com.example.myhome.features.event.dto.OptionListItemResponse
 import com.example.myhome.features.event.dto.VoteListItemResponse
@@ -152,18 +149,9 @@ object EventUITestListProvider {
     )
 
     val eventList = EventListResponse(
-        notifications = EventNotificationListResponse(
-            notifications = notificationList,
-            totalCount = 3
-        ),
-        votings = EventVotingListResponse(
-            votings = votingList,
-            totalCount = 4
-        ),
-        appeals = EventAppealListResponse(
-            appeals = emptyList(),
-            totalCount = 0
-        )
+        notifications = notificationList,
+        votings = votingList,
+        appeals =  emptyList()
     )
 
 }

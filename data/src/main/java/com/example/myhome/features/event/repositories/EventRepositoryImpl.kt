@@ -16,7 +16,8 @@ class EventRepositoryImpl(
             eventApiService.listEvent(
             EventListRequest(
                 userId = 1,
-                events = listOf(EventType.Notification, EventType.Voting)
+                events = listOf(EventType.Notification, EventType.Voting),
+                meta = null
             )
         )
         )

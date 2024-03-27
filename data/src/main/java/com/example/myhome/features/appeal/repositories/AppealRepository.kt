@@ -1,5 +1,6 @@
 package com.example.myhome.features.appeal.repositories
 
+import androidx.paging.PagingData
 import com.example.myhome.features.appeal.AppealAddMeterAddRequest
 import com.example.myhome.features.appeal.AppealListItemResponse
 import com.example.myhome.features.appeal.AppealClaimAddRequest
@@ -12,5 +13,5 @@ interface AppealRepository {
     fun updateMeter(appeal: AppealVerifyMeterAddRequest): Flow<Boolean>
     fun problem(appeal: AppealProblemAddRequest): Flow<Boolean>
     fun claim(appeal: AppealClaimAddRequest): Flow<Boolean>
-    fun listAppeal(): Flow<List<AppealListItemResponse>>
+    fun listAppeal(): Flow<PagingData<AppealListItemResponse>>
 }

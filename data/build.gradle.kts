@@ -38,14 +38,14 @@ dependencies {
     val hiltVersion = "2.50"
 
     // projects
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     //junit
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
     //mockito
-    testImplementation("org.mockito:mockito-core:5.3.1")
+    testImplementation("org.mockito:mockito-core:5.10.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
@@ -55,4 +55,7 @@ dependencies {
     // hilt
     implementation("com.google.dagger:hilt-android:${hiltVersion}")
     kapt("com.google.dagger:hilt-compiler:${hiltVersion}")
+    // paging
+    implementation("androidx.paging:paging-common-ktx:3.2.1")
+    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
 }

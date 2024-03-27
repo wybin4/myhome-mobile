@@ -1,6 +1,7 @@
 package com.example.myhome.presentation.models
 
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -94,3 +95,19 @@ fun <T> NetworkResult<List<T>>.asListResource(
     }
 }
 
+fun <T : Any> NetworkResult<PagingData<T>>.asPagingDataResource(
+    state: MutableLiveData<Resource>,
+    onSuccess: (data: PagingData<T>) -> Unit
+) {
+    when (this) {
+        is NetworkResult.Success -> {
+            val data = this.data
+            state.value = Resource.Success
+            onSuccess(data)
+        }
+        is NetworkResult.Loading -> {
+            state.value = Resource.Loading
+        }
+        else -> {}
+    }
+}

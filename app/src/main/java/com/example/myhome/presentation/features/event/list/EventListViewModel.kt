@@ -33,7 +33,7 @@ class EventListViewModel @Inject constructor(
                     when (it) {
                         is NetworkResult.Success -> {
                             val data = it.data
-                            if (data.notifications.totalCount > 0 || data.votings.totalCount > 0) {
+                            if (data.notifications.isNotEmpty() || data.votings.isNotEmpty()) {
                                 _eventListState.value = Resource.Success
                                 _eventList.value = eventMapper.eventListToUi(data)
                             } else {

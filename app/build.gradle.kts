@@ -47,17 +47,17 @@ dependencies {
     // projects
     implementation(project(":data"))
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     // navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     //mockito
-    testImplementation("org.mockito:mockito-core:5.3.1")
+    testImplementation("org.mockito:mockito-core:5.10.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
     androidTestImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
     androidTestImplementation("org.mockito:mockito-android:5.10.0")
@@ -86,4 +86,7 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-compiler:${hiltVersion}")
     // fragment testing
     debugImplementation("androidx.fragment:fragment-testing:1.6.2")
+    // pagination
+    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+    implementation("androidx.paging:paging-common-ktx:3.2.1")
 }

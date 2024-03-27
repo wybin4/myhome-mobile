@@ -17,4 +17,5 @@ interface EventApiService {
     suspend fun updateVoting(
         @Body request: VotingUpdateRequest
     ): VoteListItemResponse
+
 }
