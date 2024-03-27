@@ -8,56 +8,57 @@
         android:layout_height="match_parent"
         >
 
-        <androidx.core.widget.NestedScrollView
-            android:overScrollMode="never"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:id="@+id/scroll_view"
-            android:paddingBottom="50dp">
+            android:paddingHorizontal="28dp"
+            android:orientation="vertical"
+            >
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="28dp"
-                android:orientation="vertical"
+                android:id="@+id/on_error"
+                style="@style/ErrorListLayout"
+                android:visibility="gone"
                 >
+                <include
+                    android:id="@+id/error_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/list_network_error"
+                    />
 
-                <LinearLayout
-                    android:id="@+id/on_error"
-                    style="@style/ErrorListLayout"
-                    android:visibility="gone"
-                    >
-                    <include
-                        android:id="@+id/error_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        layout="@layout/list_network_error"
-                        />
+            </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/on_empty"
-                    style="@style/EmptyListLayout"
-                    android:visibility="gone"
-                    >
-                    <include
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        layout="@layout/list_empty"
-                        bind:title="@{`События ещё не произошли`}"
-                        bind:subtitle="@{`Ждём новостей от управляющей компании. Пока во дворе тихо и спокойно`}"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/on_loading"
+            <LinearLayout
+                android:id="@+id/on_empty"
+                style="@style/EmptyListLayout"
+                android:layout_height="match_parent"
+                android:layout_marginTop="-90dp"
+                android:visibility="gone"
+                >
+                <include
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    >
+                    layout="@layout/list_empty"
+                    bind:title="@{`События ещё не произошли`}"
+                    bind:subtitle="@{`Ждём новостей от управляющей компании. Пока во дворе тихо и спокойно`}"
+                    />
+
+            </LinearLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/on_loading"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:paddingBottom="50dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="120dp"
                         android:layout_height="58dp"
@@ -76,40 +77,51 @@
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
                 </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
-                <LinearLayout
-                    android:id="@+id/on_success"
-                    android:layout_weight="1"
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/on_success"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="50dp"
+                android:visibility="gone"
+                >
+
+                <com.google.android.material.appbar.AppBarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    >
-
-                    <Button
-                        android:id="@+id/filter_button"
-                        android:layout_width="120dp"
-                        style="@style/ActionButtonWithDrawable"
-                        android:text="Фильтр"
-                        android:drawableLeft="@drawable/filter"
-                        android:layout_gravity="end"
-                        android:layout_marginBottom="25dp"
-                        />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/event_recycler_view"
+                    android:backgroundTint="@color/transparent"
+                    android:outlineProvider="none">
+                    <com.google.android.material.appbar.CollapsingToolbarLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:nestedScrollingEnabled="false"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                        <Button
+                            android:id="@+id/filter_button"
+                            android:layout_width="120dp"
+                            style="@style/ActionButtonWithDrawable"
+                            android:text="Фильтр"
+                            android:drawableStart="@drawable/filter"
+                            android:layout_gravity="end"
+                            android:layout_marginBottom="25dp"
+                            />
+                    </com.google.android.material.appbar.CollapsingToolbarLayout>
+                </com.google.android.material.appbar.AppBarLayout>
 
-                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/event_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -1,5 +1,9 @@
 package com.example.myhome.features.event.models
 
-enum class EventType {
-    Appeal, Notification, Voting
+enum class EventTypeResponse {
+    Notification, Voting
+}
+
+enum class EventTypeRequest {
+    Appeal, NotificationAndVoting
 }

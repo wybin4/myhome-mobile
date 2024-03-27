@@ -2,7 +2,6 @@ package com.example.myhome.features.event.dto
 
 import com.example.myhome.features.event.models.VotingStatus
 import com.example.myhome.models.DateConverter
-import com.example.myhome.models.DateTimeConverter
 import java.util.Date
 
 data class VotingListItemResponse (
@@ -12,14 +11,9 @@ data class VotingListItemResponse (
     val name: String,
     val houseId: Int,
     val title: String,
-    val createdAt: String,
     val expiredAt: String,
     val status: VotingStatus
-): DateConverter, DateTimeConverter {
-    fun formatCreatedAt(): Date {
-        return parseDateTime(createdAt)
-    }
-
+): DateConverter {
     fun formatExpiredAt(): Date {
         return parseDate(expiredAt)
     }

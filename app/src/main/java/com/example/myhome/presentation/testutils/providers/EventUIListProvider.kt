@@ -2,45 +2,17 @@ package com.example.myhome.presentation.testutils.providers
 
 import com.example.myhome.features.event.dto.EventListResponse
 import com.example.myhome.features.event.dto.HouseNotificationListItemResponse
+import com.example.myhome.features.event.dto.NotificationAndVotingListResponse
 import com.example.myhome.features.event.dto.OptionListItemResponse
 import com.example.myhome.features.event.dto.VoteListItemResponse
 import com.example.myhome.features.event.dto.VotingListItemResponse
+import com.example.myhome.features.event.models.EventTypeResponse
 import com.example.myhome.features.event.models.HouseNotificationType
 import com.example.myhome.features.event.models.VotingStatus
 import com.example.myhome.testutils.DateDomainProvider.getDateString
 import com.example.myhome.testutils.DateDomainProvider.subtractDaysString
 
 object EventUITestListProvider {
-    private val notificationList = listOf(
-        HouseNotificationListItemResponse(
-            id = 1,
-            title = "Отключение холодной воды",
-            createdAt = subtractDaysString(1),
-            text = "???",
-            name = "ТСЖ Прогресс",
-            type = HouseNotificationType.Accident,
-            houseId = 1
-        ),
-        HouseNotificationListItemResponse(
-            id = 2,
-            title = "Отключение горячей воды",
-            createdAt = subtractDaysString(4),
-            text = "534543534",
-            name = "ТСЖ Прогресс",
-            type = HouseNotificationType.Accident,
-            houseId = 1
-        ),
-        HouseNotificationListItemResponse(
-            id = 1,
-            title = "Отключение холодной воды",
-            createdAt = subtractDaysString(5),
-            text = "213123123",
-            name = "ТСЖ Прогресс",
-            type = HouseNotificationType.Accident,
-            houseId = 1
-        )
-    )
-
     private val voteList = mutableListOf(
         VoteListItemResponse(
             id = 2,
@@ -100,57 +72,110 @@ object EventUITestListProvider {
         return modifiedOptions
     }
 
-
-    private val votingList = listOf(
-        VotingListItemResponse(
-            id = 4,
-            name = "ТСЖ Прогресс",
-            title = "Установка домофона",
-            createdAt = subtractDaysString(7),
-            expiredAt = getDateString(),
-            status = VotingStatus.Close,
-            houseId = 1,
-            resultId = 1,
-            options = getOptionSelected()
+    private val notificationList = listOf(
+        NotificationAndVotingListResponse(
+            notification = HouseNotificationListItemResponse(
+                id = 1,
+                title = "Отключение холодной воды",
+                text = "???",
+                name = "ТСЖ Прогресс",
+                type = HouseNotificationType.Accident,
+                houseId = 1
+            ),
+            voting = null,
+            createdAt = subtractDaysString(1),
+            eventType = EventTypeResponse.Notification
         ),
-        VotingListItemResponse(
-            id = 3,
-            name = "ТСЖ Прогресс",
-            title = "Установка домофона",
-            createdAt = subtractDaysString(6),
-            expiredAt = getDateString(),
-            status = VotingStatus.Close,
-            houseId = 1,
-            resultId = 1,
-            options = optionList
-        ),
-        VotingListItemResponse(
-            id = 2,
-            name = "ТСЖ Прогресс",
-            title = "Установка домофона",
-            createdAt = subtractDaysString(3),
-            expiredAt = getDateString(),
-            status = VotingStatus.Open,
-            houseId = 1,
-            resultId = null,
-            options = getOptionSelected()
-        ),
-        VotingListItemResponse(
-            id = 1,
-            name = "ТСЖ Прогресс",
-            title = "Установка домофона с видеонаблюдением",
+        NotificationAndVotingListResponse(
+            notification = null,
+            voting = VotingListItemResponse(
+                id = 1,
+                name = "ТСЖ Прогресс",
+                title = "Установка домофона с видеонаблюдением",
+                expiredAt = getDateString(),
+                status = VotingStatus.Open,
+                houseId = 1,
+                resultId = null,
+                options = optionList
+            ),
             createdAt = subtractDaysString(2),
-            expiredAt = getDateString(),
-            status = VotingStatus.Open,
-            houseId = 1,
-            resultId = null,
-            options = optionList
+            eventType = EventTypeResponse.Notification
+        ),
+        NotificationAndVotingListResponse(
+            notification = null,
+            voting = VotingListItemResponse(
+                id = 2,
+                name = "ТСЖ Прогресс",
+                title = "Установка домофона",
+                expiredAt = getDateString(),
+                status = VotingStatus.Open,
+                houseId = 1,
+                resultId = null,
+                options = getOptionSelected()
+            ),
+            createdAt = subtractDaysString(3),
+            eventType = EventTypeResponse.Notification
+        ),
+        NotificationAndVotingListResponse(
+            notification = HouseNotificationListItemResponse(
+                id = 2,
+                title = "Отключение горячей воды",
+                text = "534543534",
+                name = "ТСЖ Прогресс",
+                type = HouseNotificationType.Accident,
+                houseId = 1
+            ),
+            voting = null,
+            createdAt = subtractDaysString(4),
+            eventType = EventTypeResponse.Notification
+        ),
+        NotificationAndVotingListResponse(
+            notification = HouseNotificationListItemResponse(
+                id = 1,
+                title = "Отключение холодной воды",
+                text = "213123123",
+                name = "ТСЖ Прогресс",
+                type = HouseNotificationType.Accident,
+                houseId = 1
+            ),
+            voting = null,
+            createdAt = subtractDaysString(5),
+            eventType = EventTypeResponse.Notification
+        ),
+        NotificationAndVotingListResponse(
+            notification = null,
+            voting = VotingListItemResponse(
+                id = 3,
+                name = "ТСЖ Прогресс",
+                title = "Установка домофона",
+                expiredAt = getDateString(),
+                status = VotingStatus.Close,
+                houseId = 1,
+                resultId = 1,
+                options = optionList
+            ),
+            createdAt = subtractDaysString(6),
+            eventType = EventTypeResponse.Notification
+        ),
+        NotificationAndVotingListResponse(
+            notification = null,
+            voting = VotingListItemResponse(
+                id = 4,
+                name = "ТСЖ Прогресс",
+                title = "Установка домофона",
+                expiredAt = getDateString(),
+                status = VotingStatus.Close,
+                houseId = 1,
+                resultId = 1,
+                options = getOptionSelected()
+            ),
+            createdAt = subtractDaysString(7),
+            eventType = EventTypeResponse.Notification
         )
     )
 
     val eventList = EventListResponse(
-        notifications = notificationList,
-        votings = votingList,
+        notificationsAndVotings = notificationList,
         appeals =  emptyList()
     )
 

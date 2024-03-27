@@ -1,6 +1,6 @@
 package com.example.myhome.presentation.features.event
 
-import com.example.myhome.features.event.models.EventType
+import com.example.myhome.features.event.models.EventTypeResponse
 import com.example.myhome.features.event.models.VotingStatus
 import com.example.myhome.models.DateConverter
 import com.example.myhome.models.DateTimeConverter
@@ -12,7 +12,7 @@ data class EventUiModel(
     val voting: VotingUiModel?,
     val notification: HouseNotificationUiModel?,
     val createdAt: Date,
-    val eventType: EventType
+    val eventType: EventTypeResponse
 )
 
 data class HouseNotificationUiModel (

@@ -22,6 +22,7 @@ import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomPagingAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
+import com.example.myhome.presentation.utils.handleLoadState
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -122,17 +123,8 @@ class AppealListView : Fragment() {
         viewModel.appealListState.observe(viewLifecycleOwner) { resource ->
             listStateManager.observeStates(resource)
         }
-        appealListAdapter.addLoadStateListener { loadState ->
-            when(loadState.refresh) {
-                is LoadState.Error -> {
-                    val errorMessage = (loadState.refresh as LoadState.Error).error.message
-                    viewModel.setState(Resource.Error(errorMessage ?: ""))
-                }
-                else -> {}
-            }
-            if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && appealListAdapter.itemCount < 1) {
-                viewModel.setState(Resource.Empty)
-            }
+        appealListAdapter.addLoadStateListener {
+            it.handleLoadState(viewModel::setState, appealListAdapter.itemCount < 1)
         }
     }
 

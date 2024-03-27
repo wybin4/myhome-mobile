@@ -2,22 +2,31 @@ package com.example.myhome.features.event.dto
 
 import com.example.myhome.models.UserRole
 import com.example.myhome.features.appeal.AppealListItemResponse
-import com.example.myhome.features.event.models.EventType
-
-data class MetaRequest(
-    val page: Int,
-    val limit: Int
-)
+import com.example.myhome.features.event.models.EventTypeResponse
+import com.example.myhome.features.event.models.EventTypeRequest
+import com.example.myhome.models.DateTimeConverter
+import com.example.myhome.models.MetaRequest
+import java.util.Date
 
 data class EventListRequest (
     val userId: Int,
     val userRole: UserRole = UserRole.Owner,
-    val events: List<EventType>,
+    val eventType: EventTypeRequest,
     val meta: MetaRequest?
 )
 
 data class EventListResponse (
     val appeals: List<AppealListItemResponse>,
-    val notifications: List<HouseNotificationListItemResponse>,
-    val votings: List<VotingListItemResponse>
+    val notificationsAndVotings: List<NotificationAndVotingListResponse>
 )
+
+data class NotificationAndVotingListResponse(
+    val voting: VotingListItemResponse?,
+    val notification: HouseNotificationListItemResponse?,
+    val createdAt: String,
+    val eventType: EventTypeResponse
+): DateTimeConverter {
+    fun formatCreatedAt(): Date {
+        return parseDateTime(createdAt)
+    }
+}

@@ -6,12 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.example.myhome.databinding.EventListViewBinding
 import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.features.event.adapters.EventListAdapter
 import com.example.myhome.presentation.features.event.adapters.InfiniteEventListAdapter
+import com.example.myhome.presentation.models.Resource
+import com.example.myhome.presentation.utils.handleLoadState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EventListView : Fragment() {
@@ -68,12 +73,19 @@ class EventListView : Fragment() {
     }
 
     private fun observeList() {
-        viewModel.eventList.observe(viewLifecycleOwner) { eventListAdapter.submitList(it) }
+        viewModel.eventList.observe(viewLifecycleOwner) {
+            lifecycleScope.launch {
+                eventListAdapter.submitData(it)
+            }
+        }
     }
 
     private fun observeResourceState() {
         viewModel.eventListState.observe(viewLifecycleOwner) { resource ->
             listStateManager.observeStates(resource)
+        }
+        eventListAdapter.addLoadStateListener {
+            it.handleLoadState(viewModel::setState, eventListAdapter.itemCount < 1)
         }
     }
 

@@ -91,7 +91,8 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/transparent">
+                android:backgroundTint="@color/transparent"
+                android:outlineProvider="none">
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,7 +102,7 @@
                         android:layout_width="120dp"
                         style="@style/ActionButtonWithDrawable"
                         android:text="Фильтр"
-                        android:drawableLeft="@drawable/filter"
+                        android:drawableStart="@drawable/filter"
                         android:layout_gravity="end"
                         android:layout_marginBottom="25dp"
                         />

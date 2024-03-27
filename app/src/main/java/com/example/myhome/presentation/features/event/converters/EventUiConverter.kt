@@ -1,24 +1,24 @@
 package com.example.myhome.presentation.features.event.converters
 
-import com.example.myhome.features.event.dto.EventListResponse
 import com.example.myhome.features.event.dto.HouseNotificationListItemResponse
+import com.example.myhome.features.event.dto.NotificationAndVotingListResponse
 import com.example.myhome.features.event.dto.OptionListItemResponse
 import com.example.myhome.features.event.dto.VotingListItemResponse
-import com.example.myhome.features.event.models.EventType
 import com.example.myhome.presentation.features.event.EventUiModel
 import com.example.myhome.presentation.features.event.HouseNotificationUiModel
 import com.example.myhome.presentation.features.event.OptionUiModel
 import com.example.myhome.presentation.features.event.VotingUiModel
 import com.example.myhome.presentation.utils.pickers.ProportionPicker
+import java.util.Date
 
 interface EventUiConverter: ProportionPicker {
-    private fun notificationListToUi(notification: HouseNotificationListItemResponse): HouseNotificationUiModel {
+    private fun notificationListToUi(notification: HouseNotificationListItemResponse, createdAt: Date): HouseNotificationUiModel {
         return HouseNotificationUiModel(
             id = notification.id,
             title = notification.title,
             text = notification.text,
             managementCompanyName = notification.name,
-            createdAt = notification.formatCreatedAt()
+            createdAt = createdAt
             )
     }
 
@@ -38,44 +38,27 @@ interface EventUiConverter: ProportionPicker {
         }
     }
 
-    private fun votingListToUi(voting: VotingListItemResponse): VotingUiModel {
+    private fun votingListToUi(voting: VotingListItemResponse, createdAt: Date): VotingUiModel {
         return VotingUiModel(
             id = voting.id,
             options = optionListToUi(voting.options, voting.resultId),
             managementCompanyName = voting.name,
             title = voting.title,
-            createdAt = voting.formatCreatedAt(),
+            createdAt = createdAt,
             expiredAt = voting.formatExpiredAt(),
             status = voting.status
         )
     }
 
-    private fun notificationListToEventList(notifications: List<HouseNotificationListItemResponse>): List<EventUiModel> {
-        return notifications.map { notification ->
+    fun eventToUi(notificationAndVoting: NotificationAndVotingListResponse): EventUiModel {
+        return notificationAndVoting.run {
+            val date = formatCreatedAt()
             EventUiModel(
-                voting = null,
-                notification = notificationListToUi(notification),
-                createdAt = notification.formatCreatedAt(),
-                eventType = EventType.Notification
+                voting = voting?.let { votingListToUi(it, date) },
+                notification = notification?.let { notificationListToUi(it, date) },
+                createdAt = date,
+                eventType = eventType
             )
         }
     }
-
-    private fun votingListToEventList(votings: List<VotingListItemResponse>): List<EventUiModel> {
-        return votings.map { voting ->
-            EventUiModel(
-                voting = votingListToUi(voting),
-                notification = null,
-                createdAt = voting.formatCreatedAt(),
-                eventType = EventType.Voting
-            )
-        }
-    }
-
-    fun eventListToUi(events: EventListResponse): List<EventUiModel> {
-        val notificationList = notificationListToEventList(events.notifications)
-        val votingList = votingListToEventList(events.votings)
-        return (notificationList + votingList).sortedByDescending { it.createdAt }
-    }
-
 }

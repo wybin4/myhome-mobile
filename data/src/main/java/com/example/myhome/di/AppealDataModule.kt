@@ -1,6 +1,8 @@
 package com.example.myhome.di
 
+import androidx.paging.PagingConfig
 import com.example.myhome.features.appeal.AppealApiService
+import com.example.myhome.features.appeal.AppealPagingSource
 import com.example.myhome.features.appeal.repositories.AppealRepositoryImpl
 import com.example.myhome.features.appeal.AppealStorage
 import com.example.myhome.features.appeal.repositories.AppealRepository
@@ -26,9 +28,19 @@ class AppealDataModule {
     @Singleton
     fun provideAppealRepository(
         appealStorage: AppealStorage,
-        eventApiService: EventApiService
+        appealPagingSource: AppealPagingSource
     ): AppealRepository {
-        return AppealRepositoryImpl(appealStorage, eventApiService)
+        return AppealRepositoryImpl(
+            appealStorage,
+            appealPagingSource,
+            PagingConfig(pageSize = AppealPagingSource.APPEAL_PAGE_SIZE)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppealPagingSource(eventApiService: EventApiService): AppealPagingSource {
+        return AppealPagingSource(eventApiService)
     }
 
 }
