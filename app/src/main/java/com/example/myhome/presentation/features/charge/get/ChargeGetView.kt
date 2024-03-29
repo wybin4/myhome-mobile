@@ -1,7 +1,6 @@
 package com.example.myhome.presentation.features.charge.get
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.ChargeGetViewBinding
 import com.example.myhome.databinding.PaymentListItemBinding
+import com.example.myhome.di.RetrofitModule.Companion.BASE_URL
 import com.example.myhome.presentation.features.charge.adapters.ChargeListAdapter
 import com.example.myhome.presentation.features.charge.models.PaymentUiModel
 import com.example.myhome.presentation.features.charge.models.resources.ChargeGetResource
 import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
 import com.example.myhome.presentation.features.charge.state.ChargeCombinedState
+import com.example.myhome.presentation.utils.pickers.permissions.StoragePermissionPicker
+import com.example.myhome.presentation.utils.resources.AndroidDownloader
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +26,8 @@ class ChargeGetView : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<ChargeGetViewModel>()
     private lateinit var paymentListAdapter: ChargeListAdapter<PaymentUiModel, PaymentListItemBinding>
+
+    private lateinit var storagePermissionPicker: StoragePermissionPicker
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +38,8 @@ class ChargeGetView : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.chargeParcelable = requireArguments().getParcelable("charge")!!
+
+        storagePermissionPicker = StoragePermissionPicker(requireActivity())
 
         setupRecyclerView()
         setupActionButtons()
@@ -55,9 +61,12 @@ class ChargeGetView : Fragment() {
 
     private fun setupActionButtons() {
         binding.getSpdButton.setOnClickListener {
-            Log.e("getSpdButton", "clicked")
-//            val bundle = viewModel.mapMeterGetToUpdateParcel(viewModel.meterParcelable).toBundle()
-//            findNavController().navigate(R.id.action_meterGetView_to_meterUpdateView, bundle)
+            if (viewModel.spd.value != null) {
+                storagePermissionPicker.checkStoragePermission {
+                    val downloader = AndroidDownloader(requireActivity())
+                    downloader.downloadFile(BASE_URL + "image/" + viewModel.spd.value!!.path, viewModel.spd.value!!.path)
+                }
+            }
         }
         if (viewModel.chargeParcelable.outstandingDebt > 0) {
             binding.payChargeButton.setOnClickListener {

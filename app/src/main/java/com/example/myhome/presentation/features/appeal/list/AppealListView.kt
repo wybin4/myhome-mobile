@@ -143,9 +143,11 @@ class AppealListView : Fragment() {
             onItemClick = { item ->
                 bindingGet.appeal = item
                 bindingGet.downloadAppeal.setOnClickListener {
-                    storagePermissionPicker.checkStoragePermission {
-                        val downloader = AndroidDownloader(requireActivity())
-                        downloader.downloadFile(BASE_URL + "image/" + item.attachment)
+                    if (item.attachment != null) {
+                        storagePermissionPicker.checkStoragePermission {
+                            val downloader = AndroidDownloader(requireActivity())
+                            downloader.downloadImage(BASE_URL + "image/" + item.attachment, item.attachment)
+                        }
                     }
                 }
                 bottomSheetDialog.show()
