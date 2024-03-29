@@ -8,12 +8,12 @@ import com.example.myhome.features.charge.repositories.ChargeRepository
 import com.example.myhome.presentation.features.charge.ChargeUiMapper
 import com.example.myhome.presentation.features.charge.models.ChargeGetToPayParcelableModel
 import com.example.myhome.presentation.features.charge.models.ChargeListToGetParcelableModel
-import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
 import com.example.myhome.presentation.features.charge.models.PaymentUiModel
 import com.example.myhome.presentation.features.charge.models.SinglePaymentDocumentUiModel
 import com.example.myhome.presentation.features.charge.models.networkresults.asChargeGetResource
 import com.example.myhome.presentation.features.charge.models.networkresults.asChargeListResource
 import com.example.myhome.presentation.features.charge.models.resources.ChargeGetResource
+import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
 import com.example.myhome.presentation.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -43,26 +43,22 @@ class ChargeGetViewModel @Inject constructor(
     }
 
     fun fetchData() {
-        if (chargeParcelable !== null) {
-            viewModelScope.launch {
-                chargeRepository.getSinglePaymentDocument(chargeParcelable.id)
-                    .asNetworkResult()
-                    .collect {
-                        it.asChargeGetResource(_spdState) { data ->
-                            _spd.value = chargeUiMapper.spdToUi(data)
-                        }
+        viewModelScope.launch {
+            chargeRepository.getSinglePaymentDocument(chargeParcelable.id)
+                .asNetworkResult()
+                .collect {
+                    it.asChargeGetResource(_spdState) { data ->
+                        _spd.value = chargeUiMapper.spdToUi(data)
                     }
+                }
 
-                chargeRepository.listPayment(chargeParcelable.id)
-                    .asNetworkResult()
-                    .collect {
-                        it.asChargeListResource(_paymentState) { data ->
-                            _paymentList.value = chargeUiMapper.paymentListToUi(data)
-                        }
+            chargeRepository.listPayment(chargeParcelable.id)
+                .asNetworkResult()
+                .collect {
+                    it.asChargeListResource(_paymentState) { data ->
+                        _paymentList.value = chargeUiMapper.paymentListToUi(data)
                     }
-            }
-        } else {
-            _paymentState.value = ChargeListResource.CodeError
+                }
         }
     }
 }

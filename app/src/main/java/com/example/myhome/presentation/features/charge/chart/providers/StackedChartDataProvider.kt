@@ -1,7 +1,9 @@
-package com.example.myhome.presentation.features.charge.chart
+package com.example.myhome.presentation.features.charge.chart.providers
 
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.R
+import com.example.myhome.presentation.features.charge.chart.ColorGenerator
+import com.example.myhome.presentation.features.charge.chart.CustomValueFormatter
 import com.example.myhome.presentation.features.charge.models.ChargeChartModel
 import com.example.myhome.presentation.utils.pickers.ColorPicker
 import com.github.mikephil.charting.charts.BarChart
@@ -18,7 +20,7 @@ class StackedChartDataProvider(
     private val firstColor: Int, private val referenceTimestamp: Long
 ) : ColorGenerator, ColorPicker {
     companion object {
-        private const val BAR_WIDTH = 0.4f
+        private const val BAR_WIDTH = 0.46f
     }
     private val secondColor = getColor(context, R.color.primary_light_normal_without_alpha)
 

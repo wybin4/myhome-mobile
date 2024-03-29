@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                style="@style/Card"
+                android:paddingVertical="30dp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginBottom="30dp"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/DescriptionText"
+                    android:text="Текущий долг"
+                    android:layout_marginBottom="7dp" />
+
+                <TextView
+                    android:id="@+id/total_debt"
+                    style="@style/Text"
+                    android:textSize="38dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="-8dp" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/bar_chart"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="254dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/debt_list_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.ChargeGetViewBinding
 import com.example.myhome.databinding.PaymentListItemBinding
-import com.example.myhome.presentation.features.charge.ChargeListAdapter
+import com.example.myhome.presentation.features.charge.adapters.ChargeListAdapter
 import com.example.myhome.presentation.features.charge.models.PaymentUiModel
 import com.example.myhome.presentation.features.charge.models.resources.ChargeGetResource
 import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource

@@ -1,7 +1,8 @@
-package com.example.myhome.presentation.features.charge.chart
+package com.example.myhome.presentation.features.charge.chart.providers
 
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.R
+import com.example.myhome.presentation.features.charge.chart.CustomValueFormatter
 import com.example.myhome.presentation.features.charge.chart.renderers.CustomXAxisRenderer
 import com.example.myhome.presentation.features.charge.chart.renderers.RoundedBarChartRenderer
 import com.example.myhome.presentation.utils.pickers.ColorPicker
@@ -22,13 +23,15 @@ class StackedChartUiProvider(
     fun setupChart() {
         chart.apply {
             val chartRenderer = RoundedBarChartRenderer(this, this.animator, this.viewPortHandler)
-            chartRenderer.setRadius(25)
+            chartRenderer.setRadius(22)
             renderer = chartRenderer
 
             description = null
             axisRight.isEnabled = false
             extraBottomOffset = 20f
             setFitBars(true)
+            setTouchEnabled(false)
+            isDragEnabled = false
         }
 
         setupXAxis()
@@ -43,8 +46,8 @@ class StackedChartUiProvider(
             horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
             orientation = Legend.LegendOrientation.HORIZONTAL
             form = Legend.LegendForm.CIRCLE
-            xOffset = -25f
-            yOffset = 24f
+            xOffset = -30f
+            yOffset = 16f
             setDrawInside(false)
             isWordWrapEnabled = true
 

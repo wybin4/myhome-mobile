@@ -2,6 +2,8 @@ package com.example.myhome.presentation.features.charge.chart
 
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.R
+import com.example.myhome.presentation.features.charge.chart.providers.StackedChartDataProvider
+import com.example.myhome.presentation.features.charge.chart.providers.StackedChartUiProvider
 import com.example.myhome.presentation.features.charge.models.ChargeChartModel
 import com.example.myhome.presentation.utils.pickers.ColorPicker
 import com.github.mikephil.charting.charts.BarChart

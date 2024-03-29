@@ -4,14 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.example.myhome.features.charge.repositories.ChargeRepository
 import com.example.myhome.presentation.features.charge.ChargeUiMapper
 import com.example.myhome.presentation.features.charge.converters.MoneyConverter
 import com.example.myhome.presentation.features.charge.models.ChargeChartModel
 import com.example.myhome.presentation.features.charge.models.ChargeUiModel
-import com.example.myhome.presentation.features.charge.models.SpdDebtRelationTextListItem
-import com.example.myhome.presentation.features.charge.models.networkresults.asChargeListResource
+import com.example.myhome.presentation.features.charge.models.DebtUiModel
+import com.example.myhome.presentation.features.charge.models.networkresults.asChargePagingDataResource
 import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
+import com.example.myhome.presentation.models.NetworkResult
 import com.example.myhome.presentation.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,11 +26,14 @@ class ChargeListViewModel @Inject constructor(
     private val chargeRepository: ChargeRepository,
     val chargeUiMapper: ChargeUiMapper
 ) : ViewModel(), MoneyConverter {
-    private val _chargeList = MutableLiveData<List<ChargeUiModel>>()
-    val chargeList: LiveData<List<ChargeUiModel>> = _chargeList
+    private val _chargeList = MutableLiveData<PagingData<ChargeUiModel>>()
+    val chargeList: LiveData<PagingData<ChargeUiModel>> = _chargeList
 
-    private val _debtList = MutableLiveData<List<SpdDebtRelationTextListItem>>()
-    val debtList: LiveData<List<SpdDebtRelationTextListItem>> = _debtList
+    private val _chargeChartList = MutableLiveData<List<ChargeChartModel>>()
+    val chargeChartList: LiveData<List<ChargeChartModel>> = _chargeChartList
+
+    private val _debtList = MutableLiveData<List<DebtUiModel>>()
+    val debtList: LiveData<List<DebtUiModel>> = _debtList
 
     private val _listState = MutableLiveData<ChargeListResource>(ChargeListResource.Loading)
     val listState: LiveData<ChargeListResource> = _listState
@@ -34,22 +41,47 @@ class ChargeListViewModel @Inject constructor(
     fun fetchChargeList() {
         viewModelScope.launch {
             chargeRepository.listCharge()
+                .cachedIn(viewModelScope)
                 .asNetworkResult()
                 .collect {
-                    it.asChargeListResource(_listState) { data ->
-                        try {
-                            _chargeList.value = chargeUiMapper.chargeListToUi(data)
-                            _debtList.value = chargeUiMapper.chargeListToDebtUi(data)
-                        } catch (e: IllegalArgumentException) {
-                            _listState.value = ChargeListResource.CodeError
+                    it.asChargePagingDataResource(_listState) { data ->
+                        _chargeList.value = data.map { d -> chargeUiMapper.chargeToUi(d) }
+                    }
+                }
+        }
+    }
+    
+    fun fetchDebtAndChartLists() {
+        viewModelScope.launch {
+            chargeRepository.listDebt()
+                .asNetworkResult()
+                .collect { resource ->
+                    when (resource) {
+                        is NetworkResult.Success -> {
+                            val data = resource.data
+                            if (data.isNotEmpty()) {
+                                _debtList.value = chargeUiMapper.chargeListToDebtUi(data)
+                            }
                         }
+                        else -> {}
+                    }
+                }
+
+            chargeRepository.listChargeChart()
+                .asNetworkResult()
+                .collect { resource ->
+                    when (resource) {
+                        is NetworkResult.Success -> {
+                            _chargeChartList.value = chargeUiMapper.chargeListToChart(resource.data)
+                        }
+                        else -> {}
                     }
                 }
         }
     }
 
-    fun getChartData(): List<ChargeChartModel> {
-        return _chargeList.value?.let { chargeUiMapper.chargeListToChart(it) } ?: emptyList()
+    fun setState(resource: ChargeListResource) {
+        _listState.value = resource
     }
 
 }

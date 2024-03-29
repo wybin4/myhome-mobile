@@ -31,7 +31,7 @@ data class SinglePaymentDocumentUiModel(
     }
 }
 
-data class SpdDebtRelationTextListItem(
+data class DebtUiModel(
     override val id: Int,
     val outstandingDebt: Double,
     val createdAt: Date,

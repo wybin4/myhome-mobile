@@ -91,4 +91,6 @@ dependencies {
     implementation("androidx.paging:paging-common-ktx:3.2.1")
     // charts
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    // recyclerview
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 }

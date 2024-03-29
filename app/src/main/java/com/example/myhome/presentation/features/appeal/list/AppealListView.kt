@@ -1,7 +1,6 @@
 package com.example.myhome.presentation.features.appeal.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import com.example.myhome.R
 import com.example.myhome.databinding.AppealGetViewBinding
 import com.example.myhome.databinding.AppealListItemBinding
@@ -17,7 +15,6 @@ import com.example.myhome.databinding.AppealListItemLoadingBinding
 import com.example.myhome.databinding.AppealListViewBinding
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.appeal.AppealUiModel
-import com.example.myhome.presentation.models.Resource
 import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomPagingAdapter

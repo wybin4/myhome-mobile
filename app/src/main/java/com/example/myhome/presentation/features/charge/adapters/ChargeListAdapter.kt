@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.features.charge
+package com.example.myhome.presentation.features.charge.adapters
 
 import android.view.LayoutInflater
 import android.view.View

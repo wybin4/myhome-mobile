@@ -11,6 +11,23 @@ interface MonthYearConverter {
     private val dateFormatShort: SimpleDateFormat
         get() = SimpleDateFormat("MMM yyyy", Locale("ru"))
 
+    companion object {
+        private val monthReplacements = mapOf(
+            "Января" to "Январь",
+            "Февраля" to "Февраль",
+            "Марта" to "Март",
+            "Апреля" to "Апрель",
+            "Мая" to "Май",
+            "Июня" to "Июнь",
+            "Июля" to "Июль",
+            "Августа" to "Август",
+            "Сентября" to "Сентябрь",
+            "Октября" to "Октябрь",
+            "Ноября" to "Ноябрь",
+            "Декабря" to "Декабрь",
+        )
+    }
+
     fun formatDate(date: Date, capFirst: Boolean = true): String {
         var formattedDate = dateFormatNormal.format(date) ?: throw IllegalArgumentException("Неверный формат даты: $date")
         if (capFirst) {
@@ -20,11 +37,8 @@ interface MonthYearConverter {
         val firstSpaceIndex = formattedDate.indexOf(' ')
         return if (firstSpaceIndex != -1) {
             val firstWord = formattedDate.substring(0, firstSpaceIndex)
-            val modifiedFirstWord = when (firstWord.last()) {
-                'ь', 'й' -> firstWord.dropLast(1) + 'я'
-                'т' -> firstWord.dropLast(1) + 'а'
-                else -> firstWord
-            }
+            val modifiedFirstWord = monthReplacements[firstWord] ?: firstWord
+
             modifiedFirstWord + formattedDate.substring(firstSpaceIndex)
         } else {
             formattedDate

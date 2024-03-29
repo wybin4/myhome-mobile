@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,28 +12,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-            <androidx.core.widget.NestedScrollView
-            android:overScrollMode="never"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:id="@+id/scroll_view"
-                android:paddingBottom="50dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/on_network_error"
                         style="@style/ErrorListLayout"
+                        android:layout_height="match_parent"
                         android:visibility="gone"
                         >
                         <include
                             android:id="@+id/network_error_layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             layout="@layout/list_network_error"
                             />
 
@@ -56,6 +51,8 @@
                     <LinearLayout
                         android:id="@+id/on_empty"
                         style="@style/EmptyListLayout"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="-80dp"
                         android:visibility="gone"
                         >
                         <include
@@ -69,102 +66,77 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/on_loading"
+                    <androidx.core.widget.NestedScrollView
+                        android:overScrollMode="never"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:visibility="gone"
+                        android:fillViewport="true"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        android:id="@+id/on_loading"
+                        android:paddingBottom="50dp"
                         >
                         <LinearLayout
-                            android:paddingHorizontal="28dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            >
                             <LinearLayout
+                                android:paddingHorizontal="28dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                style="@style/Card"
-                                android:paddingVertical="30dp"
-                                android:paddingHorizontal="20dp"
-                                android:layout_marginBottom="30dp">
-
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
                                 <LinearLayout
-                                    android:layout_width="96dp"
-                                    android:layout_height="17dp"
-                                    style="@style/ItemLoading"
-                                    android:layout_marginBottom="12dp"/>
-                                <LinearLayout
-                                    android:layout_width="190dp"
-                                    android:layout_height="40dp"
-                                    style="@style/ItemLoading"/>
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    style="@style/Card"
+                                    android:paddingVertical="30dp"
+                                    android:paddingHorizontal="20dp"
+                                    android:layout_marginBottom="30dp">
 
+                                    <LinearLayout
+                                        android:layout_width="96dp"
+                                        android:layout_height="17dp"
+                                        style="@style/ItemLoading"
+                                        android:layout_marginBottom="12dp"/>
+                                    <LinearLayout
+                                        android:layout_width="190dp"
+                                        android:layout_height="40dp"
+                                        style="@style/ItemLoading"/>
+
+                                </LinearLayout>
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/charge_infinite_recycler_view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:nestedScrollingEnabled="false"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
                             </LinearLayout>
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/charge_infinite_recycler_view"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:nestedScrollingEnabled="false"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
                         </LinearLayout>
-
-                    </LinearLayout>
+                    </androidx.core.widget.NestedScrollView>
 
                     <LinearLayout
                         android:id="@+id/on_success"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:paddingHorizontal="28dp"
+                        android:paddingBottom="50dp"
+                        android:orientation="vertical"
                         >
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            style="@style/Card"
-                            android:paddingVertical="30dp"
-                            android:paddingHorizontal="20dp"
-                            android:layout_marginBottom="30dp">
-
-                            <TextView
-                                style="@style/DescriptionText"
-                                android:text="Текущий долг"
-                                android:layout_marginBottom="7dp"/>
-
-                            <TextView
-                                android:id="@+id/total_debt"
-                                style="@style/Text"
-                                android:textSize="38dp"
-                                android:textStyle="bold"
-                                android:layout_marginBottom="-8dp"/>
-
-                            <com.github.mikephil.charting.charts.BarChart
-                                android:id="@+id/bar_chart"
-                                android:layout_gravity="center"
-                                android:layout_width="284dp"
-                                android:layout_height="254dp" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/debt_list_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/charge_recycler_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="false"
+                            android:overScrollMode="never"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
                     </LinearLayout>
                 </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
