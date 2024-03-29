@@ -13,6 +13,7 @@ import com.example.myhome.databinding.AppealGetViewBinding
 import com.example.myhome.databinding.AppealListItemBinding
 import com.example.myhome.databinding.AppealListItemLoadingBinding
 import com.example.myhome.databinding.AppealListViewBinding
+import com.example.myhome.di.RetrofitModule.Companion.BASE_URL
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.appeal.AppealUiModel
 import com.example.myhome.presentation.state.list.ListState
@@ -20,6 +21,8 @@ import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomPagingAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import com.example.myhome.presentation.utils.handleLoadState
+import com.example.myhome.presentation.utils.pickers.permissions.StoragePermissionPicker
+import com.example.myhome.presentation.utils.resources.AndroidDownloader
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -40,6 +43,8 @@ class AppealListView : Fragment() {
 
     private val listStateManager = ListStateManager(this::updateViewState)
 
+    private lateinit var storagePermissionPicker: StoragePermissionPicker
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +55,8 @@ class AppealListView : Fragment() {
         setupRecyclerView()
         setupInfiniteRecyclerView()
         setupGetSheet(inflater, container)
+
+        storagePermissionPicker = StoragePermissionPicker(requireActivity())
 
         bindingList.addAppealButton.setOnClickListener {
             findNavController().navigate(R.id.action_appealListView_to_appealPickView)
@@ -135,6 +142,12 @@ class AppealListView : Fragment() {
             },
             onItemClick = { item ->
                 bindingGet.appeal = item
+                bindingGet.downloadAppeal.setOnClickListener {
+                    storagePermissionPicker.checkStoragePermission {
+                        val downloader = AndroidDownloader(requireActivity())
+                        downloader.downloadFile(BASE_URL + "image/" + item.attachment)
+                    }
+                }
                 bottomSheetDialog.show()
             }
         )

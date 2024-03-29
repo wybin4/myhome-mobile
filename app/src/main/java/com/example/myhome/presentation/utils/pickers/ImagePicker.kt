@@ -9,13 +9,13 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
-import com.example.myhome.presentation.utils.pickers.permissions.StoragePermissionPicker
+import com.example.myhome.presentation.utils.pickers.permissions.StorageReadPermissionPicker
 
 class ImagePicker(
     private val fragment: Fragment,
     private val forActivityResult: (image: Bitmap) -> Unit
 ) {
-    private val permissionPicker = StoragePermissionPicker(fragment.requireActivity())
+    private val permissionPicker = StorageReadPermissionPicker(fragment.requireActivity())
 
     private val takePictureLauncher = fragment.registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),

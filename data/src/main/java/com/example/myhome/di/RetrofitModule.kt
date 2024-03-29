@@ -24,7 +24,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
     companion object {
-        private const val BASE_URL = "https://personally-poetic-cattle.ngrok-free.app/api/"
+        const val BASE_URL = "https://personally-poetic-cattle.ngrok-free.app/api/"
     }
 
     @Provides

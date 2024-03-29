@@ -1,15 +1,10 @@
 package com.example.myhome
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.databinding.Observable
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -19,7 +14,6 @@ import com.example.myhome.features.CommonSocketService
 import com.example.myhome.presentation.state.list.ListStateWithUnread
 import com.example.myhome.presentation.utils.managers.mainactivity.NavigationManager
 import com.example.myhome.presentation.utils.managers.mainactivity.ServiceManager
-import com.example.myhome.presentation.utils.pickers.permissions.NotificationPermissionPicker
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.annotations.TestOnly
 
@@ -32,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var serviceManager: ServiceManager
 
     private var isNotificationDestination = false
-    private val notificationPermissionPicker = NotificationPermissionPicker(this)
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -49,8 +42,6 @@ class MainActivity : AppCompatActivity() {
         serviceManager = ServiceManager(this)
 
         observeResourceState()
-
-        notificationPermissionPicker.checkStoragePermission()
 
         viewModel.unreadMessagesCount.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
