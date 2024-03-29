@@ -3,7 +3,7 @@ package com.example.myhome.presentation.utils.pickers
 import com.example.myhome.R
 import com.example.myhome.features.appeal.models.AppealStatus
 import com.example.myhome.features.appeal.models.AppealType
-import com.example.myhome.presentation.features.charge.models.AmountChange
+import com.example.myhome.features.charge.dtos.AmountChange
 import com.example.myhome.presentation.features.common.models.TypeOfServiceEngNames
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiType
 

@@ -4,24 +4,6 @@ import com.example.myhome.models.DateConverter
 import com.example.myhome.models.UserRole
 import java.util.Date
 
-data class SinglePaymentDocumentListRequest(
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner,
-    val withoutAttachments: Boolean = true
-)
-
-data class SinglePaymentDocumentListItemResponse(
-    val id: Int,
-    val apartmentName: String,
-    val apartmentId: Int,
-    val mcName: String,
-    val mcCheckingAccount: String,
-    val createdAt: String
-): DateConverter {
-    fun formatCreatedAt(): Date {
-        return parseDate(createdAt)
-    }
-}
 enum class CalculationState {
     Started, DetailsCalculated, CorrectionsCalculated, Cancelled
 }

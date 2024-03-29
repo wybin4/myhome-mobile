@@ -4,7 +4,7 @@ import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
-import com.example.myhome.features.charge.dtos.SinglePaymentDocumentListItemResponse
+import com.example.myhome.features.charge.dtos.AmountChange
 import com.example.myhome.presentation.features.charge.converters.MoneyConverter
 import com.example.myhome.presentation.features.charge.converters.MonthYearConverter
 import com.example.myhome.presentation.models.Adaptive
@@ -63,14 +63,4 @@ data class SpdDebtRelationListItem(
     val amountChange: AmountChange,
     val originalDebt: Double,
     val outstandingDebt: Double
-)
-
-data class SpdGroupedByApartmentListItem(
-    val apartmentId: Int,
-    val spdList: List<SinglePaymentDocumentListItemResponse>
-)
-
-data class SpdDebtRelationGroupedByApartmentListItem(
-    val apartmentId: Int,
-    val spdDebtRelationList: List<SpdDebtRelationListItem>
 )

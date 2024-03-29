@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.ChargeListItemBinding
@@ -16,6 +15,7 @@ import com.example.myhome.databinding.DebtListItemBinding
 import com.example.myhome.presentation.ConstantsUi.Companion.VERTICAL_LOADING_RECYCLER_VIEW_SIZE
 import com.example.myhome.presentation.features.charge.ChargeColorPicker
 import com.example.myhome.presentation.features.charge.ChargeListAdapter
+import com.example.myhome.presentation.features.charge.chart.StackedChartManager
 import com.example.myhome.presentation.features.charge.models.ChargeUiModel
 import com.example.myhome.presentation.features.charge.models.SpdDebtRelationTextListItem
 import com.example.myhome.presentation.features.charge.state.list.ChargeListState
@@ -23,6 +23,7 @@ import com.example.myhome.presentation.features.charge.state.list.ChargeListStat
 import com.example.myhome.presentation.utils.adapters.CustomListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class ChargeListView : Fragment() {
@@ -82,11 +83,21 @@ class ChargeListView : Fragment() {
     }
 
     private fun observeLists() {
-        viewModel.chargeList.observe(viewLifecycleOwner) { chargeListAdapter.submitList(it) }
+        viewModel.chargeList.observe(viewLifecycleOwner) {
+            chargeListAdapter.submitList(it)
+            setupBarChart()
+        }
         viewModel.debtList.observe(viewLifecycleOwner) {
             debtListAdapter.updateList(it)
             val totalDebtValue = it.sumOf { debt -> debt.outstandingDebt }
             binding.totalDebt.text = viewModel.formatDouble2F(totalDebtValue)
+        }
+    }
+
+    private fun setupBarChart() {
+        val chartData = viewModel.getChartData()
+        if (chartData.isNotEmpty()) {
+            StackedChartManager(requireActivity(), binding.barChart, chartData)
         }
     }
 

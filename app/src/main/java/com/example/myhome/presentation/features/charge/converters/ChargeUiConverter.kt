@@ -1,46 +1,16 @@
 package com.example.myhome.presentation.features.charge.converters
 
-import com.example.myhome.features.charge.dtos.DebtListItemResponse
+import com.example.myhome.features.charge.dtos.ChargeListItemResponse
 import com.example.myhome.features.charge.dtos.PaymentListItemResponse
 import com.example.myhome.features.charge.dtos.SinglePaymentDocumentGetResponse
-import com.example.myhome.features.charge.dtos.SinglePaymentDocumentListItemResponse
-import com.example.myhome.presentation.features.charge.ChargeCalculator
+import com.example.myhome.presentation.features.charge.models.ChargeChartItem
+import com.example.myhome.presentation.features.charge.models.ChargeChartModel
 import com.example.myhome.presentation.features.charge.models.ChargeUiModel
 import com.example.myhome.presentation.features.charge.models.PaymentUiModel
 import com.example.myhome.presentation.features.charge.models.SinglePaymentDocumentUiModel
-import com.example.myhome.presentation.features.charge.models.SpdDebtRelationGroupedByApartmentListItem
-import com.example.myhome.presentation.features.charge.models.SpdDebtRelationListItem
 import com.example.myhome.presentation.features.charge.models.SpdDebtRelationTextListItem
-import com.example.myhome.presentation.features.charge.models.SpdGroupedByApartmentListItem
 
-interface ChargeUiConverter: MonthYearConverter, ChargeCalculator {
-    fun spdDebtRelationTextListToUi(
-        spds: List<SinglePaymentDocumentListItemResponse>,
-        debts: List<DebtListItemResponse>
-    ): List<SpdDebtRelationTextListItem> {
-        val sortedSpdList = spds.sortedByDescending { it.createdAt }
-        val resultList = mutableListOf<SpdDebtRelationTextListItem>()
-
-        sortedSpdList.map { spd ->
-            val currDebt = debts.firstOrNull { it.singlePaymentDocumentId == spd.id }
-            if (currDebt != null) {
-                if (currDebt.outstandingDebt > 0) {
-                    resultList.add(
-                        SpdDebtRelationTextListItem(
-                            id = spd.id,
-                            outstandingDebt = currDebt.outstandingDebt,
-                            createdAt = spd.formatCreatedAt(),
-                            apartmentName = spd.apartmentName
-                        )
-                    )
-                }
-            } else {
-                throw IllegalArgumentException("No corresponding debt found for SPD with id ${spd.id}")
-            }
-        }
-        return resultList
-    }
-
+interface ChargeUiConverter: MonthYearConverter {
     fun paymentListToUi(payments: List<PaymentListItemResponse>): List<PaymentUiModel> {
         return payments.map {
             PaymentUiModel(
@@ -62,101 +32,48 @@ interface ChargeUiConverter: MonthYearConverter, ChargeCalculator {
         )
     }
 
-    fun createSpdGroupedByApartmentList(
-        spds: List<SinglePaymentDocumentListItemResponse>
-    ): List<SpdGroupedByApartmentListItem> {
-        val apartmentIdToSpdListMap = mutableMapOf<Int, MutableList<SinglePaymentDocumentListItemResponse>>()
-
-        spds.forEach { spd ->
-            val apartmentId = spd.apartmentId
-            val spdList = apartmentIdToSpdListMap.getOrPut(apartmentId) { mutableListOf() }
-            spdList.add(spd)
-        }
-
-        apartmentIdToSpdListMap.values.forEach { spdList ->
-            spdList.sortBy { it.createdAt }
-        }
-
-        return apartmentIdToSpdListMap.map { (apartmentId, spdList) ->
-            SpdGroupedByApartmentListItem(apartmentId, spdList)
+    fun chargeListToUi(charges: List<ChargeListItemResponse>): List<ChargeUiModel> {
+        return charges.map {
+            ChargeUiModel(
+                id = it.id,
+                apartmentName = it.apartmentName,
+                managementCompanyName = it.mcName,
+                managementCompanyCheckingAccount = it.mcCheckingAccount,
+                createdAt = it.formatCreatedAt(),
+                outstandingDebt = it.outstandingDebt,
+                originalDebt = it.originalDebt,
+                percent = it.percent,
+                amountChange = it.amountChange
+            )
         }
     }
 
-    fun createSpdDebtRelationGroupedByApartmentList(
-        spds: List<SinglePaymentDocumentListItemResponse>,
-        debts: List<DebtListItemResponse>
-    ): List<SpdDebtRelationGroupedByApartmentListItem> {
-        val spdGroupedByApartmentList = createSpdGroupedByApartmentList(spds)
+    fun chargeListToDebtUi(charges: List<ChargeListItemResponse>): List<SpdDebtRelationTextListItem> {
+        return charges.filter { it.outstandingDebt > 0 }.map {
+            SpdDebtRelationTextListItem(
+                id = it.id,
+                apartmentName = it.apartmentName,
+                createdAt = it.formatCreatedAt(),
+                outstandingDebt = it.outstandingDebt
+            )
+        }
+    }
 
-        val spdDebtRelationGroupedList = mutableListOf<SpdDebtRelationGroupedByApartmentListItem>()
-
-        spdGroupedByApartmentList.forEach { spdGroupedByApartment ->
-            val apartmentId = spdGroupedByApartment.apartmentId
-            val spdList = spdGroupedByApartment.spdList
-
-            val spdDebtRelationList = mutableListOf<SpdDebtRelationListItem>()
-            var prevDebt: DebtListItemResponse? = null
-
-            spdList.forEach { spd ->
-                val currDebt = debts.firstOrNull { it.singlePaymentDocumentId == spd.id }
-                if (currDebt != null) {
-                    val amountChange = calculateAmountChange(currDebt, prevDebt)
-                    val percent = calculatePercent(currDebt, prevDebt)
-
-                    val spdDebtRelationListItem = SpdDebtRelationListItem(
-                        spdId = spd.id,
-                        percent = percent,
-                        createdAt = spd.formatCreatedAt(),
-                        amountChange = amountChange,
-                        originalDebt = currDebt.originalDebt,
-                        outstandingDebt = currDebt.outstandingDebt
+    fun chargeListToChart(charges: List<ChargeUiModel>): List<ChargeChartModel> {
+        val apartmentGroups = charges.groupBy { it.apartmentName }
+        return apartmentGroups.map { (apartmentName, apartmentCharges) ->
+            ChargeChartModel(
+                apartmentId = apartmentCharges.first().id,
+                apartmentName = apartmentName,
+                charges = apartmentCharges.take(6).mapIndexed { _, charge ->
+                    ChargeChartItem(
+                        id = charge.id.toFloat(),
+                        createdAt = charge.createdAt,
+                        amount = charge.originalDebt.toFloat()
                     )
-                    spdDebtRelationList.add(spdDebtRelationListItem)
-
-                    prevDebt = currDebt
-                } else {
-                    throw IllegalArgumentException("No corresponding spdDebtRelation found for SPD with id ${spd.id}")
                 }
-            }
-            val spdDebtRelationGroupedItem = SpdDebtRelationGroupedByApartmentListItem(apartmentId, spdDebtRelationList)
-            spdDebtRelationGroupedList.add(spdDebtRelationGroupedItem)
+            )
         }
-
-        return spdDebtRelationGroupedList
-    }
-
-    fun chargeListToUi(
-        spds: List<SinglePaymentDocumentListItemResponse>,
-        debts: List<DebtListItemResponse>
-    ): List<ChargeUiModel> {
-        val spdDebtRelationGroupedByApartmentList = createSpdDebtRelationGroupedByApartmentList(spds, debts)
-        val sortedByDescendingSpdList = spds.sortedByDescending { it.createdAt }
-        val chargeUiModels = mutableListOf<ChargeUiModel>()
-
-        sortedByDescendingSpdList.forEach { spd ->
-            val spdDebtRelations = spdDebtRelationGroupedByApartmentList.flatMap { it.spdDebtRelationList }
-                .filter { it.spdId == spd.id }
-
-            if (spdDebtRelations.isNotEmpty()) {
-                val spdDebtRelation = spdDebtRelations.first()
-                val chargeUiModel = ChargeUiModel(
-                    id = spd.id,
-                    apartmentName = spd.apartmentName,
-                    managementCompanyName = spd.mcName,
-                    managementCompanyCheckingAccount = spd.mcCheckingAccount,
-                    periodName = formatDate(spd.formatCreatedAt()),
-                    percent = spdDebtRelation.percent,
-                    amountChange = spdDebtRelation.amountChange,
-                    outstandingDebt = spdDebtRelation.outstandingDebt,
-                    originalDebt = spdDebtRelation.originalDebt
-                )
-                chargeUiModels.add(chargeUiModel)
-            } else {
-                throw IllegalArgumentException("No corresponding spdDebtRelation found for SPD with id ${spd.id}")
-            }
-        }
-
-        return chargeUiModels
     }
 
 }

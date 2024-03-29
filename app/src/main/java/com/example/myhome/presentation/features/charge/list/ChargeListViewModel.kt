@@ -7,14 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.myhome.features.charge.repositories.ChargeRepository
 import com.example.myhome.presentation.features.charge.ChargeUiMapper
 import com.example.myhome.presentation.features.charge.converters.MoneyConverter
-import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
+import com.example.myhome.presentation.features.charge.models.ChargeChartModel
 import com.example.myhome.presentation.features.charge.models.ChargeUiModel
 import com.example.myhome.presentation.features.charge.models.SpdDebtRelationTextListItem
-import com.example.myhome.presentation.features.charge.models.networkresults.pairNetworkResultAsChargeListResource
+import com.example.myhome.presentation.features.charge.models.networkresults.asChargeListResource
+import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
+import com.example.myhome.presentation.models.asNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.example.myhome.presentation.features.charge.models.networkresults.pairAsNetworkResult
 
 @HiltViewModel
 class ChargeListViewModel @Inject constructor(
@@ -33,18 +34,22 @@ class ChargeListViewModel @Inject constructor(
     fun fetchChargeList() {
         viewModelScope.launch {
             chargeRepository.listCharge()
-                .pairAsNetworkResult()
+                .asNetworkResult()
                 .collect {
-                    it.pairNetworkResultAsChargeListResource(_listState) { data ->
+                    it.asChargeListResource(_listState) { data ->
                         try {
-                            _chargeList.value = chargeUiMapper.chargeListToUi(data.first, data.second)
-                            _debtList.value = chargeUiMapper.spdDebtRelationTextListToUi(data.first, data.second)
+                            _chargeList.value = chargeUiMapper.chargeListToUi(data)
+                            _debtList.value = chargeUiMapper.chargeListToDebtUi(data)
                         } catch (e: IllegalArgumentException) {
                             _listState.value = ChargeListResource.CodeError
                         }
                     }
                 }
         }
+    }
+
+    fun getChartData(): List<ChargeChartModel> {
+        return _chargeList.value?.let { chargeUiMapper.chargeListToChart(it) } ?: emptyList()
     }
 
 }

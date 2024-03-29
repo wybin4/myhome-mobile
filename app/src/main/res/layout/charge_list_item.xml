@@ -74,7 +74,7 @@
 
                         <TextView
                             style="@style/DescriptionText"
-                            android:text="@{charge.periodName}"
+                            android:text="@{charge.formatCreatedAt()}"
                             android:textSize="13dp"/>
 
                     </LinearLayout>

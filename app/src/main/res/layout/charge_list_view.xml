@@ -137,7 +137,15 @@
                                 android:id="@+id/total_debt"
                                 style="@style/Text"
                                 android:textSize="38dp"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold"
+                                android:layout_marginBottom="-8dp"/>
+
+                            <com.github.mikephil.charting.charts.BarChart
+                                android:id="@+id/bar_chart"
+                                android:layout_gravity="center"
+                                android:layout_width="284dp"
+                                android:layout_height="254dp" />
+
 
                         </LinearLayout>
 

@@ -11,7 +11,7 @@ interface ChargeParcelableConverter {
             managementCompanyName = charge.managementCompanyName,
             managementCompanyCheckingAccount = charge.managementCompanyCheckingAccount,
             apartmentName = charge.apartmentName,
-            periodName = charge.periodName,
+            periodName = charge.formatCreatedAt(),
             originalDebt = charge.originalDebt,
             outstandingDebt = charge.outstandingDebt
         )
