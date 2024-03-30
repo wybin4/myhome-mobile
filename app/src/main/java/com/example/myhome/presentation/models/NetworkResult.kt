@@ -2,6 +2,7 @@ package com.example.myhome.presentation.models
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
+import com.example.myhome.presentation.utils.filters.ListStateWithFilter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -107,6 +108,23 @@ fun <T : Any> NetworkResult<PagingData<T>>.asPagingDataResource(
         }
         is NetworkResult.Loading -> {
             state.value = Resource.Loading
+        }
+        else -> {}
+    }
+}
+
+fun <T : Any> NetworkResult<PagingData<T>>.asPagingDataResourceWithFilter(
+    state: MutableLiveData<ListStateWithFilter>,
+    onSuccess: (data: PagingData<T>) -> Unit
+) {
+    when (this) {
+        is NetworkResult.Success -> {
+            val data = this.data
+            state.value = ListStateWithFilter.Success
+            onSuccess(data)
+        }
+        is NetworkResult.Loading -> {
+            state.value = ListStateWithFilter.Loading
         }
         else -> {}
     }

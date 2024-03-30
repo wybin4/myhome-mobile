@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,48 +34,91 @@
 
             <TextView
                 style="@style/Text"
-                android:text="Тип"
+                android:text="Статус"
                 android:fontFamily="@font/robotomedium"
                 android:layout_marginBottom="10dp"/>
 
-            <LinearLayout
+            <com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="27dp">
+                app:flexWrap="wrap"
+                app:alignItems="stretch"
+                app:alignContent="stretch"
+                app:justifyContent="flex_start">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/voting_button_active"
-                    android:layout_width="110dp"
-                    style="@style/ActiveFilterButton"
-                    android:text="Опрос"
-                    android:layout_marginRight="15dp"
-                    />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/processing_button_active"
+                        android:layout_width="190dp"
+                        style="@style/ActiveFilterButton"
+                        android:text="Не обработано"
+                        android:layout_marginRight="15dp"
+                        />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/voting_button_not_active"
-                    android:layout_width="110dp"
-                    style="@style/NotActiveFilterButton"
-                    android:text="Опрос"
-                    android:layout_marginRight="15dp"
-                    android:visibility="gone"
-                    />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/processing_button_not_active"
+                        android:layout_width="190dp"
+                        style="@style/NotActiveFilterButton"
+                        android:text="Не обработано"
+                        android:layout_marginRight="15dp"
+                        android:visibility="gone"
+                        />
+                </LinearLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/notification_button_active"
-                    android:layout_width="170dp"
-                    style="@style/ActiveFilterButton"
-                    android:text="Уведомление"
-                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/notification_button_not_active"
-                    android:layout_width="150dp"
-                    style="@style/NotActiveFilterButton"
-                    android:text="Уведомление"
-                    android:visibility="gone"
-                    />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/closed_button_active"
+                        android:layout_width="170dp"
+                        style="@style/ActiveFilterButton"
+                        android:text="Обработано"
+                        android:layout_marginRight="15dp"
+                        />
 
-            </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/closed_button_not_active"
+                        android:layout_width="170dp"
+                        style="@style/NotActiveFilterButton"
+                        android:text="Обработано"
+                        android:layout_marginRight="15dp"
+                        android:visibility="gone"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="27dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/rejected_button_active"
+                        android:layout_width="170dp"
+                        style="@style/ActiveFilterButton"
+                        android:text="Отклонено"
+                        />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/rejected_button_not_active"
+                        android:layout_width="150dp"
+                        style="@style/NotActiveFilterButton"
+                        android:text="Отклонено"
+                        android:visibility="gone"
+                        />
+
+                </LinearLayout>
+
+
+
+
+            </com.google.android.flexbox.FlexboxLayout>
+
 
             <TextView
                 style="@style/Text"

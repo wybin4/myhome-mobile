@@ -31,12 +31,32 @@
             android:layout_marginTop="-90dp"
             android:visibility="gone"
             >
+
+
             <include
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 layout="@layout/list_empty"
                 bind:title="@{`Обращения еще не добавлены`}"
                 bind:subtitle="@{`Для добавления обращений нажмите кнопку “+”`}"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/on_empty_filter"
+            style="@style/EmptyListLayout"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-90dp"
+            android:visibility="gone"
+            >
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/list_empty"
+                bind:title="@{`Таких обращений нет`}"
+                bind:subtitle="@{`Для изменения фильтра нажмите кнопку “Фильтр”`}"
                 />
 
         </LinearLayout>
@@ -49,6 +69,7 @@
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:paddingBottom="50dp"
+            android:visibility="gone"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,6 +167,14 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/add_appeal_button"
                 style="@style/FloatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/empty_filter_button"
+                style="@style/FloatingActionButton"
+                android:src="@drawable/filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"/>

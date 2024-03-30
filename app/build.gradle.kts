@@ -93,4 +93,6 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     // recyclerview
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    // flexbox-layout
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
 }

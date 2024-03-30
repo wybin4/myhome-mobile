@@ -2,6 +2,7 @@ package com.example.myhome.presentation.utils.pickers
 
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.models.DateConverter
+import com.example.myhome.presentation.utils.InputValidator
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -17,8 +18,7 @@ class CustomDatePicker(
     input: TextInputLayout,
     validateMessage: String
 ): DateConverter, ThemePicker {
-    private val validator: com.example.myhome.presentation.utils.InputValidator =
-        com.example.myhome.presentation.utils.InputValidator(
+    private val validator: InputValidator = InputValidator(
             input,
             { text: String? -> text?.length!! > 0 },
             "Выберите дату $validateMessage",

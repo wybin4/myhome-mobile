@@ -7,17 +7,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.example.myhome.features.appeal.models.AppealStatus
 import com.example.myhome.features.appeal.repositories.AppealRepository
-import com.example.myhome.features.event.models.EventTypeResponse
+import com.example.myhome.models.FilterListItemRequest
 import com.example.myhome.presentation.features.appeal.AppealMapper
 import com.example.myhome.presentation.features.appeal.AppealUiModel
-import com.example.myhome.presentation.models.Resource
 import com.example.myhome.presentation.models.asNetworkResult
-import com.example.myhome.presentation.models.asPagingDataResource
+import com.example.myhome.presentation.models.asPagingDataResourceWithFilter
+import com.example.myhome.presentation.utils.filters.FilterObserveManager
+import com.example.myhome.presentation.utils.filters.ListStateWithFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,32 +26,36 @@ class AppealListViewModel @Inject constructor(
     private val appealRepository: AppealRepository,
     private val appealMapper: AppealMapper
 ) : ViewModel() {
-    private val _appealListState = MutableLiveData<Resource>(Resource.Loading)
-    val appealListState: LiveData<Resource> = _appealListState
+    private val startAppealStatusList = listOf(
+        AppealStatus.Processing, AppealStatus.Closed, AppealStatus.Rejected
+    )
+    val observeManager = FilterObserveManager(this::fetchAppealList, startAppealStatusList, "status")
+
+    private val _appealListState = MutableLiveData<ListStateWithFilter>(ListStateWithFilter.Loading)
+    val appealListState: LiveData<ListStateWithFilter> = _appealListState
 
     private val _appealList = MutableLiveData<PagingData<AppealUiModel>>()
     val appealList: LiveData<PagingData<AppealUiModel>> = _appealList
 
-    var selectCreatedAt: Date? = null
-    var selectEventType: MutableList<EventTypeResponse> = mutableListOf(
-        EventTypeResponse.Notification, EventTypeResponse.Voting
-    )
+    init {
+        observeManager.setup()
+    }
 
-    fun fetchAppealList() {
+    fun fetchAppealList(filters: List<FilterListItemRequest>? = null) {
         viewModelScope.launch {
-            appealRepository.listAppeal()
+            appealRepository.listAppeal(filters)
                 .cachedIn(viewModelScope)
                 .asNetworkResult()
                 .collectLatest {
-                    it.asPagingDataResource(_appealListState) { data ->
+                    it.asPagingDataResourceWithFilter(_appealListState) { data ->
                         _appealList.value = data.map { d -> appealMapper.appealToUi(d) }
                     }
                 }
             }
     }
 
-    fun setState(resource: Resource) {
-        _appealListState.value = resource
+    fun setState(state: ListStateWithFilter) {
+        _appealListState.value = state
     }
 
 }
