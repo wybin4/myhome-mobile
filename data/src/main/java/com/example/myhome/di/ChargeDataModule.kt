@@ -1,6 +1,7 @@
 package com.example.myhome.di
 
 import androidx.paging.PagingConfig
+import com.example.myhome.ConstantsData.Companion.CHARGE_PAGE_SIZE
 import com.example.myhome.features.charge.ChargeApiService
 import com.example.myhome.features.charge.ChargePagingSource
 import com.example.myhome.features.charge.ChargeStorage
@@ -35,7 +36,7 @@ class ChargeDataModule {
     ): ChargeRepository {
         return ChargeRepositoryImpl(
             chargeStorage, chargePagingSource,
-            PagingConfig(pageSize = ChargePagingSource.CHARGE_PAGE_SIZE)
+            PagingConfig(pageSize = CHARGE_PAGE_SIZE)
         )
     }
 

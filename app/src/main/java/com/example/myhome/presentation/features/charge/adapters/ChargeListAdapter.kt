@@ -18,11 +18,11 @@ open class ChargeListAdapter<T: Adaptive, B : ViewDataBinding>(
     private var list: MutableList<T> = mutableListOf()
 
     fun updateList(newList: List<T>) {
-        val existingPaymentIds = list.map { it.id }
-        val uniqueNewList = newList.filter { !existingPaymentIds.contains(it.id) }
-        list.addAll(uniqueNewList)
-        uniqueNewList.forEach { newPayment ->
-            val view = getView(list.indexOf(newPayment), null, layout)
+        list.clear()
+        list.addAll(newList)
+        layout.removeAllViews()
+        list.forEachIndexed { index, _ ->
+            val view = getView(index, null, layout)
             layout.addView(view)
         }
     }

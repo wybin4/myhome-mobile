@@ -4,6 +4,7 @@
     <LinearLayout
         android:id="@+id/issued_card"
         style="@style/AttentionCard"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"
         android:paddingVertical="15dp"
         android:layout_marginBottom="20dp"

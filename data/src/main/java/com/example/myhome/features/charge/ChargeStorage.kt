@@ -1,6 +1,6 @@
 package com.example.myhome.features.charge
 
-import com.example.myhome.features.charge.ChargePagingSource.Companion.CHARGE_PAGE_SIZE
+import com.example.myhome.ConstantsData.Companion.CHARGE_PAGE_SIZE
 import com.example.myhome.features.charge.dtos.ChargeChartListItemResponse
 import com.example.myhome.features.charge.dtos.ChargeChartListRequest
 import com.example.myhome.features.charge.dtos.DebtListItemResponse

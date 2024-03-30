@@ -1,13 +1,11 @@
 package com.example.myhome.presentation.utils.pickers.permissions
 
 import android.Manifest
-import android.annotation.SuppressLint
 import androidx.fragment.app.FragmentActivity
 
-@SuppressLint("InlinedApi")
 class StorageReadPermissionPicker(activity: FragmentActivity): PermissionPicker(
     activity,
-    Manifest.permission.READ_MEDIA_IMAGES,
+    Manifest.permission.READ_EXTERNAL_STORAGE,
     STORAGE_PERMISSION_REQUEST_CODE
 ) {
     companion object {

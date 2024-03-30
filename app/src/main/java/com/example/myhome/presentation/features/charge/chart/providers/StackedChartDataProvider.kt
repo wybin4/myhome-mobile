@@ -21,7 +21,9 @@ class StackedChartDataProvider(
 ) : ColorGenerator, ColorPicker {
     companion object {
         private const val BAR_WIDTH = 0.46f
+        private const val BAR_COUNT = 6
     }
+    
     private val secondColor = getColor(context, R.color.primary_light_normal_without_alpha)
 
     private fun getAxisLabelFloat(date: Date): Float {
@@ -46,6 +48,12 @@ class StackedChartDataProvider(
             apartmentData.charges.forEachIndexed { _, charge ->
                 val xValue = getAxisLabelFloat(charge.createdAt)
                 entries.add(BarEntry(xValue, charge.amount))
+            }
+            val size = apartmentData.charges.size
+            if (size < BAR_COUNT) {
+                for (i in size + 1 until BAR_COUNT) {
+                    entries.add(BarEntry(i.toFloat(), 0f))
+                }
             }
             allEntries.add(entries)
         }
