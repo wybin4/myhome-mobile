@@ -1,6 +1,6 @@
 package com.example.myhome.presentation.features.servicenotification.models
 
-import com.example.myhome.features.servicenotification.models.ServiceNotificationType
+import com.example.myhome.features.servicenotifications.models.ServiceNotificationType
 
 enum class ServiceNotificationUiType {
     System,

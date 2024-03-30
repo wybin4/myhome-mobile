@@ -1,6 +1,6 @@
 package com.example.myhome.presentation.features.servicenotification.models
 
-import com.example.myhome.features.servicenotification.models.NotificationStatus
+import com.example.myhome.features.servicenotifications.models.NotificationStatus
 import com.example.myhome.presentation.features.servicenotification.TimeConverter
 import com.example.myhome.presentation.models.Adaptive
 import com.example.myhome.presentation.utils.converters.CombinedDateConverter

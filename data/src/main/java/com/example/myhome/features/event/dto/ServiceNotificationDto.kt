@@ -1,14 +1,16 @@
-package com.example.myhome.features.servicenotification
+package com.example.myhome.features.event.dto
 
-import com.example.myhome.features.servicenotification.models.NotificationStatus
-import com.example.myhome.features.servicenotification.models.ServiceNotificationType
+import com.example.myhome.features.servicenotifications.models.NotificationStatus
+import com.example.myhome.features.servicenotifications.models.ServiceNotificationType
 import com.example.myhome.models.DateTimeConverter
+import com.example.myhome.models.MetaRequest
 import com.example.myhome.models.UserRole
 import java.util.Date
 
 data class ServiceNotificationListRequest(
     val userId: Int,
-    val userRole: UserRole = UserRole.Owner
+    val userRole: UserRole = UserRole.Owner,
+    val meta: MetaRequest
 )
 
 data class ServiceNotificationListItemResponse(

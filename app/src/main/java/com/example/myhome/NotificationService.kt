@@ -17,7 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.CommonSocketService
 import com.example.myhome.features.chat.dtos.MessageAddResponse
-import com.example.myhome.features.servicenotification.ServiceNotificationListItemResponse
+import com.example.myhome.features.event.dto.ServiceNotificationListItemResponse
 import com.example.myhome.presentation.features.chat.converters.ChatUiConverter
 import com.example.myhome.presentation.utils.pickers.IconPicker
 

@@ -37,8 +37,14 @@ class ActionBarManager(
         actionBarBinding.title.text = title
     }
 
-    fun setUnreadDotVisibility(visibility: Int) {
-        actionBarBinding.unreadDot.visibility = visibility
+    fun setUnreadDotVisibility(isVisible: Int) {
+        actionBarBinding.unreadDot.post {
+            actionBarBinding.unreadDot.visibility = if (isVisible == 1) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
     }
 
     private fun setPlaceholderVisibility(visibility: Int) {

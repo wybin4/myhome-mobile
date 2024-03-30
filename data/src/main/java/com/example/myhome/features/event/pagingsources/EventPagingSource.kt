@@ -1,21 +1,16 @@
-package com.example.myhome.features.event
+package com.example.myhome.features.event.pagingsources
 
 import com.example.myhome.features.CustomPagingSource
+import com.example.myhome.features.event.EventApiService
 import com.example.myhome.features.event.dto.EventListRequest
 import com.example.myhome.features.event.dto.NotificationAndVotingListResponse
 import com.example.myhome.features.event.models.EventTypeRequest
 import com.example.myhome.models.FilterListItemRequest
 import com.example.myhome.models.MetaRequest
 
-class EventPagingSourceFactory(private val eventApiService: EventApiService) {
-    fun create(filters: List<FilterListItemRequest>?): CustomPagingSource<NotificationAndVotingListResponse> {
-        return EventPagingSource(filters, eventApiService)
-    }
-}
-
 class EventPagingSource(
-    private val filters: List<FilterListItemRequest>?
-    , private val eventApiService: EventApiService
+    private val filters: List<FilterListItemRequest>?,
+    private val eventApiService: EventApiService
 ) : CustomPagingSource<NotificationAndVotingListResponse>() {
     companion object {
         const val EVENT_PAGE_SIZE = 5

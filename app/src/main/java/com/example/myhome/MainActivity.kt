@@ -11,7 +11,6 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.myhome.databinding.ActivityMainBinding
 import com.example.myhome.features.CommonSocketService
-import com.example.myhome.presentation.state.list.ListStateWithUnread
 import com.example.myhome.presentation.utils.managers.mainactivity.NavigationManager
 import com.example.myhome.presentation.utils.managers.mainactivity.ServiceManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,18 +83,24 @@ class MainActivity : AppCompatActivity() {
 
             isNotificationDestination = destination.id == R.id.list_service_notification
             navigationManager.actionBarManager.setNotificationButtonVisibility(
-                viewModel.notificationListState.value!! is ListStateWithUnread.Error || isNotificationDestination
+                viewModel.hasUnreadNotifications.get() == -1 || isNotificationDestination
             )
         }
     }
 
     private fun observeResourceState() {
-        viewModel.notificationListState.observe(this) { resource ->
-            navigationManager.actionBarManager.setNotificationButtonVisibility(
-                resource is ListStateWithUnread.Error || isNotificationDestination
-            )
-            navigationManager.actionBarManager.setUnreadDotVisibility(resource.dotVisibility)
-        }
+        viewModel.hasUnreadNotifications.addOnPropertyChangedCallback(
+            object : Observable.OnPropertyChangedCallback() {
+                override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                    val hasUnread = viewModel.hasUnreadNotifications.get()
+                    navigationManager.actionBarManager.setNotificationButtonVisibility(
+                        hasUnread == -1 || isNotificationDestination
+                    )
+                    navigationManager.actionBarManager.setUnreadDotVisibility(
+                        hasUnread
+                    )
+                }
+            })
     }
 
     @TestOnly

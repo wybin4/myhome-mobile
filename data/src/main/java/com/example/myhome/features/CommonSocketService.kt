@@ -3,7 +3,7 @@ package com.example.myhome.features
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.util.Log
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.chat.dtos.ChatListItemResponse
@@ -11,7 +11,7 @@ import com.example.myhome.features.chat.dtos.MessageAddRequest
 import com.example.myhome.features.chat.dtos.MessageAddResponse
 import com.example.myhome.features.chat.dtos.MessageListItemResponse
 import com.example.myhome.features.chat.dtos.MessageReadRequest
-import com.example.myhome.features.servicenotification.ServiceNotificationListItemResponse
+import com.example.myhome.features.event.dto.ServiceNotificationListItemResponse
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import org.json.JSONArray
@@ -24,6 +24,8 @@ class CommonSocketService: BaseSocketService() {
 
     private val _newMessage = MutableLiveData<MessageAddResponse>()
     val newMessage: LiveData<MessageAddResponse> = _newMessage
+
+    val hasUnreadNotifications = ObservableInt(-1)
 
     private val _readMessages = MutableLiveData<List<MessageListItemResponse>>()
     val readMessages: LiveData<List<MessageListItemResponse>> = _readMessages
@@ -96,6 +98,11 @@ class CommonSocketService: BaseSocketService() {
         _chatList.postValue(newList)
     }
 
+    private val onHasUnreadNotifications = Emitter.Listener { args ->
+        val hasUnread = args[0]?.toString()?.toInt() ?: -1
+        hasUnreadNotifications.set(hasUnread)
+    }
+
     private val onNotificationList = Emitter.Listener { args ->
         val notifications = args[0] as JSONArray
         val list = mutableListOf<ServiceNotificationListItemResponse>()
@@ -139,6 +146,7 @@ class CommonSocketService: BaseSocketService() {
 
     override fun startListeners() {
         socket?.apply {
+            on("hasUnreadNotifications", onHasUnreadNotifications)
             on("notifications", onNotificationList)
             on("chats", onChatList)
             on("newChat", onNewChat)
@@ -153,6 +161,7 @@ class CommonSocketService: BaseSocketService() {
 
     override fun stopListeners() {
         socket?.apply {
+            off("hasUnreadNotifications", onHasUnreadNotifications)
             off("notifications", onNotificationList)
             off("chats", onChatList)
             off("newChat", onNewChat)
