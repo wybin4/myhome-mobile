@@ -13,8 +13,10 @@ class AppealPagingSourceFactory(private val eventApiService: EventApiService) {
     }
 }
 
-class AppealPagingSource(private val filters: List<FilterListItemRequest>?, private val eventApiService: EventApiService) :
-    CustomPagingSource<AppealListItemResponse>() {
+class AppealPagingSource(
+    private val filters: List<FilterListItemRequest>?,
+    private val eventApiService: EventApiService
+) : CustomPagingSource<AppealListItemResponse>() {
     companion object {
         const val APPEAL_PAGE_SIZE = 10
     }

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/BottomSheetDialog"
+        android:orientation="vertical"
+        android:paddingHorizontal="28dp"
+        android:paddingBottom="45dp">
+
+        <LinearLayout
+            android:layout_width="77dp"
+            android:layout_height="5dp"
+            android:backgroundTint="@color/description_night"
+            android:background="@drawable/circle_normal"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="40dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Text"
+                android:text="Фильтры"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="25dp"/>
+
+            <TextView
+                style="@style/Text"
+                android:text="Статус"
+                android:fontFamily="@font/robotomedium"
+                android:layout_marginBottom="10dp"/>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flexWrap="wrap"
+                app:alignItems="stretch"
+                app:alignContent="stretch"
+                app:justifyContent="flex_start">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/voting_button_active"
+                        android:layout_width="110dp"
+                        style="@style/ActiveFilterButton"
+                        android:text="Опрос"
+                        android:layout_marginRight="15dp"
+                        />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/voting_button_not_active"
+                        android:layout_width="110dp"
+                        style="@style/NotActiveFilterButton"
+                        android:text="Опрос"
+                        android:layout_marginRight="15dp"
+                        android:visibility="gone"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="27dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/notification_button_active"
+                        android:layout_width="170dp"
+                        style="@style/ActiveFilterButton"
+                        android:text="Уведомление"
+                        />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/notification_button_not_active"
+                        android:layout_width="150dp"
+                        style="@style/NotActiveFilterButton"
+                        android:text="Уведомление"
+                        android:visibility="gone"
+                        />
+
+                </LinearLayout>
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+
+            <TextView
+                style="@style/Text"
+                android:text="Дата"
+                android:fontFamily="@font/robotomedium"
+                android:layout_marginBottom="10dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/created_at_date_picker"
+                style="@style/RoundedInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/Text"
+                    android:id="@+id/created_at"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

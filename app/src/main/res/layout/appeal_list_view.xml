@@ -31,8 +31,6 @@
             android:layout_marginTop="-90dp"
             android:visibility="gone"
             >
-
-
             <include
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -50,7 +48,6 @@
             android:layout_marginTop="-90dp"
             android:visibility="gone"
             >
-
             <include
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -58,7 +55,6 @@
                 bind:title="@{`Таких обращений нет`}"
                 bind:subtitle="@{`Для изменения фильтра нажмите кнопку “Фильтр”`}"
                 />
-
         </LinearLayout>
 
         <androidx.core.widget.NestedScrollView

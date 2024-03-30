@@ -13,7 +13,7 @@ import com.example.myhome.databinding.AppealGetViewBinding
 import com.example.myhome.databinding.AppealListItemBinding
 import com.example.myhome.databinding.AppealListItemLoadingBinding
 import com.example.myhome.databinding.AppealListViewBinding
-import com.example.myhome.databinding.FilterViewBinding
+import com.example.myhome.databinding.AppealFilterViewBinding
 import com.example.myhome.di.RetrofitModule.Companion.BASE_URL
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.appeal.AppealFilterManager
@@ -34,7 +34,7 @@ class AppealListView : Fragment() {
     private val bindingList get() = _bindingList!!
     private var _bindingGet: AppealGetViewBinding? = null
     private val bindingGet get() = _bindingGet!!
-    private var _bindingFilter: FilterViewBinding? = null
+    private var _bindingFilter: AppealFilterViewBinding? = null
     private val bindingFilter get() = _bindingFilter!!
 
     private val viewModel by viewModels<AppealListViewModel>()
@@ -115,7 +115,7 @@ class AppealListView : Fragment() {
 
     private fun setupFilter(inflater: LayoutInflater, container: ViewGroup?) {
         filterDialog = BottomSheetDialog(requireActivity(), R.style.SheetDialog)
-        _bindingFilter = FilterViewBinding.inflate(inflater, container, false)
+        _bindingFilter = AppealFilterViewBinding.inflate(inflater, container, false)
         filterDialog.setContentView(bindingFilter.root)
 
         bindingList.filterDragHandle.setOnClickListener {

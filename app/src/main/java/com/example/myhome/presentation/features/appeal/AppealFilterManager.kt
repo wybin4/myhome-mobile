@@ -1,7 +1,7 @@
 package com.example.myhome.presentation.features.appeal
 
 import androidx.fragment.app.FragmentActivity
-import com.example.myhome.databinding.FilterViewBinding
+import com.example.myhome.databinding.AppealFilterViewBinding
 import com.example.myhome.features.appeal.models.AppealStatus
 import com.example.myhome.presentation.utils.filters.FilterButton
 import com.example.myhome.presentation.utils.filters.FilterDatePicker
@@ -9,7 +9,7 @@ import java.util.Date
 
 class AppealFilterManager(
     context: FragmentActivity,
-    binding: FilterViewBinding,
+    binding: AppealFilterViewBinding,
     setStatusList: (List<AppealStatus>) -> Unit,
     getStatusList: () -> List<AppealStatus>,
     setCreatedAt: (Date?, Date?) -> Unit

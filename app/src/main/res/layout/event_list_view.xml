@@ -46,6 +46,22 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/on_empty_filter"
+                style="@style/EmptyListLayout"
+                android:layout_height="match_parent"
+                android:layout_marginTop="-90dp"
+                android:visibility="gone"
+                >
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    layout="@layout/list_empty"
+                    bind:title="@{`Таких событий нет`}"
+                    bind:subtitle="@{`Для изменения фильтра нажмите кнопку “Фильтр”`}"
+                    />
+            </LinearLayout>
+
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/on_loading"
                 android:overScrollMode="never"
@@ -121,6 +137,30 @@
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                android:id="@+id/filter_drag_handle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:textAlignment="center"
+                android:textColor="@color/primary"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/empty_filter_button"
+                style="@style/FloatingActionButton"
+                android:src="@drawable/filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"/>
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
