@@ -104,7 +104,7 @@
                             android:layout_width="120dp"
                             style="@style/ActionButtonWithDrawable"
                             android:text="Фильтр"
-                            android:drawableStart="@drawable/filter"
+                            android:drawableLeft="@drawable/filter"
                             android:layout_gravity="end"
                             android:layout_marginBottom="25dp"
                             />

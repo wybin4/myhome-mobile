@@ -102,7 +102,7 @@
                         android:layout_width="120dp"
                         style="@style/ActionButtonWithDrawable"
                         android:text="Фильтр"
-                        android:drawableStart="@drawable/filter"
+                        android:drawableLeft="@drawable/filter"
                         android:layout_gravity="end"
                         android:layout_marginBottom="25dp"
                         />
@@ -126,7 +126,16 @@
             android:gravity="bottom"
             android:orientation="vertical">
             <com.google.android.material.bottomsheet.BottomSheetDragHandleView
-                android:id="@+id/bottom_sheet_drag_handle"
+                android:id="@+id/appeal_get_drag_handle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:textAlignment="center"
+                android:textColor="@color/primary"
+                />
+
+            <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                android:id="@+id/filter_drag_handle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"

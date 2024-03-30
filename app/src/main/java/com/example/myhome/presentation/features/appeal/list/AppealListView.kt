@@ -13,7 +13,9 @@ import com.example.myhome.databinding.AppealGetViewBinding
 import com.example.myhome.databinding.AppealListItemBinding
 import com.example.myhome.databinding.AppealListItemLoadingBinding
 import com.example.myhome.databinding.AppealListViewBinding
+import com.example.myhome.databinding.FilterViewBinding
 import com.example.myhome.di.RetrofitModule.Companion.BASE_URL
+import com.example.myhome.features.event.models.EventTypeResponse
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.appeal.AppealUiModel
 import com.example.myhome.presentation.state.list.ListState
@@ -21,6 +23,7 @@ import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomPagingAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import com.example.myhome.presentation.utils.handleLoadState
+import com.example.myhome.presentation.utils.pickers.CustomDatePicker
 import com.example.myhome.presentation.utils.pickers.permissions.StoragePermissionPicker
 import com.example.myhome.presentation.utils.resources.AndroidDownloader
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -33,13 +36,17 @@ class AppealListView : Fragment() {
     private val bindingList get() = _bindingList!!
     private var _bindingGet: AppealGetViewBinding? = null
     private val bindingGet get() = _bindingGet!!
+    private var _bindingFilter: FilterViewBinding? = null
+    private val bindingFilter get() = _bindingFilter!!
 
     private val viewModel by viewModels<AppealListViewModel>()
 
     private lateinit var appealListAdapter: CustomPagingAdapter<AppealUiModel, AppealListItemBinding>
     private lateinit var appealInfiniteListAdapter: InfiniteListAdapter<String, AppealListItemLoadingBinding>
 
-    private lateinit var bottomSheetDialog: BottomSheetDialog
+    private lateinit var appealGetDialog: BottomSheetDialog
+    private lateinit var filterDialog: BottomSheetDialog
+    private lateinit var createdAtPicker: CustomDatePicker
 
     private val listStateManager = ListStateManager(this::updateViewState)
 
@@ -54,12 +61,16 @@ class AppealListView : Fragment() {
 
         setupRecyclerView()
         setupInfiniteRecyclerView()
-        setupGetSheet(inflater, container)
+        setupDialog(inflater, container)
+        setupFilter(inflater, container)
 
         storagePermissionPicker = StoragePermissionPicker(requireActivity())
 
         bindingList.addAppealButton.setOnClickListener {
             findNavController().navigate(R.id.action_appealListView_to_appealPickView)
+        }
+        bindingList.filterButton.setOnClickListener {
+            filterDialog.show()
         }
 
         return bindingList.root
@@ -87,16 +98,94 @@ class AppealListView : Fragment() {
         }
     }
 
-    private fun setupGetSheet(inflater: LayoutInflater, container: ViewGroup?) {
-        bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.SheetDialog)
+    private fun setupDialog(inflater: LayoutInflater, container: ViewGroup?) {
+        appealGetDialog = BottomSheetDialog(requireActivity(), R.style.SheetDialog)
         _bindingGet = AppealGetViewBinding.inflate(inflater, container, false)
-        bottomSheetDialog.setContentView(bindingGet.root)
+        appealGetDialog.setContentView(bindingGet.root)
 
-        bindingList.bottomSheetDragHandle.setOnClickListener {
-            if (bottomSheetDialog.isShowing) {
-                bottomSheetDialog.dismiss()
+        bindingList.appealGetDragHandle.setOnClickListener {
+            if (appealGetDialog.isShowing) {
+                appealGetDialog.dismiss()
             } else {
-                bottomSheetDialog.show()
+                appealGetDialog.show()
+            }
+        }
+
+        filterDialog = BottomSheetDialog(requireActivity(), R.style.SheetDialog)
+        _bindingFilter = FilterViewBinding.inflate(inflater, container, false)
+        filterDialog.setContentView(bindingFilter.root)
+
+        createdAtPicker = CustomDatePicker(
+            requireActivity(),
+            viewModel::selectCreatedAt, bindingFilter.createdAt, bindingFilter.createdAtDatePicker,
+            "создания"
+        )
+        bindingFilter.createdAt.setOnClickListener {
+            createdAtPicker.show()
+        }
+
+        bindingList.filterDragHandle.setOnClickListener {
+            if (filterDialog.isShowing) {
+                filterDialog.dismiss()
+            } else {
+                filterDialog.show()
+            }
+        }
+    }
+
+    private fun setupFilter(inflater: LayoutInflater, container: ViewGroup?) {
+        filterDialog = BottomSheetDialog(requireActivity(), R.style.SheetDialog)
+        _bindingFilter = FilterViewBinding.inflate(inflater, container, false)
+        filterDialog.setContentView(bindingFilter.root)
+
+        createdAtPicker = CustomDatePicker(
+            requireActivity(),
+            viewModel::selectCreatedAt, bindingFilter.createdAt, bindingFilter.createdAtDatePicker,
+            "создания"
+        )
+        bindingFilter.createdAt.setOnClickListener {
+            createdAtPicker.show()
+        }
+
+        bindingList.filterDragHandle.setOnClickListener {
+            if (filterDialog.isShowing) {
+                filterDialog.dismiss()
+            } else {
+                filterDialog.show()
+            }
+        }
+
+        bindingFilter.apply {
+            notificationButtonNotActive.setOnClickListener {
+                if (!viewModel.selectEventType.contains(EventTypeResponse.Notification)) {
+                    viewModel.selectEventType.add(EventTypeResponse.Notification)
+                }
+                notificationButtonActive.visibility = View.VISIBLE
+                notificationButtonNotActive.visibility = View.GONE
+            }
+
+            notificationButtonActive.setOnClickListener {
+                if (viewModel.selectEventType.size > 1) {
+                    viewModel.selectEventType.remove(EventTypeResponse.Notification)
+                    notificationButtonActive.visibility = View.GONE
+                    notificationButtonNotActive.visibility = View.VISIBLE
+                }
+            }
+
+            votingButtonNotActive.setOnClickListener {
+                if (!viewModel.selectEventType.contains(EventTypeResponse.Voting)) {
+                    viewModel.selectEventType.add(EventTypeResponse.Voting)
+                }
+                votingButtonActive.visibility = View.VISIBLE
+                votingButtonNotActive.visibility = View.GONE
+            }
+
+            votingButtonActive.setOnClickListener {
+                if (viewModel.selectEventType.size > 1) {
+                    viewModel.selectEventType.remove(EventTypeResponse.Voting)
+                    votingButtonActive.visibility = View.GONE
+                    votingButtonNotActive.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -150,7 +239,7 @@ class AppealListView : Fragment() {
                         }
                     }
                 }
-                bottomSheetDialog.show()
+                appealGetDialog.show()
             }
         )
         bindingList.appealRecyclerView.adapter = appealListAdapter
