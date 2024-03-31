@@ -102,37 +102,14 @@ class CommonSocketService: BaseSocketService() {
         _newNotification.postValue(notification)
     }
 
-    private val onReadNotifications = Emitter.Listener { args ->
-//        val notificationsArray = args[0] as JSONArray
-//        val newList = mutableListOf<ServiceNotificationListItemResponse>()
-//        for (i in 0 until notificationsArray.length()) {
-//            val notificationJson = notificationsArray.getJSONObject(i).toString()
-//            val notification = gson.fromJson(notificationJson, ServiceNotificationListItemResponse::class.java)
-//            newList.add(notification)
-//        }
-//        val currentList = _notificationList.value.orEmpty().toMutableList()
-//        for (notification in newList) {
-//            val index = currentList.indexOfFirst { it.id == notification.id }
-//            if (index != -1) {
-//                currentList[index] = notification
-//            } else {
-//                currentList.add(notification)
-//            }
-//        }
-//        val sortedList = currentList.sortedByDescending { it.createdAt }
-//        _notificationList.postValue(sortedList)
-    }
-
     override fun startListeners() {
         socket?.apply {
             on("hasUnreadNotifications", onHasUnreadNotifications)
-//            on("notifications", onNotificationList)
             on("chats", onChatList)
             on("newChat", onNewChat)
             on("newMessage", onNewMessage)
             on("readMessages", onReadMessages)
             on("newNotification", onNewNotification)
-            on("readNotifications", onReadNotifications)
             on(Socket.EVENT_CONNECT_ERROR, onConnectError)
             connect()
         }
@@ -141,13 +118,11 @@ class CommonSocketService: BaseSocketService() {
     override fun stopListeners() {
         socket?.apply {
             off("hasUnreadNotifications", onHasUnreadNotifications)
-//            off("notifications", onNotificationList)
             off("chats", onChatList)
             off("newChat", onNewChat)
             off("newMessage", onNewMessage)
             off("readMessages", onReadMessages)
             off("newNotification", onNewNotification)
-            off("readNotifications", onReadNotifications)
             off(Socket.EVENT_CONNECT_ERROR, onConnectError)
         }
     }
