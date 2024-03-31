@@ -1,5 +1,7 @@
 package com.example.myhome.presentation.features.servicenotification
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import com.example.myhome.databinding.ServiceNotificationListItemBinding
 import com.example.myhome.databinding.ServiceNotificationListItemLoadingBinding
 import com.example.myhome.databinding.ServiceNotificationListViewBinding
+import com.example.myhome.features.CommonSocketService
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
 import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomPagingAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
+import com.example.myhome.presentation.utils.handleLoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -23,6 +27,9 @@ import kotlinx.coroutines.launch
 class ServiceNotificationListView : Fragment() {
     private var _binding: ServiceNotificationListViewBinding? = null
     private val binding get() = _binding!!
+
+    private var isServiceBound = false
+
     private val viewModel by viewModels<ServiceNotificationListViewModel>()
 
     private lateinit var notificationListAdapter: CustomPagingAdapter<ServiceNotificationUiModel, ServiceNotificationListItemBinding>
@@ -36,6 +43,9 @@ class ServiceNotificationListView : Fragment() {
     ): View? {
         _binding = ServiceNotificationListViewBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
+
+        val serviceIntent = Intent(requireContext(), CommonSocketService::class.java)
+        requireContext().bindService(serviceIntent, viewModel.getServiceConnection(), Context.BIND_AUTO_CREATE)
 
         setupRecyclerViews()
         setupInfiniteRecyclerView()
@@ -53,12 +63,16 @@ class ServiceNotificationListView : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.fetchNotificationList()
-        viewModel.readNotifications()
     }
 
     private fun observeResourceState() {
         viewModel.notificationListState.observe(viewLifecycleOwner) {
             listStateManager.observeStates(it)
+        }
+        notificationListAdapter.addLoadStateListener {
+            it.handleLoadState(
+                viewModel::setState, notificationListAdapter.itemCount < 1
+            )
         }
     }
 
@@ -104,11 +118,21 @@ class ServiceNotificationListView : Fragment() {
             }, onItemClick = null
         )
         binding.notificationRecyclerView.adapter = notificationListAdapter
+        binding.notificationRecyclerView.itemAnimator = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.readNotifications()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        if (isServiceBound) {
+            requireContext().unbindService(viewModel.getServiceConnection())
+            isServiceBound = false
+        }
     }
 
 }

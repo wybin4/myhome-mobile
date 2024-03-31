@@ -3,7 +3,6 @@ package com.example.myhome
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
-import androidx.databinding.Observable
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -50,12 +49,9 @@ class MainViewModel @Inject constructor(
     }
 
     private fun setupNotifications(service: CommonSocketService) {
-        service.hasUnreadNotifications.addOnPropertyChangedCallback(
-            object : Observable.OnPropertyChangedCallback() {
-                override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                    hasUnreadNotifications.set(service.hasUnreadNotifications.get())
-                }
-        })
+        service.hasUnreadNotifications.observeForever { value ->
+            hasUnreadNotifications.set(value)
+        }
     }
 
     private fun setupChats(service: CommonSocketService) {

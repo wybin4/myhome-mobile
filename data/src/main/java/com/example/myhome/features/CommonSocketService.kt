@@ -3,7 +3,6 @@ package com.example.myhome.features
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.chat.dtos.ChatListItemResponse
@@ -19,13 +18,11 @@ import org.json.JSONArray
 class CommonSocketService: BaseSocketService() {
     private val binder = LocalBinder()
 
-    private val _notificationList = MutableLiveData<List<ServiceNotificationListItemResponse>>()
-    val notificationList: LiveData<List<ServiceNotificationListItemResponse>> = _notificationList
-
     private val _newMessage = MutableLiveData<MessageAddResponse>()
     val newMessage: LiveData<MessageAddResponse> = _newMessage
 
-    val hasUnreadNotifications = ObservableInt(-1)
+    private val _hasUnreadNotifications = MutableLiveData(-1)
+    val hasUnreadNotifications: LiveData<Int> = _hasUnreadNotifications
 
     private val _readMessages = MutableLiveData<List<MessageListItemResponse>>()
     val readMessages: LiveData<List<MessageListItemResponse>> = _readMessages
@@ -69,10 +66,6 @@ class CommonSocketService: BaseSocketService() {
         socket?.emit("readMessage", jsonMessage)
     }
 
-    fun readSocketNotifications() {
-        socket?.emit("readNotifications")
-    }
-
     private val onNewMessage = Emitter.Listener { args ->
         val messageJson = args[0].toString()
         val message = gson.fromJson(messageJson, MessageAddResponse::class.java)
@@ -100,54 +93,40 @@ class CommonSocketService: BaseSocketService() {
 
     private val onHasUnreadNotifications = Emitter.Listener { args ->
         val hasUnread = args[0]?.toString()?.toInt() ?: -1
-        hasUnreadNotifications.set(hasUnread)
-    }
-
-    private val onNotificationList = Emitter.Listener { args ->
-        val notifications = args[0] as JSONArray
-        val list = mutableListOf<ServiceNotificationListItemResponse>()
-        for (i in 0 until notifications.length()) {
-            val notificationJson = notifications.getJSONObject(i).toString()
-            val notification = gson.fromJson(notificationJson, ServiceNotificationListItemResponse::class.java)
-            list.add(notification)
-        }
-        _notificationList.postValue(list.sortedByDescending { it.createdAt })
+        _hasUnreadNotifications.postValue(hasUnread)
     }
 
     private val onNewNotification = Emitter.Listener { args ->
         val notificationJson = args[0].toString()
         val notification = gson.fromJson(notificationJson, ServiceNotificationListItemResponse::class.java)
-        val currentList = _notificationList.value.orEmpty().toMutableList()
-        val newList = listOf(notification) + currentList
-        _notificationList.postValue(newList)
         _newNotification.postValue(notification)
     }
 
     private val onReadNotifications = Emitter.Listener { args ->
-        val notificationsArray = args[0] as JSONArray
-        val newList = mutableListOf<ServiceNotificationListItemResponse>()
-        for (i in 0 until notificationsArray.length()) {
-            val notificationJson = notificationsArray.getJSONObject(i).toString()
-            val notification = gson.fromJson(notificationJson, ServiceNotificationListItemResponse::class.java)
-            newList.add(notification)
-        }
-        val currentList = _notificationList.value.orEmpty().toMutableList()
-        for (notification in newList) {
-            val index = currentList.indexOfFirst { it.id == notification.id }
-            if (index != -1) {
-                currentList[index] = notification
-            } else {
-                currentList.add(notification)
-            }
-        }
-        val sortedList = currentList.sortedByDescending { it.createdAt }
-        _notificationList.postValue(sortedList)
+//        val notificationsArray = args[0] as JSONArray
+//        val newList = mutableListOf<ServiceNotificationListItemResponse>()
+//        for (i in 0 until notificationsArray.length()) {
+//            val notificationJson = notificationsArray.getJSONObject(i).toString()
+//            val notification = gson.fromJson(notificationJson, ServiceNotificationListItemResponse::class.java)
+//            newList.add(notification)
+//        }
+//        val currentList = _notificationList.value.orEmpty().toMutableList()
+//        for (notification in newList) {
+//            val index = currentList.indexOfFirst { it.id == notification.id }
+//            if (index != -1) {
+//                currentList[index] = notification
+//            } else {
+//                currentList.add(notification)
+//            }
+//        }
+//        val sortedList = currentList.sortedByDescending { it.createdAt }
+//        _notificationList.postValue(sortedList)
     }
 
     override fun startListeners() {
         socket?.apply {
             on("hasUnreadNotifications", onHasUnreadNotifications)
-            on("notifications", onNotificationList)
+//            on("notifications", onNotificationList)
             on("chats", onChatList)
             on("newChat", onNewChat)
             on("newMessage", onNewMessage)
@@ -162,7 +141,7 @@ class CommonSocketService: BaseSocketService() {
     override fun stopListeners() {
         socket?.apply {
             off("hasUnreadNotifications", onHasUnreadNotifications)
-            off("notifications", onNotificationList)
+//            off("notifications", onNotificationList)
             off("chats", onChatList)
             off("newChat", onNewChat)
             off("newMessage", onNewMessage)

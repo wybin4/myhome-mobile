@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import retrofit2.HttpException
 import java.io.IOException
+import java.net.SocketTimeoutException
 
 abstract class CustomPagingSource<T : Any> : PagingSource<Int, T>() {
     companion object {
@@ -24,6 +25,8 @@ abstract class CustomPagingSource<T : Any> : PagingSource<Int, T>() {
         } catch (exception: IOException) {
             LoadResult.Error(exception)
         } catch (exception: HttpException) {
+            LoadResult.Error(exception)
+        } catch (exception: SocketTimeoutException) {
             LoadResult.Error(exception)
         }
     }

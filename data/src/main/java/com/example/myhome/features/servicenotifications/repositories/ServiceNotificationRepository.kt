@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface ServiceNotificationRepository {
     fun listServiceNotification(): Flow<PagingData<ServiceNotificationListItemResponse>>
+    fun addServiceNotification(): Flow<PagingData<ServiceNotificationListItemResponse>>
     suspend fun readNotificationList()
 }

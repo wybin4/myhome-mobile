@@ -6,8 +6,8 @@ import com.example.myhome.features.event.pagingsources.EventPagingSource
 import com.example.myhome.features.event.pagingsources.EventPagingSourceFactory
 import com.example.myhome.features.event.repositories.EventRepository
 import com.example.myhome.features.event.repositories.EventRepositoryImpl
-import com.example.myhome.features.servicenotifications.ServiceNotificationPagingSource
-import com.example.myhome.features.servicenotifications.ServiceNotificationPagingSource.Companion.NOTIFICATION_PAGE_SIZE
+import com.example.myhome.features.servicenotifications.pagingsources.ServiceNotificationPagingSource.Companion.NOTIFICATION_PAGE_SIZE
+import com.example.myhome.features.servicenotifications.pagingsources.ServiceNotificationPagingSourceFactory
 import com.example.myhome.features.servicenotifications.repositories.ServiceNotificationRepository
 import com.example.myhome.features.servicenotifications.repositories.ServiceNotificationRepositoryImpl
 import dagger.Module
@@ -36,11 +36,11 @@ class EventDataModule {
     @Singleton
     fun provideServiceNotificationRepository(
         eventApiService: EventApiService,
-        serviceNotificationPagingSource: ServiceNotificationPagingSource
+        serviceNotificationPagingSourceFactory: ServiceNotificationPagingSourceFactory
     ): ServiceNotificationRepository {
         return ServiceNotificationRepositoryImpl(
             eventApiService,
-            serviceNotificationPagingSource,
+            serviceNotificationPagingSourceFactory,
             PagingConfig(pageSize = NOTIFICATION_PAGE_SIZE)
         )
     }
@@ -53,10 +53,10 @@ class EventDataModule {
 
     @Provides
     @Singleton
-    fun provideServiceNotificationPagingSource(
+    fun provideServiceNotificationPagingSourceFactory(
         eventApiService: EventApiService
-    ): ServiceNotificationPagingSource {
-        return ServiceNotificationPagingSource(eventApiService)
+    ): ServiceNotificationPagingSourceFactory {
+        return ServiceNotificationPagingSourceFactory(eventApiService)
     }
 
 }
