@@ -13,15 +13,13 @@ class VotingManager(
     private val onOptionClick: ((OptionUiModel) -> Unit)
 ) {
     operator fun invoke(voting: VotingUiModel, optionsLayout: LinearLayout) {
-        if (voting != null) {
-            val isVotingClosed = voting.isClosed()
-            val isSomeSelected = voting.isSomeSelected()
+        val isVotingClosed = voting.isClosed()
+        val isSomeSelected = voting.isSomeSelected()
 
-            val optionBindings = createOptionBindings(voting, optionsLayout)
-            val optionAdapter = createOptionAdapter(context, optionBindings, isVotingClosed, isSomeSelected)
+        val optionBindings = createOptionBindings(voting, optionsLayout)
+        val optionAdapter = createOptionAdapter(context, optionBindings, isVotingClosed, isSomeSelected)
 
-            addOptionsToLayout(voting, optionsLayout, optionAdapter)
-        }
+        addOptionsToLayout(voting, optionsLayout, optionAdapter)
     }
 
     private fun createOptionBindings(voting: VotingUiModel, optionsLayout: LinearLayout): List<Pair<OptionUiModel, OptionItemBinding>> {

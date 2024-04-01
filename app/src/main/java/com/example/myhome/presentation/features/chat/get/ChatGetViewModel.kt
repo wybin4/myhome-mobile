@@ -3,6 +3,7 @@ package com.example.myhome.presentation.features.chat.get
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,8 +11,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.myhome.features.CommonSocketService
 import com.example.myhome.features.chat.MessageStatus
 import com.example.myhome.features.chat.repositories.ChatRepository
+import com.example.myhome.models.DateConverter
 import com.example.myhome.presentation.features.chat.ChatMapper
 import com.example.myhome.presentation.features.chat.models.ChatAddToGetParcelableModel
+import com.example.myhome.presentation.features.chat.models.MessageCreatedAtUiModel
 import com.example.myhome.presentation.features.chat.models.MessageState
 import com.example.myhome.presentation.features.chat.models.MessageUiModel
 import com.example.myhome.presentation.models.Resource
@@ -26,7 +29,7 @@ import javax.inject.Inject
 class ChatGetViewModel @Inject constructor(
     private val chatRepository: ChatRepository,
     private val chatMapper: ChatMapper
-): ViewModel() {
+): ViewModel(), DateConverter {
     var isItView = false
 
     private var loadingIdCounter = 0
@@ -64,20 +67,27 @@ class ChatGetViewModel @Inject constructor(
                 val newMessageUi = chatMapper.messageAddToUi(message)
                 if (newMessageUi.isItMe) {
                     val currentList = messageList.value.orEmpty()
-                    val index = currentList.indexOfFirst { it.createdAt == message.createdAt }
-                    if (index != -1) {
-                        val updatedList = currentList.toMutableList()
-                        updatedList[index] = updatedList[index].copy(
-                            id = messageId,
-                            messageState = MessageState.Success(message.status == MessageStatus.Read)
-                        )
-                        _messageList.postValue(updatedList)
+                    val existingItem = currentList.find { it.messages.any { m -> m.createdAt == message.createdAt } }
+                    if (existingItem != null) {
+                        val updatedMessages = existingItem.messages.map { innerMessage ->
+                            if (innerMessage.createdAt == message.createdAt) {
+                                innerMessage.copy(
+                                    id = messageId,
+                                    messageState = MessageState.Success(message.status == MessageStatus.Read)
+                                )
+                            } else {
+                                innerMessage
+                            }
+                        }
+                        val updatedItem = existingItem.copy(messages = updatedMessages)
+                        val updatedList = currentList.map { if (it == existingItem) updatedItem else it }
+                        _messageList.value = updatedList
                     } else {
                         updateMessageStatesInList(MessageState.Error)
                     }
                 } else {
-                    val currentList = messageList.value.orEmpty()
-                    _messageList.postValue(currentList + newMessageUi)
+                    val ddMMMMYYYYDate = getDDMMMMYYYYDate(newMessageUi.createdAt)
+                    _messageList.value = updateMessageListWithLoadingMessage(ddMMMMYYYYDate, newMessageUi)
                     if (isItView) {
                         service.readSocketMessage(chatMapper.messageReadToRemote(chatParcelable.id, messageId))
                     }
@@ -89,13 +99,17 @@ class ChatGetViewModel @Inject constructor(
         service.readMessages.observeForever { messages ->
             if (messages.isNotEmpty()) {
                 val updatedMessageList = _messageList.value?.map { message ->
-                    val updatedMessage = messages.find { it.id == message.id }
-                    if (updatedMessage != null && updatedMessage.status == MessageStatus.Read) {
-                        message.copy(messageState = MessageState.Success(true))
-                    } else {
-                        message
+                    val updatedMessages = message.messages.map { innerMessage ->
+                        val updatedMessage = messages.find { it.id == innerMessage.id }
+                        if (updatedMessage != null && updatedMessage.status == MessageStatus.Read) {
+                            innerMessage.copy(messageState = MessageState.Success(true))
+                        } else {
+                            innerMessage
+                        }
                     }
+                    message.copy(messages = updatedMessages)
                 }
+
                 updatedMessageList?.let { _messageList.value = it }
             }
         }
@@ -107,13 +121,16 @@ class ChatGetViewModel @Inject constructor(
 
     private fun updateMessageStatesInList(state: MessageState) {
         val updatedList = _messageList.value.orEmpty().map { message ->
-            if (message.messageState == MessageState.Loading) {
-                message.copy(messageState = state)
-            } else {
-                message
+            val updatedMessages = message.messages.map { innerMessage ->
+                if (innerMessage.messageState == MessageState.Loading) {
+                    innerMessage.copy(messageState = state)
+                } else {
+                    innerMessage
+                }
             }
+            message.copy(messages = updatedMessages)
         }
-        _messageList.postValue(updatedList)
+        _messageList.value = updatedList
     }
 
     fun fetchMessageList() {
@@ -128,23 +145,53 @@ class ChatGetViewModel @Inject constructor(
         }
     }
 
+    private fun getDDMMMMYYYYDate(dateLong: Long): Date {
+        return parseDate(formatDate(Date(dateLong)))
+    }
+
+    private fun getDDMMMMYYYYDate(date: Date): Date {
+        return parseDate(formatDate(date))
+    }
+
     fun sendMessage(text: String) {
         loadingIdCounter++
-        val createdAt = Date().time
-        val currentList = messageList.value.orEmpty()
-        val loadingMessage = MessageUiModel(
+        val createdAt = Date()
+        val createdAtLong = createdAt.time
+
+        val loadingMessage = MessageCreatedAtUiModel(
             id = loadingIdCounter,
             isItMe = true,
             text = text,
-            createdAt = createdAt,
+            createdAt = createdAtLong,
             messageState = MessageState.Loading
         )
-        val newList = currentList + loadingMessage
-        _messageList.value = newList
+
+        _messageList.value = updateMessageListWithLoadingMessage(createdAt, loadingMessage)
+
         if (_messageListState.value == Resource.Empty) {
             _messageListState.value = Resource.Success
         }
         val socketService = localBinder.value?.getService()
-        socketService?.sendSocketMessage(chatMapper.messageAddToRemote(chatParcelable.id, text, createdAt))
+        socketService?.sendSocketMessage(chatMapper.messageAddToRemote(chatParcelable.id, text, createdAtLong))
     }
+
+    private fun updateMessageListWithLoadingMessage(createdAt: Date, loadingMessage: MessageCreatedAtUiModel): List<MessageUiModel> {
+        val existingList = _messageList.value ?: emptyList()
+        val ddMMMMYYYYDate = getDDMMMMYYYYDate(createdAt)
+        val existingItemIndex = existingList.indexOfFirst { it.createdAt == ddMMMMYYYYDate }
+
+        return if (existingItemIndex != -1) {
+            val existingItem = existingList[existingItemIndex]
+            val updatedMessages = existingItem.messages + loadingMessage
+            val updatedItem = existingItem.copy(messages = updatedMessages)
+            existingList.toMutableList().apply { this[existingItemIndex] = updatedItem }
+        } else {
+            val newItem = MessageUiModel(
+                createdAt = ddMMMMYYYYDate,
+                messages = listOf(loadingMessage)
+            )
+            existingList + newItem
+        }
+    }
+
 }

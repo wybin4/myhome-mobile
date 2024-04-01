@@ -1,12 +1,21 @@
 package com.example.myhome.presentation.features.chat.models
 
-import android.util.Log
 import android.view.View
 import com.example.myhome.presentation.features.servicenotification.TimeConverter
 import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.utils.converters.CombinedDateConverter
 import java.util.Date
 
 data class MessageUiModel(
+    val createdAt: Date,
+    val messages: List<MessageCreatedAtUiModel>
+): CombinedDateConverter {
+    fun formatCreatedAt(): String {
+        return formatDateHuman(createdAt)
+    }
+}
+
+data class MessageCreatedAtUiModel(
     override val id: Int,
     val isItMe: Boolean,
     val text: String,

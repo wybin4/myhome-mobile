@@ -1,6 +1,5 @@
 package com.example.myhome.features.chat.dtos
 
-import com.example.myhome.models.DateConverter
 import com.example.myhome.models.DateTimeConverter
 import com.example.myhome.models.UserRole
 import java.util.Date
@@ -13,7 +12,7 @@ data class ChatListRequest(
 data class ChatListItemResponse(
     val id: Int,
     val createdAt: String,
-    val lastMessage: MessageListItemResponse?,
+    val lastMessage: MessageCreatedAtListItemResponse?,
     val countUnread: Int,
     val receiverName: String
 ): DateTimeConverter {

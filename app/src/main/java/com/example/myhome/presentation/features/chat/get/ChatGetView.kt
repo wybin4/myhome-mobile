@@ -3,24 +3,21 @@ package com.example.myhome.presentation.features.chat.get
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.ChatGetViewBinding
-import com.example.myhome.databinding.MessageListItemBinding
 import com.example.myhome.features.CommonSocketService
 import com.example.myhome.presentation.features.chat.adapters.InfiniteMessageListAdapter
-import com.example.myhome.presentation.features.chat.models.MessageUiModel
+import com.example.myhome.presentation.features.chat.adapters.MessageListAdapter
 import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.state.list.ListStateManager
-import com.example.myhome.presentation.utils.adapters.CustomListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +29,7 @@ class ChatGetView : Fragment() {
 
     private val viewModel by viewModels<ChatGetViewModel>()
 
-    private lateinit var messageListAdapter: CustomListAdapter<MessageUiModel, MessageListItemBinding>
+    private lateinit var messageListAdapter: MessageListAdapter
     private lateinit var messageInfiniteListAdapter: InfiniteMessageListAdapter
 
     private val listStateManager = ListStateManager(this::updateViewState)
@@ -130,14 +127,7 @@ class ChatGetView : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        messageListAdapter = CustomListAdapter(
-            itemBindingInflater = { inflater, parent, attachToParent ->
-                MessageListItemBinding.inflate(inflater, parent, attachToParent)
-            },
-            setBinding = { bindingList, item ->
-                bindingList.message = item
-            }, onItemClick = null
-        )
+        messageListAdapter = MessageListAdapter()
         binding.messageRecyclerView.adapter = messageListAdapter
         binding.messageRecyclerView.itemAnimator = null
     }

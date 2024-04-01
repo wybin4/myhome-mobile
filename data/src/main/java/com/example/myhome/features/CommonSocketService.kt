@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.myhome.features.chat.dtos.ChatListItemResponse
 import com.example.myhome.features.chat.dtos.MessageAddRequest
 import com.example.myhome.features.chat.dtos.MessageAddResponse
-import com.example.myhome.features.chat.dtos.MessageListItemResponse
+import com.example.myhome.features.chat.dtos.MessageCreatedAtListItemResponse
 import com.example.myhome.features.chat.dtos.MessageReadRequest
 import com.example.myhome.features.event.dto.ServiceNotificationListItemResponse
 import io.socket.client.Socket
@@ -24,8 +24,8 @@ class CommonSocketService: BaseSocketService() {
     private val _hasUnreadNotifications = MutableLiveData(-1)
     val hasUnreadNotifications: LiveData<Int> = _hasUnreadNotifications
 
-    private val _readMessages = MutableLiveData<List<MessageListItemResponse>>()
-    val readMessages: LiveData<List<MessageListItemResponse>> = _readMessages
+    private val _readMessages = MutableLiveData<List<MessageCreatedAtListItemResponse>>()
+    val readMessages: LiveData<List<MessageCreatedAtListItemResponse>> = _readMessages
 
     private val _newNotification = MutableLiveData<ServiceNotificationListItemResponse>()
     val newNotification: LiveData<ServiceNotificationListItemResponse> = _newNotification
@@ -74,10 +74,10 @@ class CommonSocketService: BaseSocketService() {
 
     private val onReadMessages = Emitter.Listener { args ->
         val messages = args[0] as JSONArray
-        val list = mutableListOf<MessageListItemResponse>()
+        val list = mutableListOf<MessageCreatedAtListItemResponse>()
         for (i in 0 until messages.length()) {
             val messageJson = messages.getJSONObject(i).toString()
-            val message = gson.fromJson(messageJson, MessageListItemResponse::class.java)
+            val message = gson.fromJson(messageJson, MessageCreatedAtListItemResponse::class.java)
             list.add(message)
         }
         _readMessages.postValue(list)

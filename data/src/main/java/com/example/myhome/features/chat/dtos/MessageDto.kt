@@ -1,7 +1,9 @@
 package com.example.myhome.features.chat.dtos
 
 import com.example.myhome.features.chat.MessageStatus
+import com.example.myhome.models.DateConverter
 import com.example.myhome.models.UserRole
+import java.util.Date
 
 data class MessageListRequest(
     val chatId: Int,
@@ -10,6 +12,15 @@ data class MessageListRequest(
 )
 
 data class MessageListItemResponse(
+    val createdAt: String,
+    val messages: List<MessageCreatedAtListItemResponse>
+): DateConverter {
+    fun formatCreatedAt(): Date {
+        return parseDate(createdAt)
+    }
+}
+
+data class MessageCreatedAtListItemResponse(
     val id: Int,
     val sender: ChatUserListItemResponse,
     val text: String,
