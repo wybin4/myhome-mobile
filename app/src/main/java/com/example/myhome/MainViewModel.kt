@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myhome.features.CommonSocketService
 import com.example.myhome.presentation.features.chat.ChatMapper
+import com.example.myhome.presentation.features.chat.models.ChatAddToGetParcelableModel
 import com.example.myhome.presentation.features.chat.models.ChatUiModel
 import com.example.myhome.presentation.state.list.ListStateWithUnread
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -75,6 +76,11 @@ class MainViewModel @Inject constructor(
         service.socketError.observeForever { message ->
             _chatListState.value = ListStateWithUnread.Error(message)
         }
+    }
+
+    fun getChatById(chatId: Int): ChatAddToGetParcelableModel? {
+        return chatList.value?.firstOrNull { it.id == chatId }
+            ?.let { chatMapper.chatListToGetParcel(it) }
     }
 
 }

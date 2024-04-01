@@ -216,7 +216,8 @@
     <fragment
         android:id="@+id/list_chat"
         android:name="com.example.myhome.presentation.features.chat.list.ChatListView"
-        android:label="@string/title_chats">
+        android:label="@string/title_chats"
+        tools:layout="@layout/chat_list_view">
         <action
             android:id="@+id/action_chatListView_to_chatAddView"
             app:destination="@id/add_chat" />
@@ -229,7 +230,8 @@
     <fragment
         android:id="@+id/add_chat"
         android:name="com.example.myhome.presentation.features.chat.add.ChatAddView"
-        android:label="@string/title_add_chats">
+        android:label="@string/title_add_chats"
+        tools:layout="@layout/chat_add_list_view">
 
         <action
             android:id="@+id/action_chatAddView_to_chatListView"
@@ -243,7 +245,8 @@
     <fragment
         android:id="@+id/get_chat"
         android:name="com.example.myhome.presentation.features.chat.get.ChatGetView"
-        android:label="@string/title_chats">
+        android:label="@string/title_chats"
+        tools:layout="@layout/chat_get_view">
 
         <action
             android:id="@+id/action_chatGetView_to_chatListView"
@@ -257,6 +260,7 @@
     <fragment
         android:id="@+id/list_service_notification"
         android:name="com.example.myhome.presentation.features.servicenotification.ServiceNotificationListView"
-        android:label="@string/title_service_notifications"/>
+        android:label="@string/title_service_notifications"
+        tools:layout="@layout/service_notification_list_view"/>
 
 </navigation>

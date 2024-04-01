@@ -2,7 +2,6 @@ package com.example.myhome
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.Observable
@@ -67,9 +66,11 @@ class MainActivity : AppCompatActivity() {
         } else if (fragmentToOpen == "ChatGetView") {
             val chatId = intent.getStringExtra("chat_id")
             if (chatId != null) {
-                Log.e("ChatGetView", chatId)
+                val bundle = viewModel.getChatById(chatId = chatId.toInt())
+                if (bundle != null) {
+                    navController.navigate(R.id.get_chat, bundle.toBundle())
+                }
             }
-//            navController.navigate(R.id.get_chat)
         }
     }
 
