@@ -2,6 +2,9 @@ package com.example.myhome.presentation.models
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
+import com.example.myhome.presentation.state.add.AddState
+import com.example.myhome.presentation.state.get.GetState
+import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.utils.filters.ListStateWithFilter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -22,98 +25,124 @@ fun <T> Flow<T>.asNetworkResult(): Flow<NetworkResult<T>> = map<T, NetworkResult
     .onStart { emit(NetworkResult.Loading) }
     .catch { emit(NetworkResult.Error(it)) }
 
-fun <T> NetworkResult<T>.asAddResource(state: MutableLiveData<AddResource>) {
+fun <T> NetworkResult<T>.asAddState(state: MutableLiveData<AddState>) {
     when (this) {
         is NetworkResult.Success -> {
             val data = this.data
             if (data is Boolean) {
-                state.value = AddResource.Success
+                state.value = AddState.Success
             } else {
-                state.value = AddResource.CodeError
+                state.value = AddState.CodeError
             }
         }
         is NetworkResult.Loading -> {
-            state.value = AddResource.Loading
+            state.value = AddState.Loading
         }
         is NetworkResult.Error -> {
             val errorMessage = this.exception.message
             if (errorMessage != null) {
-                state.value = AddResource.NetworkError(errorMessage)
+                state.value = AddState.NetworkError(errorMessage)
             }
         }
     }
 }
 
-fun <T> NetworkResult<T>.asAddResourceWithData(
-    state: MutableLiveData<AddResource>,
+fun <T> NetworkResult<T>.asAddStateWithData(
+    state: MutableLiveData<AddState>,
     onSuccess: (data: T) -> Unit
 ) {
     when (this) {
         is NetworkResult.Success -> {
             val data = this.data
             if (data != null) {
-                state.value = AddResource.Success
+                state.value = AddState.Success
                 onSuccess(data)
             } else {
-                state.value = AddResource.CodeError
+                state.value = AddState.CodeError
             }
         }
         is NetworkResult.Loading -> {
-            state.value = AddResource.Loading
+            state.value = AddState.Loading
         }
         is NetworkResult.Error -> {
             val errorMessage = this.exception.message
             if (errorMessage != null) {
-                state.value = AddResource.NetworkError(errorMessage)
+                state.value = AddState.NetworkError(errorMessage)
             }
         }
     }
 }
 
-fun <T> NetworkResult<List<T>>.asListResource(
-    state: MutableLiveData<Resource>,
+fun <T> NetworkResult<List<T>>.asListState(
+    state: MutableLiveData<ListState>,
     onSuccess: (data: List<T>) -> Unit
 ) {
     when (this) {
         is NetworkResult.Success -> {
             val data = this.data
             if (data.isNotEmpty()) {
-                state.value = Resource.Success
+                state.value = ListState.Success
                 onSuccess(data)
             } else {
-                state.value = Resource.Empty
+                state.value = ListState.Empty
             }
         }
         is NetworkResult.Loading -> {
-            state.value = Resource.Loading
+            state.value = ListState.Loading
         }
         is NetworkResult.Error -> {
             val errorMessage = this.exception.message
             if (errorMessage != null) {
-                state.value = Resource.Error(errorMessage)
+                state.value = ListState.Error(errorMessage)
             }
         }
     }
 }
 
-fun <T : Any> NetworkResult<PagingData<T>>.asPagingDataResource(
-    state: MutableLiveData<Resource>,
+fun <T> NetworkResult<List<T>>.asGetState(
+    state: MutableLiveData<GetState>,
+    onSuccess: (data: List<T>) -> Unit
+) {
+    when (this) {
+        is NetworkResult.Success -> {
+            val data = this.data
+            if (data.isNotEmpty()) {
+                state.value = GetState.Success
+                onSuccess(data)
+            } else {
+                state.value = GetState.Empty
+            }
+        }
+        is NetworkResult.Loading -> {
+            state.value = GetState.Loading
+        }
+        is NetworkResult.Error -> {
+            val errorMessage = this.exception.message
+            if (errorMessage != null) {
+                state.value = GetState.Error(errorMessage)
+            }
+        }
+    }
+}
+
+fun <T : Any> NetworkResult<PagingData<T>>.asPagingDataListState(
+    state: MutableLiveData<ListState>,
     onSuccess: (data: PagingData<T>) -> Unit
 ) {
     when (this) {
         is NetworkResult.Success -> {
             val data = this.data
-            state.value = Resource.Success
+            state.value = ListState.Success
             onSuccess(data)
         }
         is NetworkResult.Loading -> {
-            state.value = Resource.Loading
+            state.value = ListState.Loading
         }
         else -> {}
     }
 }
 
-fun <T : Any> NetworkResult<PagingData<T>>.asPagingDataResourceWithFilter(
+fun <T : Any> NetworkResult<PagingData<T>>.asPagingDataListStateWithFilter(
     state: MutableLiveData<ListStateWithFilter>,
     onSuccess: (data: PagingData<T>) -> Unit
 ) {

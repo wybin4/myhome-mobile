@@ -12,7 +12,7 @@ import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.databinding.DatePickersViewBinding
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.common.models.TypeOfServiceUiModel
-import com.example.myhome.presentation.state.data.DataStateManager
+import com.example.myhome.presentation.state.DataStateManager
 import com.example.myhome.presentation.utils.managers.DatePickersManager
 import com.example.myhome.presentation.utils.managers.SelectorManager
 import com.example.myhome.presentation.utils.pickers.ImagePicker
@@ -67,11 +67,11 @@ abstract class BaseAppealAddView : Fragment() {
     }
 
     private fun observeResourceState() {
-        viewModel.dataState.observe(viewLifecycleOwner) { resource ->
-            dataStateManager.observeGetState(resource)
+        viewModel.getState.observe(viewLifecycleOwner) { state ->
+            dataStateManager.observeGetState(state)
         }
-        viewModel.dataAddState.observe(viewLifecycleOwner) { resource ->
-            dataStateManager.observeAddState(resource)
+        viewModel.addState.observe(viewLifecycleOwner) { state ->
+            dataStateManager.observeAddState(state)
         }
     }
 

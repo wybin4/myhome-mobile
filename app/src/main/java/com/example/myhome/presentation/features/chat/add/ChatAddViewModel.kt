@@ -9,11 +9,11 @@ import com.example.myhome.features.chat.repositories.ChatRepository
 import com.example.myhome.presentation.features.chat.ChatMapper
 import com.example.myhome.presentation.features.chat.models.ChatAddToGetParcelableModel
 import com.example.myhome.presentation.features.chat.models.ReceiverUiModel
-import com.example.myhome.presentation.models.AddResource
-import com.example.myhome.presentation.models.Resource
-import com.example.myhome.presentation.models.asAddResourceWithData
-import com.example.myhome.presentation.models.asListResource
+import com.example.myhome.presentation.models.asAddStateWithData
+import com.example.myhome.presentation.models.asListState
 import com.example.myhome.presentation.models.asNetworkResult
+import com.example.myhome.presentation.state.add.AddState
+import com.example.myhome.presentation.state.list.ListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,11 +27,11 @@ class ChatAddViewModel @Inject constructor(
     private val _receiverList = MutableLiveData<List<ReceiverUiModel>>()
     val receiverList: LiveData<List<ReceiverUiModel>> = _receiverList
 
-    private val _receiverListState = MutableLiveData<Resource>(Resource.Loading)
-    val receiverListState: LiveData<Resource> = _receiverListState
+    private val _receiverListState = MutableLiveData<ListState>(ListState.Loading)
+    val receiverListState: LiveData<ListState> = _receiverListState
 
-    private val _chatAddState = MutableLiveData<AddResource>(AddResource.None)
-    val chatAddState: LiveData<AddResource> = _chatAddState
+    private val _chatAddState = MutableLiveData<AddState>(AddState.None)
+    val chatAddState: LiveData<AddState> = _chatAddState
 
     private val _chatAddData = MutableLiveData<ChatListItemResponse>()
     val chatAddData: LiveData<ChatListItemResponse> = _chatAddData
@@ -45,7 +45,7 @@ class ChatAddViewModel @Inject constructor(
             chatRepository.addChat(chatMapper.chatAddToRemote(receiver))
                 .asNetworkResult()
                 .collect {
-                    it.asAddResourceWithData(_chatAddState) { data ->
+                    it.asAddStateWithData(_chatAddState) { data ->
                         _chatAddData.value = data
                     }
                 }
@@ -57,7 +57,7 @@ class ChatAddViewModel @Inject constructor(
             chatRepository.listReceiver()
                 .asNetworkResult()
                 .collect {
-                    it.asListResource(_receiverListState) { data ->
+                    it.asListState(_receiverListState) { data ->
                         originalReceiverList = chatMapper.receiverListToUi(data)
                         _receiverList.value = originalReceiverList
                     }

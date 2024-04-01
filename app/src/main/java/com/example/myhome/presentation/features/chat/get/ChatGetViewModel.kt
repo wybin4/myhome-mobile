@@ -3,7 +3,6 @@ package com.example.myhome.presentation.features.chat.get
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,9 +16,9 @@ import com.example.myhome.presentation.features.chat.models.ChatAddToGetParcelab
 import com.example.myhome.presentation.features.chat.models.MessageCreatedAtUiModel
 import com.example.myhome.presentation.features.chat.models.MessageState
 import com.example.myhome.presentation.features.chat.models.MessageUiModel
-import com.example.myhome.presentation.models.Resource
-import com.example.myhome.presentation.models.asListResource
+import com.example.myhome.presentation.models.asListState
 import com.example.myhome.presentation.models.asNetworkResult
+import com.example.myhome.presentation.state.list.ListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -39,8 +38,8 @@ class ChatGetViewModel @Inject constructor(
     private val _messageList = MutableLiveData<List<MessageUiModel>>()
     val messageList: LiveData<List<MessageUiModel>> = _messageList
 
-    private val _messageListState = MutableLiveData<Resource>(Resource.Loading)
-    val messageListState: LiveData<Resource> = _messageListState
+    private val _messageListState = MutableLiveData<ListState>(ListState.Loading)
+    val messageListState: LiveData<ListState> = _messageListState
 
     private val localBinder: MutableLiveData<CommonSocketService.LocalBinder?> = MutableLiveData()
 
@@ -138,7 +137,7 @@ class ChatGetViewModel @Inject constructor(
             chatRepository.listMessage(chatParcelable.id)
                 .asNetworkResult()
                 .collect {
-                    it.asListResource(_messageListState) { data ->
+                    it.asListState(_messageListState) { data ->
                         _messageList.value = chatMapper.messageListToUi(data)
                     }
                 }
@@ -168,8 +167,8 @@ class ChatGetViewModel @Inject constructor(
 
         _messageList.value = updateMessageListWithLoadingMessage(createdAt, loadingMessage)
 
-        if (_messageListState.value == Resource.Empty) {
-            _messageListState.value = Resource.Success
+        if (_messageListState.value == ListState.Empty) {
+            _messageListState.value = ListState.Success
         }
         val socketService = localBinder.value?.getService()
         socketService?.sendSocketMessage(chatMapper.messageAddToRemote(chatParcelable.id, text, createdAtLong))

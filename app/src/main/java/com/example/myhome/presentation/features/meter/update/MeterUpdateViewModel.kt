@@ -12,7 +12,7 @@ import com.example.myhome.presentation.features.appeal.add.verify.BaseAppealVeri
 import com.example.myhome.presentation.features.common.CommonUiConverter
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.meter.MeterGetToUpdateParcelableModel
-import com.example.myhome.presentation.models.asListResource
+import com.example.myhome.presentation.models.asGetState
 import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.utils.mappers.ImageMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +44,7 @@ class MeterUpdateViewModel @Inject constructor(
         apartmentRepository.listApartment()
             .asNetworkResult()
             .collect {
-                it.asListResource(mutableDataState) { data ->
+                it.asGetState(mutableGetState) { data ->
                     _apartmentList.value = commonUiConverter.apartmentListToUi(data)
                 }
             }

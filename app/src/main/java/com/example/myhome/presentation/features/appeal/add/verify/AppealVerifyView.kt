@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
 import com.example.myhome.databinding.AppealVerifyViewBinding
 import com.example.myhome.presentation.features.meter.MeterExtendedUiModel
-import com.example.myhome.presentation.state.data.DataStateManager
+import com.example.myhome.presentation.state.DataStateManager
 import com.example.myhome.presentation.utils.managers.SelectorManager
 import com.example.myhome.presentation.utils.pickers.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint

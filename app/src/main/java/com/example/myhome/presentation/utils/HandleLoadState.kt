@@ -2,20 +2,20 @@ package com.example.myhome.presentation.utils
 
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import com.example.myhome.presentation.state.list.ListState
 import com.example.myhome.presentation.utils.filters.ListStateWithFilter
-import com.example.myhome.presentation.models.Resource
 
-fun CombinedLoadStates.handleLoadState(resourceCallback: (Resource) -> Unit, isItemCountNullable: Boolean) {
+fun CombinedLoadStates.handleLoadState(resourceCallback: (ListState) -> Unit, isItemCountNullable: Boolean) {
     when (refresh) {
         is LoadState.Error -> {
             val errorMessage = (refresh as LoadState.Error).error.message
-            resourceCallback(Resource.Error(errorMessage ?: ""))
+            resourceCallback(ListState.Error(errorMessage ?: ""))
         }
         else -> {}
     }
 
     if (source.refresh is LoadState.NotLoading && append.endOfPaginationReached && isItemCountNullable) {
-        resourceCallback(Resource.Empty)
+        resourceCallback(ListState.Empty)
     }
 }
 

@@ -3,10 +3,10 @@ package com.example.myhome.presentation.features.chat.add
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.R
@@ -15,10 +15,9 @@ import com.example.myhome.databinding.ChatAddListItemLoadingBinding
 import com.example.myhome.databinding.ChatAddListViewBinding
 import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.presentation.ConstantsUi
+import com.example.myhome.presentation.features.chat.ChatAddStateManager
 import com.example.myhome.presentation.features.chat.models.ReceiverUiModel
-import com.example.myhome.presentation.features.chat.ChatDataAddStateManager
 import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,8 +32,7 @@ class ChatAddView : Fragment() {
     private lateinit var chatListAdapter: CustomListAdapter<ReceiverUiModel, ChatAddListItemBinding>
     private lateinit var chatInfiniteListAdapter: InfiniteListAdapter<String, ChatAddListItemLoadingBinding>
 
-    private val listStateManager = ListStateManager(this::updateViewState)
-    private lateinit var dataAddStateManager: ChatDataAddStateManager
+    private lateinit var dataAddStateManager: ChatAddStateManager
     private lateinit var dataAddStateBinding: DataStateBinding
 
     override fun onCreateView(
@@ -75,7 +73,7 @@ class ChatAddView : Fragment() {
 
     private fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
         dataAddStateBinding = DataStateBinding.inflate(inflater, container, false)
-        dataAddStateManager = ChatDataAddStateManager(
+        dataAddStateManager = ChatAddStateManager(
             requireActivity(), dataAddStateBinding,
             "Ваш запрос на создание чата в процессе обработки"
         ) { }
@@ -114,8 +112,8 @@ class ChatAddView : Fragment() {
     }
 
     private fun observeResourceState() {
-        viewModel.receiverListState.observe(viewLifecycleOwner) { resource ->
-            listStateManager.observeStates(resource)
+        viewModel.receiverListState.observe(viewLifecycleOwner) {
+            updateViewState(it)
         }
         viewModel.chatAddState.observe(viewLifecycleOwner) { resource ->
             dataAddStateManager.observeState(resource)

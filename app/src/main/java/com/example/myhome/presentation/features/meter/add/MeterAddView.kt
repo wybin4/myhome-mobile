@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.databinding.MeterAddViewBinding
 import com.example.myhome.presentation.features.appeal.add.add.BaseAppealAddView
-import com.example.myhome.presentation.state.data.DataStateManager
+import com.example.myhome.presentation.state.DataStateManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,8 +1,8 @@
-package com.example.myhome.presentation.state.data.get
+package com.example.myhome.presentation.state.get
 
 import android.app.Dialog
 
-class DataGetStateBehavior(
+class GetStateBehavior(
     private val dialog: Dialog,
     private val goBack: () -> Unit
 ) {

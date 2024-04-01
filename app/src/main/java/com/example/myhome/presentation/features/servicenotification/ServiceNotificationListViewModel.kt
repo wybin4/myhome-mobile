@@ -14,9 +14,9 @@ import com.example.myhome.features.CommonSocketService
 import com.example.myhome.features.event.dto.ServiceNotificationListItemResponse
 import com.example.myhome.features.servicenotifications.repositories.ServiceNotificationRepository
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
-import com.example.myhome.presentation.models.Resource
 import com.example.myhome.presentation.models.asNetworkResult
-import com.example.myhome.presentation.models.asPagingDataResource
+import com.example.myhome.presentation.models.asPagingDataListState
+import com.example.myhome.presentation.state.list.ListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.Flow
@@ -29,8 +29,8 @@ class ServiceNotificationListViewModel @Inject constructor(
     private val notificationRepository: ServiceNotificationRepository,
     private val converter: ServiceNotificationUiConverter
 ): ViewModel() {
-    private val _notificationListState = MutableLiveData<Resource>(Resource.Loading)
-    val notificationListState: LiveData<Resource> = _notificationListState
+    private val _notificationListState = MutableLiveData<ListState>(ListState.Loading)
+    val notificationListState: LiveData<ListState> = _notificationListState
 
     private val _notificationList = MutableLiveData<PagingData<ServiceNotificationUiModel>>()
     val notificationList: LiveData<PagingData<ServiceNotificationUiModel>> = _notificationList
@@ -71,7 +71,7 @@ class ServiceNotificationListViewModel @Inject constructor(
         this.cachedIn(viewModelScope)
             .asNetworkResult()
             .collect {
-                it.asPagingDataResource(_notificationListState) { data ->
+                it.asPagingDataListState(_notificationListState) { data ->
                     _notificationList.value = data.map { d -> converter.notificationToUi(d) }
                 }
             }
@@ -83,7 +83,7 @@ class ServiceNotificationListViewModel @Inject constructor(
         }
     }
 
-    fun setState(resource: Resource) {
+    fun setState(resource: ListState) {
         _notificationListState.value = resource
     }
 }

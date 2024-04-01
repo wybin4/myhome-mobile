@@ -8,9 +8,9 @@ import com.example.myhome.features.common.repositories.SubscriberRepository
 import com.example.myhome.presentation.features.appeal.add.BaseAppealViewModel
 import com.example.myhome.presentation.features.common.CommonUiConverter
 import com.example.myhome.presentation.features.common.models.SubscriberUiModel
-import com.example.myhome.presentation.models.Resource
-import com.example.myhome.presentation.models.asListResource
+import com.example.myhome.presentation.models.asGetState
 import com.example.myhome.presentation.models.asNetworkResult
+import com.example.myhome.presentation.state.get.GetState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
 import javax.inject.Inject
@@ -23,8 +23,8 @@ open class BaseAppealVerifyViewModel @Inject constructor(
     private val _subscriberList = MutableLiveData<List<SubscriberUiModel>>()
     protected val subscriberList: LiveData<List<SubscriberUiModel>> = _subscriberList
 
-    protected val mutableDataState = MutableLiveData<Resource>(Resource.Loading)
-    val dataState: LiveData<Resource> = mutableDataState
+    protected val mutableGetState = MutableLiveData<GetState>(GetState.Loading)
+    val getState: LiveData<GetState> = mutableGetState
 
     var selectIssuedAt: Date? = null
     var selectVerifiedAt: Date? = null
@@ -34,7 +34,7 @@ open class BaseAppealVerifyViewModel @Inject constructor(
         subscriberRepository.listSubscriber()
             .asNetworkResult()
             .collect {
-                it.asListResource(mutableDataState) { data ->
+                it.asGetState(mutableGetState) { data ->
                     _subscriberList.value = commonUiConverter.subscriberListToUi(data)
                 }
         }

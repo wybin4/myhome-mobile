@@ -9,7 +9,8 @@ import androidx.fragment.app.Fragment
 import com.example.myhome.databinding.AppealProblemOrClaimViewBinding
 import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
-import com.example.myhome.presentation.state.data.DataStateManager
+import com.example.myhome.presentation.state.DataStateManager
+import com.example.myhome.presentation.utils.InputValidator
 import com.example.myhome.presentation.utils.managers.SelectorManager
 
 abstract class BaseAppealProblemOrClaimView : Fragment() {
@@ -19,7 +20,7 @@ abstract class BaseAppealProblemOrClaimView : Fragment() {
 
     protected abstract val viewModel: BaseAppealProblemOrClaimViewModel
 
-    private lateinit var textValidator: com.example.myhome.presentation.utils.InputValidator
+    private lateinit var textValidator: InputValidator
     private lateinit var apartmentManager: SelectorManager<ApartmentExtendedUiModel>
 
     protected lateinit var dataStateManager: DataStateManager
@@ -50,7 +51,7 @@ abstract class BaseAppealProblemOrClaimView : Fragment() {
     }
 
     private fun observeResourceState() {
-        viewModel.dataAddState.observe(viewLifecycleOwner) { resource ->
+        viewModel.addState.observe(viewLifecycleOwner) { resource ->
             dataStateManager.observeAddState(resource)
         }
     }

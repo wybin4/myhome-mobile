@@ -18,7 +18,6 @@ import com.example.myhome.presentation.ConstantsUi.Companion.VERTICAL_LOADING_RE
 import com.example.myhome.presentation.features.meter.ApartmentUiModel
 import com.example.myhome.presentation.features.meter.MeterUiModel
 import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,8 +33,6 @@ class MeterListView : Fragment() {
     
     private lateinit var meterInfiniteListAdapter: InfiniteListAdapter<String, MeterListItemLoadingBinding>
     private lateinit var apartmentInfiniteListAdapter: InfiniteListAdapter<String, ApartmentListItemLoadingBinding>
-
-    private val listStateManager = ListStateManager(this::updateViewState)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,14 +77,14 @@ class MeterListView : Fragment() {
             onSuccess.visibility = state.successVisibility
             onEmpty.visibility = state.emptyVisibility
             onError.visibility = state.errorVisibility
-            emptyAddMeterButton.visibility = state.addButtonLayoutVisibility ?: View.GONE
+            emptyAddMeterButton.visibility = state.addButtonVisibility
             state.errorMessage?.let { errorLayout.error = it }
         }
     }
 
     private fun observeResourceState() {
-        viewModel.meterListState.observe(viewLifecycleOwner) { resource ->
-            listStateManager.observeStates(resource)
+        viewModel.meterListState.observe(viewLifecycleOwner) {
+            updateViewState(it)
         }
     }
 

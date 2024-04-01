@@ -11,7 +11,7 @@ import com.example.myhome.presentation.features.appeal.AppealUpdateMeterUiModel
 import com.example.myhome.presentation.features.common.CommonUiConverter
 import com.example.myhome.presentation.features.meter.MeterExtendedUiModel
 import com.example.myhome.presentation.features.meter.mappers.MeterMapper
-import com.example.myhome.presentation.models.asListResource
+import com.example.myhome.presentation.models.asGetState
 import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.utils.mappers.ImageMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +44,7 @@ class AppealVerifyViewModel @Inject constructor(
         meterRepository.listMeter()
             .asNetworkResult()
             .collect {
-                it.asListResource(mutableDataState) { data ->
+                it.asGetState(mutableGetState) { data ->
                     _meterList.value = meterMapper.meterListToUi(data)
                 }
             }

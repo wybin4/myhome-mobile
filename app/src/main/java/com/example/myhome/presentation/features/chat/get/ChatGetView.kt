@@ -3,7 +3,6 @@ package com.example.myhome.presentation.features.chat.get
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.example.myhome.features.CommonSocketService
 import com.example.myhome.presentation.features.chat.adapters.InfiniteMessageListAdapter
 import com.example.myhome.presentation.features.chat.adapters.MessageListAdapter
 import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.state.list.ListStateManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +29,6 @@ class ChatGetView : Fragment() {
 
     private lateinit var messageListAdapter: MessageListAdapter
     private lateinit var messageInfiniteListAdapter: InfiniteMessageListAdapter
-
-    private val listStateManager = ListStateManager(this::updateViewState)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -121,8 +117,8 @@ class ChatGetView : Fragment() {
     }
 
     private fun observeResourceState() {
-        viewModel.messageListState.observe(viewLifecycleOwner) { resource ->
-            listStateManager.observeStates(resource)
+        viewModel.messageListState.observe(viewLifecycleOwner) {
+            updateViewState(it)
         }
     }
 

@@ -13,7 +13,7 @@ import com.example.myhome.models.FilterListItemRequest
 import com.example.myhome.presentation.features.event.EventMapper
 import com.example.myhome.presentation.features.event.EventUiModel
 import com.example.myhome.presentation.models.asNetworkResult
-import com.example.myhome.presentation.models.asPagingDataResourceWithFilter
+import com.example.myhome.presentation.models.asPagingDataListStateWithFilter
 import com.example.myhome.presentation.utils.filters.FilterObserveManager
 import com.example.myhome.presentation.utils.filters.ListStateWithFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +47,7 @@ class EventListViewModel @Inject constructor(
                 .cachedIn(viewModelScope)
                 .asNetworkResult()
                 .collectLatest {
-                    it.asPagingDataResourceWithFilter(_eventListState) { data ->
+                    it.asPagingDataListStateWithFilter(_eventListState) { data ->
                         _eventList.value = data.map { d -> eventMapper.eventToUi(d) }
                     }
                 }

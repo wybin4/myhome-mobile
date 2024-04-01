@@ -16,7 +16,6 @@ import com.example.myhome.features.CommonSocketService
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
 import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomPagingAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import com.example.myhome.presentation.utils.handleLoadState
@@ -34,8 +33,6 @@ class ServiceNotificationListView : Fragment() {
 
     private lateinit var notificationListAdapter: CustomPagingAdapter<ServiceNotificationUiModel, ServiceNotificationListItemBinding>
     private lateinit var notificationInfiniteListAdapter: InfiniteListAdapter<String, ServiceNotificationListItemLoadingBinding>
-
-    private val listStateManager = ListStateManager(this::updateViewState)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +64,7 @@ class ServiceNotificationListView : Fragment() {
 
     private fun observeResourceState() {
         viewModel.notificationListState.observe(viewLifecycleOwner) {
-            listStateManager.observeStates(it)
+           updateViewState(it)
         }
         notificationListAdapter.addLoadStateListener {
             it.handleLoadState(

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.databinding.DatePickersViewBinding
-import com.example.myhome.presentation.state.data.DataStateManager
+import com.example.myhome.presentation.state.DataStateManager
 import com.example.myhome.presentation.utils.managers.DatePickersManager
 import com.example.myhome.presentation.utils.pickers.ImagePicker
 
@@ -52,11 +52,11 @@ abstract class BaseAppealVerifyView : Fragment() {
     }
 
     protected open fun observeResourceState() {
-        viewModel.dataState.observe(viewLifecycleOwner) { resource ->
-            dataStateManager.observeGetState(resource)
+        viewModel.getState.observe(viewLifecycleOwner) { state ->
+            dataStateManager.observeGetState(state)
         }
-        viewModel.dataAddState.observe(viewLifecycleOwner) { resource ->
-            dataStateManager.observeAddState(resource)
+        viewModel.addState.observe(viewLifecycleOwner) { state ->
+            dataStateManager.observeAddState(state)
         }
     }
 

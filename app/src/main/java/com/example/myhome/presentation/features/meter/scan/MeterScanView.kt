@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.myhome.databinding.DataStateBinding
 import com.example.myhome.presentation.BaseDigitPickerView
 import com.example.myhome.presentation.features.meter.ReadingPicker
-import com.example.myhome.presentation.models.AddResource
-import com.example.myhome.presentation.state.data.add.DataAddStateManagerWrapper
+import com.example.myhome.presentation.state.add.AddState
+import com.example.myhome.presentation.state.add.AddStateManagerWrapper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +18,7 @@ class MeterScanView : BaseDigitPickerView() {
     override val viewModel by viewModels<MeterScanViewModel>()
 
     private lateinit var dataAddStateBinding: DataStateBinding
-    private lateinit var dataAddStateManager: DataAddStateManagerWrapper
+    private lateinit var dataAddStateManager: AddStateManagerWrapper
 
     override val digitPicker = ReadingPicker()
 
@@ -34,7 +34,7 @@ class MeterScanView : BaseDigitPickerView() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.dataAddState.observe(viewLifecycleOwner) { resource ->
+        viewModel.addState.observe(viewLifecycleOwner) { resource ->
             dataAddStateManager.observeState(resource)
         }
     }
@@ -45,13 +45,13 @@ class MeterScanView : BaseDigitPickerView() {
 
     private fun setupDateManager(inflater: LayoutInflater, container: ViewGroup?) {
         dataAddStateBinding = DataStateBinding.inflate(inflater, container, false)
-        dataAddStateManager = DataAddStateManagerWrapper(
+        dataAddStateManager = AddStateManagerWrapper(
             requireActivity(), dataAddStateBinding,
             "Показание добавлено", "Мы высоко ценим вашу оперативность!",
             "Показание получено и находится в очереди на добавление"
         ) {
             val navController = findNavController()
-            if (viewModel.dataAddState.value is AddResource.Success) {
+            if (viewModel.addState.value is AddState.Success) {
                 navController.previousBackStackEntry?.savedStateHandle?.set("current_reading", getNewValue())
             }
             navController.popBackStack()

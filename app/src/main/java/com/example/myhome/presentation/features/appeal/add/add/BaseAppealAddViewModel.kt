@@ -16,9 +16,9 @@ import com.example.myhome.presentation.features.common.CommonUiConverter
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.common.models.SubscriberUiModel
 import com.example.myhome.presentation.features.common.models.TypeOfServiceUiModel
-import com.example.myhome.presentation.models.Resource
-import com.example.myhome.presentation.models.asListResource
+import com.example.myhome.presentation.models.asGetState
 import com.example.myhome.presentation.models.asNetworkResult
+import com.example.myhome.presentation.state.get.GetState
 import com.example.myhome.presentation.utils.mappers.ImageMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -44,8 +44,8 @@ class BaseAppealAddViewModel @Inject constructor(
     private val _subscriberList = MutableLiveData<List<SubscriberUiModel>>()
     private val subscriberList: LiveData<List<SubscriberUiModel>> = _subscriberList
 
-    private val _dataState = MutableLiveData<Resource>(Resource.Loading)
-    val dataState: LiveData<Resource> = _dataState
+    private val _getState = MutableLiveData<GetState>(GetState.Loading)
+    val getState: LiveData<GetState> = _getState
 
     var selectIssuedAt: Date? = null
     var selectVerifiedAt: Date? = null
@@ -63,7 +63,7 @@ class BaseAppealAddViewModel @Inject constructor(
             apartmentRepository.listApartment()
                 .asNetworkResult()
                 .collect {
-                    it.asListResource(_dataState) { data ->
+                    it.asGetState(_getState) { data ->
                         _apartmentList.value = commonUiMapper.apartmentListToUi(data)
                     }
                 }
@@ -71,7 +71,7 @@ class BaseAppealAddViewModel @Inject constructor(
             typeOfServiceRepository.listTypeOfService()
                 .asNetworkResult()
                 .collect {
-                    it.asListResource(_dataState) { data ->
+                    it.asGetState(_getState) { data ->
                         _typeOfServiceList.value = commonUiMapper.typeOfServiceListToUi(data)
                     }
                 }
@@ -79,7 +79,7 @@ class BaseAppealAddViewModel @Inject constructor(
             subscriberRepository.listSubscriber()
                 .asNetworkResult()
                 .collect {
-                    it.asListResource(_dataState) { data ->
+                    it.asGetState(_getState) { data ->
                         _subscriberList.value = commonUiMapper.subscriberListToUi(data)
                     }
                 }

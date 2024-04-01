@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.state.data.add
+package com.example.myhome.presentation.state.add
 
 import com.example.myhome.databinding.DataStateBinding
 

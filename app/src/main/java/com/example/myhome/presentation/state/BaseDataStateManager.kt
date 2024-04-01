@@ -1,12 +1,12 @@
-package com.example.myhome.presentation.state.data
+package com.example.myhome.presentation.state
 
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.databinding.DataStateBinding
-import com.example.myhome.presentation.state.data.common.DataErrorStateUi
-import com.example.myhome.presentation.state.data.common.DataSuccessStateUi
+import com.example.myhome.presentation.state.common.ErrorStateUi
+import com.example.myhome.presentation.state.common.SuccessStateUi
 
 abstract class BaseDataStateManager(
     context: FragmentActivity,
@@ -15,8 +15,8 @@ abstract class BaseDataStateManager(
     successSubtitleText: String
 ) {
     protected val dialog = Dialog(context)
-    protected val errorUi = DataErrorStateUi(context, dataStateBinding)
-    protected val successUi = DataSuccessStateUi(context, dataStateBinding, successTitleText, successSubtitleText)
+    protected val errorUi = ErrorStateUi(context, dataStateBinding)
+    protected val successUi = SuccessStateUi(context, dataStateBinding, successTitleText, successSubtitleText)
 
     init {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

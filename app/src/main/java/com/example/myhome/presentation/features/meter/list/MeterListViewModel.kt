@@ -8,11 +8,11 @@ import com.example.myhome.features.meter.dtos.ApartmentWithMeterListItemResponse
 import com.example.myhome.features.meter.repositories.MeterRepository
 import com.example.myhome.presentation.features.meter.ApartmentUiModel
 import com.example.myhome.presentation.features.meter.MeterListToGetParcelableModel
-import com.example.myhome.presentation.features.meter.mappers.MeterMapper
 import com.example.myhome.presentation.features.meter.MeterUiModel
-import com.example.myhome.presentation.models.Resource
-import com.example.myhome.presentation.models.asListResource
+import com.example.myhome.presentation.features.meter.mappers.MeterMapper
+import com.example.myhome.presentation.models.asListState
 import com.example.myhome.presentation.models.asNetworkResult
+import com.example.myhome.presentation.state.list.ListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,8 +30,8 @@ class MeterListViewModel @Inject constructor(
     private val _meterList = MutableLiveData<List<MeterUiModel>>()
     val meterList: LiveData<List<MeterUiModel>> = _meterList
 
-    private val _meterListState = MutableLiveData<Resource>(Resource.Loading)
-    val meterListState: LiveData<Resource> = _meterListState
+    private val _meterListState = MutableLiveData<ListState>(ListState.Loading)
+    val meterListState: LiveData<ListState> = _meterListState
 
     var selectedApartmentId: Int = -1
 
@@ -68,7 +68,7 @@ class MeterListViewModel @Inject constructor(
             meterRepository.listApartmentWithMeter()
                 .asNetworkResult()
                 .collect {
-                    it.asListResource(_meterListState) { data ->
+                    it.asListState(_meterListState) { data ->
                         setupLists(data)
                     }
                 }

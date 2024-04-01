@@ -1,6 +1,5 @@
 package com.example.myhome.presentation.features.meter.get
 
-import com.example.myhome.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,13 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.myhome.R
 import com.example.myhome.databinding.MeterGetViewBinding
 import com.example.myhome.databinding.ReadingListItemBinding
 import com.example.myhome.databinding.ReadingListItemLoadingBinding
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.meter.ReadingUiModel
 import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.state.list.ListStateManager
 import com.example.myhome.presentation.utils.adapters.CustomListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,8 +25,6 @@ class MeterGetView : Fragment() {
     private val viewModel by viewModels<MeterGetViewModel>()
     private lateinit var readingListAdapter: CustomListAdapter<ReadingUiModel, ReadingListItemBinding>
     private lateinit var readingInfiniteListAdapter: InfiniteListAdapter<String, ReadingListItemLoadingBinding>
-
-    private val listStateManager = ListStateManager(this::updateViewState)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,8 +62,8 @@ class MeterGetView : Fragment() {
     }
 
     private fun observeResourceState() {
-        viewModel.readingListState.observe(viewLifecycleOwner) { resource ->
-            listStateManager.observeStates(resource)
+        viewModel.readingListState.observe(viewLifecycleOwner) {
+            updateViewState(it)
         }
     }
 

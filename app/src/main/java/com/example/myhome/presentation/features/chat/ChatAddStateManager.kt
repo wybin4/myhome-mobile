@@ -5,23 +5,23 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.databinding.DataStateBinding
-import com.example.myhome.presentation.models.AddResource
-import com.example.myhome.presentation.state.data.add.DataAddStateBehavior
-import com.example.myhome.presentation.state.data.add.DataAddStateUI
-import com.example.myhome.presentation.state.data.common.DataErrorStateUi
-import com.example.myhome.presentation.state.data.common.DataLoadingStateUi
+import com.example.myhome.presentation.state.add.AddState
+import com.example.myhome.presentation.state.add.AddStateBehavior
+import com.example.myhome.presentation.state.add.DataAddStateUI
+import com.example.myhome.presentation.state.common.ErrorStateUi
+import com.example.myhome.presentation.state.common.LoadingStateUi
 
-class ChatDataAddStateManager(
+class ChatAddStateManager(
     context: FragmentActivity,
     dataStateBinding: DataStateBinding,
     loadingSubtitleText: String,
     goBack: () -> Unit
 ) {
     private val dialog = Dialog(context)
-    private val errorUi = DataErrorStateUi(context, dataStateBinding)
-    private val loadingUi = DataLoadingStateUi(context, dataStateBinding, loadingSubtitleText)
+    private val errorUi = ErrorStateUi(context, dataStateBinding)
+    private val loadingUi = LoadingStateUi(context, dataStateBinding, loadingSubtitleText)
 
-    private val dataAddBehavior = DataAddStateBehavior(dialog, goBack)
+    private val dataAddBehavior = AddStateBehavior(dialog, goBack)
     private val uiManager = DataAddStateUI(dataStateBinding) {
         dataAddBehavior.setupBackAction()
     }
@@ -31,24 +31,24 @@ class ChatDataAddStateManager(
         dialog.setContentView(dataStateBinding.root)
     }
 
-    fun observeState(resource: AddResource) {
+    fun observeState(resource: AddState) {
         dataAddBehavior.setupVisibility(resource)
         when (resource) {
-            is AddResource.CodeError -> errorUi.showCodeErrorState()
-            is AddResource.NetworkError -> errorUi.showNetworkErrorState(resource.message)
-            is AddResource.Loading -> loadingUi.showLoadingState()
+            is AddState.CodeError -> errorUi.showCodeErrorState()
+            is AddState.NetworkError -> errorUi.showNetworkErrorState(resource.message)
+            is AddState.Loading -> loadingUi.showLoadingState()
             else -> {}
         }
         setupDialogBehavior(resource)
     }
 
-    private fun setupDialogBehavior(resource: AddResource) {
+    private fun setupDialogBehavior(resource: AddState) {
         when (resource) {
-            is AddResource.NetworkError, is AddResource.CodeError, AddResource.Loading -> {
+            is AddState.NetworkError, is AddState.CodeError, AddState.Loading -> {
                 uiManager.setupState()
                 dataAddBehavior.setupNotLoadingBehavior()
             }
-            is AddResource.Success -> {
+            is AddState.Success -> {
                 dataAddBehavior.setupBackAction()
             }
             else -> {}

@@ -5,25 +5,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myhome.features.appeal.models.AppealType
 import com.example.myhome.presentation.features.appeal.AppealUiPicker
-import com.example.myhome.presentation.models.AddResource
 import com.example.myhome.presentation.models.NetworkResult
-import com.example.myhome.presentation.models.asAddResource
+import com.example.myhome.presentation.models.asAddState
+import com.example.myhome.presentation.state.add.AddState
 
 abstract class BaseAppealViewModel(
     private val appealType: AppealType
 ) : ViewModel(), AppealUiPicker {
-    private val _dataAddState = MutableLiveData<AddResource>(AddResource.None)
-    val dataAddState: LiveData<AddResource> = _dataAddState
+    private val _addState = MutableLiveData<AddState>(AddState.None)
+    val addState: LiveData<AddState> = _addState
 
     fun getTypeString(): String {
         return getType(appealType)
     }
 
     fun manageAddState(result: NetworkResult<Boolean>) {
-        result.asAddResource(_dataAddState)
+        result.asAddState(_addState)
     }
 
     fun codeError() {
-        _dataAddState.value = AddResource.CodeError
+        _addState.value = AddState.CodeError
     }
 }

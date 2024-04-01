@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.databinding.MeterUpdateViewBinding
 import com.example.myhome.presentation.features.appeal.add.verify.BaseAppealVerifyView
-import com.example.myhome.presentation.state.data.DataStateManager
+import com.example.myhome.presentation.state.DataStateManager
 import com.example.myhome.presentation.utils.pickers.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 
