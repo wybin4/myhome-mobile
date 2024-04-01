@@ -1,9 +1,9 @@
 package com.example.myhome.features.meter.dtos
 
-import com.example.myhome.models.UserRole
 import com.example.myhome.features.meter.models.MeterStatus
 import com.example.myhome.features.meter.models.MeterType
 import com.example.myhome.models.DateConverter
+import com.example.myhome.models.UserRole
 import java.util.Date
 
 data class MeterListRequestExtended(
@@ -27,6 +27,10 @@ data class MeterExtendedListItemResponse(
     val status: MeterStatus
 )
 
+data class ApartmentWithMeterListResponse(
+    val meters: List<ApartmentWithMeterListItemResponse>
+)
+
 data class ApartmentWithMeterListItemResponse(
     val apartmentId: Int,
     val apartmentFullAddress: String,
@@ -42,7 +46,7 @@ data class MeterListItemResponse(
     val typeOfServiceId: Int,
     val typeOfServiceName: String,
     val typeOfServiceEngName: String,
-    val currentReading: Double?,
+    val currentReading: Double,
     val unitName: String
 ): DateConverter {
     fun formatIssuedAt(): Date {

@@ -1,7 +1,7 @@
 package com.example.myhome.presentation.features.event.converters
 
 import com.example.myhome.features.event.dto.HouseNotificationListItemResponse
-import com.example.myhome.features.event.dto.NotificationAndVotingListResponse
+import com.example.myhome.features.event.dto.NotificationAndVotingListItemResponse
 import com.example.myhome.features.event.dto.OptionListItemResponse
 import com.example.myhome.features.event.dto.VotingListItemResponse
 import com.example.myhome.presentation.features.event.EventUiModel
@@ -50,7 +50,7 @@ interface EventUiConverter: ProportionPicker {
         )
     }
 
-    fun eventToUi(notificationAndVoting: NotificationAndVotingListResponse): EventUiModel {
+    fun eventToUi(notificationAndVoting: NotificationAndVotingListItemResponse): EventUiModel {
         return notificationAndVoting.run {
             val date = formatCreatedAt()
             EventUiModel(

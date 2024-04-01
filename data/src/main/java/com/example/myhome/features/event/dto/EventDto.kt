@@ -1,6 +1,6 @@
 package com.example.myhome.features.event.dto
 
-import com.example.myhome.features.appeal.AppealListItemResponse
+import com.example.myhome.features.appeal.AppealListResponse
 import com.example.myhome.features.event.models.EventTypeRequest
 import com.example.myhome.features.event.models.EventTypeResponse
 import com.example.myhome.models.DateTimeConverter
@@ -16,11 +16,20 @@ data class EventListRequest (
 )
 
 data class EventListResponse (
-    val appeals: List<AppealListItemResponse>,
-    val notificationsAndVotings: List<NotificationAndVotingListResponse>
+    val events: EventListItemResponse
+)
+
+data class EventListItemResponse (
+    val appeals: AppealListResponse,
+    val notificationsAndVotings: NotificationAndVotingListResponse
 )
 
 data class NotificationAndVotingListResponse(
+    val notificationsAndVotings: List<NotificationAndVotingListItemResponse>,
+    val totalCount: Int
+)
+
+data class NotificationAndVotingListItemResponse(
     val voting: VotingListItemResponse?,
     val notification: HouseNotificationListItemResponse?,
     val createdAt: String,

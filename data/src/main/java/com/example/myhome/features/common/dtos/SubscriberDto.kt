@@ -7,8 +7,11 @@ data class SubscriberListRequest (
     val userRole: UserRole = UserRole.Owner
 )
 
+data class SubscriberListResponse(
+    val users: List<SubscriberListItemResponse>
+)
+
 data class SubscriberListItemResponse(
-    val managementCompanyId: Int,
-    val subscriberId: Int,
-    val address: String
+    val user: ManagementCompanyListItemResponse,
+    val subscribers: List<ManagementCompanyWithSubscriberListItemResponse>
 )

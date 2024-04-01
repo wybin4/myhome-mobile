@@ -52,7 +52,7 @@ object MeterDomainTestListProvider {
 
         return listOf(
             MeterListItemResponse(1, "12332132131231", getDateString(), getDateString(), 1, "Газ", "Gas",16.9, "м3"),
-            MeterListItemResponse(2, "12332132131232", getDateString(), notIssuedDate, 2, "ХВС", "Water",null, "м3"),
+            MeterListItemResponse(2, "12332132131232", getDateString(), notIssuedDate, 2, "ХВС", "Water",0.0, "м3"),
             MeterListItemResponse(3, "12132132131232", getDateString(), notIssuedDate, 3, "ГВС", "Water",11.2, "гКал")
         )
     }

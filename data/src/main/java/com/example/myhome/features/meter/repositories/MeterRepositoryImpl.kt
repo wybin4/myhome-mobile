@@ -13,7 +13,8 @@ class MeterRepositoryImpl(
 ): MeterRepository {
     override fun listApartmentWithMeter(): Flow<List<ApartmentWithMeterListItemResponse>> = flow {
         val request = ApartmentWithMeterListRequest(userId = 1)
-        emit(meterApiService.listApartmentWithMeter(request))
+        val response = meterApiService.listApartmentWithMeter(request)
+        emit(response.meters)
     }
 
     override fun listMeter(): Flow<List<MeterExtendedListItemResponse>> = flow {

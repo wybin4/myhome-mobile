@@ -259,7 +259,7 @@
 
     <fragment
         android:id="@+id/list_service_notification"
-        android:name="com.example.myhome.presentation.features.servicenotification.ServiceNotificationListView"
+        android:name="com.example.myhome.presentation.features.servicenotification.list.ServiceNotificationListView"
         android:label="@string/title_service_notifications"
         tools:layout="@layout/service_notification_list_view"/>
 

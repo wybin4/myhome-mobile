@@ -20,6 +20,7 @@ class ReadingRepositoryImpl(
 
     override fun listReading(meterId: Int): Flow<List<ReadingListItemResponse>> = flow {
         val request = ReadingListRequest(meterId)
-        emit(meterApiService.listReading(request))
+        val response = meterApiService.listReading(request)
+        emit(response.readings)
     }
 }

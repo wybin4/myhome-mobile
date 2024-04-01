@@ -11,6 +11,15 @@ data class ReadingAddRequest(
     val readAt: String
 )
 
+data class ReadingListRequest(
+    val meterId: Int,
+    val meterType: MeterType = MeterType.Individual
+)
+
+data class ReadingListResponse(
+    val readings: List<ReadingListItemResponse>
+)
+
 data class ReadingListItemResponse(
     val id: Int,
     val reading: Double,
@@ -21,7 +30,3 @@ data class ReadingListItemResponse(
         return parseDate(readAt)
     }
 }
-
-data class ReadingListRequest(
-    val meterId: Int
-)

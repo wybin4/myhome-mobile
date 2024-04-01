@@ -106,12 +106,8 @@ fun <T> NetworkResult<List<T>>.asGetState(
     when (this) {
         is NetworkResult.Success -> {
             val data = this.data
-            if (data.isNotEmpty()) {
-                state.value = GetState.Success
-                onSuccess(data)
-            } else {
-                state.value = GetState.Empty
-            }
+            state.value = GetState.Success
+            onSuccess(data)
         }
         is NetworkResult.Loading -> {
             state.value = GetState.Loading

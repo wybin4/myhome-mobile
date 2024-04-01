@@ -64,6 +64,11 @@ data class AppealClaimAddRequest(
     data = data
 )
 
+data class AppealListResponse (
+    val appeals: List<AppealListItemResponse>,
+    val totalCount: Int
+)
+
 data class AppealListItemResponse (
     val id: Int,
     val managementCompanyId: Int,

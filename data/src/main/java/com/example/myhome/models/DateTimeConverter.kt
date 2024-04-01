@@ -9,8 +9,7 @@ interface DateTimeConverter {
         get() = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
 
     fun formatDateTime(date: Date): String {
-        val fullDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
-        return fullDateFormat.format(date) ?: throw IllegalArgumentException("Неверный формат даты: $date")
+        return dateFormat.format(date) ?: throw IllegalArgumentException("Неверный формат даты: $date")
     }
 
     fun parseDateTime(dateString: String): Date {

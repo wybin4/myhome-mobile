@@ -9,7 +9,8 @@ class TypeOfServiceRepositoryImpl(
     private val commonApiService: CommonApiService
 ): TypeOfServiceRepository {
     override fun listTypeOfService(): Flow<List<TypeOfServiceListItemResponse>> = flow {
-        emit(commonApiService.listTypeOfService())
+        val response = commonApiService.listTypeOfService()
+        emit(response.typesOfService)
     }
 
 }

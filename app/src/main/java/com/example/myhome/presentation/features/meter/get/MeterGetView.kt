@@ -114,7 +114,7 @@ class MeterGetView : Fragment() {
             val bundle = viewModel.mapMeterGetToUpdateParcel(viewModel.meterParcelable).toBundle()
             findNavController().navigate(R.id.action_meterGetView_to_meterUpdateView, bundle)
         }
-        if (viewModel.meterParcelable.currentReading == null) {
+        if (viewModel.meterParcelable.currentReading == 0.0) {
             binding.addReadingButton.setOnClickListener {
                 val prevReading = viewModel.readingList.value?.firstOrNull()?.reading ?: 0.0
                 val bundle = viewModel.mapMeterGetToScanParcel(viewModel.meterParcelable, prevReading).toBundle()

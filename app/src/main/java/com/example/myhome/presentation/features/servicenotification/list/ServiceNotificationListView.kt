@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.features.servicenotification
+package com.example.myhome.presentation.features.servicenotification.list
 
 import android.content.Context
 import android.content.Intent

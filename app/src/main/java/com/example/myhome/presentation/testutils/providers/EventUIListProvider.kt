@@ -1,7 +1,10 @@
 package com.example.myhome.presentation.testutils.providers
 
+import com.example.myhome.features.appeal.AppealListResponse
+import com.example.myhome.features.event.dto.EventListItemResponse
 import com.example.myhome.features.event.dto.EventListResponse
 import com.example.myhome.features.event.dto.HouseNotificationListItemResponse
+import com.example.myhome.features.event.dto.NotificationAndVotingListItemResponse
 import com.example.myhome.features.event.dto.NotificationAndVotingListResponse
 import com.example.myhome.features.event.dto.OptionListItemResponse
 import com.example.myhome.features.event.dto.VoteListItemResponse
@@ -73,7 +76,7 @@ object EventUITestListProvider {
     }
 
     private val notificationList = listOf(
-        NotificationAndVotingListResponse(
+        NotificationAndVotingListItemResponse(
             notification = HouseNotificationListItemResponse(
                 id = 1,
                 title = "Отключение холодной воды",
@@ -86,7 +89,7 @@ object EventUITestListProvider {
             createdAt = subtractDaysString(1),
             eventType = EventTypeResponse.Notification
         ),
-        NotificationAndVotingListResponse(
+        NotificationAndVotingListItemResponse(
             notification = null,
             voting = VotingListItemResponse(
                 id = 1,
@@ -101,7 +104,7 @@ object EventUITestListProvider {
             createdAt = subtractDaysString(2),
             eventType = EventTypeResponse.Notification
         ),
-        NotificationAndVotingListResponse(
+        NotificationAndVotingListItemResponse(
             notification = null,
             voting = VotingListItemResponse(
                 id = 2,
@@ -116,7 +119,7 @@ object EventUITestListProvider {
             createdAt = subtractDaysString(3),
             eventType = EventTypeResponse.Notification
         ),
-        NotificationAndVotingListResponse(
+        NotificationAndVotingListItemResponse(
             notification = HouseNotificationListItemResponse(
                 id = 2,
                 title = "Отключение горячей воды",
@@ -129,7 +132,7 @@ object EventUITestListProvider {
             createdAt = subtractDaysString(4),
             eventType = EventTypeResponse.Notification
         ),
-        NotificationAndVotingListResponse(
+        NotificationAndVotingListItemResponse(
             notification = HouseNotificationListItemResponse(
                 id = 1,
                 title = "Отключение холодной воды",
@@ -142,7 +145,7 @@ object EventUITestListProvider {
             createdAt = subtractDaysString(5),
             eventType = EventTypeResponse.Notification
         ),
-        NotificationAndVotingListResponse(
+        NotificationAndVotingListItemResponse(
             notification = null,
             voting = VotingListItemResponse(
                 id = 3,
@@ -157,7 +160,7 @@ object EventUITestListProvider {
             createdAt = subtractDaysString(6),
             eventType = EventTypeResponse.Notification
         ),
-        NotificationAndVotingListResponse(
+        NotificationAndVotingListItemResponse(
             notification = null,
             voting = VotingListItemResponse(
                 id = 4,
@@ -175,8 +178,16 @@ object EventUITestListProvider {
     )
 
     val eventList = EventListResponse(
-        notificationsAndVotings = notificationList,
-        appeals =  emptyList()
+        events = EventListItemResponse(
+            notificationsAndVotings = NotificationAndVotingListResponse(
+                notificationsAndVotings = notificationList,
+                totalCount = -1
+            ),
+            appeals = AppealListResponse(
+                appeals = emptyList(),
+                totalCount = -1
+            )
+        )
     )
 
 }

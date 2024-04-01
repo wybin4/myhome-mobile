@@ -29,11 +29,14 @@ class CommonUiConverter @Inject constructor() {
     }
 
     fun subscriberListToUi(subscribers: List<SubscriberListItemResponse>): List<SubscriberUiModel> {
-        return subscribers.map {
-            SubscriberUiModel(
-                id = it.subscriberId,
-                managementCompanyId = it.managementCompanyId
-            )
+        return subscribers.flatMap { listItem ->
+            val user = listItem.user
+            listItem.subscribers.map { subscriber ->
+                SubscriberUiModel(
+                    id = subscriber.id,
+                    managementCompanyId = user.id
+                )
+            }
         }
     }
 

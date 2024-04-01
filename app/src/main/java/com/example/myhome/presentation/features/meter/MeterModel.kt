@@ -29,7 +29,7 @@ data class MeterUiModel(
     val issuedAt: Date,
     val apartmentId: Int,
     val address: String,
-    val currentReading: Double?,
+    val currentReading: Double,
     val typeOfServiceName: String,
     val typeOfServiceEngName: String,
     val unitName: String,
@@ -38,9 +38,7 @@ data class MeterUiModel(
     fun formatIssuedAt(): String {
         return formatDate(issuedAt)
     }
-    fun formatVerifiedAt(): String {
-        return formatDate(verifiedAt)
-    }
+
     fun setIsIssued(): MeterUiModel {
         val threeDaysLater = Calendar.getInstance().apply {
             add(Calendar.DAY_OF_MONTH, 3)
@@ -48,9 +46,11 @@ data class MeterUiModel(
         isIssued = issuedAt.before(threeDaysLater)
         return this
     }
+
     fun formatCurrentReading(): String {
         return x2doubleToString(currentReading, unitName)
     }
+
     fun getIcon(): Int? {
         return getMeterIcon(typeOfServiceEngName)
     }
@@ -64,7 +64,7 @@ class MeterListToGetParcelableModel(
     val isIssued: Boolean,
     val apartmentId: Int,
     val address: String,
-    var currentReading: Double?,
+    var currentReading: Double,
     val typeOfServiceName: String,
     val typeOfServiceEngName: String,
     val unitName: String
@@ -113,7 +113,7 @@ class MeterListToGetParcelableModel(
         parcel.writeInt(if (isIssued) 1 else 0)
         parcel.writeInt(apartmentId)
         parcel.writeString(address)
-        parcel.writeDouble(currentReading ?: Double.NaN)
+        parcel.writeDouble(currentReading)
         parcel.writeString(typeOfServiceName)
         parcel.writeString(typeOfServiceEngName)
         parcel.writeString(unitName)

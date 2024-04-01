@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.features.servicenotification
+package com.example.myhome.presentation.features.servicenotification.list
 
 import android.content.ComponentName
 import android.content.ServiceConnection
@@ -13,6 +13,7 @@ import androidx.paging.map
 import com.example.myhome.features.CommonSocketService
 import com.example.myhome.features.event.dto.ServiceNotificationListItemResponse
 import com.example.myhome.features.servicenotifications.repositories.ServiceNotificationRepository
+import com.example.myhome.presentation.features.servicenotification.ServiceNotificationUiConverter
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
 import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.models.asPagingDataListState

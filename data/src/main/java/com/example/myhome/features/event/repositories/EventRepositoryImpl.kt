@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.myhome.features.event.EventApiService
-import com.example.myhome.features.event.dto.NotificationAndVotingListResponse
+import com.example.myhome.features.event.dto.NotificationAndVotingListItemResponse
 import com.example.myhome.features.event.dto.VotingUpdateRequest
 import com.example.myhome.features.event.pagingsources.EventPagingSourceFactory
 import com.example.myhome.models.FilterListItemRequest
@@ -18,7 +18,7 @@ class EventRepositoryImpl(
 ): EventRepository {
     override fun listEvent(
         filters: List<FilterListItemRequest>?
-    ): Flow<PagingData<NotificationAndVotingListResponse>> {
+    ): Flow<PagingData<NotificationAndVotingListItemResponse>> {
         return Pager(
             config = pageConfig,
             pagingSourceFactory = { eventPagingSourceFactory.create(filters) }

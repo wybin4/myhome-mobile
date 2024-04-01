@@ -1,7 +1,6 @@
 package com.example.myhome.testutils
 
 import com.example.myhome.features.common.dtos.ApartmentListItemResponse
-import com.example.myhome.features.common.dtos.SubscriberListItemResponse
 import com.example.myhome.features.common.dtos.TypeOfServiceListItemResponse
 import com.example.myhome.testutils.MeterDomainTestListProvider.apartmentList
 
@@ -41,15 +40,15 @@ object CommonDomainTestListProvider {
         )
     }
 
-    fun getSubscriberList(): List<SubscriberListItemResponse> {
-        return listOf(
-            SubscriberListItemResponse(
-                managementCompanyId = 1, subscriberId = 1, address = ""
-            ),
-            SubscriberListItemResponse(
-                managementCompanyId = 1, subscriberId = 2, address = ""
-            )
-        )
-    }
+//    fun getSubscriberList(): List<SubscriberListItemResponse> {
+//        return listOf(
+//            SubscriberListItemResponse(
+//                managementCompanyId = 1, subscriberId = 1, address = ""
+//            ),
+//            SubscriberListItemResponse(
+//                managementCompanyId = 1, subscriberId = 2, address = ""
+//            )
+//        )
+//    }
 
 }

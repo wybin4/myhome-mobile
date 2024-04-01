@@ -11,6 +11,7 @@ class SubscriberRepositoryImpl(
 ): SubscriberRepository {
     override fun listSubscriber(): Flow<List<SubscriberListItemResponse>> = flow {
         val request = SubscriberListRequest(userId = 1)
-        emit(commonApiService.listSubscriber(request))
+        val response = commonApiService.listSubscriber(request)
+        emit(response.users)
     }
 }
