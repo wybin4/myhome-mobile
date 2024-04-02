@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.features.meter.update
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -26,7 +27,7 @@ class MeterUpdateViewModel @Inject constructor(
     private val appealRepository: AppealRepository,
     private val appealMapper: AppealMapper,
     private val commonUiConverter: CommonUiConverter,
-    private val imageMapper: ImageMapper
+    val imageMapper: ImageMapper
 ) : BaseAppealVerifyViewModel(subscriberRepository, commonUiConverter) {
     private val _apartmentList = MutableLiveData<List<ApartmentExtendedUiModel>>()
     private val apartmentList: LiveData<List<ApartmentExtendedUiModel>> = _apartmentList
@@ -50,24 +51,23 @@ class MeterUpdateViewModel @Inject constructor(
             }
     }
 
-    fun updateMeter() {
+    fun updateMeter(file: Bitmap) {
         val selectedSubscriberId = apartmentList.value?.find { it.id == meterParcelable.apartmentId }?.id
         val selectedManagementCompanyId = subscriberList.value?.find { it.id == selectedSubscriberId }?.managementCompanyId
-        val attachment = imageMapper.mapImageToDomain(selectAttachment!!)
 
         if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
             viewModelScope.launch {
                 appealRepository.updateMeter(
-                    appealMapper.updateToRemote(
+                    appeal = appealMapper.updateToRemote(
                         AppealUpdateMeterUiModel(
                             meterId = meterParcelable.meterId,
                             verifiedAt = selectVerifiedAt!!,
                             issuedAt = selectIssuedAt!!,
                             managementCompanyId = selectedManagementCompanyId,
-                            subscriberId = selectedSubscriberId,
-                            attachment = attachment
+                            subscriberId = selectedSubscriberId
                         )
-                    )
+                    ),
+                    file = file
                 )
                     .asNetworkResult()
                     .collect { result ->

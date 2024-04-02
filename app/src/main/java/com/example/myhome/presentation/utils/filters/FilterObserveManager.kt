@@ -34,8 +34,8 @@ class FilterObserveManager<T : Enum<T>>(
             if (selectCreatedAt.value != null) {
                 val datePair = selectCreatedAt.value
                 if (datePair?.first != null && datePair.second != null) {
-                    val startDateString = formatDate(datePair.first!!)
-                    val endDateString = formatDate(datePair.second!!)
+                    val startDateString = formatDateDash(datePair.first!!)
+                    val endDateString = formatDateDash(datePair.second!!)
                     if (createdAtFilter != null) {
                         createdAtFilter.filterArray = listOf(startDateString, endDateString)
                     } else {

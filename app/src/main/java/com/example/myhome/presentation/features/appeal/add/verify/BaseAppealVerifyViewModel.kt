@@ -28,7 +28,6 @@ open class BaseAppealVerifyViewModel @Inject constructor(
 
     var selectIssuedAt: Date? = null
     var selectVerifiedAt: Date? = null
-    var selectAttachment: Bitmap? = null
 
     protected suspend fun fetchSubscriberList() {
         subscriberRepository.listSubscriber()

@@ -19,7 +19,8 @@ class MeterRepositoryImpl(
 
     override fun listMeter(): Flow<List<MeterExtendedListItemResponse>> = flow {
         val request = MeterListRequestExtended(userId = 1)
-        emit(meterApiService.listMeter(request))
+        val response = meterApiService.listMeter(request)
+        emit(response.meters)
     }
 
 }

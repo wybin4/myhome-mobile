@@ -1,5 +1,6 @@
 package com.example.myhome.presentation.features.appeal.add.verify
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,7 @@ import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.utils.mappers.ImageMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,9 +26,9 @@ class AppealVerifyViewModel @Inject constructor(
     subscriberRepository: SubscriberRepository,
     private val appealRepository: AppealRepository,
     private val appealMapper: AppealMapper,
-    private val commonUiConverter: CommonUiConverter,
+    commonUiConverter: CommonUiConverter,
     private val meterMapper: MeterMapper,
-    private val imageMapper: ImageMapper
+    val imageMapper: ImageMapper
 ) : BaseAppealVerifyViewModel(subscriberRepository, commonUiConverter) {
     private val _meterList = MutableLiveData<List<MeterExtendedUiModel>>()
     val meterList: LiveData<List<MeterExtendedUiModel>> = _meterList
@@ -51,24 +53,23 @@ class AppealVerifyViewModel @Inject constructor(
 
     }
 
-    fun updateMeter() {
+    fun updateMeter(file: Bitmap) {
         val selectedSubscriberId = meterList.value?.find { it.id == selectedMeterId }?.subscriberId
         val selectedManagementCompanyId = subscriberList.value?.find { it.id == selectedSubscriberId }?.managementCompanyId
-        val attachment = imageMapper.mapImageToDomain(selectAttachment!!)
 
         if (selectedManagementCompanyId !== null && selectedSubscriberId !== null) {
             viewModelScope.launch {
                 appealRepository.updateMeter(
-                    appealMapper.updateToRemote(
+                    appeal = appealMapper.updateToRemote(
                         AppealUpdateMeterUiModel(
                             meterId = selectedMeterId,
                             verifiedAt = selectVerifiedAt!!,
                             issuedAt = selectIssuedAt!!,
                             managementCompanyId = selectedManagementCompanyId,
                             subscriberId = selectedSubscriberId,
-                            attachment = attachment
                         )
-                    )
+                    ),
+                    file = file
                 )
                     .asNetworkResult()
                     .collect { result ->

@@ -56,8 +56,7 @@ class AppealVerifyView : BaseAppealVerifyView() {
 
     override fun setupImagePicker() {
         imagePicker = ImagePicker(this) {
-            viewModel.selectAttachment = it
-            viewModel.updateMeter()
+            viewModel.updateMeter(it)
         }
     }
 

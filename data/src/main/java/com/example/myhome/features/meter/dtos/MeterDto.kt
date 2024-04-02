@@ -13,6 +13,10 @@ data class MeterListRequestExtended(
     val isNotAllInfo: Boolean = true
 )
 
+data class MeterExtendedListResponse(
+    val meters: List<MeterExtendedListItemResponse>
+)
+
 data class MeterExtendedListItemResponse(
     val id: Int,
     val factoryNumber: String,

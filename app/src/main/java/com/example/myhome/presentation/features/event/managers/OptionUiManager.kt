@@ -1,10 +1,8 @@
 package com.example.myhome.presentation.features.event.managers
 
 import android.content.res.ColorStateList
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import com.example.myhome.R

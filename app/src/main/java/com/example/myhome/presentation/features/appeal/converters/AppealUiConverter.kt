@@ -15,7 +15,7 @@ interface AppealUiConverter {
                 managementCompanyName = name,
                 description = data,
                 attachment = attachment,
-                createdAt = formatCreatedAt()
+                createdAt = formatCreatedAt(),
             )
         }
     }

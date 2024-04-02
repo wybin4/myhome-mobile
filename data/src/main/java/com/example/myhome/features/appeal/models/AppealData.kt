@@ -8,14 +8,12 @@ data class AddIndividualMeterData(
     val factoryNumber: String,
     val issuedAt: String,
     val verifiedAt: String,
-    val attachment: String
 ): AppealData()
 
 data class VerifyIndividualMeterData(
     val meterId: Int,
     val verifiedAt: String,
     val issuedAt: String,
-    val attachment: String
 ) : AppealData()
 
 data class ProblemOrClaimData(

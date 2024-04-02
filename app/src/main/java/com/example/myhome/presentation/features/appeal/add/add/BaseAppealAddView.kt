@@ -95,8 +95,7 @@ abstract class BaseAppealAddView : Fragment() {
 
     private fun setupImagePicker() {
         imagePicker = ImagePicker(this) {
-            viewModel.selectAttachment = it
-            viewModel.addMeter()
+            viewModel.addMeter(it)
         }
     }
 

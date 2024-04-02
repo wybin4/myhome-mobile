@@ -1,5 +1,6 @@
 package com.example.myhome.features.event.dto
 
+
 import com.example.myhome.features.appeal.AppealListResponse
 import com.example.myhome.features.event.models.EventTypeRequest
 import com.example.myhome.features.event.models.EventTypeResponse

@@ -2,7 +2,7 @@ package com.example.myhome.features.meter
 
 import com.example.myhome.features.meter.dtos.ApartmentWithMeterListRequest
 import com.example.myhome.features.meter.dtos.ApartmentWithMeterListResponse
-import com.example.myhome.features.meter.dtos.MeterExtendedListItemResponse
+import com.example.myhome.features.meter.dtos.MeterExtendedListResponse
 import com.example.myhome.features.meter.dtos.MeterListRequestExtended
 import com.example.myhome.features.meter.dtos.ReadingAddRequest
 import com.example.myhome.features.meter.dtos.ReadingListItemResponse
@@ -20,7 +20,7 @@ interface MeterApiService {
     @POST("meter/get-meters-by-user")
     suspend fun listMeter(
         @Body request: MeterListRequestExtended
-    ): List<MeterExtendedListItemResponse>
+    ): MeterExtendedListResponse
 
     @POST("meter/get-meter-readings-by-user")
     suspend fun listReading(

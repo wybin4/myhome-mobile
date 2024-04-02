@@ -1,6 +1,6 @@
 package com.example.myhome.testutils.espresso
 
-import android.util.Log
+
 import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView

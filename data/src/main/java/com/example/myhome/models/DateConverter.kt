@@ -15,6 +15,10 @@ interface DateConverter {
         return outputFormat.format(date) ?: throw IllegalArgumentException("Неверный формат даты: $date")
     }
 
+    fun formatDateDash(date: Date): String {
+        return dateFormat.format(date) ?: throw IllegalArgumentException("Неверный формат даты: $date")
+    }
+
     fun parseDate(dateString: String): Date {
         return try {
             dateFormat.parse(dateString) ?: throw IllegalArgumentException("Неверный формат даты: $dateString")

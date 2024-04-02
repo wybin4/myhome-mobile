@@ -23,7 +23,7 @@ interface EventApiService {
     @POST("event/read-service-notifications")
     suspend fun readServiceNotificationList()
 
-    @POST("event/update-voting")
+    @POST("voting/update-voting")
     suspend fun updateVoting(
         @Body request: VotingUpdateRequest
     ): VoteListItemResponse
