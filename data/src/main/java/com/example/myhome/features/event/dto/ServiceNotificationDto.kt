@@ -13,6 +13,15 @@ data class ServiceNotificationListRequest(
     val meta: MetaRequest
 )
 
+data class ServiceNotificationReadRequest(
+    val userId: Int,
+    val userRole: UserRole = UserRole.Owner
+)
+
+data class ServiceNotificationListResponse(
+    val notifications: List<ServiceNotificationListItemResponse>
+)
+
 data class ServiceNotificationListItemResponse(
     val id: Int,
     val userId: Int,

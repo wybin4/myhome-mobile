@@ -7,7 +7,7 @@ import androidx.databinding.BindingAdapter
 
 object BindingAdapter {
     @JvmStatic
-    @BindingAdapter("app:tint")
+    @BindingAdapter("tint")
     fun ImageView.setImageTint(@ColorInt color: Int) {
         setColorFilter(color)
     }

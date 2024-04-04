@@ -42,8 +42,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         layout="@layout/list_empty"
-                        bind:title="@{`Обращения еще не добавлены`}"
-                        bind:subtitle="@{`Для добавления обращений нажмите кнопку “+”`}"
+                        bind:title="@{`Уведомления еще не пришли`}"
+                        bind:subtitle="@{`Подождите немного – вдруг что-нибудь случится`}"
                         />
 
                 </LinearLayout>

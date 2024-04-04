@@ -22,7 +22,7 @@ class ServiceNotificationPagingSource(
                 userId = 1,
                 meta = MetaRequest(page, NOTIFICATION_PAGE_SIZE)
             )
-        )
+        ).notifications
     }
 
     override fun getRefreshKey(state: PagingState<Int, ServiceNotificationListItemResponse>): Int? {
