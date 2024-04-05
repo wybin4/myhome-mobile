@@ -20,6 +20,7 @@ import com.example.myhome.features.chat.dtos.MessageAddResponse
 import com.example.myhome.features.event.dto.ServiceNotificationListItemResponse
 import com.example.myhome.presentation.features.chat.converters.ChatUiConverter
 import com.example.myhome.presentation.utils.pickers.IconPicker
+import kotlin.random.Random
 
 class NotificationService : Service(), IconPicker, ChatUiConverter {
     private val localBinder: MutableLiveData<CommonSocketService.LocalBinder?> = MutableLiveData<CommonSocketService.LocalBinder?>()
@@ -113,13 +114,13 @@ class NotificationService : Service(), IconPicker, ChatUiConverter {
     fun onNewMessage(message: MessageAddResponse) {
         val messageUi = messageAddToUi(message)
         if (!messageUi.isItMe) {
-            val chatId = message.chatId.toString()
+            val chatId = message.chatId
             val notificationBuilder = createNotificationBuilder(
                 message.sender.name, message.text,
                 "ChatGetView", chatId
             )
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.notify(message.id, notificationBuilder.build())
+            notificationManager.notify(Random.nextInt(10000), notificationBuilder.build())
         }
     }
 

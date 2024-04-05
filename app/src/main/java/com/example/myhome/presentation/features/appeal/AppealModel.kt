@@ -3,7 +3,7 @@ package com.example.myhome.presentation.features.appeal
 import com.example.myhome.features.appeal.models.AppealStatus
 import com.example.myhome.features.appeal.models.AppealType
 import com.example.myhome.models.DateConverter
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveInt
 import com.example.myhome.presentation.utils.pickers.IconPicker
 import java.util.Date
 
@@ -17,7 +17,7 @@ data class AppealUiModel(
     val description: String,
     val attachment: String?,
     val createdAt: Date
-) : Adaptive, IconPicker, DateConverter, AppealUiPicker {
+) : AdaptiveInt, IconPicker, DateConverter, AppealUiPicker {
     fun getTypeIcon(): Int? {
         return getAppealTypeIcon(typeOfAppeal)
     }

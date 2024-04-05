@@ -1,6 +1,6 @@
 package com.example.myhome.presentation.features.common.models
 
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveInt
 import com.example.myhome.presentation.models.Selectable
 
 enum class TypeOfServiceEngNames {
@@ -10,4 +10,4 @@ enum class TypeOfServiceEngNames {
 class TypeOfServiceUiModel (
     override val id: Int,
     override val name: String
-): Adaptive, Selectable
+): AdaptiveInt, Selectable

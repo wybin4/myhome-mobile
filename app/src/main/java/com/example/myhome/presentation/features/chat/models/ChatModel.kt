@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcel
 import com.example.myhome.presentation.features.chat.MessageFormatter
 import com.example.myhome.presentation.features.chat.converters.CombinedTimeConverter
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveString
 import com.example.myhome.presentation.models.ParcelableModel
 import com.example.myhome.presentation.models.readDate
 import com.example.myhome.presentation.models.writeDate
@@ -13,14 +13,14 @@ import com.example.myhome.presentation.utils.pickers.CharPicker
 import java.util.Date
 
 data class ChatUiModel(
-    override val id: Int,
+    override val id: String,
     val receiverName: String,
     val lastMessageText: String?,
     val lastMessageAt: Long?,
     val isMyMessageLast: Boolean,
     val countUnread: Int,
     val createdAt: Date
-) : Adaptive, CombinedTimeConverter, CharPicker, MessageFormatter {
+) : AdaptiveString, CombinedTimeConverter, CharPicker, MessageFormatter {
     fun formatMessageAt(): String {
         return if (lastMessageAt != null) {
             val date = Date(lastMessageAt)
@@ -44,12 +44,12 @@ data class ChatUiModel(
 }
 
 class ChatAddToGetParcelableModel(
-    val id: Int,
+    val id: String,
     val receiverName: String,
     val createdAt: Date
 ) : ParcelableModel(), CharPicker, CombinedDateConverter {
     constructor(parcel: Parcel) : this(
-        id = parcel.readInt(),
+        id = parcel.readString() ?: "",
         receiverName = parcel.readString() ?: "",
         createdAt = parcel.readDate() ?: Date()
     )
@@ -69,7 +69,7 @@ class ChatAddToGetParcelableModel(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
+        parcel.writeString(id)
         parcel.writeString(receiverName)
         parcel.writeDate(createdAt)
     }

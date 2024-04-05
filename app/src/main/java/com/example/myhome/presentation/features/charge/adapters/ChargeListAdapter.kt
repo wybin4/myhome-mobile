@@ -7,9 +7,9 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentActivity
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveInt
 
-open class ChargeListAdapter<T: Adaptive, B : ViewDataBinding>(
+open class ChargeListAdapter<T: AdaptiveInt, B : ViewDataBinding>(
     context: FragmentActivity,
     private val itemBindingInflater: (LayoutInflater, ViewGroup, Boolean) -> B,
     private val setBinding: (B, T, Int, Int) -> Unit,

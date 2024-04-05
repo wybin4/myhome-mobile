@@ -2,7 +2,7 @@ package com.example.myhome.presentation.features.meter
 
 import android.os.Parcel
 import com.example.myhome.models.DateConverter
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveInt
 import com.example.myhome.presentation.models.ParcelableModel
 import java.util.Date
 
@@ -12,7 +12,7 @@ data class ReadingUiModel(
     val consumption: Double,
     val readAt: Date,
     val unitName: String
-): Adaptive, DateConverter {
+): AdaptiveInt, DateConverter {
     fun formattedDate(): String {
         return formatDate(readAt)
     }

@@ -2,7 +2,7 @@ package com.example.myhome.presentation.features.servicenotification.models
 
 import com.example.myhome.features.servicenotifications.models.NotificationStatus
 import com.example.myhome.presentation.features.servicenotification.TimeConverter
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveInt
 import com.example.myhome.presentation.utils.converters.CombinedDateConverter
 import com.example.myhome.presentation.utils.pickers.IconPicker
 import java.util.Date
@@ -15,7 +15,7 @@ data class ServiceNotificationUiModel(
     val type: ServiceNotificationUiType,
     val createdAt: Date,
     val status: NotificationStatus
-) : Adaptive, CombinedDateConverter, TimeConverter, IconPicker {
+) : AdaptiveInt, CombinedDateConverter, TimeConverter, IconPicker {
     fun isRead(): Boolean = status == NotificationStatus.Read
 
     private fun getDate(): String {

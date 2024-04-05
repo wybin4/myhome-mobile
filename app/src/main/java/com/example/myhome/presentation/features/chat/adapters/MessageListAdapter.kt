@@ -9,7 +9,7 @@ import com.example.myhome.databinding.MessageCreatedAtItemBinding
 import com.example.myhome.databinding.MessageListItemBinding
 import com.example.myhome.presentation.features.chat.models.MessageCreatedAtUiModel
 import com.example.myhome.presentation.features.chat.models.MessageUiModel
-import com.example.myhome.presentation.utils.adapters.CustomListAdapter
+import com.example.myhome.presentation.utils.adapters.AdaptiveIntListAdapter
 
 class MessageListAdapter : ListAdapter<MessageUiModel, MessageListAdapter.MessageViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
@@ -28,7 +28,7 @@ class MessageListAdapter : ListAdapter<MessageUiModel, MessageListAdapter.Messag
             binding.message = item
             binding.executePendingBindings()
 
-            val messageAdapter = CustomListAdapter<MessageCreatedAtUiModel, MessageCreatedAtItemBinding>(
+            val messageAdapter = AdaptiveStringListAdapter<MessageCreatedAtUiModel, MessageCreatedAtItemBinding>(
                 itemBindingInflater = { inflater, parent, attachToParent ->
                     MessageCreatedAtItemBinding.inflate(inflater, parent, attachToParent)
                 },

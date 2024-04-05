@@ -3,6 +3,7 @@ package com.example.myhome
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
+import android.util.Log
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -78,7 +79,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getChatById(chatId: Int): ChatAddToGetParcelableModel? {
+    fun getChatById(chatId: String): ChatAddToGetParcelableModel? {
         return chatList.value?.firstOrNull { it.id == chatId }
             ?.let { chatMapper.chatListToGetParcel(it) }
     }

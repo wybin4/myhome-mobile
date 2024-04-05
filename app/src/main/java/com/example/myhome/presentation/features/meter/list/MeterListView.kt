@@ -18,7 +18,7 @@ import com.example.myhome.presentation.ConstantsUi.Companion.VERTICAL_LOADING_RE
 import com.example.myhome.presentation.features.meter.ApartmentUiModel
 import com.example.myhome.presentation.features.meter.MeterUiModel
 import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.utils.adapters.CustomListAdapter
+import com.example.myhome.presentation.utils.adapters.AdaptiveIntListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,8 +28,8 @@ class MeterListView : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<MeterListViewModel>()
     
-    private lateinit var meterListAdapter: CustomListAdapter<MeterUiModel, MeterListItemBinding>
-    private lateinit var apartmentListAdapter: CustomListAdapter<ApartmentUiModel, ApartmentListItemBinding>
+    private lateinit var meterListAdapter: AdaptiveIntListAdapter<MeterUiModel, MeterListItemBinding>
+    private lateinit var apartmentListAdapter: AdaptiveIntListAdapter<ApartmentUiModel, ApartmentListItemBinding>
     
     private lateinit var meterInfiniteListAdapter: InfiniteListAdapter<String, MeterListItemLoadingBinding>
     private lateinit var apartmentInfiniteListAdapter: InfiniteListAdapter<String, ApartmentListItemLoadingBinding>
@@ -120,7 +120,7 @@ class MeterListView : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        meterListAdapter = CustomListAdapter(
+        meterListAdapter = AdaptiveIntListAdapter(
             itemBindingInflater = { inflater, parent, attachToParent ->
                 MeterListItemBinding.inflate(inflater, parent, attachToParent)
             },
@@ -137,7 +137,7 @@ class MeterListView : Fragment() {
     }
 
     private fun setupCarouselView() {
-        apartmentListAdapter = CustomListAdapter(
+        apartmentListAdapter = AdaptiveIntListAdapter(
             itemBindingInflater = { inflater, parent, attachToParent ->
                 ApartmentListItemBinding.inflate(inflater, parent, attachToParent)
             },

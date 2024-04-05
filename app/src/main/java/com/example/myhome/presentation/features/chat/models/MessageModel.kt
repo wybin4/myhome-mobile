@@ -2,7 +2,7 @@ package com.example.myhome.presentation.features.chat.models
 
 import android.view.View
 import com.example.myhome.presentation.features.servicenotification.TimeConverter
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveString
 import com.example.myhome.presentation.utils.converters.CombinedDateConverter
 import java.util.Date
 
@@ -16,12 +16,12 @@ data class MessageUiModel(
 }
 
 data class MessageCreatedAtUiModel(
-    override val id: Int,
+    override val id: String,
     val isItMe: Boolean,
     val text: String,
     val createdAt: Long,
     val messageState: MessageState
-) : Adaptive, TimeConverter {
+) : AdaptiveString, TimeConverter {
     fun formatCreatedAt(): String {
         return formatHHMM(Date(createdAt))
     }

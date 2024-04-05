@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         } else if (fragmentToOpen == "ChatGetView") {
             val chatId = intent.getStringExtra("chat_id")
             if (chatId != null) {
-                val bundle = viewModel.getChatById(chatId = chatId.toInt())
+                val bundle = viewModel.getChatById(chatId = chatId)
                 if (bundle != null) {
                     navController.navigate(R.id.get_chat, bundle.toBundle())
                 }

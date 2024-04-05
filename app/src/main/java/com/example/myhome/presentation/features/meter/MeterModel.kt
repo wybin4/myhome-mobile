@@ -3,7 +3,7 @@ package com.example.myhome.presentation.features.meter
 import android.os.Bundle
 import android.os.Parcel
 import com.example.myhome.models.DateConverter
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveInt
 import com.example.myhome.presentation.models.ParcelableModel
 import com.example.myhome.presentation.models.Selectable
 import com.example.myhome.presentation.utils.converters.DoubleNullableConverter
@@ -15,7 +15,7 @@ class ApartmentUiModel (
     override val id: Int,
     val name: String,
     var selected: Boolean
-): Adaptive {
+): AdaptiveInt {
     fun setSelected(selectedId: Int): ApartmentUiModel {
         selected = selectedId == id
         return this
@@ -34,7 +34,7 @@ data class MeterUiModel(
     val typeOfServiceEngName: String,
     val unitName: String,
     var isIssued: Boolean
-) : Adaptive, DateConverter, DoubleNullableConverter, IconPicker {
+) : AdaptiveInt, DateConverter, DoubleNullableConverter, IconPicker {
     fun formatIssuedAt(): String {
         return formatDate(issuedAt)
     }

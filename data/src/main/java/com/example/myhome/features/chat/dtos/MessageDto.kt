@@ -6,9 +6,13 @@ import com.example.myhome.models.UserRole
 import java.util.Date
 
 data class MessageListRequest(
-    val chatId: Int,
+    val chatId: String,
     val userId: Int,
     val userRole: UserRole = UserRole.Owner
+)
+
+data class MessageListResponse(
+    val messages: List<MessageListItemResponse>
 )
 
 data class MessageListItemResponse(
@@ -21,7 +25,7 @@ data class MessageListItemResponse(
 }
 
 data class MessageCreatedAtListItemResponse(
-    val id: Int,
+    val id: String,
     val sender: ChatUserListItemResponse,
     val text: String,
     val createdAt: Long,
@@ -30,7 +34,7 @@ data class MessageCreatedAtListItemResponse(
 )
 
 data class MessageAddRequest(
-    val chatId: Int,
+    val chatId: String,
     val text: String,
     val senderId: Int,
     val senderRole: UserRole = UserRole.Owner,
@@ -38,18 +42,18 @@ data class MessageAddRequest(
 )
 
 data class MessageAddResponse(
-    val id: Int,
+    val id: String,
     val sender: ChatUserListItemResponse,
     val text: String,
     val createdAt: Long,
     val readAt: String?,
     val status: MessageStatus,
-    val chatId: Int
+    val chatId: String
 )
 
 data class MessageReadRequest(
-    val messageId: Int,
-    val chatId: Int,
+    val messageId: String,
+    val chatId: String,
     val senderId: Int,
     val senderRole: UserRole = UserRole.Owner,
 )

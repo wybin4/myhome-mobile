@@ -1,10 +1,10 @@
 package com.example.myhome.presentation.features.chat.list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myhome.MainViewModel
@@ -14,8 +14,8 @@ import com.example.myhome.databinding.ChatListItemLoadingBinding
 import com.example.myhome.databinding.ChatListViewBinding
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.chat.ChatMapper
+import com.example.myhome.presentation.features.chat.adapters.AdaptiveStringListAdapter
 import com.example.myhome.presentation.features.chat.models.ChatUiModel
-import com.example.myhome.presentation.utils.adapters.CustomListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +26,7 @@ class ChatListView : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
 
-    private lateinit var chatListAdapter: CustomListAdapter<ChatUiModel, ChatListItemBinding>
+    private lateinit var chatListAdapter: AdaptiveStringListAdapter<ChatUiModel, ChatListItemBinding>
     private lateinit var chatInfiniteListAdapter: InfiniteListAdapter<String, ChatListItemLoadingBinding>
 
     private val chatMapper = ChatMapper()
@@ -86,7 +86,7 @@ class ChatListView : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        chatListAdapter = CustomListAdapter(
+        chatListAdapter = AdaptiveStringListAdapter(
             itemBindingInflater = { inflater, parent, attachToParent ->
                 ChatListItemBinding.inflate(inflater, parent, attachToParent)
             },
@@ -98,7 +98,6 @@ class ChatListView : Fragment() {
                 findNavController().navigate(R.id.action_chatListView_to_chatGetView, bundle)
             }
         )
-
         binding.chatRecyclerView.adapter = chatListAdapter
     }
 

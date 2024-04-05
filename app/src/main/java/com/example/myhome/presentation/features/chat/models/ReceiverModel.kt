@@ -1,14 +1,14 @@
 package com.example.myhome.presentation.features.chat.models
 
 import com.example.myhome.models.UserRole
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveInt
 import com.example.myhome.presentation.utils.pickers.CharPicker
 
 data class ReceiverUiModel(
     override val id: Int,
     val role: UserRole,
     val name: String
-) : Adaptive, CharPicker {
+) : AdaptiveInt, CharPicker {
     fun formatName(): String {
         return processString(name)
     }

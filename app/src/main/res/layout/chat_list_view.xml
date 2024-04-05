@@ -46,8 +46,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         layout="@layout/list_empty"
-                        bind:title="@{`Нет доступных пользователей`}"
-                        bind:subtitle="@{`В системе нет пользователей, с которыми вы можете связаться`}"
+                        bind:title="@{`Нет доступных чатов`}"
+                        bind:subtitle="@{`Начните общаться с другими пользователями прямо сейчас!`}"
                         />
 
                 </LinearLayout>

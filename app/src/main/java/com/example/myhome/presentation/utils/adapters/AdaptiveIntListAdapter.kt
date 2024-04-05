@@ -3,16 +3,16 @@ package com.example.myhome.presentation.utils.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
-import com.example.myhome.presentation.models.AdaptiveInt
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myhome.presentation.models.AdaptiveInt
 
-open class CustomPagingAdapter<T: AdaptiveInt, B : ViewDataBinding>(
+open class AdaptiveIntListAdapter<T: AdaptiveInt, B : ViewDataBinding>(
     private val itemBindingInflater: (LayoutInflater, ViewGroup, Boolean) -> B,
     private val setBinding: (B, T) -> Unit,
     private val onItemClick: ((item: T) -> Unit)?
-) : PagingDataAdapter<T, CustomPagingAdapter<T, B>.ItemViewHolder>(DiffCallback()) {
+) : ListAdapter<T, AdaptiveIntListAdapter<T, B>.ItemViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -22,11 +22,9 @@ open class CustomPagingAdapter<T: AdaptiveInt, B : ViewDataBinding>(
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = getItem(position)
-        item?.run {
-            holder.bind(this)
-            holder.itemView.setOnClickListener {
-                onItemClick?.invoke(this)
-            }
+        holder.bind(item)
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(item)
         }
     }
 
@@ -46,4 +44,6 @@ open class CustomPagingAdapter<T: AdaptiveInt, B : ViewDataBinding>(
             return oldItem.areContentsTheSame(newItem)
         }
     }
+
 }
+

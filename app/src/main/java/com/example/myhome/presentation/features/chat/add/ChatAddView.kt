@@ -18,7 +18,7 @@ import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.chat.ChatAddStateManager
 import com.example.myhome.presentation.features.chat.models.ReceiverUiModel
 import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.utils.adapters.CustomListAdapter
+import com.example.myhome.presentation.utils.adapters.AdaptiveIntListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +29,7 @@ class ChatAddView : Fragment() {
 
     private val viewModel by viewModels<ChatAddViewModel>()
 
-    private lateinit var chatListAdapter: CustomListAdapter<ReceiverUiModel, ChatAddListItemBinding>
+    private lateinit var chatListAdapter: AdaptiveIntListAdapter<ReceiverUiModel, ChatAddListItemBinding>
     private lateinit var chatInfiniteListAdapter: InfiniteListAdapter<String, ChatAddListItemLoadingBinding>
 
     private lateinit var dataAddStateManager: ChatAddStateManager
@@ -121,7 +121,7 @@ class ChatAddView : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        chatListAdapter = CustomListAdapter(
+        chatListAdapter = AdaptiveIntListAdapter(
             itemBindingInflater = { inflater, parent, attachToParent ->
                 ChatAddListItemBinding.inflate(inflater, parent, attachToParent)
             },

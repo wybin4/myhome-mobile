@@ -5,7 +5,7 @@ import android.os.Parcel
 import com.example.myhome.features.charge.dtos.AmountChange
 import com.example.myhome.presentation.features.charge.converters.MoneyConverter
 import com.example.myhome.presentation.features.charge.converters.MonthYearConverter
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveInt
 import com.example.myhome.presentation.models.ParcelableModel
 import com.example.myhome.presentation.utils.converters.PercentConverter
 import com.example.myhome.presentation.utils.pickers.IconPicker
@@ -37,7 +37,7 @@ data class ChargeUiModel(
     val originalDebt: Double,
     var percent: Double,
     val amountChange: AmountChange
-) : Adaptive, MoneyConverter, PercentConverter, IconPicker, MonthYearConverter {
+) : AdaptiveInt, MoneyConverter, PercentConverter, IconPicker, MonthYearConverter {
     fun formatOriginalDebt(): String {
         return formatDouble2F(originalDebt)
     }

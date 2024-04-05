@@ -1,8 +1,15 @@
 package com.example.myhome.presentation.models
 
 interface Adaptive {
-    val id: Int
     fun areContentsTheSame(other: Adaptive): Boolean {
         return this == other
     }
+}
+
+interface AdaptiveInt: Adaptive {
+    val id: Int
+}
+
+interface AdaptiveString: Adaptive {
+    val id: String
 }

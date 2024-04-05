@@ -14,7 +14,7 @@ import com.example.myhome.databinding.ReadingListItemLoadingBinding
 import com.example.myhome.presentation.ConstantsUi
 import com.example.myhome.presentation.features.meter.ReadingUiModel
 import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.utils.adapters.CustomListAdapter
+import com.example.myhome.presentation.utils.adapters.AdaptiveIntListAdapter
 import com.example.myhome.presentation.utils.adapters.InfiniteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +23,7 @@ class MeterGetView : Fragment() {
     private var _binding: MeterGetViewBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<MeterGetViewModel>()
-    private lateinit var readingListAdapter: CustomListAdapter<ReadingUiModel, ReadingListItemBinding>
+    private lateinit var readingListAdapter: AdaptiveIntListAdapter<ReadingUiModel, ReadingListItemBinding>
     private lateinit var readingInfiniteListAdapter: InfiniteListAdapter<String, ReadingListItemLoadingBinding>
 
     override fun onCreateView(
@@ -126,7 +126,7 @@ class MeterGetView : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        readingListAdapter = CustomListAdapter(
+        readingListAdapter = AdaptiveIntListAdapter(
             itemBindingInflater = { inflater, parent, attachToParent ->
                 ReadingListItemBinding.inflate(inflater, parent, attachToParent)
             },

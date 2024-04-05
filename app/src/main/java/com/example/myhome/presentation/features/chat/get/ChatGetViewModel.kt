@@ -21,6 +21,7 @@ import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.state.list.ListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
 
@@ -149,7 +150,14 @@ class ChatGetViewModel @Inject constructor(
     }
 
     private fun getDDMMMMYYYYDate(date: Date): Date {
-        return parseDate(formatDate(date))
+        val calendar = Calendar.getInstance().apply {
+            time = date
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return calendar.time
     }
 
     fun sendMessage(text: String) {
@@ -158,7 +166,7 @@ class ChatGetViewModel @Inject constructor(
         val createdAtLong = createdAt.time
 
         val loadingMessage = MessageCreatedAtUiModel(
-            id = loadingIdCounter,
+            id = loadingIdCounter.toString(),
             isItMe = true,
             text = text,
             createdAt = createdAtLong,

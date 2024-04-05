@@ -1,4 +1,4 @@
-package com.example.myhome.presentation.utils.adapters
+package com.example.myhome.presentation.features.chat.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,13 +6,13 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveString
 
-open class CustomListAdapter<T: Adaptive, B : ViewDataBinding>(
+open class AdaptiveStringListAdapter<T: AdaptiveString, B : ViewDataBinding>(
     private val itemBindingInflater: (LayoutInflater, ViewGroup, Boolean) -> B,
     private val setBinding: (B, T) -> Unit,
     private val onItemClick: ((item: T) -> Unit)?
-) : ListAdapter<T, CustomListAdapter<T, B>.ItemViewHolder>(DiffCallback()) {
+) : ListAdapter<T, AdaptiveStringListAdapter<T, B>.ItemViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -35,7 +35,7 @@ open class CustomListAdapter<T: Adaptive, B : ViewDataBinding>(
         }
     }
 
-    class DiffCallback<T: Adaptive> : DiffUtil.ItemCallback<T>() {
+    class DiffCallback<T: AdaptiveString> : DiffUtil.ItemCallback<T>() {
         override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
             return oldItem.id == newItem.id
         }
@@ -46,4 +46,3 @@ open class CustomListAdapter<T: Adaptive, B : ViewDataBinding>(
     }
 
 }
-

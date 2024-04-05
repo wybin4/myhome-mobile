@@ -7,7 +7,7 @@ import android.text.style.StyleSpan
 import com.example.myhome.features.charge.dtos.AmountChange
 import com.example.myhome.presentation.features.charge.converters.MoneyConverter
 import com.example.myhome.presentation.features.charge.converters.MonthYearConverter
-import com.example.myhome.presentation.models.Adaptive
+import com.example.myhome.presentation.models.AdaptiveInt
 import java.util.Date
 
 data class SinglePaymentDocumentUiModel(
@@ -36,7 +36,7 @@ data class DebtUiModel(
     val outstandingDebt: Double,
     val createdAt: Date,
     val apartmentName: String
-) : Adaptive, MoneyConverter, MonthYearConverter {
+) : AdaptiveInt, MoneyConverter, MonthYearConverter {
     fun getText(): SpannableStringBuilder {
         val formattedCreatedAt = formatDate(createdAt, false)
         val formattedOutstandingDebt = formatDouble2F(outstandingDebt)
