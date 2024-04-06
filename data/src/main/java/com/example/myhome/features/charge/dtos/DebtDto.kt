@@ -4,7 +4,11 @@ import com.example.myhome.models.DateConverter
 import java.util.Date
 
 data class DebtListRequest (
-    val ownerId: Int
+    val userId: Int
+)
+
+data class DebtListResponse (
+    val debts: List<DebtListItemResponse>
 )
 
 data class DebtListItemResponse (

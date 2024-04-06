@@ -2,7 +2,6 @@ package com.example.myhome.features.charge.dtos
 
 import com.example.myhome.models.DateConverter
 import com.example.myhome.models.MetaRequest
-import com.example.myhome.models.UserRole
 import java.util.Date
 
 enum class AmountChange {
@@ -11,9 +10,11 @@ enum class AmountChange {
 
 data class ChargeListRequest(
     val userId: Int,
-    val userRole: UserRole = UserRole.Owner,
-    val withoutAttachments: Boolean = true,
     val meta: MetaRequest
+)
+
+data class ChargeListResponse(
+    val charges: List<ChargeListItemResponse>
 )
 
 data class ChargeListItemResponse(
@@ -34,8 +35,12 @@ data class ChargeListItemResponse(
 }
 
 data class ChargeChartListRequest(
-    val ownerId: Int,
+    val userId: Int,
     val count: Int,
+)
+
+data class ChargeChartListResponse(
+    val charges: List<ChargeChartListItemResponse>
 )
 
 data class ChargeChartListItemResponse(

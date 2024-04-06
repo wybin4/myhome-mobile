@@ -7,27 +7,27 @@ import com.example.myhome.features.charge.dtos.DebtListItemResponse
 import com.example.myhome.features.charge.dtos.DebtListRequest
 import com.example.myhome.features.charge.dtos.PaymentListItemResponse
 import com.example.myhome.features.charge.dtos.PaymentListRequest
+import com.example.myhome.features.charge.dtos.SinglePaymentDocumentGetItemResponse
 import com.example.myhome.features.charge.dtos.SinglePaymentDocumentGetRequest
-import com.example.myhome.features.charge.dtos.SinglePaymentDocumentGetResponse
 
 class ChargeStorage(private val chargeApiService: ChargeApiService) {
     suspend fun listPayment(spdId: Int): List<PaymentListItemResponse> {
         val request = PaymentListRequest(spdId)
-        return chargeApiService.listPayment(request)
+        return chargeApiService.listPayment(request).payments
     }
 
-    suspend fun getSinglePaymentDocument(id: Int): SinglePaymentDocumentGetResponse {
+    suspend fun getSinglePaymentDocument(id: Int): SinglePaymentDocumentGetItemResponse {
         val request = SinglePaymentDocumentGetRequest(id)
-        return chargeApiService.getSinglePaymentDocument(request)
+        return chargeApiService.getSinglePaymentDocument(request).singlePaymentDocument
     }
 
     suspend fun listDebt(): List<DebtListItemResponse> {
-        val request = DebtListRequest(ownerId = 1)
-        return chargeApiService.listDebt(request)
+        val request = DebtListRequest(userId = 1)
+        return chargeApiService.listDebt(request).debts
     }
 
     suspend fun listChargeChart(): List<ChargeChartListItemResponse> {
-        val request = ChargeChartListRequest(ownerId = 1, count = CHARGE_PAGE_SIZE)
-        return chargeApiService.listChargeChart(request)
+        val request = ChargeChartListRequest(userId = 1, count = CHARGE_PAGE_SIZE)
+        return chargeApiService.listChargeChart(request).charges
     }
 }

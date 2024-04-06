@@ -7,6 +7,9 @@ data class PaymentListRequest(
     val singlePaymentDocumentId: Int
 )
 
+data class PaymentListResponse(
+    val payments: List<PaymentListItemResponse>
+)
 data class PaymentListItemResponse(
     val id: Int,
     val amount: Double,

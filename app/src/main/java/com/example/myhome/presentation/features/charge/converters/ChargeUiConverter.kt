@@ -5,7 +5,7 @@ import com.example.myhome.features.charge.dtos.ChargeChartListItemResponse
 import com.example.myhome.features.charge.dtos.ChargeListItemResponse
 import com.example.myhome.features.charge.dtos.DebtListItemResponse
 import com.example.myhome.features.charge.dtos.PaymentListItemResponse
-import com.example.myhome.features.charge.dtos.SinglePaymentDocumentGetResponse
+import com.example.myhome.features.charge.dtos.SinglePaymentDocumentGetItemResponse
 import com.example.myhome.presentation.features.charge.models.ChargeChartItem
 import com.example.myhome.presentation.features.charge.models.ChargeChartModel
 import com.example.myhome.presentation.features.charge.models.ChargeUiModel
@@ -24,7 +24,7 @@ interface ChargeUiConverter: MonthYearConverter {
         }
     }
 
-    fun spdToUi(spd: SinglePaymentDocumentGetResponse): SinglePaymentDocumentUiModel {
+    fun spdToUi(spd: SinglePaymentDocumentGetItemResponse): SinglePaymentDocumentUiModel {
         return SinglePaymentDocumentUiModel(
             id = spd.id,
             amount = spd.amount,

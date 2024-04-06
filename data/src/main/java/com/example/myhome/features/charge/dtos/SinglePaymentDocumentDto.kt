@@ -1,7 +1,6 @@
 package com.example.myhome.features.charge.dtos
 
 import com.example.myhome.models.DateConverter
-import com.example.myhome.models.UserRole
 import java.util.Date
 
 enum class CalculationState {
@@ -13,6 +12,10 @@ data class SinglePaymentDocumentGetRequest(
 )
 
 data class SinglePaymentDocumentGetResponse(
+    val singlePaymentDocument: SinglePaymentDocumentGetItemResponse
+)
+
+data class SinglePaymentDocumentGetItemResponse(
     val id: Int,
     val totalId: Int,
     val subscriberId: Int,

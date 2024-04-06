@@ -9,7 +9,7 @@ import com.example.myhome.features.charge.dtos.ChargeChartListItemResponse
 import com.example.myhome.features.charge.dtos.ChargeListItemResponse
 import com.example.myhome.features.charge.dtos.DebtListItemResponse
 import com.example.myhome.features.charge.dtos.PaymentListItemResponse
-import com.example.myhome.features.charge.dtos.SinglePaymentDocumentGetResponse
+import com.example.myhome.features.charge.dtos.SinglePaymentDocumentGetItemResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -33,7 +33,7 @@ class  ChargeRepositoryImpl(
         emit(chargeStorage.listChargeChart())
     }
 
-    override fun getSinglePaymentDocument(id: Int): Flow<SinglePaymentDocumentGetResponse> = flow {
+    override fun getSinglePaymentDocument(id: Int): Flow<SinglePaymentDocumentGetItemResponse> = flow {
         emit(chargeStorage.getSinglePaymentDocument(id))
     }
 
