@@ -14,7 +14,7 @@ data class ChatListItemResponse(
     val createdAt: String,
     val lastMessage: MessageCreatedAtListItemResponse?,
     var countUnread: Int,
-    val receiverName: String
+    var receiverName: String
 ): DateTimeConverter {
     fun formatCreatedAt(): Date {
         return parseDateTime(createdAt)

@@ -41,7 +41,7 @@ class CommonSocketService: BaseSocketService() {
         return START_STICKY
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder {
         return binder
     }
 
@@ -100,6 +100,9 @@ class CommonSocketService: BaseSocketService() {
             val existingChat = currentList[index]
             if (chat.countUnread == -1) {
                 chat.countUnread = existingChat.countUnread
+            }
+            if (chat.receiverName == "") {
+                chat.receiverName = existingChat.receiverName
             }
             currentList[index] = chat
         } else {
