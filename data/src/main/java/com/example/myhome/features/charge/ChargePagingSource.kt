@@ -12,7 +12,6 @@ class ChargePagingSource(private val chargeApiService: ChargeApiService) :
     override suspend fun invoke(page: Int): List<ChargeListItemResponse> {
         val response = chargeApiService.listCharge(
             ChargeListRequest(
-                userId = 1,
                 meta = MetaRequest(page, CHARGE_PAGE_SIZE)
             )
         )

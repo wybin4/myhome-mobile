@@ -7,8 +7,6 @@ import java.util.Date
 
 data class MessageListRequest(
     val chatId: String,
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner
 )
 
 data class MessageListResponse(

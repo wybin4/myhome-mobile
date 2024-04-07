@@ -73,8 +73,10 @@ class ActionBarManager(
         activity.run {
             if (isItGetChatDestination) {
                 supportActionBar?.hide()
+                actionBarBinding.root.visibility = View.GONE
             } else {
                 supportActionBar?.show()
+                actionBarBinding.root.visibility = View.VISIBLE
             }
         }
     }

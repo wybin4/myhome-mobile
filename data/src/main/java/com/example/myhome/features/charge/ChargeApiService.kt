@@ -4,7 +4,6 @@ import com.example.myhome.features.charge.dtos.ChargeChartListRequest
 import com.example.myhome.features.charge.dtos.ChargeChartListResponse
 import com.example.myhome.features.charge.dtos.ChargeListRequest
 import com.example.myhome.features.charge.dtos.ChargeListResponse
-import com.example.myhome.features.charge.dtos.DebtListRequest
 import com.example.myhome.features.charge.dtos.DebtListResponse
 import com.example.myhome.features.charge.dtos.PaymentListRequest
 import com.example.myhome.features.charge.dtos.PaymentListResponse
@@ -25,9 +24,7 @@ interface ChargeApiService {
     ): SinglePaymentDocumentGetResponse
 
     @POST("debt/get-debts")
-    suspend fun listDebt(
-        @Body request: DebtListRequest
-    ): DebtListResponse
+    suspend fun listDebt(): DebtListResponse
 
     @POST("debt/get-charge-chart")
     suspend fun listChargeChart(

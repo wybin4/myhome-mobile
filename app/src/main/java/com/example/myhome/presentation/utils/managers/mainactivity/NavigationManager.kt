@@ -37,9 +37,9 @@ class NavigationManager(
     fun setupNavigation(destination: NavDestination) {
         destination.run {
             actionBarManager.setTitle(label)
+            handleStartDestination(this)
             actionBarManager.handleGetChatDestination(id == R.id.get_chat)
             bottomNavigationManager.handleListChatDestination(id == R.id.list_chat)
-            handleStartDestination(this)
         }
     }
 

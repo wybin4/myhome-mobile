@@ -10,7 +10,7 @@ class ApartmentRepositoryImpl(
     private val commonApiService: CommonApiService
 ): ApartmentRepository {
     override fun listApartment(): Flow<List<ApartmentListItemResponse>> = flow {
-        val response = commonApiService.listApartment(ApartmentListRequest(userId = 1))
+        val response = commonApiService.listApartment(ApartmentListRequest())
         emit(response.apartments)
     }
 }

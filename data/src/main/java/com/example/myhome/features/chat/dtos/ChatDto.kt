@@ -4,11 +4,6 @@ import com.example.myhome.models.DateTimeConverter
 import com.example.myhome.models.UserRole
 import java.util.Date
 
-data class ChatListRequest(
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner
-)
-
 data class ChatListItemResponse(
     val id: String,
     val createdAt: String,
@@ -26,9 +21,7 @@ data class ChatAddResponse(
 )
 
 data class ChatAddRequest(
-    val users: List<ChatAddRequestItem>,
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner
+    val users: List<ChatAddRequestItem>
 )
 
 data class ChatAddRequestItem(

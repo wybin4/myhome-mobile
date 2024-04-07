@@ -1,17 +1,13 @@
 package com.example.myhome.features.event.dto
 
-
 import com.example.myhome.features.appeal.AppealListResponse
 import com.example.myhome.features.event.models.EventTypeRequest
 import com.example.myhome.features.event.models.EventTypeResponse
 import com.example.myhome.models.DateTimeConverter
 import com.example.myhome.models.MetaRequest
-import com.example.myhome.models.UserRole
 import java.util.Date
 
 data class EventListRequest (
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner,
     val eventType: EventTypeRequest,
     val meta: MetaRequest
 )

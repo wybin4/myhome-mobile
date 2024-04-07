@@ -62,7 +62,7 @@ class EventListViewModel @Inject constructor(
     fun updateVoting(optionId: Int) {
         viewModelScope.launch {
             eventRepository.updateVoting(
-                eventMapper.votingToRemote(optionId, userId = 1)
+                eventMapper.votingToRemote(optionId)
             ).collect{}
         }
     }

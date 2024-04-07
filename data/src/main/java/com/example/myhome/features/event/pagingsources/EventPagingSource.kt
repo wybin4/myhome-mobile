@@ -19,7 +19,6 @@ class EventPagingSource(
     override suspend fun invoke(page: Int): List<NotificationAndVotingListItemResponse> {
         val response = eventApiService.listEvent(
             EventListRequest(
-                userId = 1,
                 eventType = EventTypeRequest.NotificationAndVoting,
                 meta = MetaRequest(page, EVENT_PAGE_SIZE, filters)
             )

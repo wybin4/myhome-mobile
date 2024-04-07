@@ -1,10 +1,6 @@
 package com.example.myhome.features.common.dtos
 
-import com.example.myhome.models.UserRole
-
 data class ApartmentListRequest(
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner,
     val isAllInfo: Boolean = true
 )
 

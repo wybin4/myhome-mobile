@@ -8,14 +8,7 @@ import com.example.myhome.models.UserRole
 import java.util.Date
 
 data class ServiceNotificationListRequest(
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner,
     val meta: MetaRequest
-)
-
-data class ServiceNotificationReadRequest(
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner
 )
 
 data class ServiceNotificationListResponse(

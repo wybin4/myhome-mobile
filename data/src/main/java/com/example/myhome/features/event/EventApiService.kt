@@ -4,7 +4,6 @@ import com.example.myhome.features.event.dto.EventListRequest
 import com.example.myhome.features.event.dto.EventListResponse
 import com.example.myhome.features.event.dto.ServiceNotificationListRequest
 import com.example.myhome.features.event.dto.ServiceNotificationListResponse
-import com.example.myhome.features.event.dto.ServiceNotificationReadRequest
 import com.example.myhome.features.event.dto.VoteListItemResponse
 import com.example.myhome.features.event.dto.VotingUpdateRequest
 import retrofit2.http.Body
@@ -22,9 +21,7 @@ interface EventApiService {
     ): ServiceNotificationListResponse
 
     @POST("service-notification/update-all-service-notifications")
-    suspend fun readServiceNotificationList(
-        @Body request: ServiceNotificationReadRequest
-    )
+    suspend fun readServiceNotificationList()
 
     @POST("voting/update-voting")
     suspend fun updateVoting(

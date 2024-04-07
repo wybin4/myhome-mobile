@@ -3,10 +3,6 @@ package com.example.myhome.features.charge.dtos
 import com.example.myhome.models.DateConverter
 import java.util.Date
 
-data class DebtListRequest (
-    val userId: Int
-)
-
 data class DebtListResponse (
     val debts: List<DebtListItemResponse>
 )

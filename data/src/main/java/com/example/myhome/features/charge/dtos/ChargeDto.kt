@@ -9,7 +9,6 @@ enum class AmountChange {
 }
 
 data class ChargeListRequest(
-    val userId: Int,
     val meta: MetaRequest
 )
 
@@ -35,7 +34,6 @@ data class ChargeListItemResponse(
 }
 
 data class ChargeChartListRequest(
-    val userId: Int,
     val count: Int,
 )
 

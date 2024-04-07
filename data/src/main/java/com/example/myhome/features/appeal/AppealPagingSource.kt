@@ -24,7 +24,6 @@ class AppealPagingSource(
     override suspend fun invoke(page: Int): List<AppealListItemResponse> {
         val response = eventApiService.listEvent(
             EventListRequest(
-                userId = 1,
                 eventType = EventTypeRequest.Appeal,
                 meta = MetaRequest(page, APPEAL_PAGE_SIZE, filters)
             )

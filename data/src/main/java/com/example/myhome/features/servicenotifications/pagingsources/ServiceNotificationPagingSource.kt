@@ -19,7 +19,6 @@ class ServiceNotificationPagingSource(
     override suspend fun invoke(page: Int): List<ServiceNotificationListItemResponse> {
         return eventApiService.listServiceNotification(
             ServiceNotificationListRequest(
-                userId = 1,
                 meta = MetaRequest(page, NOTIFICATION_PAGE_SIZE)
             )
         ).notifications

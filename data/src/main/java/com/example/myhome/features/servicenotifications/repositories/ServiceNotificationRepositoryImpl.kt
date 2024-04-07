@@ -5,7 +5,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.myhome.features.event.EventApiService
 import com.example.myhome.features.event.dto.ServiceNotificationListItemResponse
-import com.example.myhome.features.event.dto.ServiceNotificationReadRequest
 import com.example.myhome.features.servicenotifications.pagingsources.ServiceNotificationPagingSourceFactory
 import kotlinx.coroutines.flow.Flow
 
@@ -22,8 +21,7 @@ class ServiceNotificationRepositoryImpl(
     }
 
     override suspend fun readNotificationList() {
-        val request = ServiceNotificationReadRequest(userId = 1)
-        eventApiService.readServiceNotificationList(request)
+        eventApiService.readServiceNotificationList()
     }
 
     override fun addServiceNotification(): Flow<PagingData<ServiceNotificationListItemResponse>> {

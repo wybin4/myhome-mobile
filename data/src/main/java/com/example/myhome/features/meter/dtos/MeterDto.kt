@@ -7,8 +7,6 @@ import com.example.myhome.models.UserRole
 import java.util.Date
 
 data class MeterListRequestExtended(
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner,
     val meterType: MeterType = MeterType.Individual,
     val isNotAllInfo: Boolean = true
 )
@@ -62,8 +60,6 @@ data class MeterListItemResponse(
 }
 
 data class ApartmentWithMeterListRequest(
-    val userId: Int,
-    val userRole: UserRole = UserRole.Owner,
     val meterType: MeterType = MeterType.Individual,
     val isNotAllInfo: Boolean = false
 )

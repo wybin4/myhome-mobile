@@ -34,6 +34,5 @@ data class VoteListItemResponse (
 )
 
 data class VotingUpdateRequest (
-    val optionId: Int,
-    val userId: Int
+    val optionId: Int
 )
