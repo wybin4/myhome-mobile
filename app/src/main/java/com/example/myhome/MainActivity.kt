@@ -6,14 +6,18 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.Observable
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.myhome.databinding.ActivityMainBinding
 import com.example.myhome.features.CommonSocketService
+import com.example.myhome.features.auth.repositories.AuthRepository
 import com.example.myhome.presentation.utils.managers.mainactivity.NavigationManager
 import com.example.myhome.presentation.utils.managers.mainactivity.ServiceManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.jetbrains.annotations.TestOnly
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     private var isNotificationDestination = false
 
     private val viewModel: MainViewModel by viewModels()
+
+    @Inject
+    lateinit var authRepository: AuthRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +94,12 @@ class MainActivity : AppCompatActivity() {
                 viewModel.hasUnreadNotifications.get() == -1 || isNotificationDestination
             )
         }
+
+        lifecycleScope.launch {
+            if (authRepository.isLoginNeed()) {
+                navController.navigate(R.id.login)
+            }
+        }
     }
 
     private fun observeResourceState() {
@@ -109,6 +122,13 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)
         return navHostFragment?.childFragmentManager?.fragments?.firstOrNull()
     }
+
+//    override fun onStop() {
+//        super.onStop()
+//        lifecycleScope.launch {
+//            authRepository.logout()
+//        }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -13,6 +13,7 @@ import com.example.myhome.databinding.DatePickersViewBinding
 import com.example.myhome.presentation.features.common.models.ApartmentExtendedUiModel
 import com.example.myhome.presentation.features.common.models.TypeOfServiceUiModel
 import com.example.myhome.presentation.state.DataStateManager
+import com.example.myhome.presentation.utils.InputValidator
 import com.example.myhome.presentation.utils.managers.DatePickersManager
 import com.example.myhome.presentation.utils.managers.SelectorManager
 import com.example.myhome.presentation.utils.pickers.ImagePicker
@@ -28,7 +29,7 @@ abstract class BaseAppealAddView : Fragment() {
     lateinit var typeOfServiceManager: SelectorManager<TypeOfServiceUiModel>
 
     lateinit var datePickersManager: DatePickersManager
-    private lateinit var factoryNumberValidator: com.example.myhome.presentation.utils.InputValidator
+    private lateinit var factoryNumberValidator: InputValidator
 
     lateinit var imagePicker: ImagePicker
 
@@ -100,7 +101,7 @@ abstract class BaseAppealAddView : Fragment() {
     }
 
     private fun setupValidator() {
-        factoryNumberValidator = com.example.myhome.presentation.utils.InputValidator(
+        factoryNumberValidator = InputValidator(
             layoutItemsBinding.factoryNumberInput,
             { text: String? -> text?.length!! > 0 },
             "Введите заводской номер",

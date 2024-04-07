@@ -33,6 +33,16 @@ class ActionBarManager(
         }
     }
 
+    fun toggleVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            activity.supportActionBar?.hide()
+            actionBarBinding.root.visibility = View.GONE
+        } else {
+            activity.supportActionBar?.show()
+            actionBarBinding.root.visibility = View.VISIBLE
+        }
+    }
+
     fun setTitle(title: CharSequence?) {
         actionBarBinding.title.text = title
     }

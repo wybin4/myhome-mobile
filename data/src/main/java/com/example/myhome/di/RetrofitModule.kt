@@ -2,6 +2,11 @@ package com.example.myhome.di
 
 import android.content.Context
 import com.example.myhome.features.appeal.AppealApiService
+import com.example.myhome.features.auth.AuthAuthenticator
+import com.example.myhome.features.auth.interceptors.AccessTokenInterceptor
+import com.example.myhome.features.auth.interceptors.RefreshTokenInterceptor
+import com.example.myhome.features.auth.services.AuthApiService
+import com.example.myhome.features.auth.services.RefreshApiService
 import com.example.myhome.features.charge.ChargeApiService
 import com.example.myhome.features.chat.ChatApiService
 import com.example.myhome.features.common.CommonApiService
@@ -18,41 +23,109 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class AuthenticatedClient
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class TokenRefreshClient
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class PublicClient
 
 @Module
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
     companion object {
+        const val TIMEOUT = 10L
         const val BASE_URL = "https://personally-poetic-cattle.ngrok-free.app/api/"
     }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
-        @ApplicationContext context: Context
+    @AuthenticatedClient
+    fun provideAccessOkHttpClient(
+        @ApplicationContext context: Context,
+        accessTokenInterceptor: AccessTokenInterceptor,
+        authAuthenticator: AuthAuthenticator
     ): OkHttpClient {
         val cacheSize = 10 * 1024 * 1024L // 10MB
         val cache = Cache(context.cacheDir, cacheSize)
         return OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .authenticator(authAuthenticator)
+            .addInterceptor(accessTokenInterceptor)
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
             .cache(cache)
             .build()
     }
 
     @Provides
     @Singleton
+    @TokenRefreshClient
+    fun provideRefreshOkHttpClient(
+        @ApplicationContext context: Context,
+        refreshTokenInterceptor: RefreshTokenInterceptor
+    ): OkHttpClient {
+        val cacheSize = 10 * 1024 * 1024L
+        val cache = Cache(context.cacheDir, cacheSize)
+        return OkHttpClient.Builder()
+            .addInterceptor(refreshTokenInterceptor)
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .cache(cache)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @PublicClient
+    fun provideUnauthenticatedOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     @Named("Normal")
-    fun provideNormalRetrofit(
-        okHttpClient: OkHttpClient
-    ): Retrofit {
+    fun provideRetrofit(@AuthenticatedClient okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthApiService(@PublicClient okHttpClient: OkHttpClient): AuthApiService {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(AuthApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRefreshApiService(@TokenRefreshClient okHttpClient: OkHttpClient): RefreshApiService {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(RefreshApiService::class.java)
     }
 
     @Provides

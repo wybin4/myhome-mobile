@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.myhome.presentation.features.auth.AuthViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="28dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp">
+            <LinearLayout
+                android:layout_weight="0.5"
+                android:gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/exit_button"
+                    style="@style/Exit"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"/>
+            </LinearLayout>
+            <TextView
+                style="@style/DescriptionText"
+                android:layout_weight="0.5"
+                android:gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Забыли пароль?"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="-70dp">
+
+            <ImageView
+                android:layout_width="63dp"
+                android:layout_height="63dp"
+                android:src="@drawable/myhome_logo_wth_back"
+                android:layout_gravity="center"
+                android:layout_marginBottom="55dp"/>
+
+            <TextView
+                style="@style/DescriptionText"
+                android:textSize="16dp"
+                android:text="Добро пожаловать!"
+                android:layout_gravity="center"
+                android:layout_marginBottom="36dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_input"
+                style="@style/HighRoundedInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.selectEmail}"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_input"
+                style="@style/HighRoundedInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Пароль"
+                app:endIconMode="password_toggle"
+                app:endIconDrawable="@drawable/password"
+                android:layout_marginBottom="-10dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.selectPassword}"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:layout_gravity="start"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/next_button"
+            style="@style/PrimaryButton"
+            android:layout_height="65dp"
+            android:layout_marginBottom="50dp"
+            android:textSize="16dp"
+            android:text="Войти" />
+
+    </LinearLayout>
+</layout>

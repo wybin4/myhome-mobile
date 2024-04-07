@@ -20,7 +20,6 @@ import com.example.myhome.presentation.features.common.models.TypeOfServiceUiMod
 import com.example.myhome.presentation.models.asGetState
 import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.state.get.GetState
-import com.example.myhome.presentation.utils.mappers.ImageMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -33,8 +32,7 @@ class BaseAppealAddViewModel @Inject constructor(
     private val typeOfServiceRepository: TypeOfServiceRepository,
     private val appealRepository: AppealRepository,
     private val appealMapper: AppealMapper,
-    private val commonUiMapper: CommonUiConverter,
-    val imageMapper: ImageMapper
+    private val commonUiMapper: CommonUiConverter
 ) : BaseAppealViewModel(AppealType.AddIndividualMeter) {
     private val _apartmentList = MutableLiveData<List<ApartmentExtendedUiModel>>()
     val apartmentList: LiveData<List<ApartmentExtendedUiModel>> = _apartmentList

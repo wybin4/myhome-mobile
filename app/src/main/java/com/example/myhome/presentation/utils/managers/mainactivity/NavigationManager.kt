@@ -1,6 +1,5 @@
 package com.example.myhome.presentation.utils.managers.mainactivity
 
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -47,11 +46,10 @@ class NavigationManager(
     private fun handleStartDestination(destination: NavDestination) {
         val isItStartDestination = destination.id in appBarConfiguration.topLevelDestinations
         actionBarManager.handleStartDestination(isItStartDestination)
-        if (isItStartDestination) {
-            bottomNavigationManager.setNavViewVisibility(View.VISIBLE)
-        } else {
-            bottomNavigationManager.setNavViewVisibility(View.GONE)
-        }
+        bottomNavigationManager.setNavViewVisibility(isItStartDestination)
+
+        val isLoginDestination = destination.id == R.id.login
+        actionBarManager.toggleVisibility(isLoginDestination)
     }
 
 }

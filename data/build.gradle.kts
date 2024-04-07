@@ -58,4 +58,7 @@ dependencies {
     // paging
     implementation("androidx.paging:paging-common-ktx:3.2.1")
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+    // datastore
+    implementation("androidx.datastore:datastore-core:1.0.0")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

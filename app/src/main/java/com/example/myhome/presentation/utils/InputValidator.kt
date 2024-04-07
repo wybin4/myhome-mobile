@@ -1,14 +1,23 @@
 package com.example.myhome.presentation.utils
 
+import android.content.res.ColorStateList
 import com.google.android.material.textfield.TextInputLayout
 
 class InputValidator(
     private val textInputLayout: TextInputLayout,
     private val validationCallback: ValidationCallback,
     private val errorMessage: String,
-    private val errorReset: (() -> Unit)?
+    private val errorReset: (() -> Unit)?,
+    errorColor: Int? = null
 ) {
     private var isFirstError: Boolean = true
+
+    init {
+        if (errorColor != null) {
+            textInputLayout.setErrorTextColor(ColorStateList.valueOf(errorColor))
+        }
+    }
+
     fun validate(text: String?): Boolean {
         val isValid = validationCallback(text)
 

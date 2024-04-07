@@ -263,4 +263,9 @@
         android:label="@string/title_service_notifications"
         tools:layout="@layout/service_notification_list_view"/>
 
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.myhome.presentation.features.auth.AuthView"
+        tools:layout="@layout/login_view"/>
+
 </navigation>

@@ -43,12 +43,15 @@ class BottomNavigationManager(
     }
 
     private fun setupActionBar() {
-        navView.setupWithNavController(navController)
         activity.setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
-    fun setNavViewVisibility(visibility: Int) {
-        navView.visibility = visibility
+    fun setNavViewVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            navView.visibility = View.VISIBLE
+        } else {
+            navView.visibility = View.GONE
+        }
     }
 
     fun handleListChatDestination(isItListChatDestination: Boolean) {
