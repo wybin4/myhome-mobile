@@ -12,8 +12,8 @@ import com.example.myhome.features.appeal.repositories.AppealRepository
 import com.example.myhome.models.FilterListItemRequest
 import com.example.myhome.presentation.features.appeal.AppealMapper
 import com.example.myhome.presentation.features.appeal.AppealUiModel
-import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.models.asPagingDataListStateWithFilter
+import com.example.myhome.presentation.models.asPagingNetworkResult
 import com.example.myhome.presentation.utils.filters.FilterObserveManager
 import com.example.myhome.presentation.utils.filters.ListStateWithFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,10 +45,12 @@ class AppealListViewModel @Inject constructor(
         viewModelScope.launch {
             appealRepository.listAppeal(filters)
                 .cachedIn(viewModelScope)
-                .asNetworkResult()
+                .asPagingNetworkResult()
                 .collectLatest {
-                    it.asPagingDataListStateWithFilter(_appealListState) { data ->
-                        _appealList.value = data.map { d -> appealMapper.appealToUi(d) }
+                    it.asPagingDataListStateWithFilter { data ->
+                        if (data != null) {
+                            _appealList.value = data.map { d -> appealMapper.appealToUi(d) }
+                        }
                     }
                 }
             }

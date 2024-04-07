@@ -87,6 +87,7 @@ class AppealRepositoryImpl(
 
     override fun claim(appeal: AppealClaimAddRequest): Flow<Boolean> = flow {
         val map: MutableMap<String, RequestBody> = mutableMapOf()
+        addValuesToMap(appeal, map)
         map["text"] = createPartFromString(appeal.data.text)
 
         appealApiService.addAppeal(map)

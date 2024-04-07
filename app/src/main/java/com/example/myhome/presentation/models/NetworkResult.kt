@@ -5,7 +5,6 @@ import androidx.paging.PagingData
 import com.example.myhome.presentation.state.add.AddState
 import com.example.myhome.presentation.state.get.GetState
 import com.example.myhome.presentation.state.list.ListState
-import com.example.myhome.presentation.utils.filters.ListStateWithFilter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -17,6 +16,11 @@ sealed interface NetworkResult<out T> {
     data object Loading : NetworkResult<Nothing>
 }
 
+sealed interface PagingNetworkResult<out T> {
+    data class Error(val exception: Throwable) : PagingNetworkResult<Nothing>
+    data class Loading<T>(val data: T?) : PagingNetworkResult<T>
+}
+
 fun <T> Flow<T>.asNetworkResult(): Flow<NetworkResult<T>> = map<T, NetworkResult<T>> {
     NetworkResult.Success(
         it
@@ -24,6 +28,15 @@ fun <T> Flow<T>.asNetworkResult(): Flow<NetworkResult<T>> = map<T, NetworkResult
 }
     .onStart { emit(NetworkResult.Loading) }
     .catch { emit(NetworkResult.Error(it)) }
+
+fun <T> Flow<T>.asPagingNetworkResult(): Flow<PagingNetworkResult<T>> = map<T, PagingNetworkResult<T>> {
+    PagingNetworkResult.Loading(
+        it
+    )
+}
+    .onStart { emit(PagingNetworkResult.Loading(null)) }
+    .catch { emit(PagingNetworkResult.Error(it)) }
+
 
 fun <T> NetworkResult<T>.asAddState(state: MutableLiveData<AddState>) {
     when (this) {
@@ -121,35 +134,25 @@ fun <T> NetworkResult<List<T>>.asGetState(
     }
 }
 
-fun <T : Any> NetworkResult<PagingData<T>>.asPagingDataListState(
-    state: MutableLiveData<ListState>,
-    onSuccess: (data: PagingData<T>) -> Unit
+fun <T : Any> PagingNetworkResult<PagingData<T>>.asPagingDataListState(
+    onSuccess: (data: PagingData<T>?) -> Unit
 ) {
     when (this) {
-        is NetworkResult.Success -> {
+        is PagingNetworkResult.Loading -> {
             val data = this.data
-            state.value = ListState.Success
             onSuccess(data)
-        }
-        is NetworkResult.Loading -> {
-            state.value = ListState.Loading
         }
         else -> {}
     }
 }
 
-fun <T : Any> NetworkResult<PagingData<T>>.asPagingDataListStateWithFilter(
-    state: MutableLiveData<ListStateWithFilter>,
-    onSuccess: (data: PagingData<T>) -> Unit
+fun <T : Any> PagingNetworkResult<PagingData<T>>.asPagingDataListStateWithFilter(
+    onSuccess: (data: PagingData<T>?) -> Unit
 ) {
     when (this) {
-        is NetworkResult.Success -> {
+        is PagingNetworkResult.Loading -> {
             val data = this.data
-            state.value = ListStateWithFilter.Success
             onSuccess(data)
-        }
-        is NetworkResult.Loading -> {
-            state.value = ListStateWithFilter.Loading
         }
         else -> {}
     }

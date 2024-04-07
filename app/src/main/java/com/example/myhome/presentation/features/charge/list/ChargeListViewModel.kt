@@ -17,6 +17,7 @@ import com.example.myhome.presentation.features.charge.models.networkresults.asC
 import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
 import com.example.myhome.presentation.models.NetworkResult
 import com.example.myhome.presentation.models.asNetworkResult
+import com.example.myhome.presentation.models.asPagingNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,10 +43,12 @@ class ChargeListViewModel @Inject constructor(
         viewModelScope.launch {
             chargeRepository.listCharge()
                 .cachedIn(viewModelScope)
-                .asNetworkResult()
+                .asPagingNetworkResult()
                 .collect {
-                    it.asChargePagingDataResource(_listState) { data ->
-                        _chargeList.value = data.map { d -> chargeUiMapper.chargeToUi(d) }
+                    it.asChargePagingDataResource { data ->
+                        if (data != null) {
+                            _chargeList.value = data.map { d -> chargeUiMapper.chargeToUi(d) }
+                        }
                     }
                 }
         }

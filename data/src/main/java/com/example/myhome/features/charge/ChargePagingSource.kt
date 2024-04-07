@@ -15,7 +15,6 @@ class ChargePagingSource(private val chargeApiService: ChargeApiService) :
                 meta = MetaRequest(page, CHARGE_PAGE_SIZE)
             )
         )
-        Log.e("ChargePagingSource", response.toString())
         return response.charges
     }
 

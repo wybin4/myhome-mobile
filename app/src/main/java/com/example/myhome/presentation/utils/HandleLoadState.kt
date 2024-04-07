@@ -17,6 +17,10 @@ fun CombinedLoadStates.handleLoadState(resourceCallback: (ListState) -> Unit, is
     if (source.refresh is LoadState.NotLoading && append.endOfPaginationReached && isItemCountNullable) {
         resourceCallback(ListState.Empty)
     }
+
+    if (source.refresh is LoadState.NotLoading && !append.endOfPaginationReached && !isItemCountNullable) {
+        resourceCallback(ListState.Success)
+    }
 }
 
 
@@ -37,5 +41,9 @@ fun CombinedLoadStates.handleLoadStateWithFilter(
         } else {
             resourceCallback(ListStateWithFilter.Empty)
         }
+    }
+
+    if (source.refresh is LoadState.NotLoading && !append.endOfPaginationReached && !isItemCountNullable) {
+        resourceCallback(ListStateWithFilter.Success)
     }
 }

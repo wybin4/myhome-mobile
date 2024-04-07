@@ -15,8 +15,8 @@ import com.example.myhome.features.event.dto.ServiceNotificationListItemResponse
 import com.example.myhome.features.servicenotifications.repositories.ServiceNotificationRepository
 import com.example.myhome.presentation.features.servicenotification.ServiceNotificationUiConverter
 import com.example.myhome.presentation.features.servicenotification.models.ServiceNotificationUiModel
-import com.example.myhome.presentation.models.asNetworkResult
 import com.example.myhome.presentation.models.asPagingDataListState
+import com.example.myhome.presentation.models.asPagingNetworkResult
 import com.example.myhome.presentation.state.list.ListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.NonCancellable
@@ -70,10 +70,12 @@ class ServiceNotificationListViewModel @Inject constructor(
 
     private suspend fun Flow<PagingData<ServiceNotificationListItemResponse>>.processNotificationList() {
         this.cachedIn(viewModelScope)
-            .asNetworkResult()
+            .asPagingNetworkResult()
             .collect {
-                it.asPagingDataListState(_notificationListState) { data ->
-                    _notificationList.value = data.map { d -> converter.notificationToUi(d) }
+                it.asPagingDataListState { data ->
+                    if (data != null) {
+                        _notificationList.value = data.map { d -> converter.notificationToUi(d) }
+                    }
                 }
             }
     }

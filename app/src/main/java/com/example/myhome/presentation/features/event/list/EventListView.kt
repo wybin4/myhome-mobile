@@ -1,6 +1,7 @@
 package com.example.myhome.presentation.features.event.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -96,6 +97,8 @@ class EventListView : Fragment() {
 
     private fun observeResourceState() {
         viewModel.eventListState.observe(viewLifecycleOwner) { resource ->
+            Log.e("handleLoadStateWithFilter eventListState", resource.toString())
+
             updateViewState(resource)
         }
         eventListAdapter.addLoadStateListener {

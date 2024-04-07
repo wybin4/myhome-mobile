@@ -16,4 +16,8 @@ fun CombinedLoadStates.chargeHandleLoadState(resourceCallback: (ChargeListResour
     if (source.refresh is LoadState.NotLoading && append.endOfPaginationReached && isItemCountNullable) {
         resourceCallback(ChargeListResource.Empty)
     }
+
+    if (source.refresh is LoadState.NotLoading && !append.endOfPaginationReached && !isItemCountNullable) {
+        resourceCallback(ChargeListResource.Success)
+    }
 }

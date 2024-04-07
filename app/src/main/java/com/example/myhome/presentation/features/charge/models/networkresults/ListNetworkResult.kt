@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import com.example.myhome.presentation.features.charge.models.resources.ChargeListResource
 import com.example.myhome.presentation.models.NetworkResult
+import com.example.myhome.presentation.models.PagingNetworkResult
 
 fun <T> NetworkResult<List<T>>.asChargeListResource(
     state: MutableLiveData<ChargeListResource>,
@@ -31,18 +32,13 @@ fun <T> NetworkResult<List<T>>.asChargeListResource(
     }
 }
 
-fun <T : Any> NetworkResult<PagingData<T>>.asChargePagingDataResource(
-    state: MutableLiveData<ChargeListResource>,
-    onSuccess: (data: PagingData<T>) -> Unit
+fun <T : Any> PagingNetworkResult<PagingData<T>>.asChargePagingDataResource(
+    onSuccess: (data: PagingData<T>?) -> Unit
 ) {
     when (this) {
-        is NetworkResult.Success -> {
+        is PagingNetworkResult.Loading -> {
             val data = this.data
-            state.value = ChargeListResource.Success
             onSuccess(data)
-        }
-        is NetworkResult.Loading -> {
-            state.value = ChargeListResource.Loading
         }
         else -> {}
     }
