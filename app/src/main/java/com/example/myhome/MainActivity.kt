@@ -86,6 +86,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
+        lifecycleScope.launch {
+            if (authRepository.isLoginNeed()) {
+                navController.navigate(R.id.login)
+                navigationManager.actionBarManager.toggleVisibility(true)
+            }
+        }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             navigationManager.setupNavigation(destination)
 
@@ -93,12 +100,6 @@ class MainActivity : AppCompatActivity() {
             navigationManager.actionBarManager.setNotificationButtonVisibility(
                 viewModel.hasUnreadNotifications.get() == -1 || isNotificationDestination
             )
-        }
-
-        lifecycleScope.launch {
-            if (authRepository.isLoginNeed()) {
-                navController.navigate(R.id.login)
-            }
         }
     }
 
